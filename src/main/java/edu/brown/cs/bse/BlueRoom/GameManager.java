@@ -1,6 +1,7 @@
 package edu.brown.cs.bse.BlueRoom;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import edu.brown.cs.bse.elements.Customer;
@@ -47,6 +48,14 @@ public class GameManager {
       return null;
     }
     return customers.remove(0);
+  }
+  
+  public List<Double> getDailyProfits() {
+    return Collections.emptyList();
+  }
+  
+  public List<Double> getTotalProfits() {
+    return Collections.emptyList();
   }
 
 }
