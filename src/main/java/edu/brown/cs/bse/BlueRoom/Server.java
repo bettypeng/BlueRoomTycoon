@@ -46,7 +46,8 @@ public class Server {
    * processor to be user later.
    * @param cp Command Processor to user to parse user commands
    */
-  public Server() {
+  public Server(GameManager gm) {
+    gameManager = gm;
     runSparkServer();
   }
 
@@ -68,7 +69,6 @@ public class Server {
    * with the gui.
    */
   private void runSparkServer() {
-    gameManager = new GameManager();
     Spark.externalStaticFileLocation("src/main/resources/static");
     Spark.exception(Exception.class, new ExceptionPrinter());
 
@@ -76,6 +76,13 @@ public class Server {
 
     // Setup Spark Routes
     Spark.get("/blueroom", new FrontHandler(), freeMarker);
+    Spark.post("/purchase", new PurchaseHandler());
+    Spark.post("/finance", new FinanceHandler());
+    Spark.post("/endday", new EndDayHandler());
+    Spark.post("/customer", new CustomerHandler());
+    Spark.post("/newemployee", new NewEmployeeHandler());
+    Spark.post("/employee", new EmployeeHandler());
+    Spark.post("/newstation", new NewStationHandler());
   }
 
   /**
@@ -198,9 +205,7 @@ public class Server {
   private class CustomerHandler implements Route {
     @Override
     public Object handle(final Request req, final Response res) {
-      QueryParamsMap qm = req.queryMap();
-
-      Customer newCust = gameManager.getCustomer();
+      Customer newCust = gameManager.newCustomer();
 
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("customer", newCust).build();
