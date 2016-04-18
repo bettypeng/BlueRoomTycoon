@@ -13,18 +13,31 @@ public class GameManager {
   private List<Customer> customers;
   private List<Employee> employees;
   
+  private List<String> availableStations;
+  
   public GameManager() {
     manager = new MoneyManager();
     customers = new ArrayList<>();
     employees = new ArrayList<>();
+    availableStations = new ArrayList<>();
+    availableStations.add("sandwich");
   }
   
-  public double purchase(FoodItem purchase, double happiness) {
-    return 0;
+  public double purchase(FoodItem purchase, Customer cust) {
+    double price = purchase.getPrice();
+    price += (purchase.compareToOrder(cust.getOrder()) * cust.getHappiness() * 3);
+    return price;
   }
   
   public Customer newCustomer() {
-    Customer newCustomer = new Customer(OrderFactory.getSandwichOrder(), "sandwich");
+    int rand = (int) (Math.random() * availableStations.size());
+    String station = availableStations.get(rand);
+    Customer newCustomer;
+    switch (station) {
+    default:
+      newCustomer = new Customer(OrderFactory.getSandwichOrder(), station);
+      break;
+    }
     customers.add(newCustomer);
     return newCustomer;
   }

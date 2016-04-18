@@ -16,5 +16,7 @@ public class SandwichIngredient {
   public String toString() {
     return type;
   }
+  
+  // needs hash code and equals for sandwich class
 
 }

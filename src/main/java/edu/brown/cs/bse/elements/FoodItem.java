@@ -12,6 +12,12 @@ public abstract class FoodItem {
     this.price = newprice;
   }
   
-  public abstract double findQuality();
+  /**
+   * Compares this food item to the one that was ordered.
+   * @param ordered
+   * @return A measure of the quality of the food item that was prepared,
+   * between 0 and 1.
+   */
+  public abstract double compareToOrder(FoodItem ordered);
 
 }

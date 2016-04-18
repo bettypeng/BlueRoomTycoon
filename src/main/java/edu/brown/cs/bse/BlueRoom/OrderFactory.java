@@ -1,7 +1,6 @@
 package edu.brown.cs.bse.BlueRoom;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import edu.brown.cs.bse.elements.Bread;
@@ -11,13 +10,13 @@ import edu.brown.cs.bse.elements.SandwichIngredient;
 public class OrderFactory {
 
   private static final String[] MEAT_NAMES = { "turkey", "roast beef", "ham",
-      "chicken salad", "salami", "prosciutto", "none" };
+      "chicken salad", "salami", "prosciutto" };
 
   private static final String[] VEGGIE_NAMES = { "lettuce", "tomato", "spinach",
-      "spring mix", "onions", "none" };
+      "spring mix", "onions", "cucumber", "none" };
 
   private static final String[] SAUCE_NAMES = { "mayo", "chipotle mayo",
-      "mustard", "hummus", "goat cheese", "balsamic", "honey mustard", "none" };
+      "mustard", "hummus", "goat cheese", "balsamic", "honey mustard" };
 
   private static final String[] BREAD_NAMES = { "ciabatta", "french", "wheat",
       "wrap" };
@@ -33,10 +32,25 @@ public class OrderFactory {
   }
 
   private static List<SandwichIngredient> getMeats() {
+    int numMeats;
+    int rand = (int) (Math.random() * 10);
+    switch (rand) {
+    case 0:
+      numMeats = 3;
+      break;
+    case 1: case 2:
+      numMeats = 2;
+      break;
+    case 3: case 4:
+      numMeats = 0;
+    default:
+      numMeats = 1;
+      break;
+    }
     List<SandwichIngredient> meats = new ArrayList<>();
-    int rand = (int) (Math.random() * MEAT_NAMES.length);
-    String meatType = MEAT_NAMES[rand];
-    if (!meatType.equals("none")) {
+    for (int i = 0; i < numMeats; i++) {
+      rand = (int) (Math.random() * MEAT_NAMES.length);
+      String meatType = MEAT_NAMES[rand];
       meats.add(new SandwichIngredient(meatType));
     }
     return meats;
@@ -72,10 +86,23 @@ public class OrderFactory {
   }
 
   private static List<SandwichIngredient> getSauces() {
+    int numSauce;
+    int rand = (int) (Math.random() * 10);
+    switch (rand) {
+    case 0: case 1:
+      numSauce = 2;
+      break;
+    case 2: case 3:
+      numSauce = 0;
+      break;
+    default:
+      numSauce = 1;
+      break;
+    }
     List<SandwichIngredient> sauces = new ArrayList<>();
-    int rand = (int) (Math.random() * SAUCE_NAMES.length);
-    String sauceType = SAUCE_NAMES[rand];
-    if (!sauceType.equals("none")) {
+    for (int i = 0; i < numSauce; i++) {
+      rand = (int) (Math.random() * SAUCE_NAMES.length);
+      String sauceType = SAUCE_NAMES[rand];
       sauces.add(new SandwichIngredient(sauceType));
     }
     return sauces;
