@@ -23,6 +23,7 @@ import spark.template.freemarker.FreeMarkerEngine;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 
+import edu.brown.cs.bse.elements.Bread;
 import edu.brown.cs.bse.elements.Customer;
 import edu.brown.cs.bse.elements.Employee;
 import edu.brown.cs.bse.elements.FoodItem;
@@ -111,17 +112,19 @@ public class Server {
       QueryParamsMap qm = req.queryMap();
 
       //this is the order that was made to compare the actual received item to
-      String order = qm.value("order");
-      //somehow parse order into list of ingredient names"
+      Customer customer = GSON.fromJson(qm.value("customer"), Customer.class);
 
       String type = qm.value("type");
-      Double happiness = Double.parseDouble(qm.value("happiness"));
 
-      //recieves what makes up the purchase in the form of a map which maps
+      List<String> ingredients = GSON.fromJson(qm.value("ingredients"), List.class);
+      String bread = qm.value("bread");
+
+      Bread b = new Bread(bread);
+
+    //recieves what makes up the purchase in the form of a map which maps
       //each part of the purchase to how far it was from the center (sandwiches)
       //how far from well cooked it is (bakery good)
-      String itemMap = qm.value("purchase");
-      //somehow parse this into a map, not a string
+      Map<String, Double> ingMap = GSON.fromJson(qm.value("map"), Map.class);
 
       FoodItem purchase;
 
@@ -130,8 +133,7 @@ public class Server {
         List<SandwichIngredient> sWichIng = new ArrayList<>();
         Map<SandwichIngredient, Double> sWichMap = new HashMap<>();
 
-        Map<String, Double> iMap = new HashMap<>();
-        for (Entry<String, Double> e: iMap.entrySet()) {
+        for (Entry<String, Double> e: ingMap.entrySet()) {
           String itemName = e.getKey();
           Double val = e.getValue();
           SandwichIngredient ing = new SandwichIngredient(itemName);
@@ -139,10 +141,13 @@ public class Server {
           sWichMap.put(ing, val);
         }
         //get the bread out of this and do something with it
-        purchase = new Sandwich(sWichIng, sWichMap, order);
+        purchase = new Sandwich(sWichIng, sWichMap, b);
+      } else {
+        purchase = null;
+        System.out.println("Not a sandwich - no other foods implemented yet");
       }
 
-      Double moneyMade = gameManager.purchase(purchase, happiness);
+      Double moneyMade = gameManager.purchase(purchase, customer);
 
 
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
@@ -226,7 +231,7 @@ public class Server {
       QueryParamsMap qm = req.queryMap();
 
       //this can be if we ever want different employees to have different traits
-      String employeeName = qm.value("employee");
+//      String employeeName = qm.value("employee");
 
       //sends the knowledge of the new employee to the game manager
       gameManager.addEmployee();
@@ -250,19 +255,24 @@ public class Server {
     @Override
     public Object handle(final Request req, final Response res) {
       QueryParamsMap qm = req.queryMap();
+      //GSON.fromJson(value, String.class)
 
-      String employee = qm.value("employee");
-      //somehow parse this string into an employee
-      String order = qm.value("order");
-      //somehow parse this into a list of strings
-      Double happiness = Double.parseDouble(qm.value("happiness"));
+      Employee employee = GSON.fromJson(qm.value("employee"), Employee.class);
 
-      Employee emp = new Employee();
+      Customer customer = GSON.fromJson(qm.value("customer"), Customer.class);
 
-      FoodItem fi = new Sandwich(emp, order);
+      String type = qm.value("type");
 
+      FoodItem fi;
 
-      Double moneyMade = gameManager.purchase(fi, happiness);
+      if (type.equals("sandwich")) {
+        fi = new Sandwich(employee, (Sandwich)customer.getOrder());
+      } else {
+        fi = null;
+        System.out.println("Nothing other than sandwiches should be ordered");
+      }
+
+      Double moneyMade = gameManager.purchase(fi, customer);
 
 
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
