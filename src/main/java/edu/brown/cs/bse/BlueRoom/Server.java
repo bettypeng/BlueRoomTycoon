@@ -84,6 +84,8 @@ public class Server {
     Spark.post("/newemployee", new NewEmployeeHandler());
     Spark.post("/employee", new EmployeeHandler());
     Spark.post("/newstation", new NewStationHandler());
+    Spark.post("/line", new LineHandler());
+
   }
 
   /**
@@ -117,9 +119,6 @@ public class Server {
       String type = qm.value("type");
 
       List<String> ingredients = GSON.fromJson(qm.value("ingredients"), List.class);
-      String bread = qm.value("bread");
-
-      Bread b = new Bread(bread);
 
     //recieves what makes up the purchase in the form of a map which maps
       //each part of the purchase to how far it was from the center (sandwiches)
@@ -140,6 +139,9 @@ public class Server {
           sWichIng.add(ing);
           sWichMap.put(ing, val);
         }
+        String bread = qm.value("bread");
+
+        Bread b = new Bread(bread);
         //get the bread out of this and do something with it
         purchase = new Sandwich(sWichIng, sWichMap, b);
       } else {
@@ -241,6 +243,29 @@ public class Server {
 
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("results", results).build();
+
+      return GSON.toJson(variables);
+    }
+  }
+
+  /**
+   * Triggered when new customer gets to front of line
+   * @author srw
+   *
+   */
+  private class LineHandler implements Route {
+    @Override
+    public Object handle(final Request req, final Response res) {
+      QueryParamsMap qm = req.queryMap();
+
+      //this can be if we ever want different employees to have different traits
+//      String employeeName = qm.value("employee");
+
+      //sends the knowledge of the new employee to the game manager
+      Customer front = gameManager.getFrontCustomer();
+
+      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+          .put("customer", front).build();
 
       return GSON.toJson(variables);
     }
