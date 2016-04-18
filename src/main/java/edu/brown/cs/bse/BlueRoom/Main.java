@@ -44,7 +44,7 @@ public class Main {
     GameManager manager = new GameManager();
     
     if (options.has("gui")) {
-      System.out.println("run spark server");
+      new Server();
     } else {
       
       try (BufferedReader reader = new BufferedReader(
@@ -68,7 +68,8 @@ public class Main {
             Sandwich sand = OrderFactory.getSandwichOrder();
             Customer customer = new Customer(sand, "sandwich");
             customer.setHappiness(Math.random());
-            System.out.println(manager.purchase(sand, customer));
+            System.out.println(manager.purchase(OrderFactory.getSandwichOrder(), customer));
+            break;
             
           default:
             List<SandwichIngredient> testList = Arrays.asList(new SandwichIngredient("turkey"), new SandwichIngredient("cheese"));
@@ -76,7 +77,8 @@ public class Main {
             Map<SandwichIngredient, Double> del = new HashMap<>();
             del.put(new SandwichIngredient("turkey"), 0.2);
             del.put(new SandwichIngredient("cheese"), 0.1);
-            Sandwich test = new Sandwich(del, new Bread("ciabatta"));
+            List<SandwichIngredient> list = Arrays.asList(new SandwichIngredient("turkey"), new SandwichIngredient("cheese"));
+            Sandwich test = new Sandwich(list, del, new Bread("ciabatta"));
             test.compareToOrder(original);
             break;
           }

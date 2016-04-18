@@ -57,5 +57,9 @@ public class GameManager {
   public List<Double> getTotalProfits() {
     return Collections.emptyList();
   }
+  
+  public void addEmployee() {
+    
+  }
 
 }

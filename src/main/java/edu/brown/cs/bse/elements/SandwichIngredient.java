@@ -1,5 +1,7 @@
 package edu.brown.cs.bse.elements;
 
+import java.util.Objects;
+
 public class SandwichIngredient {
   
   private String type;
@@ -17,6 +19,21 @@ public class SandwichIngredient {
     return type;
   }
   
-  // needs hash code and equals for sandwich class
+  @Override
+  public boolean equals(Object o) {
+    if (o == this) {
+      return true;
+    }
+    if (!(o instanceof SandwichIngredient)) {
+      return false;
+    }
+    SandwichIngredient other = (SandwichIngredient) o;
+    return other.getType().equals(type);
+  }
+  
+  @Override
+  public int hashCode() {
+    return Objects.hash(type);
+  }
 
 }
