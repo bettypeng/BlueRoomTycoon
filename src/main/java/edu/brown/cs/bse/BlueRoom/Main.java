@@ -68,7 +68,7 @@ public class Main {
             Sandwich sand = OrderFactory.getSandwichOrder();
             Customer customer = new Customer(sand, "sandwich");
             customer.setHappiness(Math.random());
-            System.out.println(manager.purchase(OrderFactory.getSandwichOrder(), customer));
+            System.out.println(manager.purchase(sand, customer));
             break;
             
           default:
@@ -79,7 +79,7 @@ public class Main {
             del.put(new SandwichIngredient("cheese"), 0.1);
             List<SandwichIngredient> list = Arrays.asList(new SandwichIngredient("turkey"), new SandwichIngredient("cheese"));
             Sandwich test = new Sandwich(list, del, new Bread("ciabatta"));
-            test.compareToOrder(original);
+            System.out.println(test.compareToOrder(original));
             break;
           }
           
