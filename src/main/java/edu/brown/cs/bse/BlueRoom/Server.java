@@ -23,6 +23,7 @@ import spark.template.freemarker.FreeMarkerEngine;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 
+import edu.brown.cs.bse.elements.Bread;
 import edu.brown.cs.bse.elements.Customer;
 import edu.brown.cs.bse.elements.Employee;
 import edu.brown.cs.bse.elements.FoodItem;
@@ -46,7 +47,8 @@ public class Server {
    * processor to be user later.
    * @param cp Command Processor to user to parse user commands
    */
-  public Server() {
+  public Server(GameManager gm) {
+    gameManager = gm;
     runSparkServer();
   }
 
@@ -68,7 +70,6 @@ public class Server {
    * with the gui.
    */
   private void runSparkServer() {
-    gameManager = new GameManager();
     Spark.externalStaticFileLocation("src/main/resources/static");
     Spark.exception(Exception.class, new ExceptionPrinter());
 
@@ -76,6 +77,15 @@ public class Server {
 
     // Setup Spark Routes
     Spark.get("/blueroom", new FrontHandler(), freeMarker);
+    Spark.post("/purchase", new PurchaseHandler());
+    Spark.post("/finance", new FinanceHandler());
+    Spark.post("/endday", new EndDayHandler());
+    Spark.post("/customer", new CustomerHandler());
+    Spark.post("/newemployee", new NewEmployeeHandler());
+    Spark.post("/employee", new EmployeeHandler());
+    Spark.post("/newstation", new NewStationHandler());
+    Spark.post("/line", new LineHandler());
+
   }
 
   /**
@@ -104,17 +114,16 @@ public class Server {
       QueryParamsMap qm = req.queryMap();
 
       //this is the order that was made to compare the actual received item to
-      String order = qm.value("order");
-      //somehow parse order into list of ingredient names"
+      Customer customer = GSON.fromJson(qm.value("customer"), Customer.class);
 
       String type = qm.value("type");
-      Double happiness = Double.parseDouble(qm.value("happiness"));
 
-      //recieves what makes up the purchase in the form of a map which maps
+      List<String> ingredients = GSON.fromJson(qm.value("ingredients"), List.class);
+
+    //recieves what makes up the purchase in the form of a map which maps
       //each part of the purchase to how far it was from the center (sandwiches)
       //how far from well cooked it is (bakery good)
-      String itemMap = qm.value("purchase");
-      //somehow parse this into a map, not a string
+      Map<String, Double> ingMap = GSON.fromJson(qm.value("map"), Map.class);
 
       FoodItem purchase;
 
@@ -123,19 +132,24 @@ public class Server {
         List<SandwichIngredient> sWichIng = new ArrayList<>();
         Map<SandwichIngredient, Double> sWichMap = new HashMap<>();
 
-        Map<String, Double> iMap = new HashMap<>();
-        for (Entry<String, Double> e: iMap.entrySet()) {
+        for (Entry<String, Double> e: ingMap.entrySet()) {
           String itemName = e.getKey();
           Double val = e.getValue();
           SandwichIngredient ing = new SandwichIngredient(itemName);
           sWichIng.add(ing);
           sWichMap.put(ing, val);
         }
+        String bread = qm.value("bread");
+
+        Bread b = new Bread(bread);
         //get the bread out of this and do something with it
-        purchase = new Sandwich(sWichIng, sWichMap, order);
+        purchase = new Sandwich(sWichIng, sWichMap, b);
+      } else {
+        purchase = null;
+        System.out.println("Not a sandwich - no other foods implemented yet");
       }
 
-      Double moneyMade = gameManager.purchase(purchase, happiness);
+      Double moneyMade = gameManager.purchase(purchase, customer);
 
 
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
@@ -198,9 +212,7 @@ public class Server {
   private class CustomerHandler implements Route {
     @Override
     public Object handle(final Request req, final Response res) {
-      QueryParamsMap qm = req.queryMap();
-
-      Customer newCust = gameManager.getCustomer();
+      Customer newCust = gameManager.newCustomer();
 
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("customer", newCust).build();
@@ -221,7 +233,7 @@ public class Server {
       QueryParamsMap qm = req.queryMap();
 
       //this can be if we ever want different employees to have different traits
-      String employeeName = qm.value("employee");
+//      String employeeName = qm.value("employee");
 
       //sends the knowledge of the new employee to the game manager
       gameManager.addEmployee();
@@ -237,6 +249,29 @@ public class Server {
   }
 
   /**
+   * Triggered when new customer gets to front of line
+   * @author srw
+   *
+   */
+  private class LineHandler implements Route {
+    @Override
+    public Object handle(final Request req, final Response res) {
+      QueryParamsMap qm = req.queryMap();
+
+      //this can be if we ever want different employees to have different traits
+//      String employeeName = qm.value("employee");
+
+      //sends the knowledge of the new employee to the game manager
+      Customer front = gameManager.getFrontCustomer();
+
+      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+          .put("customer", front).build();
+
+      return GSON.toJson(variables);
+    }
+  }
+
+  /**
    * Triggered when a sandwich is made by just an employee, no user interaction
    * @author srw
    *
@@ -245,19 +280,24 @@ public class Server {
     @Override
     public Object handle(final Request req, final Response res) {
       QueryParamsMap qm = req.queryMap();
+      //GSON.fromJson(value, String.class)
 
-      String employee = qm.value("employee");
-      //somehow parse this string into an employee
-      String order = qm.value("order");
-      //somehow parse this into a list of strings
-      Double happiness = Double.parseDouble(qm.value("happiness"));
+      Employee employee = GSON.fromJson(qm.value("employee"), Employee.class);
 
-      Employee emp = new Employee();
+      Customer customer = GSON.fromJson(qm.value("customer"), Customer.class);
 
-      FoodItem fi = new Sandwich(emp, order);
+      String type = qm.value("type");
 
+      FoodItem fi;
 
-      Double moneyMade = gameManager.purchase(fi, happiness);
+      if (type.equals("sandwich")) {
+        fi = new Sandwich(employee, (Sandwich)customer.getOrder());
+      } else {
+        fi = null;
+        System.out.println("Nothing other than sandwiches should be ordered");
+      }
+
+      Double moneyMade = gameManager.purchase(fi, customer);
 
 
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
