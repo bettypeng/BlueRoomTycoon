@@ -149,6 +149,8 @@ public class Server {
         System.out.println("Not a sandwich - no other foods implemented yet");
       }
 
+      // SHANNON: make sure you set the customer's happiness to the right level before passing in
+      // or maybe the javascript side will have already given the right happiness?
       Double moneyMade = gameManager.purchase(purchase, customer);
 
 
