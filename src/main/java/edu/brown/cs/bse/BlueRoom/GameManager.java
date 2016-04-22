@@ -1,7 +1,6 @@
 package edu.brown.cs.bse.BlueRoom;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,10 +10,10 @@ import edu.brown.cs.bse.elements.Customer;
 import edu.brown.cs.bse.elements.Employee;
 import edu.brown.cs.bse.elements.FoodItem;
 
-
 public class GameManager {
 
   private final static int UUID_LEN = 8;
+  private static final double INITIAL_MONEY = 1000;
   private MoneyManager manager;
   private List<Customer> customers;
   private List<Employee> employees;
@@ -23,7 +22,7 @@ public class GameManager {
   private List<String> availableStations;
 
   public GameManager() {
-    manager = new MoneyManager();
+    manager = new MoneyManager(INITIAL_MONEY);
     customers = new ArrayList<>();
     employees = new ArrayList<>();
     availableStations = new ArrayList<>();
@@ -34,6 +33,7 @@ public class GameManager {
   public double purchase(FoodItem purchase, Customer cust) {
     double price = purchase.getPrice();
     price += (purchase.compareToOrder(cust.getOrder()) * cust.getHappiness() * 3);
+    manager.handlePurchase(price, cust.getStation());
     return price;
   }
 
@@ -53,6 +53,7 @@ public class GameManager {
       break;
     }
     customers.add(newCustomer);
+    customerMap.put(id,  newCustomer);
     return newCustomer;
   }
 
@@ -63,12 +64,14 @@ public class GameManager {
     return customers.remove(0);
   }
 
-  public List<Double> getDailyProfits() {
-    return manager.getDP();
+  // gets the data about today's profits and whatever else
+  public DayData getDailyProfits() {
+    return manager.getTodayInfo();
   }
 
+  // gets data about total profits over time. could make this a list of DayData?
   public List<Double> getTotalProfits() {
-    return Collections.emptyList();
+    return manager.getProfits();
   }
 
   public void addEmployee() {
@@ -85,10 +88,7 @@ public class GameManager {
    * @return
    */
   public Customer getCustomer(String id) {
-    if (customerMap.containsKey(id)) {
-      return customerMap.get(id);
-    }
-    return null;
+    return customerMap.get(id);
   }
 
 }

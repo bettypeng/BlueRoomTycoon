@@ -5,14 +5,30 @@ import java.util.List;
 
 public class MoneyManager {
 
-  private List<Double> dailyProfits;
+  private List<Double> profitsOverTime;
+  private DayData currDay;
+  private double money;
 
-  public MoneyManager() {
-    dailyProfits = new ArrayList<>();
+  public MoneyManager(double startMoney) {
+    profitsOverTime = new ArrayList<>();
+    money = startMoney;
   }
 
-  public List<Double> getDP() {
-    return dailyProfits;
+  public List<Double> getProfits() {
+    return profitsOverTime;
+  }
+  
+  public DayData getTodayInfo() {
+    return currDay;
+  }
+  
+  public void handlePurchase(double incr, String station) {
+    money += incr;
+    currDay.newPurchase(station, incr);
+  }
+  
+  public double getMoney() {
+    return money;
   }
 
 }
