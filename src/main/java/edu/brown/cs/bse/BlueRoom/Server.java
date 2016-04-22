@@ -98,7 +98,7 @@ public class Server {
     public ModelAndView handle(Request req, Response res) {
       Map<String, Object> variables =
           ImmutableMap.of("title", "Blue Room Tycoon");
-      return new ModelAndView(variables, "type.ftl");
+      return new ModelAndView(variables, "testing.ftl");
     }
   }
 
@@ -112,13 +112,29 @@ public class Server {
     @Override
     public Object handle(final Request req, final Response res) {
       QueryParamsMap qm = req.queryMap();
+      System.out.println("purchasing");
 
       //this is the order that was made to compare the actual received item to
-      Customer customer = GSON.fromJson(qm.value("customer"), Customer.class);
+      Customer customer = null;
+      System.out.println(qm.value("customer"));
+      try {
+        System.out.println(GSON.fromJson(qm.value("customer"), Customer.class));
+        customer = GSON.fromJson(qm.value("customer"), Customer.class);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+      System.out.println("got customer");
+      System.out.println(customer);
 
       String type = qm.value("type");
+      System.out.println(type);
+
+      System.out.println(qm.value("ingredients"));
+      System.out.println(qm.value("map"));
 
       List<String> ingredients = GSON.fromJson(qm.value("ingredients"), List.class);
+
+      System.out.println(ingredients);
 
     //recieves what makes up the purchase in the form of a map which maps
       //each part of the purchase to how far it was from the center (sandwiches)
@@ -134,6 +150,7 @@ public class Server {
 
         for (Entry<String, Double> e: ingMap.entrySet()) {
           String itemName = e.getKey();
+          System.out.println(itemName);
           Double val = e.getValue();
           SandwichIngredient ing = new SandwichIngredient(itemName);
           sWichIng.add(ing);
@@ -215,6 +232,7 @@ public class Server {
     @Override
     public Object handle(final Request req, final Response res) {
       Customer newCust = gameManager.newCustomer();
+      System.out.println("sending up customer");
 
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("customer", newCust).build();
