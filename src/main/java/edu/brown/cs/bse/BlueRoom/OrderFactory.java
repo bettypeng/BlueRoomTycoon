@@ -18,8 +18,7 @@ public class OrderFactory {
   private static final String[] SAUCE_NAMES = { "mayo", "chipotle mayo",
       "mustard", "hummus", "goat cheese", "balsamic", "honey mustard" };
 
-  private static final String[] BREAD_NAMES = { "ciabatta", "french", "wheat",
-      "wrap" };
+  private static final String[] BREAD_NAMES = { "ciabatta", "french", "wheat", "sliced" };
 
   public static Sandwich getSandwichOrder() {
     List<SandwichIngredient> ingreds = new ArrayList<>();
