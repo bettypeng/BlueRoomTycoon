@@ -1,10 +1,16 @@
 package edu.brown.cs.bse.BlueRoom;
 
-import src.main.java.edu.brown.cs.bse.BlueRoom.MoneyManager;
-import src.main.java.edu.brown.cs.bse.BlueRoom.OrderFactory;
-import src.main.java.edu.brown.cs.bse.elements.Customer;
-import src.main.java.edu.brown.cs.bse.elements.Employee;
-import src.main.java.edu.brown.cs.bse.elements.FoodItem;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import edu.brown.cs.bse.elements.Customer;
+import edu.brown.cs.bse.elements.Employee;
+import edu.brown.cs.bse.elements.FoodItem;
+
 
 public class GameManager {
 
@@ -79,8 +85,8 @@ public class GameManager {
    * @return
    */
   public Customer getCustomer(String id) {
-    if (customerMap.contains(id)) {
-      return customerMap.get(id));
+    if (customerMap.containsKey(id)) {
+      return customerMap.get(id);
     }
     return null;
   }
