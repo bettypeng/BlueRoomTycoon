@@ -16,6 +16,9 @@ function getFinanaces() {
     });
 }
 
+window.setTimeout(getCustomer, 1000);
+var customer;
+
 function getCustomer() {
 
 	var postParameters = {}
@@ -24,8 +27,17 @@ function getCustomer() {
 
         responseObject = JSON.parse(responseJSON);
         var newCust = responseObject.customer;
+        customer = newCust;
 
-        newCustomer(newCust);
+        var order = newCust.order;
+        console.log(order);
+
+        //from order:
+        //order.ingreds = list of ingredients - for each one do ing.type to get name of ingredient
+        //order.deltas = won't need this, will be sent once we send it back
+        //order.bread = can use bread.type to get name of bread
+
+        // newCustomer(newCust);
         //in order to get the customer's order just do: newCust.order
         //the order will be a fooditem which you can get things from using
         //a similar method
@@ -93,10 +105,21 @@ function employeePurchase(type, employee, customer) {
 
 }
 
-function purchase(type, ingredients, ingMap, customer, bread) {
-    //bread will be null if the type is not sandwich
 
-	var postParameters = {type: type, ingredients: ingredients, map: ingMap, customer: customer, bread: bread};
+window.setTimeout(purchase, 5000);
+
+
+function purchase() {
+    //bread will be null if the type is not sandwich
+    var type = "sandwich";
+    var ingredients = ["tomato", "mustard", "ham"];
+    var ingMap = {tomato: 0.1, mustard: 0.1, ham: 0.1};
+    var bread = "ciabatta";
+
+
+    var cust = JSON.stringify(customer);
+	var postParameters = {type: type, ingredients: ingredients, map: ingMap, customer: cust, bread: bread};
+    console.log(postParameters["customer"]);
 
     $.post("/purchase", postParameters, function(responseJSON){
 

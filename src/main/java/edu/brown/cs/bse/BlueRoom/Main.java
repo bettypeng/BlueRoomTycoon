@@ -67,7 +67,7 @@ public class Main {
 
           case "p":
             Sandwich sand = OrderFactory.getSandwichOrder();
-            Customer customer = new Customer(sand, "sandwich");
+            Customer customer = new Customer("randomid", sand, "sandwich");
             customer.setHappiness(Math.random());
             System.out.println(manager.purchase(sand, customer));
             break;
