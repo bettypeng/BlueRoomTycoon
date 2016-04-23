@@ -5,7 +5,6 @@
 	<title>Blue Room Tycoon</title>
 	<script src="js/phaser.min.js"></script>
 	<script src="js/jquery-2.1.1.js"></script>
-	<script src="js/Server.js"></script>
 	<script src="js/Boot.js"></script>
 	<script src="js/Preloader.js"></script>
 	<script src="js/MainMenu.js"></script>
@@ -13,6 +12,7 @@
 	<script src="js/StatusBar.js"></script>
 	<script src="js/Customer.js"></script>
 	<script src="js/Game.js"></script>
+	<script src="js/Server.js"></script>
 	<script src="js/GameManagerView.js"></script>
 	<script src="js/GameSandwichView.js"></script>
 	<script src="js/GameCoffeeView.js"></script>

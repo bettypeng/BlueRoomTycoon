@@ -26,6 +26,7 @@ var cashierLine = new Array();
 // BlueRoom.GameManagerView.prototype = {
 
     BlueRoom.Game.prototype.createManager = function () {
+        console.log("other: "+this);
         this.bmd = null;
         // points arrays - one for x and one for y
         this.points = {
@@ -205,10 +206,13 @@ var cashierLine = new Array();
     
         //BlueRoom.Game.prototype.update.call(this);
 
-    },
+    };
     
     BlueRoom.Game.prototype.newCustomerReturned = function(customer){
         var currThis = this;
+        console.log(customer);
+        console.log(this.add);
+        console.log(this);
         customer.sprite = this.add.sprite(400, 600, 'customer');
         this.customer = this.customer.sprite;
         customerGroup.add(this.customer);

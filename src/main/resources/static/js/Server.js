@@ -1,4 +1,3 @@
-var frontSandwichCustomer = null;
 
 function getFinanaces() {
     
@@ -28,8 +27,9 @@ function getCustomer() {
         var newCust = responseObject.customer;
         
         var cust = new Customer(newCust.id, newCust.station, newCust.order);
+        console.log(cust);
         
-        game.newCustomerReturned(cust);
+        BlueRoom.Game.prototype.newCustomerReturned(cust);
     
         //from order:
         //order.ingreds = list of ingredients - for each one do ing.type to get name of ingredient
