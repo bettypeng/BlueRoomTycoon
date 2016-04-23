@@ -34,6 +34,6 @@ public class Customer {
 
   @Override
   public String toString() {
-    return String.format("order: %s, station: %s, happiness: %f", order, station, happiness);
+    return String.format("id: %s, order: %s, station: %s, happiness: %f", id, order, station, happiness);
   }
 }

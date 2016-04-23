@@ -8,10 +8,14 @@ public class MoneyManager {
   private List<Double> profitsOverTime;
   private DayData currDay;
   private double money;
+  
+  // this will change
+  private static final double DAILY_EXPENSES = 200;
 
   public MoneyManager(double startMoney) {
     profitsOverTime = new ArrayList<>();
     money = startMoney;
+    currDay = new DayData();
   }
 
   public List<Double> getProfits() {
@@ -29,6 +33,15 @@ public class MoneyManager {
   
   public double getMoney() {
     return money;
+  }
+  
+  public void endDay() {
+    profitsOverTime.add(currDay.getTotalProfit());
+  }
+  
+  public void startDay() {
+    currDay = new DayData();
+    money -= DAILY_EXPENSES;
   }
 
 }

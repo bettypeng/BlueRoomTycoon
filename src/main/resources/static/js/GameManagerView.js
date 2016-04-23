@@ -215,6 +215,8 @@ var currThis = this;
         //BlueRoom.Game.prototype.update.call(this);
 
     };
+
+    // var currThis = BlueRoom.Game.prototype;
     
     BlueRoom.Game.prototype.newCustomerReturned = function(customer){
         // var currThis = this;

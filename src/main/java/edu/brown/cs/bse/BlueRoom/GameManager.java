@@ -90,5 +90,22 @@ public class GameManager {
   public Customer getCustomer(String id) {
     return customerMap.get(id);
   }
+  
+  public double getCurrentMoney() {
+    return manager.getMoney();
+  }
+  
+  public void startDay() {
+    manager.startDay();
+  }
+  
+  // returns the DayData for the day that's ending
+  public DayData endDay() {
+    DayData today = manager.getTodayInfo();
+    manager.endDay();
+    customers.clear();
+    customerMap.clear();
+    return today;
+  }
 
 }

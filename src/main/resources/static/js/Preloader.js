@@ -64,6 +64,8 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('lettuce', 'js/images/sandwich/lettuce.png');
 		this.load.image('onion', 'js/images/sandwich/onion.png');
 		this.load.image('tomato', 'js/images/sandwich/tomato.png');
+		
+		this.load.image('speechBubble', 'js/images/sandwich/speech_bubble.png');
 
 
 
