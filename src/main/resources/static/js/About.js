@@ -34,6 +34,7 @@ BlueRoom.About.prototype = {
 	
 	changeText: function () {
 	    abouttext.setText("How to make sandwiches: When in the sandwich view, you should see the first component of the customer’s order at the top of the screen in a speech bubble. Drag and drop this ingredient onto the cutting board illuminated at the right hand side of the screen. This should make the next ingredient show up in the speech bubble. Dragging a top bun onto your sandwich completes the order! You will make more money based on how well you make your sandwiches, so try to drop the ingredients right on the center!");
+		this.nextB.visible = false;
 	}
 
 };

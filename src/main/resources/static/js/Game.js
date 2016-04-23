@@ -111,7 +111,7 @@ BlueRoom.Game.prototype = {
     },
     
     addMoney: function(amt){
-        statusBar.money +=10;
+        statusBar.money += amt;
     },
 
     update: function () {

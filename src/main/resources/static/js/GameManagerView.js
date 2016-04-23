@@ -207,12 +207,14 @@ var cashierLine = new Array();
         //BlueRoom.Game.prototype.update.call(this);
 
     };
+
+    var currThis = BlueRoom.Game.prototype;
     
     BlueRoom.Game.prototype.newCustomerReturned = function(customer){
-        var currThis = this;
+        //var currThis = this;
         console.log(customer);
         console.log(this.add);
-        console.log(this);
+        console.log(currThis);
         customer.sprite = this.add.sprite(400, 600, 'customer');
         this.customer = this.customer.sprite;
         customerGroup.add(this.customer);

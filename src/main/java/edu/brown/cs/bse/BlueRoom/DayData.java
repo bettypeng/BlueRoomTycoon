@@ -66,5 +66,10 @@ public class DayData {
   public int getCoffeeCount() {
     return coffeeCount;
   }
+  
+  @Override
+  public String toString() {
+    return String.format("Today's profit: %.2f, number of purchases: %d", totalProfit, totalPurchases);
+  }
 
 }

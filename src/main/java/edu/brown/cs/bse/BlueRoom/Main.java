@@ -71,6 +71,14 @@ public class Main {
             customer.setHappiness(Math.random());
             System.out.println(manager.purchase(sand, customer));
             break;
+            
+          case "d":
+            System.out.println(manager.getDailyProfits());
+            break;
+            
+          case "m":
+            System.out.println(String.format("%.2f", manager.getCurrentMoney()));
+            break;
 
           default:
             List<SandwichIngredient> testList = Arrays.asList(new SandwichIngredient("turkey"), new SandwichIngredient("cheese"));
