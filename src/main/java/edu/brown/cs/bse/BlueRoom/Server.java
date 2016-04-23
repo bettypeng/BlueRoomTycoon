@@ -78,8 +78,8 @@ public class Server {
     // Setup Spark Routes
     Spark.get("/blueroom", new FrontHandler(), freeMarker);
     Spark.post("/purchase", new PurchaseHandler());
-    Spark.post("/finance", new FinanceHandler());
-    Spark.post("/endday", new EndDayHandler());
+//    Spark.post("/finance", new FinanceHandler());
+//    Spark.post("/endday", new EndDayHandler());
     Spark.post("/customer", new CustomerHandler());
     Spark.post("/newemployee", new NewEmployeeHandler());
     Spark.post("/employee", new EmployeeHandler());
@@ -188,43 +188,43 @@ public class Server {
    * @author srw
    *
    */
-  private class FinanceHandler implements Route {
-    @Override
-    public Object handle(final Request req, final Response res) {
-      QueryParamsMap qm = req.queryMap();
-
-      List<Double> profits = gameManager.getDailyProfits();
-
-
-      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
-          .put("profits", profits).build();
-
-      return GSON.toJson(variables);
-    }
-  }
-
-  /**
-   * Triggered at the end of the day in the game - returns to the front end
-   * the profits of the day and for the total game-play so far
-   * @author srw
-   *
-   */
-  private class EndDayHandler implements Route {
-    @Override
-    public Object handle(final Request req, final Response res) {
-      QueryParamsMap qm = req.queryMap();
-
-      List<Double> dailyProfits = gameManager.getDailyProfits();
-      List<Double> totalProfits = gameManager.getTotalProfits();
-
-
-      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
-          .put("dailyProfits", dailyProfits)
-          .put("totalProfits", totalProfits).build();
-
-      return GSON.toJson(variables);
-    }
-  }
+//  private class FinanceHandler implements Route {
+//    @Override
+//    public Object handle(final Request req, final Response res) {
+//      QueryParamsMap qm = req.queryMap();
+//
+//      List<Double> profits = gameManager.getDailyProfits();
+//
+//
+//      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+//          .put("profits", profits).build();
+//
+//      return GSON.toJson(variables);
+//    }
+//  }
+//
+//  /**
+//   * Triggered at the end of the day in the game - returns to the front end
+//   * the profits of the day and for the total game-play so far
+//   * @author srw
+//   *
+//   */
+//  private class EndDayHandler implements Route {
+//    @Override
+//    public Object handle(final Request req, final Response res) {
+//      QueryParamsMap qm = req.queryMap();
+//
+//      List<Double> dailyProfits = gameManager.getDailyProfits();
+//      List<Double> totalProfits = gameManager.getTotalProfits();
+//
+//
+//      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+//          .put("dailyProfits", dailyProfits)
+//          .put("totalProfits", totalProfits).build();
+//
+//      return GSON.toJson(variables);
+//    }
+//  }
 
   /**
    * Triggered on interval from front end to generate a customer with a unique
@@ -251,26 +251,26 @@ public class Server {
    * @author srw
    *
    */
-  private class NewEmployeeHandler implements Route {
-    @Override
-    public Object handle(final Request req, final Response res) {
-      QueryParamsMap qm = req.queryMap();
-
-      //this can be if we ever want different employees to have different traits
-//      String employeeName = qm.value("employee");
-
-      //sends the knowledge of the new employee to the game manager
-      gameManager.addEmployee();
-
-      List<String> results = new ArrayList<>();
-
-
-      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
-          .put("results", results).build();
-
-      return GSON.toJson(variables);
-    }
-  }
+//  private class NewEmployeeHandler implements Route {
+//    @Override
+//    public Object handle(final Request req, final Response res) {
+//      QueryParamsMap qm = req.queryMap();
+//
+//      //this can be if we ever want different employees to have different traits
+////      String employeeName = qm.value("employee");
+//
+//      //sends the knowledge of the new employee to the game manager
+//      gameManager.addEmployee();
+//
+//      List<String> results = new ArrayList<>();
+//
+//
+//      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+//          .put("results", results).build();
+//
+//      return GSON.toJson(variables);
+//    }
+//  }
 
   /**
    * Triggered when new customer gets to front of line

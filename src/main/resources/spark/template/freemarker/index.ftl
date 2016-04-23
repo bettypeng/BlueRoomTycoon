@@ -3,17 +3,18 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>Blue Room Tycoon</title>
-	<script src="phaser.min.js"></script>
-	<script src="Boot.js"></script>
-	<script src="Preloader.js"></script>
-	<script src="MainMenu.js"></script>
-	<script src="About.js"></script>
-	<script src="StatusBar.js"></script>
-	<script src="Game.js"></script>
-	<script src="GameManagerView.js"></script>
-	<script src="GameSandwichView.js"></script>
-	<script src="GameCoffeeView.js"></script>
-	<script src="GameBakeryView.js"></script>
+	<script src="js/phaser.min.js"></script>
+	<script src="js/jquery-2.1.1.js"></script>
+	<script src="js/Boot.js"></script>
+	<script src="js/Preloader.js"></script>
+	<script src="js/MainMenu.js"></script>
+	<script src="js/About.js"></script>
+	<script src="js/StatusBar.js"></script>
+	<script src="js/Game.js"></script>
+	<script src="js/GameManagerView.js"></script>
+	<script src="js/GameSandwichView.js"></script>
+	<script src="js/GameCoffeeView.js"></script>
+	<script src="js/GameBakeryView.js"></script>
 
 
 </head>
