@@ -249,7 +249,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
                 }
                 currSandwich.push(item.key);
                 currSandSprites.push(item);
-                currDelts[item.key] = Math.abs(item.x-firstX);
+                currDelts[item.key] = Math.abs((item.x-firstX)/100);
                 
                 if (currPlace == (currCustomer.order.ingreds.length-1)) {
                     currOrderElem.destroy();
