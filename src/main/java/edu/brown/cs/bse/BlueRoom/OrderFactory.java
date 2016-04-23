@@ -10,19 +10,19 @@ import edu.brown.cs.bse.elements.SandwichIngredient;
 public class OrderFactory {
 
   private static final String[] MEAT_NAMES = { "turkey", "roast beef", "ham",
-      "chicken salad", "salami", "prosciutto" };
+      /*"chicken salad", "salami", "prosciutto"*/ };
 
-  private static final String[] VEGGIE_NAMES = { "lettuce", "tomato", "spinach",
-      "spring mix", "onions", "cucumber", "none" };
+  private static final String[] VEGGIE_NAMES = { "lettuce", "tomato", "onions", "cucumber", /*"spinach",
+      "spring mix",*/ "none" };
 
   private static final String[] SAUCE_NAMES = { "mayo", "chipotle mayo",
       "mustard", "hummus", "goat cheese", "balsamic", "honey mustard" };
 
-  private static final String[] BREAD_NAMES = { "ciabatta", "french", "wheat", "sliced" };
+  private static final String[] BREAD_NAMES = { "wheat", /*"ciabatta", "french", "sliced"*/ };
 
   public static Sandwich getSandwichOrder() {
     List<SandwichIngredient> ingreds = new ArrayList<>();
-    ingreds.addAll(getSauces());
+    //ingreds.addAll(getSauces());
     ingreds.addAll(getMeats());
     ingreds.addAll(getCheese());
     ingreds.addAll(getVeggies());
