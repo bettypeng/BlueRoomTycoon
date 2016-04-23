@@ -98,7 +98,7 @@ public class Server {
     public ModelAndView handle(Request req, Response res) {
       Map<String, Object> variables =
           ImmutableMap.of("title", "Blue Room Tycoon");
-      return new ModelAndView(variables, "testing.ftl");
+      return new ModelAndView(variables, "index.html");
     }
   }
 
@@ -115,31 +115,34 @@ public class Server {
       System.out.println("purchasing");
 
       //this is the order that was made to compare the actual received item to
-      Customer customer = null;
-      System.out.println(qm.value("customer"));
-      try {
-        System.out.println(GSON.fromJson(qm.value("customer"), Customer.class));
-        customer = GSON.fromJson(qm.value("customer"), Customer.class);
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-      System.out.println("got customer");
-      System.out.println(customer);
-
+      String id = qm.value("id");
+      System.out.println(id);
+//      System.out.println(qm.value("customer"));
+//      try {
+//        System.out.println(GSON.fromJson(qm.value("customer"), Customer.class));
+//        customer = GSON.fromJson(qm.value("customer"), Customer.class);
+//      } catch (Exception e) {
+//        e.printStackTrace();
+//      }
+//      System.out.println("got customer");
+//      System.out.println(customer);
+//
       String type = qm.value("type");
-      System.out.println(type);
-
+//      System.out.println(type);
+//
       System.out.println(qm.value("ingredients"));
-      System.out.println(qm.value("map"));
+//      System.out.println(qm.value("map"));
 
       List<String> ingredients = GSON.fromJson(qm.value("ingredients"), List.class);
 
-      System.out.println(ingredients);
+      System.out.println(ingredients.get(0));
 
     //recieves what makes up the purchase in the form of a map which maps
       //each part of the purchase to how far it was from the center (sandwiches)
       //how far from well cooked it is (bakery good)
       Map<String, Double> ingMap = GSON.fromJson(qm.value("map"), Map.class);
+
+      System.out.println(ingMap.get("tomato"));
 
       FoodItem purchase;
 
@@ -165,6 +168,7 @@ public class Server {
         purchase = null;
         System.out.println("Not a sandwich - no other foods implemented yet");
       }
+      Customer customer = gameManager.getCustomer(id);
 
       // SHANNON: make sure you set the customer's happiness to the right level before passing in
       // or maybe the javascript side will have already given the right happiness?

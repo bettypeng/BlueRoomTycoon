@@ -53,7 +53,7 @@ public class GameManager {
       break;
     }
     customers.add(newCustomer);
-    customerMap.put(id,  newCustomer);
+    customerMap.put(id, newCustomer);
     return newCustomer;
   }
 

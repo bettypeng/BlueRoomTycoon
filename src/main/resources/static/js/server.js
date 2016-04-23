@@ -116,10 +116,13 @@ function purchase() {
     var ingMap = {tomato: 0.1, mustard: 0.1, ham: 0.1};
     var bread = "ciabatta";
 
+    console.log(customer);
 
-    var cust = JSON.stringify(customer);
-	var postParameters = {type: type, ingredients: ingredients, map: ingMap, customer: cust, bread: bread};
-    console.log(postParameters["customer"]);
+
+    var id = customer.id;
+    var ing = JSON.stringify(ingredients);
+    var iMap = JSON.stringify(ingMap);
+	var postParameters = {type: type, ingredients: ing, map: iMap, id: id, bread: bread};
 
     $.post("/purchase", postParameters, function(responseJSON){
 

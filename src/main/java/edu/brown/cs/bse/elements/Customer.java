@@ -1,5 +1,7 @@
 package edu.brown.cs.bse.elements;
 
+import edu.brown.cs.bse.elements.FoodItem;
+
 public class Customer {
 
   private FoodItem order;
