@@ -125,6 +125,7 @@ function purchase (type, ingredients, ingMap, bread, id, happiness) {
     var ing = JSON.stringify(ingredients);
     var iMap = JSON.stringify(ingMap);
     var happ = JSON.stringify(happiness);
+    console.log(bread);
 	var postParameters = {type: type, ingredients: ing, map: iMap, id: id, bread: bread, happiness: happ};
     
     $.post("/purchase", postParameters, function(responseJSON){
@@ -132,7 +133,7 @@ function purchase (type, ingredients, ingMap, bread, id, happiness) {
         var responseObject = JSON.parse(responseJSON);
         var moneyMade = responseObject.moneyMade;
         
-        game.addMoney(moneyMade);
+        BlueRoom.Game.prototype.addMoney(moneyMade);
         //have money that was made appear on screen and increment lower left money counter
     
     });

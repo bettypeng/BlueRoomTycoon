@@ -23,10 +23,11 @@ var left;
 var sandwichLine = new Array();
 var cashierLine = new Array();
 
+var currThis = this;
+
 // BlueRoom.GameManagerView.prototype = {
 
     BlueRoom.Game.prototype.createManager = function () {
-        console.log("other: "+this);
         this.bmd = null;
         // points arrays - one for x and one for y
         this.points = {
@@ -133,7 +134,7 @@ var cashierLine = new Array();
     BlueRoom.Game.prototype.toCashier= function(){
         if(sandwichLine.length>0){
             var curr= sandwichLine.shift();
-            var currCustomer = curr.sprite();
+            var currCustomer = curr.sprite;
             //currCustomer.destroy();
             numSandwich--;
             var xpos = this.cashierLinePos['x'][numCashier];
@@ -168,6 +169,9 @@ var cashierLine = new Array();
     
     BlueRoom.Game.prototype.toLeaveBlueRoom= function(){
         if(cashierLine.length>0 && cashierLine[0]!=null && !leaving){
+            var c = cashierLine[0];
+            console.log(c);
+            purchase("sandwich", c.ingredients, c.ingMap, "wheat", c.id, c.happiness);
             leaving = true;
             left = cashierLine.shift().sprite;
             numCashier--;
@@ -196,11 +200,15 @@ var cashierLine = new Array();
     BlueRoom.Game.prototype.managerUpdate= function () {
         // this just takes care of resetting
         // the timer so the movement repeats
+        currThis = this;
        
         if (this.timerStopped && numSandwich<15) {
             this.timerStopped = false;
             this.timer = this.game.time.create(true);
-            //this.customer = this.add.sprite(400, 600, 'customer');
+            // this.customer = this.add.sprite(400, 600, 'customer');
+            // console.log("in other func");
+            // console.log(this);
+            // console.log(this.add);
             getCustomer();
         }
     
@@ -209,17 +217,17 @@ var cashierLine = new Array();
     };
     
     BlueRoom.Game.prototype.newCustomerReturned = function(customer){
-        var currThis = this;
-        console.log(customer);
-        console.log(this.add);
-        console.log(this);
-        customer.sprite = this.add.sprite(400, 600, 'customer');
-        this.customer = this.customer.sprite;
-        customerGroup.add(this.customer);
+        // var currThis = this;
+        // console.log(customer);
+        // console.log(currThis.add);
+        // console.log(this);
+        customer.sprite = currThis.add.sprite(400, 600, 'customer');
+        currThis.customer = customer.sprite;
+        customerGroup.add(currThis.customer);
         numSandwich++;
-        this.drawPath();
-        this.customer.anchor.setTo(0.5, 0.5);
-        this.timer.loop(.001, function(){
+        currThis.drawPath();
+        currThis.customer.anchor.setTo(0.5, 0.5);
+        currThis.timer.loop(.001, function(){
             var posx = currThis.math.bezierInterpolation(currThis.points.x, currThis.i);
             var posy = currThis.math.bezierInterpolation(currThis.points.y, currThis.i);
             currThis.customer.x = posx;

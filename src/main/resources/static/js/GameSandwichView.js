@@ -231,13 +231,13 @@ BlueRoom.Game.prototype.createSandwichView= function () {
     // },
     
     BlueRoom.Game.prototype.orderElems= function () {
+        console.log("orderElems");
         var currThis = this;
         
-        if (currCustomer == null)  {
-            return;
-        }
-        
         window.setInterval(function() {
+            if (currCustomer == null)  {
+                return;
+            }
             
             if (collidedElem != null) {
                 var item = collidedElem;
@@ -251,7 +251,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
                 currSandSprites.push(item);
                 currDelts[item.key] = Math.abs(item.x-firstX);
                 
-                if (currPlace == (currCustomer.length-1)) {
+                if (currPlace == (currCustomer.order.ingreds.length-1)) {
                     for (var i=0; i<currSandSprites.length; i++) {
                         movableElements.remove(currSandSprites[i]);
                     }
@@ -296,6 +296,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         
         if (sandwichLine.length != 0 && currCustomer == null) {
             currCustomer = sandwichLine[0];
+            console.log(currCustomer);
         }
         
         if (currCustomer != null && currOrderElem == null) {
