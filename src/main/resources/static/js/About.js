@@ -20,7 +20,19 @@ BlueRoom.About.prototype = {
         this.nextB = this.add.button(870, 410, 'nextButton', this.changeText, this);
         var style = { font: "20px Comic Sans MS", fill: "#000000", wordWrap: true, wordWrapWidth: 1000, align: "left", backgroundColor: "#ffffff" };
 
-        abouttext = this.game.add.text(50, 100, "Blue Room Tycoon is a business strategy game centered around Brown University’s iconic Blue Room eatery. In the game, you start off with an empty Blue Room with a sandwich station, a cash register, and no employees. It’s your job to serve all of the customers by making them their sandwiches and checking them out at the cash register! The icons in the top left corner allow you to switch between the sandwich-making view, where you serve customers by following their sandwich orders, and the home/manager view, where you can view your establishment and its lines, and you can check customers out at the cash register by clicking the register.", style);
+        abouttext = this.game.add.text(50, 100, "Congratulations! You have just purchased Brown's beloved eatery, "+
+        	"the Blue Room. You begin with just a sandwich station and cash register at "+
+        	"the moment, but don't worry, business will soon be booming. With time you will be able to hire employees "+
+        	"to help you out, but for now you are the lone manager and worker of your eatery. All of Brown is depending on you to keep their "+
+        	"favorite eatery afloat. Good luck!", style);
+
+        // Blue Room Tycoon is a business strategy game centered around Brown University’s iconic Blue Room eatery. 
+        //In the game, you start off with an empty Blue Room with a sandwich station, a cash register, and no employees. 
+        //It’s your job to serve all of the customers by making them their sandwiches and checking them out at the cash
+        // register! The icons in the top left corner allow you to switch between the sandwich-making view, where you 
+        //serve customers by following their sandwich orders, and the home/manager view, where you can view your 
+        //establishment and its lines, and you can check customers out at the cash register by clicking the register.", 
+        //style);
 	},
 
 	update: function () {
@@ -33,7 +45,15 @@ BlueRoom.About.prototype = {
 	},
 	
 	changeText: function () {
-	    abouttext.setText("How to make sandwiches: When in the sandwich view, you should see the first component of the customer’s order at the top of the screen in a speech bubble. Drag and drop this ingredient onto the cutting board illuminated at the right hand side of the screen. This should make the next ingredient show up in the speech bubble. Dragging a top bun onto your sandwich completes the order! You will make more money based on how well you make your sandwiches, so try to drop the ingredients right on the center!");
+	    abouttext.setText("HOW TO PLAY: \n You have two views of the Blue Room: Manager and Sandwich. The "+
+	    	"icons in the top left corner allow you to switch between these views. Your job is to serve all the "+
+	    	"customers by making them their sandwiches and check them out at the cash register. \n Manager View:\n "+
+	    	"Once a customer receives their sandwich they will move over to the cash register. You must check them "+
+	    	"out by clicking on the dollar sign above the cash register. The money you recieved will increment your "+
+	    	"account balance in the lower left. \nSandwich View:\n When a customer is at the sandwich station his/her "+
+	    	"order will appear in the speech bubble bit by bit as you construct the sandwich. Just click and drag the "+
+	    	"correct ingredients over to the cutting board illuminated on the right thand side. The better you make "+
+	    	"your sandwich, the more money you make, so try to drop the ingredients right in the center.");
 		this.nextB.visible = false;
 	}
 
