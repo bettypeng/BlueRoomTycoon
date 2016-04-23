@@ -79,9 +79,9 @@ public class Sandwich extends FoodItem {
     //System.out.println(quality);
 
     // if quality is below a certain threshold, return 0
-    if (quality < .5) {
-      return 0;
-    }
+//    if (quality < .5) {
+//      return 0;
+//    }
     return quality;
   }
 

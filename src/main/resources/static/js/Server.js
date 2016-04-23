@@ -131,6 +131,8 @@ function purchase (type, ingredients, ingMap, bread, id, happiness) {
     
         var responseObject = JSON.parse(responseJSON);
         var moneyMade = responseObject.moneyMade;
+
+        console.log(moneyMade);
         
         BlueRoom.Game.prototype.addMoney(moneyMade);
         //have money that was made appear on screen and increment lower left money counter

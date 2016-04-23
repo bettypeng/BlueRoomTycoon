@@ -273,6 +273,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
                     // console.log("here");
                     currPlace++;
                     currOrderElem.destroy();
+                    sandwichViewElements.push(currThis.add.sprite(160, -30, "speechBubble"));
                     currOrderElem = currThis.add.sprite(200, 50, currCustomer.order.ingreds[currPlace].type);
                     sandwichViewElements.push(currOrderElem);
 
@@ -300,6 +301,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         
         if (currCustomer != null && currOrderElem == null) {
             var f = currCustomer.order.ingreds[0].type;
+            sandwichViewElements.push(this.add.sprite(160, -30, "speechBubble"));
             currOrderElem = this.add.sprite(200, 50, f);
             sandwichViewElements.push(currOrderElem);
         }
