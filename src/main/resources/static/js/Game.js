@@ -157,7 +157,7 @@ BlueRoom.Game.prototype = {
                 }
                 statusBar.minute = 0;
             }
-        }, 100);
+        }, 300);
     },
 
     quitGame: function (pointer) {
