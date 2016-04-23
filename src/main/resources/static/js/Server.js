@@ -27,9 +27,7 @@ function getCustomer() {
         var newCust = responseObject.customer;
         
         var cust = new Customer(newCust.id, newCust.station, newCust.order);
-        console.log(cust);
         
-        console.log(this);
         BlueRoom.Game.prototype.newCustomerReturned(cust);
     
         //from order:
