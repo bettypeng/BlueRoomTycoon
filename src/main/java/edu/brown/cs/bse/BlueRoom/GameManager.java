@@ -74,12 +74,12 @@ public class GameManager {
     return manager.getProfits();
   }
 
-  public void addEmployee() {
-
+  public void addEmployee(Employee emp) {
+    employees.add(emp);
   }
 
   public void addStation(String stationName) {
-
+    availableStations.add(stationName);
   }
 
   /**
