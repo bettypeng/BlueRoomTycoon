@@ -200,7 +200,7 @@ var cashierLine = new Array();
             this.timerStopped = false;
             this.timer = this.game.time.create(true);
             //this.customer = this.add.sprite(400, 600, 'customer');
-            this.getCustomer();
+            getCustomer();
         }
     
         //BlueRoom.Game.prototype.update.call(this);

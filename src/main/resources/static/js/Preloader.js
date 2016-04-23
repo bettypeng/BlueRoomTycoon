@@ -22,47 +22,47 @@ BlueRoom.Preloader.prototype = {
 		//	Load the rest of the assets our game needs.
 
 		// MAINMENU
-		this.load.image('titlepage', 'images/title_page.png');
-		this.load.image('playButton', 'images/start_game.png');
-		this.load.image('aboutButton', 'images/about_game.png');
+		this.load.image('titlepage', 'js/images/title_page.png');
+		this.load.image('playButton', 'js/images/start_game.png');
+		this.load.image('aboutButton', 'js/images/about_game.png');
 		
 		// ABOUT
-		this.load.image('nextButton', 'images/next.png');
-		this.load.image('smallStart', 'images/small_start.png');
+		this.load.image('nextButton', 'js/images/next.png');
+		this.load.image('smallStart', 'js/images/small_start.png');
 		
 		// BUTTONS
-		this.load.image('managerButton', 'images/game_manager_button.png');
-		this.load.image('sandwichButton', 'images/sandwich_view_button.png');
-		this.load.image('coffeeButton', 'images/coffee_view_button.png');
-		this.load.image('bakeryButton', 'images/bakery_view_button.png');
+		this.load.image('managerButton', 'js/images/game_manager_button.png');
+		this.load.image('sandwichButton', 'js/images/sandwich_view_button.png');
+		this.load.image('coffeeButton', 'js/images/coffee_view_button.png');
+		this.load.image('bakeryButton', 'js/images/bakery_view_button.png');
 		
 		//STATUS BAR
-		this.load.image('status_bar', 'images/status_bar.png');
+		this.load.image('status_bar', 'js/images/status_bar.png');
 
 		 
 		// BACKGROUNDS
-		this.load.image('whiteBg', 'images/bg.png');
-		this.load.image('managerBg', 'images/manager_bg.png');
-		this.load.image('sandwichBg', 'images/sandwich_bg.png');
-		this.load.image('sandwichBg2', 'images/sandwich_bg_2.png');
+		this.load.image('whiteBg', 'js/images/bg.png');
+		this.load.image('managerBg', 'js/images/manager_bg.png');
+		this.load.image('sandwichBg', 'js/images/sandwich_bg.png');
+		this.load.image('sandwichBg2', 'js/images/sandwich_bg_2.png');
 
 		// MANAGER VIEW
-		this.load.image('customer', 'images/customer.png');
-		this.load.image('dollar', 'images/dollar.png');
+		this.load.image('customer', 'js/images/customer.png');
+		this.load.image('dollar', 'js/images/dollar.png');
 
 		
 		//SANDWICH LINE
-		this.load.image('dropzone', 'images/sandwich/dropzone.png');
-		this.load.image('top_bun', 'images/sandwich/top_bun.png');
-		this.load.image('bottom_bun', 'images/sandwich/bottom_bun.png');
-		this.load.image('roast_beef', 'images/sandwich/roast_beef.png');
-		this.load.image('turkey', 'images/sandwich/turkey.png');
-		this.load.image('ham', 'images/sandwich/ham.png');
-		this.load.image('cheese', 'images/sandwich/cheese.png');
-		this.load.image('cucumber', 'images/sandwich/cucumber.png');
-		this.load.image('lettuce', 'images/sandwich/lettuce.png');
-		this.load.image('onion', 'images/sandwich/onion.png');
-		this.load.image('tomato', 'images/sandwich/tomato.png');
+		this.load.image('dropzone', 'js/images/sandwich/dropzone.png');
+		this.load.image('top_bun', 'js/images/sandwich/top_bun.png');
+		this.load.image('bottom_bun', 'js/images/sandwich/bottom_bun.png');
+		this.load.image('roast_beef', 'js/images/sandwich/roast_beef.png');
+		this.load.image('turkey', 'js/images/sandwich/turkey.png');
+		this.load.image('ham', 'js/images/sandwich/ham.png');
+		this.load.image('cheese', 'js/images/sandwich/cheese.png');
+		this.load.image('cucumber', 'js/images/sandwich/cucumber.png');
+		this.load.image('lettuce', 'js/images/sandwich/lettuce.png');
+		this.load.image('onion', 'js/images/sandwich/onion.png');
+		this.load.image('tomato', 'js/images/sandwich/tomato.png');
 
 
 

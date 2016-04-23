@@ -81,7 +81,7 @@ public class Server {
 //    Spark.post("/finance", new FinanceHandler());
 //    Spark.post("/endday", new EndDayHandler());
     Spark.post("/customer", new CustomerHandler());
-    Spark.post("/newemployee", new NewEmployeeHandler());
+//    Spark.post("/newemployee", new NewEmployeeHandler());
     Spark.post("/employee", new EmployeeHandler());
     Spark.post("/newstation", new NewStationHandler());
     Spark.post("/line", new LineHandler());
@@ -98,7 +98,7 @@ public class Server {
     public ModelAndView handle(Request req, Response res) {
       Map<String, Object> variables =
           ImmutableMap.of("title", "Blue Room Tycoon");
-      return new ModelAndView(variables, "index.html");
+      return new ModelAndView(variables, "index.ftl");
     }
   }
 
