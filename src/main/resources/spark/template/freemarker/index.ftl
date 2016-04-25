@@ -9,9 +9,10 @@
 	<script src="js/Preloader.js"></script>
 	<script src="js/MainMenu.js"></script>
 	<script src="js/About.js"></script>
+
+	<script src="js/Game.js"></script>
 	<script src="js/StatusBar.js"></script>
 	<script src="js/Customer.js"></script>
-	<script src="js/Game.js"></script>
 	<script src="js/Server.js"></script>
 	<script src="js/GameManagerView.js"></script>
 	<script src="js/GameSandwichView.js"></script>

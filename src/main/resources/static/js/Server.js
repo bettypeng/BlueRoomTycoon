@@ -15,7 +15,7 @@ function getFinanaces() {
     });
 }
 
-function getCustomer() {
+function getCustomer(game) {
     // if (numSandwich <= 0) {
     //     return;
     // }

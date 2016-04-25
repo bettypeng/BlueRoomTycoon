@@ -33,8 +33,8 @@ BlueRoom.Boot.prototype = {
     preload: function () {
 
         // Load the assets required for preloader (background and a loading bar)
-        this.load.image('preloaderBackground', 'js/images/preloader_background.jpeg');
-        this.load.image('preloaderBar', 'js/images/preloader_bar.png');
+        this.load.image('preloaderBackground', 'images/preloader_background.jpeg');
+        this.load.image('preloaderBar', 'images/preloader_bar.png');
 
     },
 

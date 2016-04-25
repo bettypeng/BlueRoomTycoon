@@ -223,12 +223,11 @@ var currThis = this;
         // console.log(customer);
         // console.log(currThis.add);
         // console.log(this);
-        customer.sprite = currThis.add.sprite(400, 600, 'customer');
         currThis.customer = customer.sprite;
         customerGroup.add(currThis.customer);
         numSandwich++;
         currThis.drawPath();
-        currThis.customer.anchor.setTo(0.5, 0.5);
+        //currThis.customer.anchor.setTo(0.5, 0.5);
         currThis.timer.loop(.001, function(){
             var posx = currThis.math.bezierInterpolation(currThis.points.x, currThis.i);
             var posy = currThis.math.bezierInterpolation(currThis.points.y, currThis.i);
