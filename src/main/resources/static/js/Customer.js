@@ -1,9 +1,9 @@
 var currThis = this;
 
-
 function Customer(id, station, order){
     this.id = id;
     this.sprite = currThis.add.group();
+
     var cust = currThis.game.add.sprite(0, 5, 'customer');
     cust.anchor.setTo(0.5, 0.5);
     this.sprite.add(cust);
@@ -13,7 +13,6 @@ function Customer(id, station, order){
 	this.bar = currThis.add.bitmapData(30,2);
     var bar = currThis.game.add.sprite(0, -60, this.bar);
     bar.anchor.setTo(0.5, 0.5);
-
     this.sprite.add(bar);
 
     this.station = station;
@@ -26,6 +25,29 @@ function Customer(id, station, order){
 
 
 Customer.prototype = {
+
+    // setUpInteractions =function(sprite){
+    //     sprite.events.onInputOver.add(this.onOver, this);
+    //     sprite.events.onInputOut.add(this.onOut, this);
+    //     sprite.events.onDragStart.add(this.onDragStart, this);
+    //     sprite.events.onDragStop.add(this.onDragStop, this);
+    // };
+
+    flashDollar: function(){
+        var sign = currThis.add.sprite(0, -80, 'dollarSign');
+        sign.anchor.setTo(0.5, 0.5);
+        this.sprite.add(sign);
+        var counter = 0;
+        var timer = setInterval(function(){
+            if(counter%2 == 0){
+                sign.loadTexture('dollarSign');
+            }
+            else{
+                sign.loadTexture('dollarSignDark');
+            }
+            counter++;
+        }, 100);
+    },
 
    	createBar : function(){
         var mygame = this;

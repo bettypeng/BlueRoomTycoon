@@ -50,6 +50,10 @@ BlueRoom.Preloader.prototype = {
 		// MANAGER VIEW
 		this.load.image('customer', 'images/customer.png');
 		this.load.image('dollar', 'images/dollar.png');
+		this.load.image('dollarSign', 'images/dollar_sign.png');
+		this.load.image('dollarSignDark', 'images/dollar_sign_dark.png');
+
+
 
 		
 		//SANDWICH LINE

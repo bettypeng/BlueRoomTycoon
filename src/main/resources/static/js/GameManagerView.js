@@ -38,7 +38,7 @@ var currThis = this;
         this.cashierLinePos = {'x': new Array(), 'y':new Array()};
         // BlueRoom.Game.prototype.create.call(this);
         this.add.sprite(0, 0, 'managerBg');
-        this.cashierButton = this.add.button(300, 400, 'dollar', this.toLeaveBlueRoom, this);
+        this.cashierButton = this.add.button(300, 400, 'dollar', this.cashCustomerOut, this);
         var smallstyle = { font: "10px Arial", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "center" };
         this.game.add.text(305, 465, "CLICK TO\nCASH OUT!", smallstyle);
         
@@ -137,16 +137,18 @@ var currThis = this;
             var currCustomer = curr.sprite;
             //currCustomer.destroy();
             numSandwich--;
-            var xpos = this.cashierLinePos['x'][numCashier];
-            var ypos = this.cashierLinePos['y'][numCashier];
+            // var xpos = this.cashierLinePos['x'][numCashier];
+            // var ypos = this.cashierLinePos['y'][numCashier];
+            var xpos = this.game.rnd.integerInRange(300, 700);
+            var ypos = this.game.rnd.integerInRange(300, 500);
             var tween = this.add.tween(currCustomer).to( { x: xpos, y: ypos }, 5000, null, true);
-            tween.onComplete.add(onCashierMoveComplete, this);
-            numCashier++;
+            // tween.onComplete.add(onCashierMoveComplete, this);
+            // numCashier++;
             this.shiftFirstInLine(sandwichLine, this.sandwichLinePos);
-            
-            function onCashierMoveComplete(){
-                cashierLine.push(curr);
-            }
+            curr.flashDollar();
+            // function onCashierMoveComplete(){
+            //     cashierLine.push(curr);
+            // }
            // cashierLine.push(currCustomer);
         }
     };
@@ -167,7 +169,7 @@ var currThis = this;
         }
     };
     
-    BlueRoom.Game.prototype.toLeaveBlueRoom= function(){
+    BlueRoom.Game.prototype.cashCustomerOut= function(){
         if(cashierLine.length>0 && cashierLine[0]!=null && !leaving){
             var c = cashierLine[0];
             console.log(c);
