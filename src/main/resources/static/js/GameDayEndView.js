@@ -30,8 +30,18 @@ BlueRoom.Game.prototype.createDayEndView= function () {
 
 
 	dayEndViewElements.push(title);
+	dayEndViewElements.push(today);
 	dayEndViewElements.push(tips);
-
+		dayEndViewElements.push(revenue);
+	dayEndViewElements.push(expenses);
+	dayEndViewElements.push(profit);
+	dayEndViewElements.push(total);
+dayEndViewElements.push(ttips);
+		dayEndViewElements.push(trevenue);
+	dayEndViewElements.push(texpenses);
+	dayEndViewElements.push(tprofit);
+dayEndViewElements.push(upgrade);
+		
 
 	managerView = false;
 	sandwichView = false;
