@@ -42,8 +42,10 @@ BlueRoom.Preloader.prototype = {
 
 		 
 		// BACKGROUNDS
-		this.load.image('whiteBg', 'images/bg.png');
-		this.load.image('managerBg', 'images/manager_bg.png');
+		this.load.image('whiteBg', 'images/white.png');
+		this.load.image('managerBg', 'images/manager_view.png');
+		this.load.image('sandwichStation', 'images/sandwich_station.png');
+
 		this.load.image('sandwichBg', 'images/sandwich_bg.png');
 		this.load.image('sandwichBg2', 'images/sandwich_bg_2.png');
 

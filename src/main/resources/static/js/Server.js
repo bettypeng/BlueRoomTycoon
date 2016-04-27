@@ -112,7 +112,7 @@ function employeePurchase (type, employee, customer) {
     
 }
     
-function purchase (type, ingredients, ingMap, bread, id, happiness) {
+function purchase (type, ingredients, ingMap, bread, id, happiness, paid) {
     //bread will be null if the type is not sandwich
     // var type = "sandwich";
     // var ingredients = ["tomato", "mustard", "ham"];
@@ -133,8 +133,12 @@ function purchase (type, ingredients, ingMap, bread, id, happiness) {
         var moneyMade = responseObject.moneyMade;
 
         console.log(moneyMade);
-        
-        BlueRoom.Game.prototype.addMoney(moneyMade);
+        if (paid){
+            BlueRoom.Game.prototype.addMoney(moneyMade);
+        }
+        else{
+            BlueRoom.Game.prototype.loseMoney(moneyMade);
+        }
         //have money that was made appear on screen and increment lower left money counter
     
     });

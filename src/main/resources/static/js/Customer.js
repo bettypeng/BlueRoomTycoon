@@ -1,19 +1,21 @@
-var currThis = this;
+var sign;
+//var currThis = this;
 
 function Customer(id, station, order){
     this.id = id;
-    this.sprite = currThis.add.group();
+    this.sprite = currThis.game.add.group();
 
     var cust = currThis.game.add.sprite(0, 5, 'customer');
+    this.cust = cust;
     cust.anchor.setTo(0.5, 0.5);
     this.sprite.add(cust);
 
 	this.barProgress = 30;
 	//this.bar = this.game.add.bitmapData(30, 2);
 	this.bar = currThis.add.bitmapData(30,2);
-    var bar = currThis.game.add.sprite(0, -60, this.bar);
-    bar.anchor.setTo(0.5, 0.5);
-    this.sprite.add(bar);
+    this.barSprite = currThis.game.add.sprite(0, -60, this.bar);
+    this.barSprite.anchor.setTo(0.5, 0.5);
+    this.sprite.add(this.barSprite);
 
     this.station = station;
     this.order = order;
@@ -21,20 +23,75 @@ function Customer(id, station, order){
     this.ingredients = null;
     this.ingMap = null;
     this.createBar();
+
+    this.inLine = true;
+
 }
 
 
 Customer.prototype = {
 
-    // setUpInteractions =function(sprite){
-    //     sprite.events.onInputOver.add(this.onOver, this);
-    //     sprite.events.onInputOut.add(this.onOut, this);
-    //     sprite.events.onDragStart.add(this.onDragStart, this);
-    //     sprite.events.onDragStop.add(this.onDragStop, this);
-    // };
+    setUpInteractions:function(){
+        this.cust.inputEnabled = true;
+        this.cust.input.enableDrag();
+        // this.cust.draggable = false;
+        this.cust.events.onInputOver.add(this.onOver, this);
+        this.cust.events.onInputOut.add(this.onOut, this);
+        this.cust.events.onDragStart.add(this.onDragStart, this);
+        this.cust.events.onDragUpdate.add(this.onDragUpdate, this);
+        this.cust.events.onDragStop.add(this.onDragStop, this);
+    },
+
+    onOver: function(sprite, pointer) {
+        sprite.tint = 0x00cc00;
+    
+    },
+    
+    onOut: function(sprite, pointer) {
+        sprite.tint = 0xffffff;
+    },
+    
+    onDragStart : function(sprite, pointer) {
+        this.cust.moves = false;
+        dragPosition.set(sprite.x, sprite.y);
+        this.hideDollar();
+        this.barSprite.visible = false;
+    },
+
+    onDragUpdate: function(sprite, pointer){
+    },
+    
+    onDragStop: function(sprite, pointer) {
+        this.barSprite.visible = true;
+        this.sprite.x = pointer.x;
+        this.sprite.y = pointer.y; 
+        this.cust.x = 0;
+        this.cust.y = 5;    
+
+    
+        // if (!sprite.overlap(dropZone) || sprite.overlap(platform))
+        // {
+        //     this.add.tween(this.sprite).to( { x: dragPosition.x, y: dragPosition.y }, 500, "Back.easeOut", true);
+        // }
+        if(sprite.overlap(currThis.cashier)){
+            console.log("HELLO");
+            sprite.input.draggable = false;
+            //this.renewTopping(curr.x, curr.y, curr.key);
+            currThis.cashCustomerOut(this);
+        }
+        else{
+                    sign.visible = true;
+        }
+    
+    },
+
+    hideDollar: function(){
+        // this.sprite.remove(sign);
+        sign.visible = false;
+    },
 
     flashDollar: function(){
-        var sign = currThis.add.sprite(0, -80, 'dollarSign');
+        sign = currThis.add.sprite(0, -80, 'dollarSign');
         sign.anchor.setTo(0.5, 0.5);
         this.sprite.add(sign);
         var counter = 0;
@@ -51,13 +108,17 @@ Customer.prototype = {
 
    	createBar : function(){
         var mygame = this;
-    	var timer = setInterval(function(){
-      		mygame.barProgress-=0.1;
+    	this.barTimer = setInterval(function(){
+            if(managerView){
+          		mygame.barProgress-=0.1;
+            }
       	}, 100);
 
         var mygame = this;
-        var mytimer = setInterval(function(){
-          	mygame.myupdate();
+        this.myTimer = setInterval(function(){
+            if(managerView){
+                mygame.myupdate();
+            }
         }, 10);
 	},
 
@@ -75,12 +136,30 @@ Customer.prototype = {
         else {
             this.bar.context.fillStyle = '#0f0';
         }
+
+        if(this.barProgress <= 0){
+            this.leaveBlueRoom();
+            clearInterval(this.barTimer);
+            clearInterval(this.myTimer);
+        }
         
         // draw the bar
         this.bar.context.fillRect(0, 0, this.barProgress, 8);
         
         // important - without this line, the context will never be updated on the GPU when using webGL
         this.bar.dirty = true;
+    },
+
+    leaveBlueRoom: function(){
+        if(this.ingredients!=null){
+            currThis.steal(this);
+            this.cust.tint = 0xff7777;
+            console.log("STEAL");
+        }
+        else{
+            currThis.abandonLine(this);
+            console.log("ABANDON");
+        }
     }
 
 };

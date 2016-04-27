@@ -19,7 +19,7 @@ var customerGroup;
 var numSandwich;
 var numCashier;
 var leaving;
-var left;
+//var left;
 var sandwichLine = new Array();
 var cashierLine = new Array();
 
@@ -38,9 +38,10 @@ var currThis = this;
         this.cashierLinePos = {'x': new Array(), 'y':new Array()};
         // BlueRoom.Game.prototype.create.call(this);
         this.add.sprite(0, 0, 'managerBg');
-        this.cashierButton = this.add.button(300, 400, 'dollar', this.cashCustomerOut, this);
+        this.add.sprite(652, 146, 'sandwichStation');
+        this.cashier = this.add.sprite(300, 500, 'dollar');
         var smallstyle = { font: "10px Arial", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "center" };
-        this.game.add.text(305, 465, "CLICK TO\nCASH OUT!", smallstyle);
+        this.game.add.text(305, 565, "DRAG HERE TO\nCASH OUT!", smallstyle);
         
         var style = { font: "30px Arial", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "center" };
         this.game.add.text(682, 190, "SANDWICHES", style);
@@ -121,19 +122,49 @@ var currThis = this;
                 // if(counter%15 ==0){
                 //     myGame.toLeaveBlueRoom();
                 // }
-                myGame.moveLineUp(sandwichLine, myGame.sandwichLinePos, 4000);
-                myGame.moveLineUp(cashierLine, myGame.cashierLinePos, 3000);
+                if(!leaving){
+                    myGame.moveLineUp(sandwichLine, myGame.sandwichLinePos, 5000);
+                }
+                //myGame.moveLineUp(cashierLine, myGame.cashierLinePos, 3000);
 
             //}
            
-        }, 1000);
+        }, 100);
 
         
     };
     
+    BlueRoom.Game.prototype.abandonLine = function(customer){
+        var myGame = this;
+        leaving = true;
+        //var outer = this;
+        var c = customer;
+        var curr= sandwichLine.shift();
+        c.inLine = false;
+        var currCustomer = c.sprite;
+        //left= currCustomer;
+        numSandwich--;
+        var tween = this.add.tween(currCustomer).to( { x: 450, y: 700 }, 2000, null, true);
+        
+        tween.onComplete.add(onLeaveMoveComplete, this);
+        // function onLeft(){
+        //     //outer.shiftFirstInLine(sandwichLine, this.sandwichLinePos);
+        //     outer.onLeaveMoveComplete();
+        // }
+
+         function onLeaveMoveComplete(){
+                customer.sprite.visible = false;
+                leaving = false;
+            }
+        
+        //c = null;
+
+    }
+
     BlueRoom.Game.prototype.toCashier= function(){
         if(sandwichLine.length>0){
             var curr= sandwichLine.shift();
+            curr.inLine = false;
             var currCustomer = curr.sprite;
             //currCustomer.destroy();
             numSandwich--;
@@ -142,48 +173,85 @@ var currThis = this;
             var xpos = this.game.rnd.integerInRange(300, 700);
             var ypos = this.game.rnd.integerInRange(300, 500);
             var tween = this.add.tween(currCustomer).to( { x: xpos, y: ypos }, 5000, null, true);
-            // tween.onComplete.add(onCashierMoveComplete, this);
+            tween.onComplete.add(onCashierMoveComplete, this);
             // numCashier++;
-            this.shiftFirstInLine(sandwichLine, this.sandwichLinePos);
-            curr.flashDollar();
-            // function onCashierMoveComplete(){
+
+            
+            function onCashierMoveComplete(){
             //     cashierLine.push(curr);
-            // }
+                //this.shiftFirstInLine(sandwichLine, this.sandwichLinePos);
+                //this.moveLineUp(sandwichLine, this.sandwichLinePos, 5000);
+                curr.flashDollar();
+                curr.setUpInteractions();
+            }
            // cashierLine.push(currCustomer);
         }
     };
     
-    BlueRoom.Game.prototype.onLeaveMoveComplete= function(){
-        //this.shiftFirstInLine(sandwichLine, this.sandwichLinePos);
-        leaving = false;
-        left.destroy();
-    };
+    // BlueRoom.Game.prototype.onLeaveMoveComplete= function(){
+    //     //this.shiftFirstInLine(sandwichLine, this.sandwichLinePos);
+    //     leaving = false;
+    //     left.visible = false;
+    // };
     
     
     
-    BlueRoom.Game.prototype.shiftFirstInLine= function(line, linePos){
-        if(line[0]!=null){
-            var xposy = linePos['x'][0];
-            var yposy = linePos['y'][0];
-            this.add.tween(line[0].sprite).to( { x: xposy, y: yposy }, 4000, "Back.easeOut", true);
-        }
-    };
+    // BlueRoom.Game.prototype.shiftFirstInLine= function(line, linePos){
+    //     if(line[0]!=null){
+    //         var xposy = linePos['x'][0];
+    //         var yposy = linePos['y'][0];
+    //         this.add.tween(line[0].sprite).to( { x: xposy, y: yposy }, 4000, "Back.easeOut", true);
+    //     }
+    // };
     
-    BlueRoom.Game.prototype.cashCustomerOut= function(){
-        if(cashierLine.length>0 && cashierLine[0]!=null && !leaving){
-            var c = cashierLine[0];
+    BlueRoom.Game.prototype.cashCustomerOut= function(customer){
+        // if(cashierLine.length>0 && cashierLine[0]!=null && !leaving){
+            // var c = cashierLine[0];
+            var c = customer;
             console.log(c);
-            purchase("sandwich", c.ingredients, c.ingMap, "wheat", c.id, c.happiness);
+            purchase("sandwich", c.ingredients, c.ingMap, "wheat", c.id, c.happiness, true);
             leaving = true;
-            left = cashierLine.shift().sprite;
+            //left = cashierLine.shift().sprite;
+            // left = customer.sprite;
             numCashier--;
-            var tween = this.add.tween(left).to( { x: 450, y: 700 }, 1000, null, true);
-            tween.onComplete.add(this.onLeaveMoveComplete, this);
+            var tween = this.add.tween(customer.sprite).to( { x: 450, y: 700 }, 1000, null, true);
+            tween.onComplete.add(onLeaveMoveComplete, this);
+            function onLeaveMoveComplete(){
+                customer.sprite.visible = false;
+                leaving = false;
+            }
+            //tween.onComplete.add(done, this);
+            // function done(){
+            //     c = null;
+            // }
             //BlueRoom.Game.prototype.addMoney.call(this);
-            this.shiftFirstInLine(cashierLine, this.cashierLinePos);
-        }
+            //this.shiftFirstInLine(cashierLine, this.cashierLinePos);
+        // }
 
     };
+
+    BlueRoom.Game.prototype.steal = function(customer){
+        var c = customer;
+        console.log(c);
+        purchase("sandwich", c.ingredients, c.ingMap, "wheat", c.id, c.happiness, false);
+        leaving = true;
+        //left = cashierLine.shift().sprite;
+        //left = customer.sprite;
+        numCashier--;
+        var tween = this.add.tween(customer.sprite).to( { x: 450, y: 700 }, 1000, null, true);
+        tween.onComplete.add(onLeaveMoveComplete, this);
+         function onLeaveMoveComplete(){
+                customer.sprite.visible = false;
+                leaving = false;
+            }
+        //tween.onComplete.add(done, this);
+        // function done(){
+        //     c = null;
+        // }
+        //BlueRoom.Game.prototype.addMoney.call(this);
+        //this.shiftFirstInLine(cashierLine, this.cashierLinePos);
+    // }
+    }
     
     BlueRoom.Game.prototype.moveLineUp=function(line, linePos, speed){
         for(var i = 0; i< line.length; i++){

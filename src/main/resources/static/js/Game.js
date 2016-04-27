@@ -26,6 +26,7 @@ BlueRoom.Game = function (game) {
 var managerView = true;
 var sandwichView = false;
 
+var gameTimer;
 var gamegroup;
 var textgroup;
 var moneytext;
@@ -35,6 +36,9 @@ var ampmtext;
 
 var dayCounter = 0;
 var twelveCounter = 0;
+
+var MANAGERTIMEINTERVAL = 500;
+var SANDWICHTIMEINTERVAL = 1000;
 
 BlueRoom.Game.prototype = {
 
@@ -78,7 +82,8 @@ BlueRoom.Game.prototype = {
             item.anchor.set(0.5);
         });
         
-        this.managerTime();
+        this.setTimer(MANAGERTIMEINTERVAL);
+        this.managerButton.alpha = 0.5;
       
         this.createManager();
         this.createSandwichView();
@@ -89,12 +94,19 @@ BlueRoom.Game.prototype = {
 		    managerView = true;
 		    sandwichView = false;
 		    mygame.hideSandwichView();
+            this.managerButton.alpha = 0.5;
+            this.sandwichButton.alpha = 1;
+
+            this.setTimer(MANAGERTIMEINTERVAL);
     	};
     	
     	function goToSandwichView(pointer) {
     	    sandwichView = true;
     	    managerView = false;
     	    mygame.showSandwichView();
+            this.sandwichButton.alpha = 0.5;
+            this.managerButton.alpha = 1;
+            this.setTimer(SANDWICHTIMEINTERVAL);
     	};
     	
     	function goToCoffeeView(pointer) {
@@ -111,6 +123,10 @@ BlueRoom.Game.prototype = {
     
     addMoney: function(amt){
         statusBar.money += amt;
+    },
+
+    loseMoney: function(amt){
+        statusBar.money -= amt;
     },
 
     update: function () {
@@ -137,8 +153,10 @@ BlueRoom.Game.prototype = {
         }
     },
     
-    managerTime: function(){
-        window.setInterval(function(){
+
+    setTimer: function(inc){
+        clearInterval(gameTimer);
+        gameTimer = setInterval(function(){
             if(statusBar.minute < 59){
                 statusBar.minute+=1;
             } else{
@@ -156,7 +174,7 @@ BlueRoom.Game.prototype = {
                 }
                 statusBar.minute = 0;
             }
-        }, 300);
+        }, inc);
     },
 
     quitGame: function (pointer) {
