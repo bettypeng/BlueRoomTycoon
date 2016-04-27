@@ -37,7 +37,7 @@ var ampmtext;
 var dayCounter = 0;
 var twelveCounter = 0;
 
-var MANAGERTIMEINTERVAL = 5;
+var MANAGERTIMEINTERVAL = 500;
 var SANDWICHTIMEINTERVAL = 1000;
 
 BlueRoom.Game.prototype = {
