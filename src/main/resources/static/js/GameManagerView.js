@@ -142,6 +142,7 @@ var currThis = this;
     
     BlueRoom.Game.prototype.abandonLine = function(customer){
         var myGame = this;
+        myGame.deleteCurrSandwich(customer);
         leaving = true;
         //var outer = this;
         var c = customer;
