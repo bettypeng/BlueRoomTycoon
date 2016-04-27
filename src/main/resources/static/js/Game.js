@@ -37,7 +37,7 @@ var ampmtext;
 var dayCounter = 0;
 var twelveCounter = 0;
 
-var MANAGERTIMEINTERVAL = 500;
+var MANAGERTIMEINTERVAL = 10;
 var SANDWICHTIMEINTERVAL = 1000;
 
 BlueRoom.Game.prototype = {
@@ -66,7 +66,7 @@ BlueRoom.Game.prototype = {
         var style = { font: "32px Arial", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "center", backgroundColor: "#ffffff" };
 
         moneytext = this.game.add.text(70, 650, '$' + (status.money.toFixed(2)), style);
-        daytext = this.game.add.text(500, 650,  status.day[dayCounter], style);
+        daytext = this.game.add.text(500, 650,  status.day[dayCounter%7], style);
         timetext = this.game.add.text(900, 650,  status.hour + ':' + status.minute, style);
         ampmtext = this.game.add.text(970, 650,  status.ampm[twelveCounter%2], style);
 
@@ -140,7 +140,7 @@ BlueRoom.Game.prototype = {
         }
         timetext.setText(statusBar.hour + ':' + minute);
         ampmtext.setText(statusBar.ampm[twelveCounter%2]);
-        daytext.setText(statusBar.day[dayCounter]);
+        daytext.setText(statusBar.day[dayCounter%7]);
 
 
         this.game.world.bringToTop(textgroup);
@@ -155,16 +155,18 @@ BlueRoom.Game.prototype = {
     
 
     setTimer: function(inc){
+        var myGame = this;
         clearInterval(gameTimer);
         gameTimer = setInterval(function(){
             if(statusBar.minute < 59){
                 statusBar.minute+=1;
-            } else{
+            } 
+            else{
                 if(statusBar.hour==11){
                     twelveCounter++;
-                    if(twelveCounter%2 == 0){
-                        dayCounter +=1;
-                    }
+                    // if(twelveCounter%2 == 0){
+                    //     dayCounter +=1;
+                    // }
                 }
                 if(statusBar.hour>=12){
                     statusBar.hour = 1;
@@ -174,7 +176,37 @@ BlueRoom.Game.prototype = {
                 }
                 statusBar.minute = 0;
             }
+            if(statusBar.day[dayCounter%7]=="Saturday" || statusBar.day[dayCounter%7]=="Sunday"){
+                  if(statusBar.hour==5 && twelveCounter==1){
+                    console.log("WEEKEND END");
+                    clearInterval(gameTimer);
+                    myGame.createDayEndView();
+                }
+            } 
+            else{
+                if(statusBar.hour==9 && twelveCounter==1){
+                    console.log("WEEKDAY END");
+                    clearInterval(gameTimer);
+                    myGame.createDayEndView();
+                }
+            }
         }, inc);
+    },
+
+    resetGameDay: function(){
+        dayCounter +=1;
+        //if(statusBar.day[dayCounter%7]=='Monday' || statusBar.day[dayCounter%7]=='Tuesday' || statusBar.day[dayCounter%7]=='Wednesday' || statusBar.day[dayCounter%7]=='Thursday' || statusBar.day[dayCounter%7]=='Friday'){
+        if(statusBar.day[dayCounter%7]=="Saturday" || statusBar.day[dayCounter%7]=="Sunday"){
+            statusBar.hour = 9;
+            statusBar.minute = 0;
+            twelveCounter = 0;
+        }
+        else {
+            statusBar.hour = 7;
+            statusBar.minute = 30;
+            twelveCounter = 0;
+        } 
+        this.setTimer(MANAGERTIMEINTERVAL);
     },
 
     quitGame: function (pointer) {
