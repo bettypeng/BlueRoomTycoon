@@ -75,6 +75,8 @@ BlueRoom.Preloader.prototype = {
 		//END OF DAY VIEW
 		this.load.image('dayEndBg', 'images/day_end_bg.png');
 		this.load.image('exitButton', 'images/exit_button.png');
+		this.load.image('upgradeButton', 'images/upgrade_button.png');
+
 
 
 		//this.load.atlas('playButton', 'images/play_button.png', 'images/play_button.json');
