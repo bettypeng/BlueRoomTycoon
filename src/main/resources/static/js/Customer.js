@@ -10,13 +10,17 @@ function Customer(id, station, order){
     cust.anchor.setTo(0.5, 0.5);
     this.sprite.add(cust);
 
-	this.barProgress = 30;
+	this.happinessBarProgress = 30;
 	//this.bar = this.game.add.bitmapData(30, 2);
 	this.bar = currThis.add.bitmapData(30,2);
     this.barSprite = currThis.game.add.sprite(0, -60, this.bar);
     this.barSprite.anchor.setTo(0.5, 0.5);
     this.sprite.add(this.barSprite);
 
+
+    this.moving = false;
+    this.sprite.x = 440;
+    this.sprite.y = 675;
     this.station = station;
     this.order = order;
     this.happiness = 1;
@@ -109,8 +113,8 @@ Customer.prototype = {
    	createBar : function(){
         var mygame = this;
     	this.barTimer = setInterval(function(){
-            if(managerView){
-          		mygame.barProgress-=0.1;
+            if(managerView && !this.moving){
+          		mygame.happinessBarProgress-=0.1;
             }
       	}, 100);
 
@@ -127,24 +131,24 @@ Customer.prototype = {
         this.bar.context.clearRect(0, 0, this.bar.width, this.bar.height);
         
         // some simple colour changing to make it look like a health bar
-        if (this.barProgress < 10) {
+        if (this.happinessBarProgress < 10) {
            this.bar.context.fillStyle = '#f00';   
         }
-        else if (this.barProgress < 20) {
+        else if (this.happinessBarProgress < 20) {
             this.bar.context.fillStyle = '#ff0';
         }
         else {
             this.bar.context.fillStyle = '#0f0';
         }
 
-        if(this.barProgress <= 0){
+        if(this.happinessBarProgress <= 0){
             this.leaveBlueRoom();
             clearInterval(this.barTimer);
             clearInterval(this.myTimer);
         }
         
         // draw the bar
-        this.bar.context.fillRect(0, 0, this.barProgress, 8);
+        this.bar.context.fillRect(0, 0, this.happinessBarProgress, 8);
         
         // important - without this line, the context will never be updated on the GPU when using webGL
         this.bar.dirty = true;
