@@ -18,7 +18,7 @@ function Customer(id, station, order){
     this.sprite.add(this.barSprite);
 
 
-    this.moving = false;
+    this.moving = true;
     this.sprite.x = 440;
     this.sprite.y = 675;
     this.station = station;
@@ -60,12 +60,18 @@ Customer.prototype = {
         dragPosition.set(sprite.x, sprite.y);
         this.hideDollar();
         this.barSprite.visible = false;
+        this.moving = true;
+        console.log("DRAGGING THE SPRITE:  " + this.moving);
     },
 
     onDragUpdate: function(sprite, pointer){
     },
     
     onDragStop: function(sprite, pointer) {
+
+        this.moving = false;
+                console.log("NOT DRAGGING THE SPRITE:  " + this.moving);
+
         this.barSprite.visible = true;
         this.sprite.x = pointer.x;
         this.sprite.y = pointer.y; 
@@ -84,7 +90,7 @@ Customer.prototype = {
             currThis.cashCustomerOut(this);
         }
         else{
-                    sign.visible = true;
+            sign.visible = true;
         }
     
     },
@@ -111,17 +117,16 @@ Customer.prototype = {
     },
 
    	createBar : function(){
-        var mygame = this;
+        var currCust = this;
     	this.barTimer = setInterval(function(){
-            if(managerView && !this.moving){
-          		mygame.happinessBarProgress-=0.1;
+            if(managerView && !currCust.moving){
+          		currCust.happinessBarProgress-=0.1;
             }
       	}, 100);
 
-        var mygame = this;
         this.myTimer = setInterval(function(){
             if(managerView){
-                mygame.myupdate();
+                currCust.myupdate();
             }
         }, 10);
 	},
@@ -155,6 +160,7 @@ Customer.prototype = {
     },
 
     leaveBlueRoom: function(){
+        this.moving = true;
         if(this.ingredients!=null){
             currThis.steal(this);
             this.cust.tint = 0xff7777;

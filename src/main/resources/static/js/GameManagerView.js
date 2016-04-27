@@ -299,9 +299,11 @@ var currThis = this;
         numSandwich++;
         var posx = currThis.sandwichLinePos['x'][numSandwich];
         var posy = currThis.sandwichLinePos['y'][numSandwich];
+        customer.moving = true;
         var tween = currThis.add.tween(currThis.customer).to( { x: posx, y: posy }, 4000, null, true);
         tween.onComplete.add(onComplete, this);
         function onComplete(){
+            customer.moving = false;
             sandwichLine.push(customer);
         }
         // currThis.customer = customer.sprite;
