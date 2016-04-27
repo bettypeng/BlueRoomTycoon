@@ -19,6 +19,7 @@ function Customer(id, station, order){
 
 
     this.moving = true;
+    this.cashedOut = false;
     this.sprite.x = 440;
     this.sprite.y = 675;
     this.station = station;
@@ -68,10 +69,12 @@ Customer.prototype = {
     },
     
     onDragStop: function(sprite, pointer) {
-        var currThis = this;
-        setTimeout(function(){
-            this.moving = false;
-        }, 500);
+        // var currThis = this;
+        // setTimeout(function(){
+        //     this.moving = false;
+        // }, 500);
+        // console.log("NOT DRAGGING THE SPRITE:  " + this.moving);
+        this.moving = false;
         console.log("NOT DRAGGING THE SPRITE:  " + this.moving);
 
         this.barSprite.visible = true;
@@ -148,7 +151,7 @@ Customer.prototype = {
             this.bar.context.fillStyle = '#0f0';
         }
 
-        if(this.happinessBarProgress <= 0){
+        if(this.happinessBarProgress < 0){
             this.leaveBlueRoom();
             clearInterval(this.barTimer);
             clearInterval(this.myTimer);
@@ -163,14 +166,16 @@ Customer.prototype = {
 
     leaveBlueRoom: function(){
         this.moving = true;
-        if(this.ingredients!=null){
-            currThis.steal(this);
-            this.cust.tint = 0xff7777;
-            console.log("STEAL");
-        }
-        else{
-            currThis.abandonLine(this);
-            console.log("ABANDON");
+        if(!this.cashedOut){
+            if(this.ingredients!=null){
+                currThis.steal(this);
+                this.cust.tint = 0xff7777;
+                console.log("STEAL");
+            }
+            else{
+                currThis.abandonLine(this);
+                console.log("ABANDON");
+            }
         }
     }
 

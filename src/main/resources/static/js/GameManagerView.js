@@ -224,6 +224,7 @@ var currThis = this;
             // left = customer.sprite;
             numCashier--;
             var tween = this.add.tween(customer.sprite).to( { x: 450, y: 700 }, 1000, null, true);
+            customer.moving = true;
             tween.onComplete.add(onLeaveMoveComplete, this);
             function onLeaveMoveComplete(){
                 customer.sprite.visible = false;

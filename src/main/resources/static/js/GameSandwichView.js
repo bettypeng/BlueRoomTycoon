@@ -84,10 +84,10 @@ BlueRoom.Game.prototype.createSandwichView= function () {
 
         sandwichViewElements.push(dropZone);
 
-        var pointer = this.add.sprite(940, 45, 'pointer');
-        pointer.anchor.setTo(0.5, 0.5);
-        this.add.tween(pointer).to({y: 70}, 1000, Phaser.Easing.Quadratic.InOut, true, 0, Infinity, true);
-        sandwichViewElements.push(pointer);
+        var mypointer = this.add.sprite(940, 45, 'pointer');
+        mypointer.anchor.setTo(0.5, 0.5);
+        this.add.tween(mypointer).to({y: 70}, 1000, Phaser.Easing.Quadratic.InOut, true, 0, Infinity, true);
+        sandwichViewElements.push(mypointer);
 
         staticElements = this.add.group();
         movableElements =  this.add.physicsGroup();
