@@ -72,6 +72,10 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('tomato', 'images/sandwich/tomato.png');
 		
 		this.load.image('speechBubble', 'images/sandwich/speech_bubble.png');
+		this.load.image('happy', 'images/happy.png');
+		this.load.image('neutral', 'images/neutral.png');
+		this.load.image('sad', 'images/saddness.png');
+		this.load.image('leaving', 'images/leaving.png');
 
 		//this.load.atlas('playButton', 'images/play_button.png', 'images/play_button.json');
 		//this.load.audio('titleMusic', ['audio/main_menu.mp3']);
