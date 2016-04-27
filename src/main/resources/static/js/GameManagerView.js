@@ -22,6 +22,8 @@ var leaving;
 //var left;
 var sandwichLine = new Array();
 var cashierLine = new Array();
+var managerCounter = 0;
+var CUSTOMERINTERVAL = 500;
 
 var currThis = this;
 
@@ -86,6 +88,10 @@ var currThis = this;
         this.i = 0; 
         this.timerStopped = true;
         this.timer = null;
+
+        setTimeout(function(){
+            getCustomer();
+        }, 500);
     
         this.startMovement();
         // Draw the path 
@@ -165,6 +171,7 @@ var currThis = this;
         if(sandwichLine.length>0){
             var curr= sandwichLine.shift();
             curr.inLine = false;
+            curr.moving = true;
             var currCustomer = curr.sprite;
             //currCustomer.destroy();
             numSandwich--;
@@ -178,6 +185,7 @@ var currThis = this;
 
             
             function onCashierMoveComplete(){
+                curr.moving = false;
             //     cashierLine.push(curr);
                 //this.shiftFirstInLine(sandwichLine, this.sandwichLinePos);
                 //this.moveLineUp(sandwichLine, this.sandwichLinePos, 5000);
@@ -271,19 +279,10 @@ var currThis = this;
         // this just takes care of resetting
         // the timer so the movement repeats
         currThis = this;
-       
-        if (this.timerStopped && numSandwich<15) {
-            this.timerStopped = false;
-            this.timer = this.game.time.create(true);
-            // this.customer = this.add.sprite(400, 600, 'customer');
-            // console.log("in other func");
-            // console.log(this);
-            // console.log(this.add);
+        managerCounter++;
+        if(managerCounter % CUSTOMERINTERVAL == 0 && numSandwich<15){
             getCustomer();
         }
-    
-        //BlueRoom.Game.prototype.update.call(this);
-
     };
 
     // var currThis = BlueRoom.Game.prototype;
@@ -293,27 +292,38 @@ var currThis = this;
         // console.log(customer);
         // console.log(currThis.add);
         // console.log(this);
+
         currThis.customer = customer.sprite;
         customerGroup.add(currThis.customer);
         numSandwich++;
-        currThis.drawPath();
-        //currThis.customer.anchor.setTo(0.5, 0.5);
-        currThis.timer.loop(.001, function(){
-            var posx = currThis.math.bezierInterpolation(currThis.points.x, currThis.i);
-            var posy = currThis.math.bezierInterpolation(currThis.points.y, currThis.i);
-            currThis.customer.x = posx;
-            currThis.customer.y = posy;
-            currThis.i += currThis.increment;
-            if (posx > currThis.points['x'][2]) {
-                currThis.timer.stop();
-                currThis.timer.destroy();
-                currThis.i = 0;
-                currThis.timerStopped = true;
-                sandwichLine.push(customer);
-            }
-        }, currThis);
-        currThis.timer.start();
-    }
+        var posx = currThis.sandwichLinePos['x'][numSandwich];
+        var posy = currThis.sandwichLinePos['y'][numSandwich];
+        var tween = currThis.add.tween(currThis.customer).to( { x: posx, y: posy }, 4000, null, true);
+        tween.onComplete.add(onComplete, this);
+        function onComplete(){
+            sandwichLine.push(customer);
+        }
+        // currThis.customer = customer.sprite;
+        // customerGroup.add(currThis.customer);
+        // numSandwich++;
+        // currThis.drawPath();
+        // //currThis.customer.anchor.setTo(0.5, 0.5);
+        // currThis.timer.loop(.001, function(){
+        //     var posx = currThis.math.bezierInterpolation(currThis.points.x, currThis.i);
+        //     var posy = currThis.math.bezierInterpolation(currThis.points.y, currThis.i);
+        //     currThis.customer.x = posx;
+        //     currThis.customer.y = posy;
+        //     currThis.i += currThis.increment;
+        //     if (posx > currThis.points['x'][2]) {
+        //         currThis.timer.stop();
+        //         currThis.timer.destroy();
+        //         currThis.i = 0;
+        //         currThis.timerStopped = true;
+        //         sandwichLine.push(customer);
+        //     }
+        // }, currThis);
+        // currThis.timer.start();
+    };
     
     // BlueRoom.Game.prototype.plot= function() {
     //     var posx = this.math.bezierInterpolation(this.points.x, this.i);
