@@ -14,6 +14,7 @@
 	<script src="js/StatusBar.js"></script>
 	<script src="js/Customer.js"></script>
 	<script src="js/Server.js"></script>
+	<script src="js/GameDayEndView.js"></script>
 	<script src="js/GameManagerView.js"></script>
 	<script src="js/GameSandwichView.js"></script>
 	<script src="js/GameCoffeeView.js"></script>

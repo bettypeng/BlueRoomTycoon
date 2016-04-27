@@ -54,12 +54,10 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('dollar', 'images/dollar.png');
 		this.load.image('dollarSign', 'images/dollar_sign.png');
 		this.load.image('dollarSignDark', 'images/dollar_sign_dark.png');
-
-
-
 		
 		//SANDWICH LINE
 		this.load.image('dropzone', 'images/sandwich/dropzone.png');
+
 		this.load.image('top_bun', 'images/sandwich/top_bun.png');
 		this.load.image('bottom_bun', 'images/sandwich/bottom_bun.png');
 		this.load.image('roast_beef', 'images/sandwich/roast_beef.png');
@@ -76,6 +74,12 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('neutral', 'images/neutral.png');
 		this.load.image('sad', 'images/saddness.png');
 		this.load.image('leaving', 'images/leaving.png');
+		this.load.image('pointer', 'images/sandwich/down_pointer.png');
+
+		//END OF DAY VIEW
+		this.load.image('dayEndBg', 'images/day_end_bg.png');
+		this.load.image('exitButton', 'images/exit_button.png');
+		this.load.image('upgradeButton', 'images/upgrade_button.png');
 
 		//this.load.atlas('playButton', 'images/play_button.png', 'images/play_button.json');
 		//this.load.audio('titleMusic', ['audio/main_menu.mp3']);

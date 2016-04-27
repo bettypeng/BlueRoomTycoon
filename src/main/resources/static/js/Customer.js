@@ -68,9 +68,11 @@ Customer.prototype = {
     },
     
     onDragStop: function(sprite, pointer) {
-
-        this.moving = false;
-                console.log("NOT DRAGGING THE SPRITE:  " + this.moving);
+        var currThis = this;
+        setTimeout(function(){
+            this.moving = false;
+        }, 500);
+        console.log("NOT DRAGGING THE SPRITE:  " + this.moving);
 
         this.barSprite.visible = true;
         this.sprite.x = pointer.x;
