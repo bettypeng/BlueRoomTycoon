@@ -210,6 +210,21 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         }
     
     },
+
+    BlueRoom.Game.prototype.deleteCurrSandwich = function (customer) {
+        if (customer != currCustomer) {
+            return;
+        }
+        currOrderElem.destroy();
+        for (var i=0; i<currSandSprites.length; i++) {
+            movableElements.remove(currSandSprites[i]);
+        }
+        currPlace = 0;
+        currSandwich = [];
+        currDelts = {};
+        currCustomer = null;
+        currOrderElem = null;
+    },
     
     // getFrontCustomer: function() {
         
@@ -231,7 +246,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
     // },
     
     BlueRoom.Game.prototype.orderElems= function () {
-        console.log("orderElems");
+        // console.log("orderElems");
         var currThis = this;
         
         window.setInterval(function() {
@@ -275,13 +290,16 @@ BlueRoom.Game.prototype.createSandwichView= function () {
                     currOrderElem.destroy();
                     sandwichViewElements.push(currThis.add.sprite(160, -30, "speechBubble"));
                     currOrderElem = currThis.add.sprite(200, 50, currCustomer.order.ingreds[currPlace].type);
+                    currOrderElem.alpha = 0;
+
+                    currThis.add.tween(currOrderElem).to( { alpha: 1 }, 1000, Phaser.Easing.Linear.None, true);
                     sandwichViewElements.push(currOrderElem);
 
                 }
             
             }
             
-        }, 1000);
+        }, 1);
         
     },
     
@@ -303,6 +321,9 @@ BlueRoom.Game.prototype.createSandwichView= function () {
             var f = currCustomer.order.ingreds[0].type;
             sandwichViewElements.push(this.add.sprite(160, -30, "speechBubble"));
             currOrderElem = this.add.sprite(200, 50, f);
+            currOrderElem.alpha = 0;
+
+            this.add.tween(currOrderElem).to( { alpha: 1 }, 1000, Phaser.Easing.Linear.None, true);
             sandwichViewElements.push(currOrderElem);
         }
         
