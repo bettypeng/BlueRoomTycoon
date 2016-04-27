@@ -59,7 +59,8 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         sandwichViewElements.push(platform);
 
         
-        dropZone = this.add.sprite(865, 5, 'dropzone');
+        dropZone = this.add.sprite(930,  235, 'dropzone');
+        dropZone.anchor.setTo(0.5, 0.5);
         sandwichViewElements.push(dropZone);
 
         staticElements = this.add.group();
@@ -201,6 +202,11 @@ BlueRoom.Game.prototype.createSandwichView= function () {
                 }, 600);
         }
         else{
+            // console.log(currCustomer.order.ingreds[0].type);
+            if ((currCustomer != null) && (currCustomer.order.ingreds[0].type == currOrderElem.key)) {
+                this.add.tween(sprite).to( { x: dropZone.x }, 500, null, true);
+            }
+            // this.add.tween(sprite).to( { x: dropZone.x }, 500, null, true);
             sprite.body.gravity.y = 1000;
             sprite.input.draggable = false;
             // var rb = staticElements.create(270, 400, 'roast_beef');
@@ -226,25 +232,6 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         currOrderElem = null;
     },
     
-    // getFrontCustomer: function() {
-        
-    //     var postParameters = {type: "sandwich"};
-    
-    //     $.post("/line", postParameters, function(responseJSON) {
-    
-    //         var responseObject = JSON.parse(responseJSON);
-    //         currCustomer = responseObject.customer;
-    
-    //         //can get the order from this customer using frontCust.order which we can
-    //         //then display on the screen
-            
-    //         //call showing of first item on screen
-    //         //if station == sandwich: call sanwich view's method for showing
-    //         //thing
-    //     });
-        
-    // },
-    
     BlueRoom.Game.prototype.orderElems= function () {
         // console.log("orderElems");
         var currThis = this;
@@ -256,9 +243,9 @@ BlueRoom.Game.prototype.createSandwichView= function () {
             
             if (collidedElem != null) {
                 var item = collidedElem;
-                // console.log(collidedElem);
+
                 collidedElem = null;
-                // console.log(collidedElem);
+
                 if (currSandwich.length == 0) {
                     firstX = item.x;
                 }
