@@ -4,8 +4,8 @@ var dayEndViewElements = new Array();
 BlueRoom.Game.prototype.createDayEndView= function () {
 	var bg = this.add.sprite(0, 0, 'dayEndBg');
 	dayEndViewElements.push(bg);
-	var exit = this.add.button(50, 50, 'exitButton', this.destroyDayEndView, this);
-	dayEndViewElements.push(exit);
+	// var exit = this.add.button(50, 50, 'exitButton', this.destroyDayEndView, this);
+
 
     var titleStyle = { font: "60px Verdana", fill: "#000000", align: "center"};
 	var title = this.game.add.text(this.game.width/2, 50, 'End of Day Summary:', titleStyle);
@@ -25,12 +25,14 @@ BlueRoom.Game.prototype.createDayEndView= function () {
 	var texpenses = this.game.add.text(540, 280, 'Expenses:', labelStyle);
 	var tprofit = this.game.add.text(540, 330, 'Profit:', labelStyle);
 
-
-	var hire = this.add.button(this.game.width/4, 420, 'hireButton', this.createHireView, this);
-	hire.anchor.setTo(0.5, 0,5);
-	var upgrade = this.add.button(3*(this.game.width/4), 420, 'upgradeButton', this.createUpgradeView, this);
-	upgrade.anchor.setTo(0.5, 0,5);
-
+	var viewInventory = this.add.button(150, 420, 'viewInventoryButton', this.createInventoryView, this);
+	viewInventory.anchor.setTo(0.5, 0);
+	var hire = this.add.button(380, 420, 'hireButton', this.createHireView, this);
+	hire.anchor.setTo(0.5, 0);
+	var upgrade = this.add.button(600, 420, 'upgradeButton', this.createUpgradeView, this);
+	upgrade.anchor.setTo(0.5, 0);
+	var close = this.add.button(890, 370, 'exitViewButton', this.destroyDayEndView, this);
+	close.anchor.setTo(0.5, 0);
 
 	dayEndViewElements.push(title);
 	dayEndViewElements.push(today);
@@ -43,8 +45,11 @@ BlueRoom.Game.prototype.createDayEndView= function () {
 	dayEndViewElements.push(trevenue);
 	dayEndViewElements.push(texpenses);
 	dayEndViewElements.push(tprofit);
+	dayEndViewElements.push(viewInventory);
 	dayEndViewElements.push(upgrade);
 	dayEndViewElements.push(hire);
+	dayEndViewElements.push(close);
+
 		
 
 	managerView = false;

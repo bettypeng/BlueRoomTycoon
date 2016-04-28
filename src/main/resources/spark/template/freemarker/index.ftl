@@ -15,6 +15,7 @@
 	<script src="js/Customer.js"></script>
 	<script src="js/Server.js"></script>
 	<script src="js/GameDayEndView.js"></script>
+	<script src="js/GameInventoryView.js"></script>
 	<script src="js/GameUpgradeView.js"></script>
 	<script src="js/GameHireView.js"></script>
 	<script src="js/GameManagerView.js"></script>

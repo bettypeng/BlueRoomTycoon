@@ -80,16 +80,19 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('dayEndBg', 'images/day_end_bg.png');
 		this.load.image('exitButton', 'images/exit_button.png');
 		this.load.image('backButton', 'images/back_button.png');
+		this.load.image('viewInventoryButton', 'images/view_inventory_button.png');
 		this.load.image('upgradeButton', 'images/upgrade_button.png');
 		this.load.image('hireButton', 'images/hire_button.png');
+		this.load.image('exitViewButton', 'images/start_new_day.png');
 
 		// HIRE PAGE
 		this.load.image('next', 'images/next_button.png');
 		this.load.image('prev', 'images/prev_button.png');
-		this.load.image('philPage', 'images/hire/phil.png');
-		this.load.image('erikPage', 'images/hire/erik.png');
-
-
+		this.load.image('hireMeButton', 'images/hire/hire_me_button.png');
+		// this.load.image('philPage', 'images/hire/phil.png');
+		this.load.image('e0', 'images/hire/hire_erik.png');
+		this.load.image('e1', 'images/hire/hire_alex.png');
+		this.load.image('e2', 'images/hire/hire_rachel.png');
 
 		// HIRE VIEW STAR TEMPLATES
 		this.load.image('oneStar', 'images/hire/one_star.png');
@@ -97,6 +100,12 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('threeStar', 'images/hire/three_star.png');
 		this.load.image('fourStar', 'images/hire/four_star.png');
 		this.load.image('fiveStar', 'images/hire/five_star.png');
+
+		//UPGRADE PAGE
+		this.load.image('buyButton', 'images/buy_button.png');
+		this.load.image('coffeeBar', 'images/coffee_bar.png');
+		this.load.image('bakery', 'images/bakery.png');
+		this.load.image('magazineRack', 'images/magazine_rack.png');
 
 		//this.load.atlas('playButton', 'images/play_button.png', 'images/play_button.json');
 		//this.load.audio('titleMusic', ['audio/main_menu.mp3']);
