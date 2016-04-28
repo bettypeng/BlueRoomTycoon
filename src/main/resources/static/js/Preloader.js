@@ -83,6 +83,20 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('upgradeButton', 'images/upgrade_button.png');
 		this.load.image('hireButton', 'images/hire_button.png');
 
+		// HIRE PAGE
+		this.load.image('next', 'images/next_button.png');
+		this.load.image('prev', 'images/prev_button.png');
+		this.load.image('philPage', 'images/hire/phil.png');
+		this.load.image('erikPage', 'images/hire/erik.png');
+
+
+
+		// HIRE VIEW STAR TEMPLATES
+		this.load.image('oneStar', 'images/hire/one_star.png');
+		this.load.image('twoStar', 'images/hire/two_star.png');
+		this.load.image('threeStar', 'images/hire/three_star.png');
+		this.load.image('fourStar', 'images/hire/four_star.png');
+		this.load.image('fiveStar', 'images/hire/five_star.png');
 
 		//this.load.atlas('playButton', 'images/play_button.png', 'images/play_button.json');
 		//this.load.audio('titleMusic', ['audio/main_menu.mp3']);

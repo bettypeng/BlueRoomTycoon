@@ -37,7 +37,7 @@ var ampmtext;
 var dayCounter = 0;
 var twelveCounter = 0;
 
-var MANAGERTIMEINTERVAL = 250;
+var MANAGERTIMEINTERVAL = 5;
 var SANDWICHTIMEINTERVAL = 500;
 
 var game;
