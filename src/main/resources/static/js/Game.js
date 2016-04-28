@@ -37,12 +37,15 @@ var ampmtext;
 var dayCounter = 0;
 var twelveCounter = 0;
 
-var MANAGERTIMEINTERVAL = 500;
-var SANDWICHTIMEINTERVAL = 1000;
+var MANAGERTIMEINTERVAL = 250;
+var SANDWICHTIMEINTERVAL = 500;
+
+var game;
 
 BlueRoom.Game.prototype = {
 
     create: function () {
+        game = this;
         var mygame = this;
 
         //this.add.sprite(0, 0, 'whiteBg');
@@ -63,12 +66,14 @@ BlueRoom.Game.prototype = {
         //gamegroup.add(this.coffeeButton);
         
         var status = statusBar;
-        var style = { font: "32px Arial", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "center", backgroundColor: "#ffffff" };
+        var style = { font: "32px Arial", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "left", boundsAlignH: "left", backgroundColor: "#ffffff" };
 
-        moneytext = this.game.add.text(70, 650, '$' + (status.money.toFixed(2)), style);
+        moneytext = this.game.add.text(100, 650, '$' + (status.money.toFixed(2)), style);
         daytext = this.game.add.text(500, 650,  status.day[dayCounter%7], style);
         timetext = this.game.add.text(900, 650,  status.hour + ':' + status.minute, style);
         ampmtext = this.game.add.text(970, 650,  status.ampm[twelveCounter%2], style);
+
+        this.moneytextTween = this.add.tween(moneytext.scale).to({ x: 1.5, y: 1.5}, 200, Phaser.Easing.Linear.In).to({ x: 1, y: 1}, 200, Phaser.Easing.Linear.In);
 
 
         console.log(status.money);
@@ -121,23 +126,72 @@ BlueRoom.Game.prototype = {
 
     },
     
-    addMoney: function(amt){
-        statusBar.money += amt;
+    // addMoney: function(amt){
+    //     statusBar.money += Number(amt);
+    // },
+
+    // loseMoney: function(amt){
+    //     statusBar.money -= amt;
+    // },
+
+    addMoney: function(x, y, message, amt){
+        var scoreFont = "20px Arial";
+        //Create a new label for the score
+        var scoreAnimation = this.game.add.text(x, y, message, {font: scoreFont, fill: "#39d179", stroke: "#ffffff", strokeThickness: 15}); 
+        scoreAnimation.anchor.setTo(0.5, 0);
+        scoreAnimation.align = 'center';
+     
+        //Tween this score label to the total score label
+        var scoreTween = this.game.add.tween(scoreAnimation).to({x:this.game.world.centerX, y: 50}, 800, Phaser.Easing.Exponential.In, true);
+     
+        //When the animation finishes, destroy this score label, trigger the total score labels animation and add the score
+        scoreTween.onComplete.add(function(){
+            scoreAnimation.destroy();
+            this.moneytextTween.start();
+            statusBar.money += Number(amt);
+        }, this);
     },
 
-    loseMoney: function(amt){
-        statusBar.money -= amt;
+    loseMoney: function(x, y, message, amt){
+        var scoreFont = "20px Arial";
+        //Create a new label for the score
+        var scoreAnimation = this.game.add.text(x, y, message, {font: scoreFont, fill: "#cc0000", stroke: "#ffffff", strokeThickness: 15}); 
+        scoreAnimation.anchor.setTo(0.5, 0);
+        scoreAnimation.align = 'center';
+     
+        //Tween this score label to the total score label
+        var scoreTween = this.game.add.tween(scoreAnimation).to({x:this.game.world.centerX, y: 50}, 800, Phaser.Easing.Exponential.In, true);
+     
+        //When the animation finishes, destroy this score label, trigger the total score labels animation and add the score
+        scoreTween.onComplete.add(function(){
+            scoreAnimation.destroy();
+            this.moneytextTween.start();
+            statusBar.money -= Number(amt);
+        }, this);
     },
+
+    // incrementMoney: function(){
+    //     statusBar.money = statusBar.money + .01;   
+    //     statusBar.money.toFixed(2);
+    //     moneytext.text = '$' + statusBar.money;     
+    // },
 
     update: function () {
         this.game.world.bringToTop(gamegroup);
-        moneytext.setText('$' + (statusBar.money.toFixed(2)));
+
+        // if(statusBar.moneyBuffer > 0){
+        //     this.incrementMoney();
+        //     statusBar.moneyBuffer-=1;
+        //     console.log(statusBar.moneyBuffer);
+        // }
+
         var minute;
         if(statusBar.minute < 10){
             minute = '0' + statusBar.minute;
         } else {
             minute = statusBar.minute;
         }
+        moneytext.setText('$' + statusBar.money.toFixed(2));
         timetext.setText(statusBar.hour + ':' + minute);
         ampmtext.setText(statusBar.ampm[twelveCounter%2]);
         daytext.setText(statusBar.day[dayCounter%7]);

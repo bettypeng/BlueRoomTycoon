@@ -129,7 +129,7 @@ var currThis = this;
                 //     myGame.toLeaveBlueRoom();
                 // }
                 if(!leaving){
-                    myGame.moveLineUp(sandwichLine, myGame.sandwichLinePos, 5000);
+                    myGame.moveLineUp(sandwichLine, myGame.sandwichLinePos, 2000);
                 }
                 //myGame.moveLineUp(cashierLine, myGame.cashierLinePos, 3000);
 
@@ -180,7 +180,7 @@ var currThis = this;
             // var ypos = this.cashierLinePos['y'][numCashier];
             var xpos = this.game.rnd.integerInRange(300, 700);
             var ypos = this.game.rnd.integerInRange(300, 500);
-            var tween = this.add.tween(currCustomer).to( { x: xpos, y: ypos }, 5000, null, true);
+            var tween = this.add.tween(currCustomer).to( { x: xpos, y: ypos }, 2000, null, true);
             tween.onComplete.add(onCashierMoveComplete, this);
             // numCashier++;
 
@@ -301,7 +301,7 @@ var currThis = this;
         var posx = currThis.sandwichLinePos['x'][numSandwich];
         var posy = currThis.sandwichLinePos['y'][numSandwich];
         customer.moving = true;
-        var tween = currThis.add.tween(currThis.customer).to( { x: posx, y: posy }, 4000, null, true);
+        var tween = currThis.add.tween(currThis.customer).to( { x: posx, y: posy }, 2000, null, true);
         tween.onComplete.add(onComplete, this);
         function onComplete(){
             customer.moving = false;

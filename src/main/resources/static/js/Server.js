@@ -134,10 +134,11 @@ function purchase (type, ingredients, ingMap, bread, id, happiness, paid) {
 
         console.log(moneyMade);
         if (paid){
-            BlueRoom.Game.prototype.addMoney(moneyMade);
+            //BlueRoom.Game.prototype.addMoney(moneyMade);
+            game.addMoney(500, 530, "+ $"+moneyMade.toFixed(2), moneyMade);
         }
         else{
-            BlueRoom.Game.prototype.loseMoney(moneyMade);
+            game.loseMoney(500, 530, "- $"+moneyMade.toFixed(2), moneyMade);
         }
         //have money that was made appear on screen and increment lower left money counter
     
