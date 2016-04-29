@@ -23,7 +23,7 @@
 	<script src="js/GameCoffeeView.js"></script>
 	<script src="js/GameBakeryView.js"></script>
 
-
+	<link href = "css/style.css" rel="stylesheet">
 </head>
 <body>
 

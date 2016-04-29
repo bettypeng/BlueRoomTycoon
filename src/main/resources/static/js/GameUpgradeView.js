@@ -13,7 +13,7 @@ BlueRoom.Game.prototype.createUpgradeView= function () {
 	var backButton = this.add.button(50, 60, 'backButton', this.hideUpgradeView, this);
 	upgradeViewElements.push(backButton);
 
-	var titleStyle = { font: "60px Verdana", fill: "#000000", align: "center"};
+	var titleStyle = { font: "60px Roboto", fill: "#000000", align: "center"};
 	var title = this.game.add.text(this.game.width/2, 50, 'Blue Room Expansions', titleStyle);
 	title.anchor.setTo(0.5, 0,5);
 
@@ -23,7 +23,7 @@ BlueRoom.Game.prototype.createUpgradeView= function () {
 	upgradeCostList["bakery"] = 1000;
 	upgradeCostList["magazineRack"] = 50;
 
-	var labelStyle = { font: "16px Verdana", fill: "#000000", align: "center"};
+	var labelStyle = { font: "16px Roboto Light", fill: "#000000", align: "center"};
 	var currbalance = this.game.add.text(this.game.width/2, 140, 'Current Balance: $' + statusBar.money.toFixed(2), labelStyle);
 	currbalance.anchor.setTo(0.5, 0,5);
 

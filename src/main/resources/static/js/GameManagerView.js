@@ -43,10 +43,10 @@ var currThis = this;
         this.add.sprite(0, 0, 'managerBg');
         this.add.sprite(652, 146, 'sandwichStation');
         this.cashier = this.add.sprite(300, 500, 'dollar');
-        var smallstyle = { font: "10px Arial", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "center" };
+        var smallstyle = { font: "10px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "center" };
         this.game.add.text(305, 565, "DRAG HERE TO\nCASH OUT!", smallstyle);
         
-        var style = { font: "30px Arial", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "center" };
+        var style = { font: "30px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "center" };
         this.game.add.text(682, 190, "SANDWICHES", style);
         numSandwich = 0;
         numCustomer= 0;
