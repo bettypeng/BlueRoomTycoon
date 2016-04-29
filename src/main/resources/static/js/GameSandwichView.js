@@ -37,6 +37,7 @@ var currDelts = {};
 var firstX;
 var collidedElem = null;
 var stopUpdate = false;
+var nonSandwich = [];
 
 var movableElems = [];
 var sandwichViewElements = new Array();
@@ -62,12 +63,14 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         neutral = this.add.sprite(200, 20, "neutral");
         sideEye = this.add.sprite(200, 0, "leaving");
         speechBubble = this.add.sprite(350, -30, "speechBubble");
+        // var trash = this.add.button(950, 495, 'trash', this.function, this);
 
         sandwichViewElements.push(happy);
         sandwichViewElements.push(sad);
         sandwichViewElements.push(neutral);
         sandwichViewElements.push(sideEye);
         sandwichViewElements.push(speechBubble);
+        sandwichViewElements.push(trash);
 
         //BlueRoom.Game.prototype.create.call(this);
         var swbg = this.add.sprite(0, 0, 'sandwichBg2');
@@ -180,6 +183,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
     
     BlueRoom.Game.prototype.showSandwichView= function(){
         sandwichViewElements.forEach(function(item){
+            if (item)
             item.visible = true;
         });
         if (currCustomer != null) {
@@ -307,6 +311,21 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         currCustomer = null;
         currOrderElem = null;
     },
+
+    BlueRoom.Game.prototype.trash = function () {
+        if (nonSandwich.length != 0) {
+            for (var i=0; i<nonSandwich.length; i++) {
+                movableElements.remove(nonSandwich)[i]);
+            }
+        }
+        if (currSandSprites.length != 0) {
+            for (var i=0; i<currSandSprites.length; i++) {
+                movableElements.remove(currSandSprites[i]);
+            }
+            currSandwich = [];
+            currDelts = {};
+        }
+    }
     
     BlueRoom.Game.prototype.orderElems= function () {
         // console.log("orderElems");
@@ -315,6 +334,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         window.setInterval(function() {
             if (currCustomer == null)  {
                 currThis.noCustomer();
+                nonSandwich.push(collidedElem);
                 return;
             }
             if (transitioning) {
