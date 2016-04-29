@@ -75,7 +75,10 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('sad', 'images/saddness.png');
 		this.load.image('leaving', 'images/leaving.png');
 		this.load.image('pointer', 'images/sandwich/down_pointer.png');
-		this.load.image('trash', 'images/trash.png');
+		// this.load.image('trash', 'images/trash.png');
+		// this.load.image('exclamation', 'images/exclamation.png');
+		// this.load.image('noface', 'images/noface.png');
+		// this.load.image('glasses', 'images/glasses.png');
 
 		//END OF DAY VIEW
 		this.load.image('dayEndBg', 'images/day_end_bg.png');
