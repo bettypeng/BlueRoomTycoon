@@ -1,4 +1,3 @@
-
 // BlueRoom.GameSandwichView = function (game) {
   
 // };
@@ -23,10 +22,10 @@ var happy;
 var sad;
 var neutral;
 var sideEye;
-// var noface;
-// var glasses;
+var noface;
+var glasses;
 var speechBubble;
-// var exclamation;
+var exclamation;
 var transitioning = false;
 
 // var currCustomer = ["bottom_bun", "roast_beef", "cheese", "lettuce", "top_bun"];
@@ -40,8 +39,8 @@ var currDelts = {};
 var firstX;
 var collidedElem = null;
 var stopUpdate = false;
-// var nonSandwich = [];
-// var nonSandElem;
+var nonSandwich = [];
+var nonSandElem;
 
 var movableElems = [];
 var sandwichViewElements = new Array();
@@ -65,23 +64,23 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         happy = this.add.sprite(170, 0, "happy");
         sad = this.add.sprite(190, 20, "sad");
         neutral = this.add.sprite(200, 20, "neutral");
-        // noface = this.add.sprite(200, 20, "noface");
-        // glasses = this.add.sprite(200, 20, "glasses");
+        noface = this.add.sprite(200, 20, "noface");
+        glasses = this.add.sprite(200, 20, "glasses");
         sideEye = this.add.sprite(200, 0, "leaving");
         speechBubble = this.add.sprite(350, -30, "speechBubble");
-        // var garbageCan = this.add.button(950, 495, 'trash', this.trashButton, this);
-        // exclamation = this.add.sprite(400, 40, 'exclamation');
+        var garbageCan = this.add.button(950, 495, 'trash', this.trashButton, this);
+        exclamation = this.add.sprite(400, 40, 'exclamation');
 
         happy.visible = false;
         sad.visible = false;
         neutral.visible = false;
         sideEye.visible = false;
-        // noface.visible = false;
-        // glasses.visible = false;
+        noface.visible = false;
+        glasses.visible = false;
         speechBubble.visible = false;
-        // exclamation.visible = false;
+        exclamation.visible = false;
 
-        // sandwichViewElements.push(garbageCan);
+        sandwichViewElements.push(garbageCan);
 
         //BlueRoom.Game.prototype.create.call(this);
         var swbg = this.add.sprite(0, 0, 'sandwichBg2');
@@ -151,8 +150,8 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         happy.visible = true;
         sad.visible = false;
         neutral.visible = false;
-        // noface.visible = false;
-        // glasses.visible = false;
+        noface.visible = false;
+        glasses.visible = false;
         window.setTimeout(function() {
             if (transitioning) {
                 return;
@@ -162,41 +161,41 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         } ,2000);
     };
 
-    // BlueRoom.Game.prototype.showNo = function() {
-    //     happy.visible = false;
-    //     sad.visible = false;
-    //     neutral.visible = false;
-    //     noface.visible = true;
-    //     glasses.visible = false;
-    //     window.setTimeout(function() {
-    //         if (transitioning) {
-    //             return;
-    //         }
-    //         noface.visible = false;
-    //         neutral.visible = true;
-    //     } ,2000);
-    // };
+    BlueRoom.Game.prototype.showNo = function() {
+        happy.visible = false;
+        sad.visible = false;
+        neutral.visible = false;
+        noface.visible = true;
+        glasses.visible = false;
+        window.setTimeout(function() {
+            if (transitioning) {
+                return;
+            }
+            noface.visible = false;
+            neutral.visible = true;
+        } ,2000);
+    };
 
-    // BlueRoom.Game.prototype.showGlasses = function() {
-    //     happy.visible = false;
-    //     sad.visible = false;
-    //     neutral.visible = false;
-    //     noface.visible = false;
-    //     glasses.visible = true;
-    //     window.setTimeout(function() {
-    //         if (transitioning) {
-    //             return;
-    //         }
-    //         glasses.visible = false;
-    //         neutral.visible = true;
-    //     } ,2000);
-    // };
+    BlueRoom.Game.prototype.showGlasses = function() {
+        happy.visible = false;
+        sad.visible = false;
+        neutral.visible = false;
+        noface.visible = false;
+        glasses.visible = true;
+        window.setTimeout(function() {
+            if (transitioning) {
+                return;
+            }
+            glasses.visible = false;
+            neutral.visible = true;
+        } ,2000);
+    };
 
     BlueRoom.Game.prototype.showNeutral = function() {
         happy.visible = false;
         sad.visible = false;
-        // noface.visible = false;
-        // glasses.visible = false;
+        noface.visible = false;
+        glasses.visible = false;
         neutral.visible = true;
     };
 
@@ -204,8 +203,8 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         // console.log("sad");
         // console.log(neutral.visible);
         happy.visible = false;
-        // noface.visible = false;
-        // glasses.visible = false;
+        noface.visible = false;
+        glasses.visible = false;
         sad.visible = true;
         neutral.visible = false;
         // console.log(sad.visible);
@@ -224,8 +223,8 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         happy.visible = false;
         sad.visible = false;
         neutral.visible = false;
-        // noface.visible = false;
-        // glasses.visible = false;
+        noface.visible = false;
+        glasses.visible = false;
         speechBubble.visible = false;
         sideEye.visible = false;
     };
@@ -356,44 +355,44 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         }
         currPlace = 0;
         currSandwich = [];
-        // currSandSprites = [];
+        currSandSprites = [];
         currDelts = {};
         currCustomer = null;
         currOrderElem = null;
     },
 
-    // BlueRoom.Game.prototype.trashButton = function () {
-    //     if (nonSandwich.length != 0) {
-    //         for (var i=0; i<nonSandwich.length; i++) {
-    //             movableElements.remove(nonSandwich[i]);
-    //         }
-    //     }
-    //     if (currSandSprites.length != 0) {
-    //         console.log(currSandSprites.length);
-    //         for (var i=0; i<currSandSprites.length; i++) {
-    //             movableElements.remove(currSandSprites[i]);
-    //         }
-    //         currOrderElem.destroy();
-    //         exclamation.visible = true;
-    //         var t = this.add.tween(exclamation).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
-    //         t.onComplete.add(function () {
-    //             currSandwich = [];
-    //             currDelts = {};
-    //             currSandSprites = [];
-    //             currPlace = 0;
-    //             exclamation.visible = false;
-    //             exclamation.alpha = 1;
+    BlueRoom.Game.prototype.trashButton = function () {
+        if (nonSandwich.length != 0) {
+            for (var i=0; i<nonSandwich.length; i++) {
+                movableElements.remove(nonSandwich[i]);
+            }
+        }
+        if (currSandSprites.length != 0) {
+            console.log(currSandSprites.length);
+            for (var i=0; i<currSandSprites.length; i++) {
+                movableElements.remove(currSandSprites[i]);
+            }
+            currOrderElem.destroy();
+            exclamation.visible = true;
+            var t = this.add.tween(exclamation).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
+            t.onComplete.add(function () {
+                currSandwich = [];
+                currDelts = {};
+                currSandSprites = [];
+                currPlace = 0;
+                exclamation.visible = false;
+                exclamation.alpha = 1;
 
-    //             var f = currCustomer.order.ingreds[0].type;
-    //             // sandwichViewElements.push(this.add.sprite(160, -30, "speechBubble"));
-    //             currOrderElem = this.add.sprite(400, 60, f);
-    //             currOrderElem.alpha = 0;
+                var f = currCustomer.order.ingreds[0].type;
+                // sandwichViewElements.push(this.add.sprite(160, -30, "speechBubble"));
+                currOrderElem = this.add.sprite(400, 60, f);
+                currOrderElem.alpha = 0;
 
-    //             this.add.tween(currOrderElem).to( { alpha: 1 }, 500, Phaser.Easing.Linear.None, true);
-    //             sandwichViewElements.push(currOrderElem);
-    //         }, this);
-    //     }
-    // },
+                this.add.tween(currOrderElem).to( { alpha: 1 }, 500, Phaser.Easing.Linear.None, true);
+                sandwichViewElements.push(currOrderElem);
+            }, this);
+        }
+    },
     
     BlueRoom.Game.prototype.orderElems= function () {
         // console.log("orderElems");
@@ -402,7 +401,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         window.setInterval(function() {
             if (currCustomer == null)  {
                 currThis.noCustomer();
-                // nonSandwich.push(nonSandElem);
+                nonSandwich.push(nonSandElem);
                 return;
             }
             if (transitioning) {
@@ -421,17 +420,16 @@ BlueRoom.Game.prototype.createSandwichView= function () {
                 }
 
                 if (item.key != currCustomer.order.ingreds[currPlace].type) {
-                    // if (Math.abs(item.x-firstX) > 60) {
-                    //     currThis.showGlasses();
-                    // } else {
+                    if (Math.abs(item.x-firstX) > 60) {
+                        currThis.showGlasses();
+                    } else {
                         currThis.showSad();
-                    // }
+                    }
                 } else if (Math.abs(item.x-firstX) < 10) {
                     currThis.showHappy();
+                } else if (Math.abs(item.x-firstX) > 50) {
+                    currThis.showNo();
                 }
-                // } else if (Math.abs(item.x-firstX) > 50) {
-                //     currThis.showNo();
-                // }
                 currSandwich.push(item.key);
                 currSandSprites.push(item);
                 currDelts[item.key] = Math.abs((item.x-firstX)/100);
@@ -449,7 +447,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
                         }
                         currThis.sandwichComplete();
                         // console.log(sideEye.x);
-                        // sideEye.visible = false;
+                        sideEye.visible = false;
                         sideEye.x = 200;
                         // console.log(sideEye.x);
                     
@@ -458,7 +456,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
                         //get next customer
                         currPlace = 0;
                         currSandwich = [];
-                        // currSandSprites = [];
+                        currSandSprites = [];
                         currDelts = {};
                         currCustomer = null;
                         currOrderElem = null;
@@ -538,11 +536,11 @@ BlueRoom.Game.prototype.createSandwichView= function () {
                     i--;
                     window.setTimeout(function(){
                         e.body.moves = false;
-                        // if (currCustomer != null) {
+                        if (currCustomer != null) {
                             collidedElem = e;
-                        // } else {
-                        //     nonSandElem = e;
-                        // }
+                        } else {
+                            nonSandElem = e;
+                        }
                         stopUpdate = false;
                     }, 1);
                 } 
@@ -566,5 +564,4 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         }
     };
     
-
 
