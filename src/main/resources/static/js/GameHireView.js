@@ -1,6 +1,7 @@
 var hireViewElements = new Array();
 var NUMBEROFHIRES = 3;
-var currentlyDisplayedHire = 0;
+var nextHire = 0;
+var hireList = ["erik", "alex", "rachel"];
 
 BlueRoom.Game.prototype.createHireView= function () {
 	var bg = this.add.sprite(0, 0, 'dayEndBg');
@@ -36,10 +37,10 @@ BlueRoom.Game.prototype.createHireView= function () {
 	// e1.anchor.setTo(0.5, 0.5)
 	// hireViewElements.push(e1);
 
-	this.hireA = game.add.sprite(hireboxX, hireboxY, 'e0');
+	this.hireA = game.add.sprite(hireboxX, hireboxY, hireList[0]);
     this.hireA.anchor.setTo(0.5, 0.5);
 
-    this.hireB = game.add.sprite(hireboxX, hireboxY, 'e1');
+    this.hireB = game.add.sprite(hireboxX, hireboxY, hireList[1]);
     this.hireB.anchor.setTo(0.5, 0.5);
     this.hireB.alpha = 0;
 
@@ -47,13 +48,13 @@ BlueRoom.Game.prototype.createHireView= function () {
     hireViewElements.push(this.hireB);
 
 
-	var next = this.add.button(230, 275, 'next', this.fadeHires, this);
-	next.anchor.setTo(0.5, 0,5);
-	hireViewElements.push(next);
-	var prev = this.add.button(825, 275, 'prev', this.fadeHires, this);
+	var prev = this.add.button(230, 275, 'prev', this.fadeHireBackward, this);
 	prev.anchor.setTo(0.5, 0,5);
 	hireViewElements.push(prev);
-
+	var next = this.add.button(825, 275, 'next', this.fadeHireForward, this);
+	next.anchor.setTo(0.5, 0,5);
+	hireViewElements.push(next);
+ 
 
 	// var starList = new Array();
 	// var stars = ['oneStar', 'twoStar', 'threeStar', 'fourStar', 'fiveStar'];
@@ -72,47 +73,82 @@ BlueRoom.Game.prototype.createHireView= function () {
 };
 
 
-
-BlueRoom.Game.prototype.fadeHires = function() {
-
-    //  Cross-fade the two pictures
-    var tween;
-
-    if (this.hireA.alpha === 1)
+BlueRoom.Game.prototype.fadeHireForward = function() {
+    nextHire++;
+ 	if (nextHire >= NUMBEROFHIRES)
     {
-        tween = game.add.tween(this.hireA).to( { alpha: 0 }, 200, Phaser.Easing.Linear.None, true);
-        game.add.tween(this.hireB).to( { alpha: 1 }, 400, Phaser.Easing.Linear.None, true);
+        nextHire = 0;
+    }
+    this.updateNext(this.hireA, this.hireB, hireList[nextHire]);
+};
 
+BlueRoom.Game.prototype.fadeHireBackward = function() {
+    nextHire--;
+ 	if (nextHire < 0)
+    {
+        nextHire = NUMBEROFHIRES-1;
+    }
+    this.updateNext(this.hireA, this.hireB, hireList[nextHire]);
+ };
+
+BlueRoom.Game.prototype.updateNext = function(thingA, thingB, newImg) {
+	if (thingA.alpha === 0)
+    {
+        thingA.loadTexture(newImg);
+        game.add.tween(thingA).to( { alpha: 1 }, 400, Phaser.Easing.Linear.None, true);
+        tween = game.add.tween(thingB).to( { alpha: 0 }, 200, Phaser.Easing.Linear.None, true);
     }
     else
     {
-        game.add.tween(this.hireA).to( { alpha: 1 }, 400, Phaser.Easing.Linear.None, true);
-        tween = game.add.tween(this.hireB).to( { alpha: 0 }, 200, Phaser.Easing.Linear.None, true);
-    }
-
-    //  When the cross-fade is complete we swap the image being shown by the now hidden picture
-    tween.onComplete.add(this.changePicture, this);
-
-};
-
-BlueRoom.Game.prototype.changePicture= function() {
-    if (this.hireA.alpha === 0)
-    {
-        this.hireA.loadTexture("e" + currentlyDisplayedHire);
-    }
-    else
-    {
-        this.hireB.loadTexture("e" + currentlyDisplayedHire);
-    }
-
-    currentlyDisplayedHire++;
-    console.log(currentlyDisplayedHire);
-
-    if (currentlyDisplayedHire >= NUMBEROFHIRES)
-    {
-        currentlyDisplayedHire = 0;
+        thingB.loadTexture(newImg);
+        tween = game.add.tween(thingA).to( { alpha: 0 }, 200, Phaser.Easing.Linear.None, true);
+        game.add.tween(thingB).to( { alpha: 1 }, 400, Phaser.Easing.Linear.None, true);
     }
 };
+
+
+// BlueRoom.Game.prototype.fadeHires = function() {
+
+//     //  Cross-fade the two pictures
+//     var tween;
+
+//     if (this.hireA.alpha === 1)
+//     {
+//         tween = game.add.tween(this.hireA).to( { alpha: 0 }, 200, Phaser.Easing.Linear.None, true);
+//         game.add.tween(this.hireB).to( { alpha: 1 }, 400, Phaser.Easing.Linear.None, true);
+
+//     }
+//     else
+//     {
+//         game.add.tween(this.hireA).to( { alpha: 1 }, 400, Phaser.Easing.Linear.None, true);
+//         tween = game.add.tween(this.hireB).to( { alpha: 0 }, 200, Phaser.Easing.Linear.None, true);
+//     }
+
+//     this.changeHireToNext();
+
+//     //  When the cross-fade is complete we swap the image being shown by the now hidden picture
+//     // tween.onComplete.add(this.changeHireToNext, this);
+
+// };
+
+// BlueRoom.Game.prototype.changeHireToNext= function() {
+//     if (this.hireA.alpha === 0)
+//     {
+//         this.hireA.loadTexture("e" + nextHire);
+//     }
+//     else
+//     {
+//         this.hireB.loadTexture("e" + nextHire);
+//     }
+
+//     nextHire++;
+//     console.log(nextHire);
+
+//     if (nextHire >= NUMBEROFHIRES)
+//     {
+//         nextHire = 0;
+//     }
+// };
 
 // BlueRoom.Game.prototype.showHireView= function(){
 //     hireViewElements.forEach(function(item){

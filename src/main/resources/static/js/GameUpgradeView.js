@@ -23,7 +23,6 @@ BlueRoom.Game.prototype.createUpgradeView= function () {
 	upgradeCostList["bakery"] = 1000;
 	upgradeCostList["magazineRack"] = 50;
 
-
 	var labelStyle = { font: "16px Verdana", fill: "#000000", align: "center"};
 	var currbalance = this.game.add.text(this.game.width/2, 140, 'Current Balance: $' + statusBar.money.toFixed(2), labelStyle);
 	currbalance.anchor.setTo(0.5, 0,5);
@@ -42,11 +41,6 @@ BlueRoom.Game.prototype.createUpgradeView= function () {
 	var upgradeboxX = this.game.width/2;
 	var upgradeboxY = 325;
 
-	// var hireList = new Array();
-	// var e1 = this.add.sprite(this.game.width/2, 325, 'e3');
-	// e1.anchor.setTo(0.5, 0.5)
-	// upgradeViewElements.push(e1);
-
 	this.upgradeA = game.add.sprite(upgradeboxX, upgradeboxY, upgradeList[0]);
     this.upgradeA.anchor.setTo(0.5, 0.5);
 
@@ -57,24 +51,13 @@ BlueRoom.Game.prototype.createUpgradeView= function () {
     upgradeViewElements.push(this.upgradeA);
     upgradeViewElements.push(this.upgradeB);
 
-
-	var next = this.add.button(230, 275, 'next', this.fadeUpgrades, this);
-	next.anchor.setTo(0.5, 0,5);
-	upgradeViewElements.push(next);
-	var prev = this.add.button(825, 275, 'prev', this.fadeUpgrades, this);
+	var prev = this.add.button(230, 275, 'prev', this.fadeUpgradeBackward, this);
 	prev.anchor.setTo(0.5, 0,5);
 	upgradeViewElements.push(prev);
+	var next = this.add.button(825, 275, 'next', this.fadeUpgradeForward, this);
+	next.anchor.setTo(0.5, 0,5);
+	upgradeViewElements.push(next);
 
-
-	// var starList = new Array();
-	// var stars = ['oneStar', 'twoStar', 'threeStar', 'fourStar', 'fiveStar'];
-
-	// for (var i = 0; i < 5; i++){
-		// var st = this.add.sprite(0, 0, stars[i]);
-		// upgradeViewElements.push(st);
-	// 	starList.push(st);
-	// }
-	
 	managerView = false;
 	sandwichView = false;
 	this.managerButton.visible = false;
@@ -83,54 +66,31 @@ BlueRoom.Game.prototype.createUpgradeView= function () {
 };
 
 
-
-BlueRoom.Game.prototype.fadeUpgrades = function() {
-
-    //  Cross-fade the two pictures
-    var tween;
-
-    if (this.upgradeA.alpha === 1)
-    {
-        tween = game.add.tween(this.upgradeA).to( { alpha: 0 }, 200, Phaser.Easing.Linear.None, true);
-        game.add.tween(this.upgradeB).to( { alpha: 1 }, 400, Phaser.Easing.Linear.None, true);
-        costtext.setText("Cost: $" + upgradeCostList[this.upgradeB.key]);
-    }
-    else
-    {
-        game.add.tween(this.upgradeA).to( { alpha: 1 }, 400, Phaser.Easing.Linear.None, true);
-        tween = game.add.tween(this.upgradeB).to( { alpha: 0 }, 200, Phaser.Easing.Linear.None, true);
-        costtext.setText("Cost: $" + upgradeCostList[this.upgradeA.key]);
-    }
-
-    //  When the cross-fade is complete we swap the image being shown by the now hidden picture
-    tween.onComplete.add(this.changeUpgradeToNext, this);
-
-};
-
-BlueRoom.Game.prototype.changeUpgradeToNext= function() {
-    if (this.upgradeA.alpha === 0)
-    {
-        this.upgradeA.loadTexture(upgradeList[currentlyDisplayedUpgrade]);
-    }
-    else
-    {
-        this.upgradeB.loadTexture(upgradeList[currentlyDisplayedUpgrade]);
-    }
-
+BlueRoom.Game.prototype.fadeUpgradeForward = function() {
     currentlyDisplayedUpgrade++;
-    console.log(currentlyDisplayedUpgrade);
-
-    if (currentlyDisplayedUpgrade >= NUMBEROFUPGRADES)
+ 	if (currentlyDisplayedUpgrade >= NUMBEROFUPGRADES)
     {
         currentlyDisplayedUpgrade = 0;
     }
+    this.updateNext(this.upgradeA, this.upgradeB, upgradeList[currentlyDisplayedUpgrade]);
 };
 
-// BlueRoom.Game.prototype.showUpgradeView= function(){
-//     upgradeViewElements.forEach(function(item){
-//         item.visible = true;
-//     });
-// };
+BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
+    currentlyDisplayedUpgrade--;
+
+ 	if (currentlyDisplayedUpgrade < 0)
+    {
+        currentlyDisplayedUpgrade = NUMBEROFUPGRADES-1;
+    }
+    this.updateNext(this.upgradeA, this.upgradeB, upgradeList[currentlyDisplayedUpgrade]);
+ };
+
+
+// // BlueRoom.Game.prototype.showUpgradeView= function(){
+// //     upgradeViewElements.forEach(function(item){
+// //         item.visible = true;
+// //     });
+// // };
 
 BlueRoom.Game.prototype.hideUpgradeView= function(){
 	upgradeViewElements.forEach(function(item){
