@@ -119,13 +119,14 @@ public class Server {
       System.out.println(id);
 
       String type = qm.value("type");
+      double happiness = Double.parseDouble(qm.value("happiness"));
 
       System.out.println(qm.value("ingredients"));
 
       List<String> lingredients = GSON.fromJson(qm.value("ingredients"), List.class);
-      List<String> ingredients = lingredients.subList(1, lingredients.size()-1);
+      lingredients = lingredients.subList(1, lingredients.size()-1);
 
-
+      Bread b = null;
     //recieves what makes up the purchase in the form of a map which maps
       //each part of the purchase to how far it was from the center (sandwiches)
       //how far from well cooked it is (bakery good)
@@ -145,28 +146,45 @@ public class Server {
           System.out.println(itemName);
           Double val = e.getValue();
           SandwichIngredient ing = new SandwichIngredient(itemName);
-          sWichIng.add(ing);
+          //sWichIng.add(ing);
           sWichMap.put(ing, val);
+        }
+        for (String s : lingredients) {
+          sWichIng.add(new SandwichIngredient(s));
         }
         String bread = qm.value("bread");
         System.out.println(bread);
 
-        Bread b = new Bread(bread);
+        b = new Bread(bread);
         //get the bread out of this and do something with it
         purchase = new Sandwich(sWichIng, sWichMap, b);
         System.out.println(purchase);
+
       } else {
         purchase = null;
         System.out.println("Not a sandwich - no other foods implemented yet");
       }
       Customer customer = gameManager.getCustomer(id);
+      try {
+
+      Sandwich oldOrder = (Sandwich) customer.getOrder();
+      
+      List<SandwichIngredient> old = oldOrder.getIngredients();
+      List<SandwichIngredient> updated = new ArrayList<>(old);
+      updated.remove(0);
+      updated.remove(updated.size() - 1);
+      Sandwich newSandwich = new Sandwich(updated, b);
+      customer.setOrder(newSandwich);
+      System.out.println(customer.getOrder());
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
 
       // SHANNON: make sure you set the customer's happiness to the right level before passing in
       // or maybe the javascript side will have already given the right happiness?
-      customer.setHappiness(1);
+      customer.setHappiness(happiness);
+      System.out.println(customer.getHappiness());
       double moneyMade = gameManager.purchase(purchase, customer);
-      System.out.println(moneyMade);
-
 
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("moneyMade", moneyMade).build();

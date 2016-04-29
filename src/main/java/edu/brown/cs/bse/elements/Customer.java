@@ -27,6 +27,10 @@ public class Customer {
   public FoodItem getOrder() {
     return order;
   }
+  
+  public void setOrder(FoodItem newOrder) {
+    order = newOrder;
+  }
 
   public String getStation() {
     return station;

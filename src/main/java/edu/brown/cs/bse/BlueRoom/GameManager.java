@@ -31,6 +31,7 @@ public class GameManager {
   }
 
   public double purchase(FoodItem purchase, Customer cust) {
+    System.out.println("purchase method called");
     double price = purchase.getPrice();
     price += (purchase.compareToOrder(cust.getOrder()) * cust.getHappiness() * 6);
     manager.handlePurchase(price, cust.getStation());
