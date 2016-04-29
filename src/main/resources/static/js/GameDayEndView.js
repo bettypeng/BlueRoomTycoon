@@ -7,10 +7,10 @@ BlueRoom.Game.prototype.createDayEndView= function () {
 	// var exit = this.add.button(50, 50, 'exitButton', this.destroyDayEndView, this);
 
 
-    var titleStyle = { font: "60px Verdana", fill: "#000000", align: "center"};
+    var titleStyle = { font: "60px Roboto", fill: "#000000", align: "center"};
 	var title = this.game.add.text(this.game.width/2, 50, 'End of Day Summary:', titleStyle);
 	title.anchor.setTo(0.5, 0,5);
-	var labelStyle = { font: "30px Verdana", fill: "#000000", align: "center"};
+	var labelStyle = { font: "30px Roboto Light", fill: "#000000", align: "center"};
 	var today = this.game.add.text(this.game.width/4, 150, 'Today', labelStyle);
 	today.anchor.setTo(0.5, 0,5);
 	var tips = this.game.add.text(40, 180, 'Tips:', labelStyle);
@@ -54,6 +54,7 @@ BlueRoom.Game.prototype.createDayEndView= function () {
 
 	managerView = false;
 	sandwichView = false;
+	dayEndView = true;
 	this.managerButton.visible = false;
 	this.sandwichButton.visible = false;
 
@@ -73,5 +74,6 @@ BlueRoom.Game.prototype.destroyDayEndView= function(){
 	});
 	managerView = true;
 	sandwichView = false;
+	dayEndView = false;
 	this.resetGameDay();
 };

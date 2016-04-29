@@ -1,4 +1,5 @@
 var sign;
+var CUSTOMERHAPPINESSINTERVAL = 80;
 //var currThis = this;
 
 function Customer(id, station, order){
@@ -127,7 +128,7 @@ Customer.prototype = {
             if(managerView && !currCust.moving){
           		currCust.happinessBarProgress-=0.1;
             }
-      	}, 100);
+      	}, CUSTOMERHAPPINESSINTERVAL);
 
         this.myTimer = setInterval(function(){
             if(managerView){
