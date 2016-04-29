@@ -30,6 +30,7 @@ var transitioning = false;
 
 // var currCustomer = ["bottom_bun", "roast_beef", "cheese", "lettuce", "top_bun"];
 var currCustomer = null;
+var currCustomerOrder = [];
 var currOrderElem = null;
 var currPlace = 0;
 var currOrder;
@@ -422,7 +423,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
                     firstX = item.x;
                 }
 
-                if (item.key != currCustomer.order.ingreds[currPlace].type) {
+                if (item.key != currCustomerOrder[currPlace]) {
                     if (Math.abs(item.x-firstX) > 60) {
                         currThis.showGlasses();
                     } else {
@@ -435,9 +436,9 @@ BlueRoom.Game.prototype.createSandwichView= function () {
                 }
                 currSandwich.push(item.key);
                 currSandSprites.push(item);
-                currDelts[item.key] = Math.abs((item.x-firstX)/100);
+                currDelts[currPlace] = Math.abs((item.x-firstX)/100);
                 
-                if (currPlace == (currCustomer.order.ingreds.length-1)) {
+                if (currPlace == (currCustomerOrder.length-1)) {
                     currOrderElem.destroy();
                     transitioning = true;
                     currThis.noCustomer();
@@ -486,7 +487,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
                     // console.log("here");
                     currPlace++;
                     currOrderElem.destroy();
-                    currOrderElem = currThis.add.sprite(400, 60, currCustomer.order.ingreds[currPlace].type);
+                    currOrderElem = currThis.add.sprite(400, 60, currCustomerOrder[currPlace]);
                     currOrderElem.alpha = 0;
 
                     currThis.add.tween(currOrderElem).to( { alpha: 1 }, 1000, Phaser.Easing.Linear.None, true);
@@ -512,13 +513,18 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         if (sandwichLine.length != 0 && currCustomer == null) {
             console.log("here");
             currCustomer = sandwichLine[0];
+            // currCustomerOrder.push('bottom_bun');
+            for (var i=0; i<currCustomer.order.ingreds; i++) {
+                currCustomerOrder.push(currCustomer.order.ingreds[i].type);
+            }
+            // currCustomer.push('top_bun');
             this.showNeutral();
             speechBubble.visible = true;
             console.log(currCustomer);
         }
         
         if (currCustomer != null && currOrderElem == null) {
-            var f = currCustomer.order.ingreds[0].type;
+            var f = currCustomerOrder[0];
             // sandwichViewElements.push(this.add.sprite(160, -30, "speechBubble"));
             currOrderElem = this.add.sprite(400, 60, f);
             currOrderElem.alpha = 0;
