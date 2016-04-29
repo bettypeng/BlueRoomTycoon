@@ -38,6 +38,8 @@ var firstX;
 var collidedElem = null;
 var stopUpdate = false;
 
+var mypointer;
+
 var movableElems = [];
 var sandwichViewElements = new Array();
 
@@ -84,9 +86,10 @@ BlueRoom.Game.prototype.createSandwichView= function () {
 
         sandwichViewElements.push(dropZone);
 
-        var mypointer = this.add.sprite(940, 45, 'pointer');
+        mypointer = this.add.sprite(940, 45, 'pointer');
         mypointer.anchor.setTo(0.5, 0.5);
         this.add.tween(mypointer).to({y: 70}, 1000, Phaser.Easing.Quadratic.InOut, true, 0, Infinity, true);
+        mypointer.alpha = 0;
         sandwichViewElements.push(mypointer);
 
         staticElements = this.add.group();
@@ -128,8 +131,6 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         // movableElements.setAll('body.collideWorldBounds', true);
         //
         //elements.setAll('body.gravity.y', 2000);
-
-
 
     };
 
@@ -264,11 +265,13 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         sprite.loadTexture(dragOut, 0);
         console.log("DRAGGING");
         dragPosition.set(sprite.x, sprite.y);
+        mypointer.alpha = 1;
     },
     
     BlueRoom.Game.prototype.onDragStop= function(sprite, pointer) {
         dragging = false;
         sprite.body.moves = true;
+        mypointer.alpha = 0;
     
         if (!sprite.overlap(dropZone) || sprite.overlap(platform))
         {
