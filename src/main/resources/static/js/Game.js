@@ -36,7 +36,7 @@ var daytext;
 var ampmtext;
 var closedtext;
 
-var dayCounter = 0;
+var dayCounter = 4;
 var twelveCounter = 0;
 
 var MANAGERTIMEINTERVAL = 50; //250 standard
@@ -260,7 +260,7 @@ BlueRoom.Game.prototype = {
             }
             if(statusBar.day[dayCounter%7]=="Saturday" || statusBar.day[dayCounter%7]=="Sunday"){
                   if(statusBar.hour==5 && twelveCounter==1){
-                    ifBlueRoomOpen = false;
+                    isBlueRoomOpen = false;
                     console.log("WEEKEND END");
                     clearInterval(gameTimer);
                     myGame.closedSign(true);
