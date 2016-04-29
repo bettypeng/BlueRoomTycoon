@@ -32,7 +32,7 @@ public class GameManager {
 
   public double purchase(FoodItem purchase, Customer cust) {
     double price = purchase.getPrice();
-    price += (purchase.compareToOrder(cust.getOrder()) * cust.getHappiness() * 3);
+    price += (purchase.compareToOrder(cust.getOrder()) * cust.getHappiness() * 6);
     manager.handlePurchase(price, cust.getStation());
     return price;
   }

@@ -27,7 +27,7 @@ public class Sandwich extends FoodItem {
     this.ingreds = ingredients;
     this.bread = bread;
     this.deltas = deltas;
-    setPrice(6.95);
+    setPrice(4);
   }
 
   public Sandwich(Employee emp, Sandwich ordered) {
