@@ -70,7 +70,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         sandwichViewElements.push(neutral);
         sandwichViewElements.push(sideEye);
         sandwichViewElements.push(speechBubble);
-        sandwichViewElements.push(trash);
+        //sandwichViewElements.push(trash);
 
         //BlueRoom.Game.prototype.create.call(this);
         var swbg = this.add.sprite(0, 0, 'sandwichBg2');
@@ -312,10 +312,10 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         currOrderElem = null;
     },
 
-    BlueRoom.Game.prototype.trash = function () {
+    /*BlueRoom.Game.prototype.trash = function () {
         if (nonSandwich.length != 0) {
             for (var i=0; i<nonSandwich.length; i++) {
-                movableElements.remove(nonSandwich)[i]);
+                movableElements.remove(nonSandwich[i]);
             }
         }
         if (currSandSprites.length != 0) {
@@ -325,7 +325,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
             currSandwich = [];
             currDelts = {};
         }
-    }
+    },*/
     
     BlueRoom.Game.prototype.orderElems= function () {
         // console.log("orderElems");

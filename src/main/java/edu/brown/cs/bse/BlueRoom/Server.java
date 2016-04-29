@@ -85,6 +85,7 @@ public class Server {
     Spark.post("/employee", new EmployeeHandler());
     Spark.post("/newstation", new NewStationHandler());
     Spark.post("/line", new LineHandler());
+    Spark.post("/interval", new IntervalHandler());
 
   }
 
@@ -143,29 +144,24 @@ public class Server {
 
         for (Entry<String, Double> e: ingMap.entrySet()) {
           String itemName = e.getKey();
-          System.out.println(itemName);
           Double val = e.getValue();
           SandwichIngredient ing = new SandwichIngredient(itemName);
-          //sWichIng.add(ing);
           sWichMap.put(ing, val);
         }
         for (String s : lingredients) {
           sWichIng.add(new SandwichIngredient(s));
         }
         String bread = qm.value("bread");
-        System.out.println(bread);
 
         b = new Bread(bread);
         //get the bread out of this and do something with it
         purchase = new Sandwich(sWichIng, sWichMap, b);
-        System.out.println(purchase);
 
       } else {
         purchase = null;
         System.out.println("Not a sandwich - no other foods implemented yet");
       }
       Customer customer = gameManager.getCustomer(id);
-      try {
 
       Sandwich oldOrder = (Sandwich) customer.getOrder();
       
@@ -176,9 +172,6 @@ public class Server {
       Sandwich newSandwich = new Sandwich(updated, b);
       customer.setOrder(newSandwich);
       System.out.println(customer.getOrder());
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
 
       // SHANNON: make sure you set the customer's happiness to the right level before passing in
       // or maybe the javascript side will have already given the right happiness?
@@ -213,29 +206,29 @@ public class Server {
 //      return GSON.toJson(variables);
 //    }
 //  }
-//
-//  /**
-//   * Triggered at the end of the day in the game - returns to the front end
-//   * the profits of the day and for the total game-play so far
-//   * @author srw
-//   *
-//   */
-//  private class EndDayHandler implements Route {
-//    @Override
-//    public Object handle(final Request req, final Response res) {
-//      QueryParamsMap qm = req.queryMap();
-//
-//      List<Double> dailyProfits = gameManager.getDailyProfits();
-//      List<Double> totalProfits = gameManager.getTotalProfits();
-//
-//
-//      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
-//          .put("dailyProfits", dailyProfits)
-//          .put("totalProfits", totalProfits).build();
-//
-//      return GSON.toJson(variables);
-//    }
-//  }
+
+  /**
+   * Triggered at the end of the day in the game - returns to the front end
+   * the profits of the day and for the total game-play so far
+   * @author srw
+   *
+   */
+  private class EndDayHandler implements Route {
+    @Override
+    public Object handle(final Request req, final Response res) {
+      QueryParamsMap qm = req.queryMap();
+
+      DayData dailyInfo = gameManager.endDay();
+      List<Double> totalProfits = gameManager.getTotalProfits();
+
+
+      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+          .put("dailyProfits", dailyInfo)
+          .put("totalProfits", totalProfits).build();
+
+      return GSON.toJson(variables);
+    }
+  }
 
   /**
    * Triggered on interval from front end to generate a customer with a unique
@@ -361,6 +354,17 @@ public class Server {
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("results", results).build();
 
+      return GSON.toJson(variables);
+    }
+  }
+  
+  private class IntervalHandler implements Route {
+    
+    @Override
+    public Object handle(Request req, Response res) {
+      gameManager.incrCurrTime();
+      double interval = gameManager.calculateCustomerInterval();
+      Map<String, Object> variables = ImmutableMap.of("interval", interval);
       return GSON.toJson(variables);
     }
   }
