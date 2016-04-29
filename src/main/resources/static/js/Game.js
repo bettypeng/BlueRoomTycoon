@@ -1,4 +1,3 @@
-
 BlueRoom.Game = function (game) {
 
     //  When a State is added to Phaser it automatically has the following properties set on it, even if they already exist:
@@ -27,6 +26,7 @@ BlueRoom.Game = function (game) {
 var managerView = true;
 var sandwichView = false;
 
+var gameTimer;
 var gamegroup;
 var textgroup;
 var moneytext;
@@ -37,9 +37,15 @@ var ampmtext;
 var dayCounter = 0;
 var twelveCounter = 0;
 
+var MANAGERTIMEINTERVAL = 5;
+var SANDWICHTIMEINTERVAL = 500;
+
+var game;
+
 BlueRoom.Game.prototype = {
 
     create: function () {
+        game = this;
         var mygame = this;
 
         //this.add.sprite(0, 0, 'whiteBg');
@@ -60,12 +66,14 @@ BlueRoom.Game.prototype = {
         //gamegroup.add(this.coffeeButton);
         
         var status = statusBar;
-        var style = { font: "32px Arial", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "center", backgroundColor: "#ffffff" };
+        var style = { font: "32px Arial", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "left", boundsAlignH: "left", backgroundColor: "#ffffff" };
 
-        moneytext = this.game.add.text(70, 650, '$' + (status.money.toFixed(2)), style);
-        daytext = this.game.add.text(500, 650,  status.day[dayCounter], style);
+        moneytext = this.game.add.text(100, 650, '$' + (status.money.toFixed(2)), style);
+        daytext = this.game.add.text(500, 650,  status.day[dayCounter%7], style);
         timetext = this.game.add.text(900, 650,  status.hour + ':' + status.minute, style);
         ampmtext = this.game.add.text(970, 650,  status.ampm[twelveCounter%2], style);
+
+        this.moneytextTween = this.add.tween(moneytext.scale).to({ x: 1.5, y: 1.5}, 200, Phaser.Easing.Linear.In).to({ x: 1, y: 1}, 200, Phaser.Easing.Linear.In);
 
 
         console.log(status.money);
@@ -79,23 +87,32 @@ BlueRoom.Game.prototype = {
             item.anchor.set(0.5);
         });
         
-        this.managerTime();
+        this.setTimer(MANAGERTIMEINTERVAL);
+        this.managerButton.alpha = 0.5;
       
         this.createManager();
         this.createSandwichView();
         this.hideSandwichView();
+       
         //this.showSandwichView();
         
         function goToManagerView(pointer) {
 		    managerView = true;
 		    sandwichView = false;
 		    mygame.hideSandwichView();
+            this.managerButton.alpha = 0.5;
+            this.sandwichButton.alpha = 1;
+
+            this.setTimer(MANAGERTIMEINTERVAL);
     	};
     	
     	function goToSandwichView(pointer) {
     	    sandwichView = true;
     	    managerView = false;
     	    mygame.showSandwichView();
+            this.sandwichButton.alpha = 0.5;
+            this.managerButton.alpha = 1;
+            this.setTimer(SANDWICHTIMEINTERVAL);
     	};
     	
     	function goToCoffeeView(pointer) {
@@ -110,22 +127,75 @@ BlueRoom.Game.prototype = {
 
     },
     
-    addMoney: function(amt){
-        statusBar.money += amt;
+    // addMoney: function(amt){
+    //     statusBar.money += Number(amt);
+    // },
+
+    // loseMoney: function(amt){
+    //     statusBar.money -= amt;
+    // },
+
+    addMoney: function(x, y, message, amt){
+        var scoreFont = "20px Arial";
+        //Create a new label for the score
+        var scoreAnimation = this.game.add.text(x, y, message, {font: scoreFont, fill: "#39d179", stroke: "#ffffff", strokeThickness: 15}); 
+        scoreAnimation.anchor.setTo(0.5, 0);
+        scoreAnimation.align = 'center';
+     
+        //Tween this score label to the total score label
+        var scoreTween = this.game.add.tween(scoreAnimation).to({x:this.game.world.centerX, y: 50}, 800, Phaser.Easing.Exponential.In, true);
+     
+        //When the animation finishes, destroy this score label, trigger the total score labels animation and add the score
+        scoreTween.onComplete.add(function(){
+            scoreAnimation.destroy();
+            this.moneytextTween.start();
+            statusBar.money += Number(amt);
+        }, this);
     },
+
+    loseMoney: function(x, y, message, amt){
+        var scoreFont = "20px Arial";
+        //Create a new label for the score
+        var scoreAnimation = this.game.add.text(x, y, message, {font: scoreFont, fill: "#cc0000", stroke: "#ffffff", strokeThickness: 15}); 
+        scoreAnimation.anchor.setTo(0.5, 0);
+        scoreAnimation.align = 'center';
+     
+        //Tween this score label to the total score label
+        var scoreTween = this.game.add.tween(scoreAnimation).to({x:this.game.world.centerX, y: 50}, 1000, Phaser.Easing.Exponential.In, true);
+     
+        //When the animation finishes, destroy this score label, trigger the total score labels animation and add the score
+        scoreTween.onComplete.add(function(){
+            scoreAnimation.destroy();
+            this.moneytextTween.start();
+            statusBar.money -= Number(amt);
+        }, this);
+    },
+
+    // incrementMoney: function(){
+    //     statusBar.money = statusBar.money + .01;   
+    //     statusBar.money.toFixed(2);
+    //     moneytext.text = '$' + statusBar.money;     
+    // },
 
     update: function () {
         this.game.world.bringToTop(gamegroup);
-        moneytext.setText('$' + (statusBar.money.toFixed(2)));
+
+        // if(statusBar.moneyBuffer > 0){
+        //     this.incrementMoney();
+        //     statusBar.moneyBuffer-=1;
+        //     console.log(statusBar.moneyBuffer);
+        // }
+
         var minute;
         if(statusBar.minute < 10){
             minute = '0' + statusBar.minute;
         } else {
             minute = statusBar.minute;
         }
+        moneytext.setText('$' + statusBar.money.toFixed(2));
         timetext.setText(statusBar.hour + ':' + minute);
         ampmtext.setText(statusBar.ampm[twelveCounter%2]);
-        daytext.setText(statusBar.day[dayCounter]);
+        daytext.setText(statusBar.day[dayCounter%7]);
 
 
         this.game.world.bringToTop(textgroup);
@@ -138,16 +208,20 @@ BlueRoom.Game.prototype = {
         }
     },
     
-    managerTime: function(){
-        window.setInterval(function(){
+
+    setTimer: function(inc){
+        var myGame = this;
+        clearInterval(gameTimer);
+        gameTimer = setInterval(function(){
             if(statusBar.minute < 59){
                 statusBar.minute+=1;
-            } else{
+            } 
+            else{
                 if(statusBar.hour==11){
                     twelveCounter++;
-                    if(twelveCounter%2 == 0){
-                        dayCounter +=1;
-                    }
+                    // if(twelveCounter%2 == 0){
+                    //     dayCounter +=1;
+                    // }
                 }
                 if(statusBar.hour>=12){
                     statusBar.hour = 1;
@@ -157,7 +231,37 @@ BlueRoom.Game.prototype = {
                 }
                 statusBar.minute = 0;
             }
-        }, 300);
+            if(statusBar.day[dayCounter%7]=="Saturday" || statusBar.day[dayCounter%7]=="Sunday"){
+                  if(statusBar.hour==5 && twelveCounter==1){
+                    console.log("WEEKEND END");
+                    clearInterval(gameTimer);
+                    myGame.createDayEndView();
+                }
+            } 
+            else{
+                if(statusBar.hour==9 && twelveCounter==1){
+                    console.log("WEEKDAY END");
+                    clearInterval(gameTimer);
+                    myGame.createDayEndView();
+                }
+            }
+        }, inc);
+    },
+
+    resetGameDay: function(){
+        dayCounter +=1;
+        //if(statusBar.day[dayCounter%7]=='Monday' || statusBar.day[dayCounter%7]=='Tuesday' || statusBar.day[dayCounter%7]=='Wednesday' || statusBar.day[dayCounter%7]=='Thursday' || statusBar.day[dayCounter%7]=='Friday'){
+        if(statusBar.day[dayCounter%7]=="Saturday" || statusBar.day[dayCounter%7]=="Sunday"){
+            statusBar.hour = 9;
+            statusBar.minute = 0;
+            twelveCounter = 0;
+        }
+        else {
+            statusBar.hour = 7;
+            statusBar.minute = 30;
+            twelveCounter = 0;
+        } 
+        this.setTimer(MANAGERTIMEINTERVAL);
     },
 
     quitGame: function (pointer) {

@@ -9,10 +9,15 @@
 	<script src="js/Preloader.js"></script>
 	<script src="js/MainMenu.js"></script>
 	<script src="js/About.js"></script>
+
+	<script src="js/Game.js"></script>
 	<script src="js/StatusBar.js"></script>
 	<script src="js/Customer.js"></script>
-	<script src="js/Game.js"></script>
 	<script src="js/Server.js"></script>
+	<script src="js/GameDayEndView.js"></script>
+	<script src="js/GameInventoryView.js"></script>
+	<script src="js/GameUpgradeView.js"></script>
+	<script src="js/GameHireView.js"></script>
 	<script src="js/GameManagerView.js"></script>
 	<script src="js/GameSandwichView.js"></script>
 	<script src="js/GameCoffeeView.js"></script>

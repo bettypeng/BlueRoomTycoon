@@ -22,50 +22,90 @@ BlueRoom.Preloader.prototype = {
 		//	Load the rest of the assets our game needs.
 
 		// MAINMENU
-		this.load.image('titlepage', 'js/images/title_page.png');
-		this.load.image('playButton', 'js/images/start_game.png');
-		this.load.image('aboutButton', 'js/images/about_game.png');
+		this.load.image('titlepage', 'images/title_page.png');
+		this.load.image('playButton', 'images/start_game.png');
+		this.load.image('aboutButton', 'images/about_game.png');
 		
 		// ABOUT
-		this.load.image('nextButton', 'js/images/next.png');
-		this.load.image('smallStart', 'js/images/small_start.png');
-		this.load.image('banner', 'js/images/about_banner.png');
+		this.load.image('nextButton', 'images/next.png');
+		this.load.image('smallStart', 'images/small_start.png');
+		this.load.image('banner', 'images/about_banner.png');
 		
 		// BUTTONS
-		this.load.image('managerButton', 'js/images/game_manager_button.png');
-		this.load.image('sandwichButton', 'js/images/sandwich_view_button.png');
-		this.load.image('coffeeButton', 'js/images/coffee_view_button.png');
-		this.load.image('bakeryButton', 'js/images/bakery_view_button.png');
+		this.load.image('managerButton', 'images/game_manager_button.png');
+		this.load.image('sandwichButton', 'images/sandwich_view_button.png');
+		this.load.image('coffeeButton', 'images/coffee_view_button.png');
+		this.load.image('bakeryButton', 'images/bakery_view_button.png');
 		
 		//STATUS BAR
-		this.load.image('status_bar', 'js/images/status_bar.png');
+		this.load.image('status_bar', 'images/status_bar.png');
 
 		 
 		// BACKGROUNDS
-		this.load.image('whiteBg', 'js/images/bg.png');
-		this.load.image('managerBg', 'js/images/manager_bg.png');
-		this.load.image('sandwichBg', 'js/images/sandwich_bg.png');
-		this.load.image('sandwichBg2', 'js/images/sandwich_bg_2.png');
+		this.load.image('whiteBg', 'images/white.png');
+		this.load.image('managerBg', 'images/manager_view.png');
+		this.load.image('sandwichStation', 'images/sandwich_station.png');
+
+		this.load.image('sandwichBg', 'images/sandwich_bg.png');
+		this.load.image('sandwichBg2', 'images/sandwich_bg_2.png');
 
 		// MANAGER VIEW
-		this.load.image('customer', 'js/images/customer.png');
-		this.load.image('dollar', 'js/images/dollar.png');
-
+		this.load.image('customer', 'images/customer.png');
+		this.load.image('dollar', 'images/dollar.png');
+		this.load.image('dollarSign', 'images/dollar_sign.png');
+		this.load.image('dollarSignDark', 'images/dollar_sign_dark.png');
 		
 		//SANDWICH LINE
-		this.load.image('dropzone', 'js/images/sandwich/dropzone.png');
-		this.load.image('top_bun', 'js/images/sandwich/top_bun.png');
-		this.load.image('bottom_bun', 'js/images/sandwich/bottom_bun.png');
-		this.load.image('roast_beef', 'js/images/sandwich/roast_beef.png');
-		this.load.image('turkey', 'js/images/sandwich/turkey.png');
-		this.load.image('ham', 'js/images/sandwich/ham.png');
-		this.load.image('cheese', 'js/images/sandwich/cheese.png');
-		this.load.image('cucumber', 'js/images/sandwich/cucumber.png');
-		this.load.image('lettuce', 'js/images/sandwich/lettuce.png');
-		this.load.image('onion', 'js/images/sandwich/onion.png');
-		this.load.image('tomato', 'js/images/sandwich/tomato.png');
+		this.load.image('dropzone', 'images/sandwich/dropzone.png');
+
+		this.load.image('top_bun', 'images/sandwich/top_bun.png');
+		this.load.image('bottom_bun', 'images/sandwich/bottom_bun.png');
+		this.load.image('roast_beef', 'images/sandwich/roast_beef.png');
+		this.load.image('turkey', 'images/sandwich/turkey.png');
+		this.load.image('ham', 'images/sandwich/ham.png');
+		this.load.image('cheese', 'images/sandwich/cheese.png');
+		this.load.image('cucumber', 'images/sandwich/cucumber.png');
+		this.load.image('lettuce', 'images/sandwich/lettuce.png');
+		this.load.image('onion', 'images/sandwich/onion.png');
+		this.load.image('tomato', 'images/sandwich/tomato.png');
 		
-		this.load.image('speechBubble', 'js/images/sandwich/speech_bubble.png');
+		this.load.image('speechBubble', 'images/sandwich/speech_bubble.png');
+		this.load.image('happy', 'images/happy.png');
+		this.load.image('neutral', 'images/neutral.png');
+		this.load.image('sad', 'images/saddness.png');
+		this.load.image('leaving', 'images/leaving.png');
+		this.load.image('pointer', 'images/sandwich/down_pointer.png');
+
+		//END OF DAY VIEW
+		this.load.image('dayEndBg', 'images/day_end_bg.png');
+		this.load.image('exitButton', 'images/exit_button.png');
+		this.load.image('backButton', 'images/back_button.png');
+		this.load.image('viewInventoryButton', 'images/view_inventory_button.png');
+		this.load.image('upgradeButton', 'images/upgrade_button.png');
+		this.load.image('hireButton', 'images/hire_button.png');
+		this.load.image('exitViewButton', 'images/start_new_day.png');
+
+		// HIRE PAGE
+		this.load.image('next', 'images/next_button.png');
+		this.load.image('prev', 'images/prev_button.png');
+		this.load.image('hireMeButton', 'images/hire/hire_me_button.png');
+		// this.load.image('philPage', 'images/hire/phil.png');
+		this.load.image('e0', 'images/hire/hire_erik.png');
+		this.load.image('e1', 'images/hire/hire_alex.png');
+		this.load.image('e2', 'images/hire/hire_rachel.png');
+
+		// HIRE VIEW STAR TEMPLATES
+		this.load.image('oneStar', 'images/hire/one_star.png');
+		this.load.image('twoStar', 'images/hire/two_star.png');
+		this.load.image('threeStar', 'images/hire/three_star.png');
+		this.load.image('fourStar', 'images/hire/four_star.png');
+		this.load.image('fiveStar', 'images/hire/five_star.png');
+
+		//UPGRADE PAGE
+		this.load.image('buyButton', 'images/buy_button.png');
+		this.load.image('coffeeBar', 'images/coffee_bar.png');
+		this.load.image('bakery', 'images/bakery.png');
+		this.load.image('magazineRack', 'images/magazine_rack.png');
 
 		//this.load.atlas('playButton', 'images/play_button.png', 'images/play_button.json');
 		//this.load.audio('titleMusic', ['audio/main_menu.mp3']);

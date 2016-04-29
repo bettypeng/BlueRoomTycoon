@@ -12,7 +12,7 @@ BlueRoom.MainMenu.prototype = {
 	create: function () {
 		// this.music = this.add.audio('titleMusic');
 		// this.music.play();
-
+		this.add.sprite(0, 0, 'whiteBg');
 		this.add.sprite(0, 0, 'titlepage');
 
 		this.playButton = this.add.button(365, 250, 'playButton', this.startGame, this);
