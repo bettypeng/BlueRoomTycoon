@@ -220,7 +220,7 @@ var currThis = this;
             // var c = cashierLine[0];
             var c = customer;
             console.log(c);
-            purchase("sandwich", c.ingredients, c.ingMap, "wheat", c.id, c.happiness, true);
+            purchase("sandwich", c.ingredients, c.ingMap, "wheat", c.id, c.happinessBarProgress/30, true);
             leaving = true;
             //left = cashierLine.shift().sprite;
             // left = customer.sprite;
