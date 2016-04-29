@@ -54,6 +54,7 @@ BlueRoom.Game.prototype.createDayEndView= function () {
 
 	managerView = false;
 	sandwichView = false;
+	dayEndView = true;
 	this.managerButton.visible = false;
 	this.sandwichButton.visible = false;
 
@@ -73,5 +74,6 @@ BlueRoom.Game.prototype.destroyDayEndView= function(){
 	});
 	managerView = true;
 	sandwichView = false;
+	dayEndView = false;
 	this.resetGameDay();
 };

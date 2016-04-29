@@ -17,13 +17,14 @@ BlueRoom.GameManagerView = function (game) {
 
 var customerGroup;
 var numSandwich;
-var numCashier;
+var numCustomer;
 var leaving;
 //var left;
 var sandwichLine = new Array();
 var cashierLine = new Array();
 var managerCounter = 0;
-var CUSTOMERINTERVAL = 500;
+var CUSTOMERINTERVAL = 500; //500 standard
+var isBlueRoomOpen = true;
 
 var currThis = this;
 
@@ -48,7 +49,7 @@ var currThis = this;
         var style = { font: "30px Arial", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "center" };
         this.game.add.text(682, 190, "SANDWICHES", style);
         numSandwich = 0;
-        numCashier = 0;
+        numCustomer= 0;
         leaving = false;
         customerGroup = this.add.group();
 
@@ -161,6 +162,7 @@ var currThis = this;
 
          function onLeaveMoveComplete(){
                 customer.sprite.visible = false;
+                numCustomer--;
                 leaving = false;
             }
         
@@ -222,12 +224,12 @@ var currThis = this;
             leaving = true;
             //left = cashierLine.shift().sprite;
             // left = customer.sprite;
-            numCashier--;
             var tween = this.add.tween(customer.sprite).to( { x: 450, y: 700 }, 1000, null, true);
             customer.moving = true;
             tween.onComplete.add(onLeaveMoveComplete, this);
             function onLeaveMoveComplete(){
                 customer.sprite.visible = false;
+                numCustomer--;
                 leaving = false;
             }
             //tween.onComplete.add(done, this);
@@ -247,11 +249,11 @@ var currThis = this;
         leaving = true;
         //left = cashierLine.shift().sprite;
         //left = customer.sprite;
-        numCashier--;
         var tween = this.add.tween(customer.sprite).to( { x: 450, y: 700 }, 1000, null, true);
         tween.onComplete.add(onLeaveMoveComplete, this);
          function onLeaveMoveComplete(){
                 customer.sprite.visible = false;
+                numCustomer--;
                 leaving = false;
             }
         //tween.onComplete.add(done, this);
@@ -282,7 +284,7 @@ var currThis = this;
         // the timer so the movement repeats
         currThis = this;
         managerCounter++;
-        if(managerCounter % CUSTOMERINTERVAL == 0 && numSandwich<15){
+        if(managerCounter % CUSTOMERINTERVAL == 0 && numSandwich<15 && isBlueRoomOpen){
             getCustomer();
         }
     };
@@ -298,6 +300,7 @@ var currThis = this;
         currThis.customer = customer.sprite;
         customerGroup.add(currThis.customer);
         numSandwich++;
+        numCustomer++;
         var posx = currThis.sandwichLinePos['x'][numSandwich];
         var posy = currThis.sandwichLinePos['y'][numSandwich];
         customer.moving = true;

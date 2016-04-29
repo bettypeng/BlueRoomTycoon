@@ -25,6 +25,7 @@ BlueRoom.Game = function (game) {
 
 var managerView = true;
 var sandwichView = false;
+var dayEndView = false;
 
 var gameTimer;
 var gamegroup;
@@ -33,11 +34,12 @@ var moneytext;
 var timetext;
 var daytext;
 var ampmtext;
+var closedtext;
 
 var dayCounter = 0;
 var twelveCounter = 0;
 
-var MANAGERTIMEINTERVAL = 5;
+var MANAGERTIMEINTERVAL = 50; //250 standard
 var SANDWICHTIMEINTERVAL = 500;
 
 var game;
@@ -72,9 +74,11 @@ BlueRoom.Game.prototype = {
         daytext = this.game.add.text(500, 650,  status.day[dayCounter%7], style);
         timetext = this.game.add.text(900, 650,  status.hour + ':' + status.minute, style);
         ampmtext = this.game.add.text(970, 650,  status.ampm[twelveCounter%2], style);
+        closedtext = this.game.add.text(900, 650,  "CLOSED!", style);
+        this.closedSign(false);
+
 
         this.moneytextTween = this.add.tween(moneytext.scale).to({ x: 1.5, y: 1.5}, 200, Phaser.Easing.Linear.In).to({ x: 1, y: 1}, 200, Phaser.Easing.Linear.In);
-
 
         console.log(status.money);
         
@@ -82,6 +86,7 @@ BlueRoom.Game.prototype = {
         textgroup.add(timetext);
         textgroup.add(ampmtext);
         textgroup.add(daytext);
+        textgroup.add(closedtext);
 
         textgroup.forEach(function(item) {
             item.anchor.set(0.5);
@@ -99,6 +104,7 @@ BlueRoom.Game.prototype = {
         function goToManagerView(pointer) {
 		    managerView = true;
 		    sandwichView = false;
+            dayEndView = false;
 		    mygame.hideSandwichView();
             this.managerButton.alpha = 0.5;
             this.sandwichButton.alpha = 1;
@@ -109,6 +115,7 @@ BlueRoom.Game.prototype = {
     	function goToSandwichView(pointer) {
     	    sandwichView = true;
     	    managerView = false;
+            dayEndView = false;
     	    mygame.showSandwichView();
             this.sandwichButton.alpha = 0.5;
             this.managerButton.alpha = 1;
@@ -134,6 +141,19 @@ BlueRoom.Game.prototype = {
     // loseMoney: function(amt){
     //     statusBar.money -= amt;
     // },
+
+    closedSign: function(bool){
+        if(!bool){
+            closedtext.visible = false;
+            ampmtext.visible = true;
+            timetext.visible = true;
+        }
+        else{
+            closedtext.visible = true;
+            ampmtext.visible = false;
+            timetext.visible = false;
+        }
+    },
 
     addMoney: function(x, y, message, amt){
         var scoreFont = "20px Arial";
@@ -206,6 +226,12 @@ BlueRoom.Game.prototype = {
         if(sandwichView){
             this.sandwichUpdate();
         }
+        if(!isBlueRoomOpen && numCustomer <=0){
+            if(!dayEndView){
+                dayEndView = true;
+                this.createDayEndView();
+            }
+        }
     },
     
 
@@ -213,6 +239,7 @@ BlueRoom.Game.prototype = {
         var myGame = this;
         clearInterval(gameTimer);
         gameTimer = setInterval(function(){
+            myGame.closedSign(false);
             if(statusBar.minute < 59){
                 statusBar.minute+=1;
             } 
@@ -233,16 +260,21 @@ BlueRoom.Game.prototype = {
             }
             if(statusBar.day[dayCounter%7]=="Saturday" || statusBar.day[dayCounter%7]=="Sunday"){
                   if(statusBar.hour==5 && twelveCounter==1){
+                    ifBlueRoomOpen = false;
                     console.log("WEEKEND END");
                     clearInterval(gameTimer);
-                    myGame.createDayEndView();
+                    myGame.closedSign(true);
+
+                    // myGame.createDayEndView();
                 }
             } 
             else{
                 if(statusBar.hour==9 && twelveCounter==1){
+                    isBlueRoomOpen = false;
                     console.log("WEEKDAY END");
                     clearInterval(gameTimer);
-                    myGame.createDayEndView();
+                    myGame.closedSign(true);
+                    // myGame.createDayEndView();
                 }
             }
         }, inc);
@@ -250,6 +282,7 @@ BlueRoom.Game.prototype = {
 
     resetGameDay: function(){
         dayCounter +=1;
+        isBlueRoomOpen = true;
         //if(statusBar.day[dayCounter%7]=='Monday' || statusBar.day[dayCounter%7]=='Tuesday' || statusBar.day[dayCounter%7]=='Wednesday' || statusBar.day[dayCounter%7]=='Thursday' || statusBar.day[dayCounter%7]=='Friday'){
         if(statusBar.day[dayCounter%7]=="Saturday" || statusBar.day[dayCounter%7]=="Sunday"){
             statusBar.hour = 9;
