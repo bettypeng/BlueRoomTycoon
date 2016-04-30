@@ -1,7 +1,9 @@
 var hireViewElements = new Array();
 var NUMBEROFHIRES = 3;
-var nextHire = 0;
+var currentlyDisplayedHire = 0;
 var hireList = ["erik", "alex", "rachel"];
+var EMPLOYEEHOURLYWAGE = 10;
+var hireMeButton;
 
 BlueRoom.Game.prototype.createHireView= function () {
 	var bg = this.add.sprite(0, 0, 'dayEndBg');
@@ -18,11 +20,13 @@ BlueRoom.Game.prototype.createHireView= function () {
 	var currbalance = this.game.add.text(this.game.width/2, 140, 'Current Balance: $' + statusBar.money.toFixed(2), labelStyle);
 	currbalance.anchor.setTo(0.5, 0,5);
 
-	var wages = this.game.add.text(this.game.width/2, 480, 'Wages: $10.50 / hr', labelStyle);
+	var wages = this.game.add.text(this.game.width/2, 480, "Wages: $" +EMPLOYEEHOURLYWAGE + " / hr", labelStyle);
 	wages.anchor.setTo(0.5, 0,5);
 
-	var hireMeButton = this.add.button(this.game.width/2, 510, 'hireMeButton', this.hideHireView, this);
+	hireMeButton = this.add.button(this.game.width/2, 510, 'hireMeButton', this.hireNewEmployee, this);
 	hireMeButton.anchor.setTo(0.5, 0,5);
+	this.checkHireButton(hireMeButton);
+
 
 	hireViewElements.push(title);
 	hireViewElements.push(currbalance);
@@ -72,23 +76,42 @@ BlueRoom.Game.prototype.createHireView= function () {
 
 };
 
+BlueRoom.Game.prototype.checkHireButton = function(currButton){
+	console.log("checking button");
+
+	if(Number(statusBar.money) <= Number(EMPLOYEEHOURLYWAGE) || NUMBEROFSTATIONS<=NUMBEROFEMPLOYEES){
+		this.disableButton(currButton);
+	}
+	else{
+		this.enableButton(currButton);
+	}
+};
+
+BlueRoom.Game.prototype.updateCurrHire = function(){
+	console.log("updating curent hire");
+	this.checkHireButton(hireMeButton);
+};
+
+BlueRoom.Game.prototype.hireNewEmployee = function(){
+	console.log("Hiring: " + hireList[currentlyDisplayedHire]);
+};
 
 BlueRoom.Game.prototype.fadeHireForward = function() {
-    nextHire++;
- 	if (nextHire >= NUMBEROFHIRES)
+    currentlyDisplayedHire++;
+ 	if (currentlyDisplayedHire >= NUMBEROFHIRES)
     {
-        nextHire = 0;
+        currentlyDisplayedHire = 0;
     }
-    this.updateNext(this.hireA, this.hireB, hireList[nextHire]);
+    this.updateNext(this.hireA, this.hireB, hireList[currentlyDisplayedHire]);
 };
 
 BlueRoom.Game.prototype.fadeHireBackward = function() {
-    nextHire--;
- 	if (nextHire < 0)
+    currentlyDisplayedHire--;
+ 	if (currentlyDisplayedHire < 0)
     {
-        nextHire = NUMBEROFHIRES-1;
+        currentlyDisplayedHire = NUMBEROFHIRES-1;
     }
-    this.updateNext(this.hireA, this.hireB, hireList[nextHire]);
+    this.updateNext(this.hireA, this.hireB, hireList[currentlyDisplayedHire]);
  };
 
 BlueRoom.Game.prototype.updateNext = function(thingA, thingB, newImg) {
