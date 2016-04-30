@@ -1,35 +1,5 @@
 package edu.brown.cs.bse.BlueRoom;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import spark.ExceptionHandler;
-import spark.ModelAndView;
-import spark.QueryParamsMap;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.Spark;
-import spark.TemplateViewRoute;
-import spark.template.freemarker.FreeMarkerEngine;
-
-import com.google.common.collect.ImmutableMap;
-import com.google.gson.Gson;
-
-import edu.brown.cs.bse.elements.Bread;
-import edu.brown.cs.bse.elements.Customer;
-import edu.brown.cs.bse.elements.Employee;
-import edu.brown.cs.bse.elements.FoodItem;
-import edu.brown.cs.bse.elements.Sandwich;
-import edu.brown.cs.bse.elements.SandwichIngredient;
-import freemarker.template.Configuration;
 
 /**
  * Models the server that allows the user to interact with the gui. Sets up
@@ -125,15 +95,15 @@ public class Server {
       System.out.println(qm.value("ingredients"));
 
       List<String> lingredients = GSON.fromJson(qm.value("ingredients"), List.class);
-      lingredients = lingredients.subList(1, lingredients.size()-1);
+//      lingredients = lingredients.subList(1, lingredients.size()-1);
 
       Bread b = null;
     //recieves what makes up the purchase in the form of a map which maps
       //each part of the purchase to how far it was from the center (sandwiches)
       //how far from well cooked it is (bakery good)
-      Map<String, Double> ingMap = GSON.fromJson(qm.value("map"), Map.class);
-      ingMap.remove("top_bun");
-      ingMap.remove("bottom_bun");
+      Map<Integer, Double> ingMap = GSON.fromJson(qm.value("map"), Map.class);
+//      ingMap.remove("top_bun");
+//      ingMap.remove("bottom_bun");
 
       FoodItem purchase;
 
@@ -142,13 +112,19 @@ public class Server {
         List<SandwichIngredient> sWichIng = new ArrayList<>();
         Map<SandwichIngredient, Double> sWichMap = new HashMap<>();
 
-        for (Entry<String, Double> e: ingMap.entrySet()) {
-          String itemName = e.getKey();
+        for (Entry<Integer, Double> e: ingMap.entrySet()) {
+          int index = e.getKey();
           Double val = e.getValue();
-          SandwichIngredient ing = new SandwichIngredient(itemName);
+          if (lingredients.get(index).equals("top_bun") || lingredients.get(index).equals("bottom_bun")) {
+            continue;
+          }
+          SandwichIngredient ing = new SandwichIngredient(lingredients.get(index));
           sWichMap.put(ing, val);
         }
         for (String s : lingredients) {
+          if (s.equals("top_bun") || s.equals("bottom_bun")) {
+            continue;
+          }
           sWichIng.add(new SandwichIngredient(s));
         }
         String bread = qm.value("bread");
@@ -163,15 +139,15 @@ public class Server {
       }
       Customer customer = gameManager.getCustomer(id);
 
-      Sandwich oldOrder = (Sandwich) customer.getOrder();
-      
-      List<SandwichIngredient> old = oldOrder.getIngredients();
-      List<SandwichIngredient> updated = new ArrayList<>(old);
-      updated.remove(0);
-      updated.remove(updated.size() - 1);
-      Sandwich newSandwich = new Sandwich(updated, b);
-      customer.setOrder(newSandwich);
-      System.out.println(customer.getOrder());
+//      Sandwich oldOrder = (Sandwich) customer.getOrder();
+
+//      List<SandwichIngredient> old = oldOrder.getIngredients();
+//      List<SandwichIngredient> updated = new ArrayList<>(old);
+//      updated.remove(0);
+//      updated.remove(updated.size() - 1);
+//      Sandwich newSandwich = new Sandwich(updated, b);
+//      customer.setOrder(newSandwich);
+//      System.out.println(customer.getOrder());
 
       // SHANNON: make sure you set the customer's happiness to the right level before passing in
       // or maybe the javascript side will have already given the right happiness?
@@ -241,6 +217,8 @@ public class Server {
     public Object handle(final Request req, final Response res) {
       Customer newCust = gameManager.newCustomer();
       System.out.println("sending up customer");
+
+      System.out.println(newCust.getOrder());
 
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("customer", newCust).build();
@@ -357,9 +335,9 @@ public class Server {
       return GSON.toJson(variables);
     }
   }
-  
+
   private class IntervalHandler implements Route {
-    
+
     @Override
     public Object handle(Request req, Response res) {
       gameManager.incrCurrTime();

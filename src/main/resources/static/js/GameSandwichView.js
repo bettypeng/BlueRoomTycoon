@@ -365,11 +365,8 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         currOrderElem = null;
     },
 
-<<<<<<< HEAD
-    /*BlueRoom.Game.prototype.trash = function () {
-=======
+
     BlueRoom.Game.prototype.trashButton = function () {
->>>>>>> 3b76e9a3b28deff8e021d52768b20d2c90aaca10
         if (nonSandwich.length != 0) {
             for (var i=0; i<nonSandwich.length; i++) {
                 movableElements.remove(nonSandwich[i]);
@@ -400,11 +397,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
                 sandwichViewElements.push(currOrderElem);
             }, this);
         }
-<<<<<<< HEAD
-    },*/
-=======
     },
->>>>>>> 3b76e9a3b28deff8e021d52768b20d2c90aaca10
     
     BlueRoom.Game.prototype.orderElems= function () {
         // console.log("orderElems");
@@ -521,11 +514,11 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         if (sandwichLine.length != 0 && currCustomer == null) {
             console.log("here");
             currCustomer = sandwichLine[0];
-            // currCustomerOrder.push('bottom_bun');
-            for (var i=0; i<currCustomer.order.ingreds; i++) {
+            currCustomerOrder.push('bottom_bun');
+            for (var i=0; i<currCustomer.order.ingreds.length; i++) {
                 currCustomerOrder.push(currCustomer.order.ingreds[i].type);
             }
-            // currCustomer.push('top_bun');
+            currCustomerOrder.push('top_bun');
             this.showNeutral();
             speechBubble.visible = true;
             console.log(currCustomer);

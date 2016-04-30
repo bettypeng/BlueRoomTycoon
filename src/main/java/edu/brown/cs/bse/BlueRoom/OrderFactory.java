@@ -14,7 +14,7 @@ import edu.brown.cs.bse.elements.SandwichIngredient;
  *
  */
 public class OrderFactory {
-  
+
   // SANDWICH ORDERS
 
   private static final String[] MEAT_NAMES = { "turkey", "roast_beef", "ham",
@@ -38,14 +38,14 @@ public class OrderFactory {
     //ingreds.addAll(getSauces());
 
     //temporary!!
-    ingreds.add(new SandwichIngredient("bottom_bun"));
+//    ingreds.add(new SandwichIngredient("bottom_bun"));
 
     ingreds.addAll(getMeats());
     ingreds.addAll(getCheese());
     ingreds.addAll(getVeggies());
 
     //temporary!!
-    ingreds.add(new SandwichIngredient("top_bun"));
+//    ingreds.add(new SandwichIngredient("top_bun"));
 
     Bread bread = getBread();
     return new Sandwich(ingreds, bread);
@@ -159,9 +159,9 @@ public class OrderFactory {
     }
     return sauces;
   }
-  
+
   // DRINK ORDERS
-  
-  
+
+
 
 }
