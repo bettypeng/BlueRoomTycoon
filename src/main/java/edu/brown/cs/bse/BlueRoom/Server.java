@@ -65,6 +65,7 @@ public class Server {
    *
    */
   private class FrontHandler implements TemplateViewRoute {
+
     @Override
     public ModelAndView handle(Request req, Response res) {
       Map<String, Object> variables =
@@ -94,6 +95,8 @@ public class Server {
 
       System.out.println(qm.value("ingredients"));
 
+      try {
+
       List<String> lingredients = GSON.fromJson(qm.value("ingredients"), List.class);
 //      lingredients = lingredients.subList(1, lingredients.size()-1);
 
@@ -115,6 +118,7 @@ public class Server {
         for (Entry<Integer, Double> e: ingMap.entrySet()) {
           int index = e.getKey();
           Double val = e.getValue();
+          System.out.println(index);
           if (lingredients.get(index).equals("top_bun") || lingredients.get(index).equals("bottom_bun")) {
             continue;
           }
@@ -138,6 +142,10 @@ public class Server {
         System.out.println("Not a sandwich - no other foods implemented yet");
       }
       Customer customer = gameManager.getCustomer(id);
+
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
 
 //      Sandwich oldOrder = (Sandwich) customer.getOrder();
 

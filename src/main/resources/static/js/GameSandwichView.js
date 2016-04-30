@@ -249,6 +249,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         sandwichViewElements.forEach(function(item){
             item.visible = false;
         });
+        this.noCustomer();
         //sandwichViewElements.destroy();
         // sandwichViewElements.forEach(function(item){
         //     item.destroy();
@@ -335,7 +336,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         }
         else{
             // console.log(currCustomer.order.ingreds[0].type);
-            if ((currCustomer != null) && (currCustomer.order.ingreds[0].type == currOrderElem.key)) {
+            if ((currCustomer != null) && (currCustomerOrder[0] == currOrderElem.key)) {
                 this.add.tween(sprite).to( { x: dropZone.x }, 500, null, true);
             }
             // this.add.tween(sprite).to( { x: dropZone.x }, 500, null, true);
