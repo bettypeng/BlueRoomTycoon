@@ -4,6 +4,7 @@ var NUMBEROFUPGRADES = 3;
 var upgradeList = ["coffeeBar", "bakery", "magazineRack"];
 var upgradeCostList = [];
 var costtext;
+var buyUpgradeButton;
 
 
 BlueRoom.Game.prototype.createUpgradeView= function () {
@@ -30,13 +31,14 @@ BlueRoom.Game.prototype.createUpgradeView= function () {
 	costtext = this.game.add.text(this.game.width/2, 480, 'Cost: $' + upgradeCostList[upgradeList[0]], labelStyle);
 	costtext.anchor.setTo(0.5, 0,5);
 
-	var buyButton = this.add.button(this.game.width/2, 510, 'buyButton', this.hideUpgradeView, this);
-	buyButton.anchor.setTo(0.5, 0,5);
+	buyUpgradeButton = this.add.button(this.game.width/2, 510, 'buyButton', this.buyUpgrade, this);
+	buyUpgradeButton.anchor.setTo(0.5, 0,5);
+	this.checkBuyUpgradeButton(buyUpgradeButton);
 
 	upgradeViewElements.push(title);
 	upgradeViewElements.push(currbalance);
 	upgradeViewElements.push(costtext);
-	upgradeViewElements.push(buyButton);
+	upgradeViewElements.push(buyUpgradeButton);
 
 	var upgradeboxX = this.game.width/2;
 	var upgradeboxY = 325;
@@ -65,6 +67,34 @@ BlueRoom.Game.prototype.createUpgradeView= function () {
 
 };
 
+BlueRoom.Game.prototype.checkBuyUpgradeButton = function(currButton){
+	console.log("checking button");
+
+	if(Number(statusBar.money) <= Number(upgradeCostList[upgradeList[currentlyDisplayedUpgrade]])){
+		this.disableButton(currButton);
+	}
+	else{
+		this.enableButton(currButton);
+	}
+};
+
+BlueRoom.Game.prototype.disableButton = function(currButton) {
+	currButton.input.enabled = false;
+	currButton.alpha = 0.3;
+};
+
+BlueRoom.Game.prototype.enableButton = function(currButton) {
+	currButton.input.enabled = true;
+	currButton.alpha = 1;
+};
+
+BlueRoom.Game.prototype.updateCurrUpgrade = function(){
+	console.log("upgrade");
+	this.checkBuyUpgradeButton(buyUpgradeButton);
+	costtext.setText('Cost: $' + upgradeCostList[upgradeList[currentlyDisplayedUpgrade]]);
+
+};
+
 
 BlueRoom.Game.prototype.fadeUpgradeForward = function() {
     currentlyDisplayedUpgrade++;
@@ -73,6 +103,7 @@ BlueRoom.Game.prototype.fadeUpgradeForward = function() {
         currentlyDisplayedUpgrade = 0;
     }
     this.updateNext(this.upgradeA, this.upgradeB, upgradeList[currentlyDisplayedUpgrade]);
+    this.updateCurrUpgrade();
 };
 
 BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
@@ -83,7 +114,16 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
         currentlyDisplayedUpgrade = NUMBEROFUPGRADES-1;
     }
     this.updateNext(this.upgradeA, this.upgradeB, upgradeList[currentlyDisplayedUpgrade]);
+     this.updateCurrUpgrade();
  };
+
+ BlueRoom.Game.prototype.buyUpgrade = function() {
+ 	//CHECK IF ITS A STATION FIRST YO;
+ 	NUMBEROFSTATIONS++;
+ 	console.log("BUYING: " + upgradeList[currentlyDisplayedUpgrade]);
+ };
+
+
 
 
 // // BlueRoom.Game.prototype.showUpgradeView= function(){

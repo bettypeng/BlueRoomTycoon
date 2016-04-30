@@ -39,7 +39,7 @@ var closedtext;
 var dayCounter = 4;
 var twelveCounter = 0;
 
-var MANAGERTIMEINTERVAL = 50; //250 standard
+var MANAGERTIMEINTERVAL = 5; //250 standard
 var SANDWICHTIMEINTERVAL = 500;
 
 var game;
@@ -93,7 +93,7 @@ BlueRoom.Game.prototype = {
         });
         
         this.setTimer(MANAGERTIMEINTERVAL);
-        this.managerButton.alpha = 0.5;
+        this.disableButton(this.managerButton);
       
         this.createManager();
         this.createSandwichView();
@@ -106,8 +106,10 @@ BlueRoom.Game.prototype = {
 		    sandwichView = false;
             dayEndView = false;
 		    mygame.hideSandwichView();
-            this.managerButton.alpha = 0.5;
-            this.sandwichButton.alpha = 1;
+            mygame.disableButton(this.managerButton);
+            mygame.enableButton(this.sandwichButton);
+            // this.managerButton.alpha = 0.5;
+            // this.sandwichButton.alpha = 1;
 
             this.setTimer(MANAGERTIMEINTERVAL);
     	};
@@ -117,8 +119,10 @@ BlueRoom.Game.prototype = {
     	    managerView = false;
             dayEndView = false;
     	    mygame.showSandwichView();
-            this.sandwichButton.alpha = 0.5;
-            this.managerButton.alpha = 1;
+            mygame.disableButton(this.sandwichButton);
+            mygame.enableButton(this.managerButton);
+            // this.sandwichButton.alpha = 0.5;
+            // this.managerButton.alpha = 1;
             this.setTimer(SANDWICHTIMEINTERVAL);
     	};
     	

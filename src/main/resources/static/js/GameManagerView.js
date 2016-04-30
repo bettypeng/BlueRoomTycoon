@@ -23,6 +23,8 @@ var leaving;
 var sandwichLine = new Array();
 var cashierLine = new Array();
 var managerCounter = 0;
+var NUMBEROFSTATIONS = 1;
+var NUMBEROFEMPLOYEES = 0;
 var CUSTOMERINTERVAL = 500; //500 standard
 var isBlueRoomOpen = true;
 
@@ -41,9 +43,12 @@ var currThis = this;
         this.cashierLinePos = {'x': new Array(), 'y':new Array()};
         // BlueRoom.Game.prototype.create.call(this);
         this.add.sprite(0, 0, 'managerBg');
-        this.add.sprite(652, 146, 'sandwichStation');
-        this.cashier = this.add.sprite(300, 500, 'dollar');
+        this.sandwichStation = this.add.sprite(652, 146, 'sandwichStation');
+
         var smallstyle = { font: "10px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "center" };
+        this.employeeBreakStation = this.add.sprite(10, 430, 'employeeBreakStation');
+        this.game.add.text(35, 435, "EMPLOYEE\nBREAK\nSTATION", smallstyle);
+        this.cashier = this.add.sprite(300, 500, 'dollar');
         this.game.add.text(305, 565, "DRAG HERE TO\nCASH OUT!", smallstyle);
         
         var style = { font: "30px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "center" };
