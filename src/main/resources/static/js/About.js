@@ -18,9 +18,9 @@ BlueRoom.About.prototype = {
         this.add.sprite(355, 0, 'banner');
         this.play = this.add.button(880, 500, 'smallStart', this.startGame, this);
         this.nextB = this.add.button(870, 410, 'nextButton', this.changeText, this);
-        var style = { font: "19px Comic Sans MS", fill: "#000000", wordWrap: true, wordWrapWidth: 1000, align: "left", backgroundColor: "#ffffff" };
+        var style = { font: "17px Comic Sans MS", fill: "#000000", wordWrap: true, wordWrapWidth: 1000, align: "left", backgroundColor: "#ffffff" };
 
-        abouttext = this.game.add.text(50, 100, "Congratulations! You have just purchased Brown's beloved eatery, "+
+        abouttext = this.game.add.text(50, 90, "Congratulations! You have just purchased Brown's beloved eatery, "+
         	"the Blue Room. You begin with just a sandwich station and cash register at "+
         	"the moment, but don't worry, business will soon be booming. With time you will be able to hire employees "+
         	"to help you out, but for now you are the lone manager and worker of your eatery. All of Brown is depending on you to keep their "+

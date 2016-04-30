@@ -18,6 +18,9 @@ public class GameManager {
   private List<Customer> customers;
   private List<Employee> employees;
   private Map<String, Customer> customerMap;
+  
+  private int baselineInterval;
+  private int currTime;
 
   private List<String> availableStations;
 
@@ -28,12 +31,21 @@ public class GameManager {
     availableStations = new ArrayList<>();
     customerMap = new HashMap<>();
     availableStations.add("sandwich");
+    currTime = 0;
+    baselineInterval = 10;
   }
 
   public double purchase(FoodItem purchase, Customer cust) {
+    System.out.println("purchase method called");
     double price = purchase.getPrice();
-    price += (purchase.compareToOrder(cust.getOrder()) * cust.getHappiness() * 3);
+    price += (purchase.compareToOrder(cust.getOrder()) * cust.getHappiness() * 6);
     manager.handlePurchase(price, cust.getStation());
+    return price;
+  }
+  
+  public double steal(FoodItem stolen, Customer cust) {
+    double price = stolen.getPrice();
+    manager.handleTheft(price, cust.getStation());
     return price;
   }
 
@@ -97,15 +109,32 @@ public class GameManager {
   
   public void startDay() {
     manager.startDay();
+    currTime = 0;
+    baselineInterval--;
   }
   
   // returns the DayData for the day that's ending
   public DayData endDay() {
     DayData today = manager.getTodayInfo();
     manager.endDay();
-    customers.clear();
     customerMap.clear();
     return today;
+  }
+  
+  public int getDayNum() {
+    return manager.getProfits().size() + 1;
+  }
+  
+  public void incrCurrTime() {
+    currTime++;
+  }
+  
+  public double calculateCustomerInterval() {
+    // between 150 and 180 seconds is currently "4 pm rush"
+    if (currTime >= 150 && currTime <= 180) {
+      return baselineInterval / (double)2;
+    }
+    return baselineInterval;
   }
 
 }
