@@ -49,6 +49,9 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('sandwichBg', 'images/sandwich_bg.png');
 		this.load.image('sandwichBg2', 'images/sandwich_bg_2.png');
 
+		this.load.image('purchaseAlert', 'images/purchase_alert.png');
+
+
 		// MANAGER VIEW
 		this.load.image('employee', 'images/employee.png');
 		this.load.image('employeeHalf', 'images/employee_behind_counter.png');

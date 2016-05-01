@@ -24,7 +24,7 @@ BlueRoom.Game.prototype.createUpgradeView= function () {
 	upgradeCostList["bakery"] = 1000;
 	upgradeCostList["magazineRack"] = 50;
 
-	var labelStyle = { font: "16px Roboto Light", fill: "#000000", align: "center"};
+	var labelStyle = { font: "16px Roboto-Light", fill: "#000000", align: "center"};
 	var currbalance = this.game.add.text(this.game.width/2, 140, 'Current Balance: $' + statusBar.money.toFixed(2), labelStyle);
 	currbalance.anchor.setTo(0.5, 0,5);
 
@@ -136,4 +136,5 @@ BlueRoom.Game.prototype.hideUpgradeView= function(){
 	upgradeViewElements.forEach(function(item){
 		item.destroy();
 	});
+	upgradeViewElements = new Array();
 };

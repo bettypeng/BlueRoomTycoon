@@ -12,9 +12,10 @@
 
 	<script src="js/Game.js"></script>
 	<script src="js/StatusBar.js"></script>
-	<script src="js/Employee.js"></script>
 	<script src="js/Customer.js"></script>
+	<script src="js/Employee.js"></script>
 	<script src="js/Server.js"></script>
+	<script src="js/GamePurchaseAlertView.js"></script>
 	<script src="js/GameDayEndView.js"></script>
 	<script src="js/GameInventoryView.js"></script>
 	<script src="js/GameUpgradeView.js"></script>

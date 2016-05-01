@@ -16,7 +16,7 @@ BlueRoom.Game.prototype.createHireView= function () {
 	var title = this.game.add.text(this.game.width/2, 50, 'Hire Employees', titleStyle);
 	title.anchor.setTo(0.5, 0,5);
 
-	var labelStyle = { font: "16px Roboto Light", fill: "#000000", align: "center"};
+	var labelStyle = { font: "16px Roboto-Light", fill: "#000000", align: "center"};
 	var currbalance = this.game.add.text(this.game.width/2, 140, 'Current Balance: $' + statusBar.money.toFixed(2), labelStyle);
 	currbalance.anchor.setTo(0.5, 0,5);
 
@@ -96,6 +96,11 @@ BlueRoom.Game.prototype.hireNewEmployee = function(){
 	console.log("Hiring: " + hireList[currentlyDisplayedHire]);
 	var emp = new Employee();
 	employeeList.push(emp.employeeSprite);
+	this.createPurchaseAlert("hired", capitalizeFirstLetter(hireList[currentlyDisplayedHire]), EMPLOYEEHOURLYWAGE);
+
+	function capitalizeFirstLetter(string) {
+	    return string.charAt(0).toUpperCase() + string.slice(1);
+	}
 };
 
 BlueRoom.Game.prototype.fadeHireForward = function() {
@@ -135,4 +140,5 @@ BlueRoom.Game.prototype.hideHireView= function(){
 	hireViewElements.forEach(function(item){
 		item.destroy();
 	});
+	hireViewElements = new Array();
 };

@@ -68,7 +68,7 @@ BlueRoom.Game.prototype = {
         //gamegroup.add(this.coffeeButton);
         
         var status = statusBar;
-        var style = { font: "32px Roboto Light", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "left", boundsAlignH: "left", backgroundColor: "#ffffff" };
+        var style = { font: "32px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "left", boundsAlignH: "left", backgroundColor: "#ffffff" };
 
         moneytext = this.game.add.text(100, 650, '$' + (status.money.toFixed(2)), style);
         daytext = this.game.add.text(500, 650,  status.day[dayCounter%7], style);

@@ -1,4 +1,4 @@
-var EMPLOYEEINTERVAL = 200;
+var EMPLOYEEINTERVAL = 300;
 
 function Employee(){
     this.employeeSprite = currThis.game.add.group();
@@ -9,7 +9,6 @@ function Employee(){
     this.employeeSprite.add(e);
 
     this.workHoursProgress = 30;
-    //this.bar = this.game.add.bitmapData(30, 2);
     this.workBar = currThis.add.bitmapData(30,5);
     this.workHoursSprite = currThis.game.add.sprite(0, -75, this.workBar);
     this.workHoursSprite.anchor.setTo(0.5, 0.5);
@@ -17,11 +16,15 @@ function Employee(){
 
     this.employeeSprite.x = 440;
     this.employeeSprite.y = 500;
+
     this.station;
+    this.working = false;
+    this.recharging = false;
     this.workHours = 8;
 
     this.createBar();
     this.setUpInteractions();
+
 }
 
 
@@ -52,11 +55,12 @@ Employee.prototype = {
         this.e.moves = false;
         dragPosition.set(sprite.x, sprite.y);
         this.workHoursSprite.visible = false;
+        this.working = false;
+        this.recharging = false;
         console.log("DRAGGING EMPLOYEE");
     },
 
     onDragUpdate: function(sprite, pointer){
-
     },
     
     onDragStop: function(sprite, pointer) {
@@ -84,21 +88,37 @@ Employee.prototype = {
             this.employeeSprite.x = 750;
             this.employeeSprite.y = 107; 
             this.e.loadTexture('employeeHalf');
-
+            this.working = true;
+            this.recharging = false;
             //this.renewTopping(curr.x, curr.y, curr.key);
 
         }
-        else{
+        else if (sprite.overlap(currThis.employeeBreakStation)){
+            console.log("TAKING A BREAK");
+            this.working = false;
+            this.recharging = true;
+        } else{
+            this.working = false;
+            this.recharging = false;
         }
     
     },
 
     createBar : function(){
         var currEmployee = this;
+        var myEmployee = this;
         this.workTimer = setInterval(function(){
-           // if(managerView){
-                currEmployee.workHoursProgress-=0.1;
-            //}
+            if(myEmployee.working && !dayEndView){
+                console.log("decrementing worker satisfaction");
+                if(currEmployee.workHoursProgress>0){
+                    currEmployee.workHoursProgress-=0.1;
+                }
+            } else if(myEmployee.recharging && !dayEndView){
+                console.log("incrementing worker satisfaction");
+                if(currEmployee.workHoursProgress<30){
+                    currEmployee.workHoursProgress+=0.1;
+                }
+            }
         }, EMPLOYEEINTERVAL);
 
         this.myTimer = setInterval(function(){
@@ -125,8 +145,8 @@ Employee.prototype = {
         }
 
         if(this.workHoursProgress < 0){
-            clearInterval(this.workTimer);
-            clearInterval(this.myTimer);
+            // clearInterval(this.workTimer);
+            // clearInterval(this.myTimer);
         }
         
         // draw the bar
