@@ -13,7 +13,7 @@ function Customer(id, station, order){
 
 	this.happinessBarProgress = 30;
 	//this.bar = this.game.add.bitmapData(30, 2);
-	this.bar = currThis.add.bitmapData(30,2);
+	this.bar = currThis.add.bitmapData(30,5);
     this.barSprite = currThis.game.add.sprite(0, -60, this.bar);
     this.barSprite.anchor.setTo(0.5, 0.5);
     this.sprite.add(this.barSprite);

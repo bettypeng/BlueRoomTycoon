@@ -39,7 +39,7 @@ var closedtext;
 var dayCounter = 4;
 var twelveCounter = 0;
 
-var MANAGERTIMEINTERVAL = 5; //250 standard
+var MANAGERTIMEINTERVAL = 1; //250 standard
 var SANDWICHTIMEINTERVAL = 500;
 
 var game;
