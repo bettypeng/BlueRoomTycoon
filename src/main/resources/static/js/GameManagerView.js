@@ -96,9 +96,9 @@ var currThis = this;
         this.timerStopped = true;
         this.timer = null;
 
-        // setTimeout(function(){
-        //     getCustomer();
-        // }, 500);
+        setTimeout(function(){
+            getCustomer();
+        }, 500);
     
         this.startMovement();
         // Draw the path 
