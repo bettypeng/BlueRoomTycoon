@@ -233,7 +233,8 @@ BlueRoom.Game.prototype = {
         if(!isBlueRoomOpen && numCustomer <=0){
             if(!dayEndView){
                 dayEndView = true;
-                this.createDayEndView();
+                // this.createDayEndView();
+                endDay();
             }
         }
     },

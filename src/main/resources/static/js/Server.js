@@ -90,8 +90,10 @@ function endDay() {
     $.post("/endday", postParameters, function(responseJSON){
     
         var responseObject = JSON.parse(responseJSON);
-        var dailyProfits = responseObject.dailyProfits;
-        var totalProfits = responseObject.totalProfits;
+        var dailyInfo = responseObject.dailyInfo;
+        var totalInfo = responseObject.totalInfo;
+
+        game.createDayEndView(dailyInfo, totalInfo);
     
         //show these profits on the screen
     });

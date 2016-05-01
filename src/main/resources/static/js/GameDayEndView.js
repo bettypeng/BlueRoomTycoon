@@ -1,7 +1,7 @@
 var dayEndViewElements = new Array();
 
 
-BlueRoom.Game.prototype.createDayEndView= function () {
+BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 	var bg = this.add.sprite(0, 0, 'dayEndBg');
 	dayEndViewElements.push(bg);
 	// var exit = this.add.button(50, 50, 'exitButton', this.destroyDayEndView, this);
@@ -13,17 +13,17 @@ BlueRoom.Game.prototype.createDayEndView= function () {
 	var labelStyle = { font: "30px Roboto Light", fill: "#000000", align: "center"};
 	var today = this.game.add.text(this.game.width/4, 150, 'Today', labelStyle);
 	today.anchor.setTo(0.5, 0,5);
-	var tips = this.game.add.text(40, 180, 'Tips:', labelStyle);
-	var revenue = this.game.add.text(40, 230, 'Revenue:', labelStyle);
+	var tips = this.game.add.text(40, 180, 'Tips: $'+dailyInfo.totalTips.toFixed(2), labelStyle);
+	var revenue = this.game.add.text(40, 230, 'Revenue: $'+(dailyInfo.totalProfit - dailyInfo.totalTips).toFixed(2), labelStyle);
 	var expenses = this.game.add.text(40, 280, 'Expenses:', labelStyle);
-	var profit = this.game.add.text(40, 330, 'Profit:', labelStyle);
+	var profit = this.game.add.text(40, 330, 'Profit: $'+dailyInfo.totalProfit.toFixed(2), labelStyle);
 
 	var total = this.game.add.text(3*(this.game.width/4), 150, 'Total', labelStyle);
 	total.anchor.setTo(0.5, 0,5);
-	var ttips = this.game.add.text(540, 180, 'Tips:', labelStyle);
-	var trevenue = this.game.add.text(540, 230, 'Revenue:', labelStyle);
+	var ttips = this.game.add.text(540, 180, 'Tips: $'+ totalInfo.totalTips.toFixed(2), labelStyle);
+	var trevenue = this.game.add.text(540, 230, 'Revenue: $'+(totalInfo.totalProfit - totalInfo.totalTips).toFixed(2), labelStyle);
 	var texpenses = this.game.add.text(540, 280, 'Expenses:', labelStyle);
-	var tprofit = this.game.add.text(540, 330, 'Profit:', labelStyle);
+	var tprofit = this.game.add.text(540, 330, 'Profit: $'+totalInfo.totalProfit.toFixed(2), labelStyle);
 
 	var viewInventory = this.add.button(150, 420, 'viewInventoryButton', this.createInventoryView, this);
 	viewInventory.anchor.setTo(0.5, 0);

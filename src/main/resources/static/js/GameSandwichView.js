@@ -236,11 +236,10 @@ BlueRoom.Game.prototype.createSandwichView= function () {
             
             item.visible = true;
         });
-        // if (currCustomer != null) {
-        //     happy.visible = false;
-        //     sad.visible = false;
-        //     sideEye.visible = false;
-        // }
+        if (currCustomer != null) {
+            this.showNeutral();
+            speechBubble.visible = true;
+        }
         // sandwichViewElements.setAll('visible', true);
     };
     
@@ -389,12 +388,11 @@ BlueRoom.Game.prototype.createSandwichView= function () {
                 currSandwich = [];
                 currDelts = {};
                 currSandSprites = [];
-                currCustomerOrder = [];
                 currPlace = 0;
                 exclamation.visible = false;
                 exclamation.alpha = 1;
 
-                var f = currCustomer.order.ingreds[0].type;
+                var f = currCustomerOrder[0];
                 // sandwichViewElements.push(this.add.sprite(160, -30, "speechBubble"));
                 currOrderElem = this.add.sprite(400, 60, f);
                 currOrderElem.alpha = 0;
