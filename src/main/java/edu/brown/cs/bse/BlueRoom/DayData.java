@@ -1,7 +1,7 @@
 package edu.brown.cs.bse.BlueRoom;
 
 public class DayData {
-  
+
   private int sandwichCount;
   private double sandwichProfit;
   private int bakeryCount;
@@ -10,12 +10,14 @@ public class DayData {
   private double coffeeProfit;
   private int totalPurchases;
   private double totalProfit;
+  private double totalTips;
 
   public void newPurchase(String station, double price) {
     switch(station) {
     case "sandwich":
       sandwichCount++;
       sandwichProfit += price;
+      totalTips += price-4;
       break;
     case "coffee":
       coffeeCount++;
@@ -31,14 +33,18 @@ public class DayData {
     totalPurchases++;
     totalProfit += price;
   }
-  
+
   // i'll probably end up coming up with a better way to handle all of the different kinds of profit -
   // this is not extensible were we to add more stations (need a polymorphic way/even just a method that
   // runs a switch on station name for a getter)
   public double getTotalProfit() {
     return totalProfit;
   }
-  
+
+  public double getTotalTips() {
+    return totalTips;
+  }
+
   public int getTotalPurchases() {
     return totalPurchases;
   }
@@ -66,7 +72,7 @@ public class DayData {
   public int getCoffeeCount() {
     return coffeeCount;
   }
-  
+
   @Override
   public String toString() {
     return String.format("Today's profit: %.2f, number of purchases: %d", totalProfit, totalPurchases);

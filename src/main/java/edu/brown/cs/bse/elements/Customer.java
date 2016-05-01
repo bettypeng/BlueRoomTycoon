@@ -1,6 +1,5 @@
 package edu.brown.cs.bse.elements;
 
-import edu.brown.cs.bse.elements.FoodItem;
 
 public class Customer {
 
@@ -27,10 +26,10 @@ public class Customer {
   public FoodItem getOrder() {
     return order;
   }
-  
-  public void setOrder(FoodItem newOrder) {
-    order = newOrder;
-  }
+
+//  public void setOrder(FoodItem newOrder) {
+//    order = newOrder;
+//  }
 
   public String getStation() {
     return station;
