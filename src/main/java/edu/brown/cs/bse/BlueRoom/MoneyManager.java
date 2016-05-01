@@ -5,44 +5,51 @@ import java.util.List;
 
 public class MoneyManager {
 
-  private List<Double> profitsOverTime;
+  private List<DayData> dataOverTime;
   private DayData currDay;
+  private GameData gameData;
   private double money;
-  
+
   // this will change
   private static final double DAILY_EXPENSES = 200;
 
   public MoneyManager(double startMoney) {
-    profitsOverTime = new ArrayList<>();
+    dataOverTime = new ArrayList<>();
+    gameData = new GameData();
     money = startMoney;
     currDay = new DayData();
   }
 
-  public List<Double> getProfits() {
-    return profitsOverTime;
+  public List<DayData> getTotalData() {
+    return dataOverTime;
   }
-  
+
+  public GameData getTotalInfo() {
+    return gameData;
+  }
+
   public DayData getTodayInfo() {
     return currDay;
   }
-  
+
   public void handlePurchase(double incr, String station) {
     money += incr;
     currDay.newPurchase(station, incr);
   }
-  
+
   public void handleTheft(double amt, String station) {
     money -= amt;
   }
-  
+
   public double getMoney() {
     return money;
   }
-  
+
   public void endDay() {
-    profitsOverTime.add(currDay.getTotalProfit());
+    dataOverTime.add(currDay);
+    gameData.addDayData(currDay);
   }
-  
+
   public void startDay() {
     currDay = new DayData();
     money -= DAILY_EXPENSES;

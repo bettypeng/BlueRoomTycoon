@@ -18,7 +18,7 @@ public class GameManager {
   private List<Customer> customers;
   private List<Employee> employees;
   private Map<String, Customer> customerMap;
-  
+
   private int baselineInterval;
   private int currTime;
 
@@ -90,8 +90,12 @@ public class GameManager {
   }
 
   // gets data about total profits over time. could make this a list of DayData?
-  public List<Double> getTotalProfits() {
-    return manager.getProfits();
+  public List<DayData> getTotalStats() {
+    return manager.getTotalData();
+  }
+
+  public GameData getGameData() {
+    return manager.getTotalInfo();
   }
 
   public void addEmployee(Employee emp) {
@@ -110,17 +114,17 @@ public class GameManager {
   public Customer getCustomer(String id) {
     return customerMap.get(id);
   }
-  
+
   public double getCurrentMoney() {
     return manager.getMoney();
   }
-  
+
   public void startDay() {
     manager.startDay();
     currTime = 0;
     baselineInterval--;
   }
-  
+
   // returns the DayData for the day that's ending
   public DayData endDay() {
     DayData today = manager.getTodayInfo();
@@ -128,15 +132,15 @@ public class GameManager {
     customerMap.clear();
     return today;
   }
-  
+
   public int getDayNum() {
-    return manager.getProfits().size() + 1;
+    return manager.getTotalData().size() + 1;
   }
-  
+
   public void incrCurrTime() {
     currTime++;
   }
-  
+
   public double calculateCustomerInterval() {
     // between 150 and 180 seconds is currently "4 pm rush"
     if (currTime >= 150 && currTime <= 180) {
