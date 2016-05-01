@@ -26,6 +26,7 @@ var managerCounter = 0;
 var NUMBEROFSTATIONS = 1;
 var NUMBEROFEMPLOYEES = 0;
 var CUSTOMERINTERVAL = 500; //500 standard
+var employeeList = new Array();
 var isBlueRoomOpen = true;
 
 var currThis = this;
@@ -292,6 +293,7 @@ var currThis = this;
         if(managerCounter % CUSTOMERINTERVAL == 0 && numSandwich<15 && isBlueRoomOpen){
             getCustomer();
         }
+        
     };
 
     // var currThis = BlueRoom.Game.prototype;

@@ -94,6 +94,8 @@ BlueRoom.Game.prototype.updateCurrHire = function(){
 
 BlueRoom.Game.prototype.hireNewEmployee = function(){
 	console.log("Hiring: " + hireList[currentlyDisplayedHire]);
+	var emp = new Employee();
+	employeeList.push(emp.employeeSprite);
 };
 
 BlueRoom.Game.prototype.fadeHireForward = function() {

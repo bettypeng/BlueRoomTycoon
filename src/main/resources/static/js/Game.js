@@ -39,7 +39,7 @@ var closedtext;
 var dayCounter = 4;
 var twelveCounter = 0;
 
-var MANAGERTIMEINTERVAL = 5; //250 standard
+var MANAGERTIMEINTERVAL = 1; //250 standard
 var SANDWICHTIMEINTERVAL = 500;
 
 var game;
@@ -226,9 +226,17 @@ BlueRoom.Game.prototype = {
         if(managerView){
             this.managerUpdate();
             this.hideSandwichView();
+            employeeList.forEach(function(item){
+                item.visible = true;
+            });
+        } else{
+              employeeList.forEach(function(item){
+                item.visible = false;
+            });
         }
         if(sandwichView){
             this.sandwichUpdate();
+          
         }
         if(!isBlueRoomOpen && numCustomer <=0){
             if(!dayEndView){
