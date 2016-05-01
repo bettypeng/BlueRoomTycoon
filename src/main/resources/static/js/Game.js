@@ -57,9 +57,11 @@ BlueRoom.Game.prototype = {
         this.add.sprite(0, 0, 'whiteBg');
         this.managerButton = this.add.button(10, 10, 'managerButton', goToManagerView, this);
 		this.sandwichButton = this.add.button(10, 80, 'sandwichButton', goToSandwichView, this);
-		//this.coffeeButton = this.add.button(10, 150, 'coffeeButton', goToCoffeeView, this);
-        //this.bakeryButton = this.add.button(10, 220, 'bakeryButton', goToBakeryView, this);
+		this.coffeeButton = this.add.button(10, 150, 'coffeeButton', goToCoffeeView, this);
+        this.bakeryButton = this.add.button(10, 220, 'bakeryButton', goToBakeryView, this);
         this.status_bar = this.add.sprite(0, 600, 'status_bar');
+        this.coffeeButton.visible = false;
+        this.bakeryButton.visible = false;
         
         gamegroup.add(this.status_bar);
         gamegroup.add(this.managerButton);

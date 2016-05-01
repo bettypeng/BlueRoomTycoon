@@ -43,6 +43,7 @@ BlueRoom.Game.prototype.createHireView= function () {
 
 	this.hireA = game.add.sprite(hireboxX, hireboxY, hireList[0]);
     this.hireA.anchor.setTo(0.5, 0.5);
+    currentlyDisplayedHire = 0;
 
     this.hireB = game.add.sprite(hireboxX, hireboxY, hireList[1]);
     this.hireB.anchor.setTo(0.5, 0.5);
@@ -94,10 +95,14 @@ BlueRoom.Game.prototype.updateCurrHire = function(){
 
 BlueRoom.Game.prototype.hireNewEmployee = function(){
 	console.log("Hiring: " + hireList[currentlyDisplayedHire]);
+	NUMBEROFHIRES--;
+	NUMBEROFEMPLOYEES++;
+
 	var emp = new Employee();
 	employeeList.push(emp.employeeSprite);
 	this.createPurchaseAlert("hired", capitalizeFirstLetter(hireList[currentlyDisplayedHire]), EMPLOYEEHOURLYWAGE);
-
+	hireList.splice(currentlyDisplayedHire, 1);
+	console.log(hireList);
 	function capitalizeFirstLetter(string) {
 	    return string.charAt(0).toUpperCase() + string.slice(1);
 	}
