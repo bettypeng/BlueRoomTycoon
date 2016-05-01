@@ -35,6 +35,7 @@ var timetext;
 var daytext;
 var ampmtext;
 var closedtext;
+var activeButtons = new Array();
 
 var dayCounter = 4;
 var twelveCounter = 0;
@@ -60,14 +61,18 @@ BlueRoom.Game.prototype = {
 		this.coffeeButton = this.add.button(10, 150, 'coffeeButton', goToCoffeeView, this);
         this.bakeryButton = this.add.button(10, 220, 'bakeryButton', goToBakeryView, this);
         this.status_bar = this.add.sprite(0, 600, 'status_bar');
+
+        activeButtons.push(this.managerButton);
+        activeButtons.push(this.sandwichButton);
+
         this.coffeeButton.visible = false;
         this.bakeryButton.visible = false;
         
         gamegroup.add(this.status_bar);
         gamegroup.add(this.managerButton);
         gamegroup.add(this.sandwichButton);
-        //gamegroup.add(this.bakeryButton);
-        //gamegroup.add(this.coffeeButton);
+        gamegroup.add(this.bakeryButton);
+        gamegroup.add(this.coffeeButton);
         
         var status = statusBar;
         var style = { font: "32px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "left", boundsAlignH: "left", backgroundColor: "#ffffff" };
@@ -239,6 +244,24 @@ BlueRoom.Game.prototype = {
         if(sandwichView){
             this.sandwichUpdate();
           
+        }
+        if(dayEndView){
+            // this.managerButton.visible = false;
+            // this.sandwichButton.visible = false;
+            // this.coffeeButton.visible = false;
+            // this.bakeryButton.visible = false;
+            activeButtons.forEach(function(item){
+                item.visible = false;
+            });
+        }
+        else{
+            // this.managerButton.visible = true;
+            // this.sandwichButton.visible = true;
+            // this.coffeeButton.visible = true;
+            // this.bakeryButton.visible = true;
+            activeButtons.forEach(function(item){
+                item.visible = true;
+            });
         }
         if(!isBlueRoomOpen && numCustomer <=0){
             if(!dayEndView){

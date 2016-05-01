@@ -55,8 +55,7 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 	managerView = false;
 	sandwichView = false;
 	dayEndView = true;
-	this.managerButton.visible = false;
-	this.sandwichButton.visible = false;
+
 
 };
 
