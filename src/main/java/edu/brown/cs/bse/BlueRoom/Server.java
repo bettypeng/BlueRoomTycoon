@@ -1,5 +1,36 @@
 package edu.brown.cs.bse.BlueRoom;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import spark.ExceptionHandler;
+import spark.ModelAndView;
+import spark.QueryParamsMap;
+import spark.Request;
+import spark.Response;
+import spark.Route;
+import spark.Spark;
+import spark.TemplateViewRoute;
+import spark.template.freemarker.FreeMarkerEngine;
+
+import com.google.common.collect.ImmutableMap;
+import com.google.gson.Gson;
+
+import edu.brown.cs.bse.elements.Bread;
+import edu.brown.cs.bse.elements.Customer;
+import edu.brown.cs.bse.elements.Employee;
+import edu.brown.cs.bse.elements.FoodItem;
+import edu.brown.cs.bse.elements.Sandwich;
+import edu.brown.cs.bse.elements.SandwichIngredient;
+import freemarker.template.Configuration;
+
 
 /**
  * Models the server that allows the user to interact with the gui. Sets up
@@ -95,7 +126,7 @@ public class Server {
 
       System.out.println(qm.value("ingredients"));
 
-      try {
+      FoodItem purchase;
 
       List<String> lingredients = GSON.fromJson(qm.value("ingredients"), List.class);
 //      lingredients = lingredients.subList(1, lingredients.size()-1);
@@ -104,19 +135,19 @@ public class Server {
     //recieves what makes up the purchase in the form of a map which maps
       //each part of the purchase to how far it was from the center (sandwiches)
       //how far from well cooked it is (bakery good)
-      Map<Integer, Double> ingMap = GSON.fromJson(qm.value("map"), Map.class);
+      Map<String, Double> ingMap = GSON.fromJson(qm.value("map"), Map.class);
 //      ingMap.remove("top_bun");
 //      ingMap.remove("bottom_bun");
 
-      FoodItem purchase;
+
 
       //handling if the type is sandwich
       if (type.equals("sandwich")) {
         List<SandwichIngredient> sWichIng = new ArrayList<>();
         Map<SandwichIngredient, Double> sWichMap = new HashMap<>();
 
-        for (Entry<Integer, Double> e: ingMap.entrySet()) {
-          int index = e.getKey();
+        for (Entry<String, Double> e: ingMap.entrySet()) {
+          int index = Integer.parseInt(e.getKey());
           Double val = e.getValue();
           System.out.println(index);
           if (lingredients.get(index).equals("top_bun") || lingredients.get(index).equals("bottom_bun")) {
@@ -141,11 +172,9 @@ public class Server {
         purchase = null;
         System.out.println("Not a sandwich - no other foods implemented yet");
       }
+
       Customer customer = gameManager.getCustomer(id);
 
-      } catch(Exception e) {
-        e.printStackTrace();
-      }
 
 //      Sandwich oldOrder = (Sandwich) customer.getOrder();
 

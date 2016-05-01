@@ -368,6 +368,9 @@ BlueRoom.Game.prototype.createSandwichView= function () {
 
 
     BlueRoom.Game.prototype.trashButton = function () {
+        if (transitioning) {
+            return;
+        }
         if (nonSandwich.length != 0) {
             for (var i=0; i<nonSandwich.length; i++) {
                 movableElements.remove(nonSandwich[i]);
