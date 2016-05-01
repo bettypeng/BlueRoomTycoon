@@ -82,12 +82,12 @@ public class Server {
 //    Spark.post("/finance", new FinanceHandler());
     Spark.post("/endday", new EndDayHandler());
     Spark.post("/customer", new CustomerHandler());
-    //Spark.post("/newemployee", new NewEmployeeHandler());
+    Spark.post("/newemployee", new NewEmployeeHandler());
     Spark.post("/employee", new EmployeeHandler());
     Spark.post("/newstation", new NewStationHandler());
     Spark.post("/line", new LineHandler());
     Spark.post("/interval", new IntervalHandler());
-
+    Spark.post("/trash", new TrashHandler());
   }
 
   /**
@@ -129,6 +129,8 @@ public class Server {
       FoodItem purchase;
 
       List<String> lingredients = GSON.fromJson(qm.value("ingredients"), List.class);
+      
+      boolean paid = Boolean.parseBoolean(qm.value("paid"));
 
       Bread b = null;
       //recieves what makes up the purchase in the form of a map which maps
@@ -171,22 +173,14 @@ public class Server {
 
       Customer customer = gameManager.getCustomer(id);
 
-
-//      Sandwich oldOrder = (Sandwich) customer.getOrder();
-
-//      List<SandwichIngredient> old = oldOrder.getIngredients();
-//      List<SandwichIngredient> updated = new ArrayList<>(old);
-//      updated.remove(0);
-//      updated.remove(updated.size() - 1);
-//      Sandwich newSandwich = new Sandwich(updated, b);
-//      customer.setOrder(newSandwich);
-//      System.out.println(customer.getOrder());
-
-      // SHANNON: make sure you set the customer's happiness to the right level before passing in
-      // or maybe the javascript side will have already given the right happiness?
       customer.setHappiness(happiness);
       System.out.println(customer.getHappiness());
-      double moneyMade = gameManager.purchase(purchase, customer);
+      double moneyMade;
+      if (paid) {
+        moneyMade = gameManager.purchase(purchase, customer);
+      } else {
+        moneyMade = gameManager.steal(purchase, customer);
+      }
 
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("moneyMade", moneyMade).build();
@@ -268,26 +262,25 @@ public class Server {
    * @author srw
    *
    */
-//  private class NewEmployeeHandler implements Route {
-//    @Override
-//    public Object handle(final Request req, final Response res) {
-//      QueryParamsMap qm = req.queryMap();
-//
-//      //this can be if we ever want different employees to have different traits
-////      String employeeName = qm.value("employee");
-//
-//      //sends the knowledge of the new employee to the game manager
-//      gameManager.addEmployee();
-//
-//      List<String> results = new ArrayList<>();
-//
-//
-//      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
-//          .put("results", results).build();
-//
-//      return GSON.toJson(variables);
-//    }
-//  }
+  private class NewEmployeeHandler implements Route {
+    @Override
+    public Object handle(final Request req, final Response res) {
+      QueryParamsMap qm = req.queryMap();
+
+      //this can be if we ever want different employees to have different traits
+      String employeeName = qm.value("employee");
+
+      //sends the knowledge of the new employee to the game manager
+      gameManager.hireEmployee(employeeName);
+
+      List<String> results = new ArrayList<>();
+
+      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+          .put("results", results).build();
+
+      return GSON.toJson(variables);
+    }
+  }
 
   /**
    * Triggered when new customer gets to front of line
@@ -323,15 +316,19 @@ public class Server {
       QueryParamsMap qm = req.queryMap();
       //GSON.fromJson(value, String.class)
 
-      Employee employee = GSON.fromJson(qm.value("employee"), Employee.class);
+      Employee employee = gameManager.getEmployee(qm.value("employee"));
 
       Customer customer = gameManager.getCustomer(qm.value("customer"));
-
-      String type = qm.value("type");
+      
+      double energy = Double.parseDouble(qm.value("energy"));
+      double happiness = Double.parseDouble(qm.value("happiness"));
+      
+      employee.setEnergy(energy);
+      customer.setHappiness(happiness);
       
       double quality = 0;
 
-      if (type.equals("sandwich")) {
+      if (customer.getStation().equals("sandwich")) {
         quality = employee.fillOrder();
       } else {
         System.out.println("Nothing other than sandwiches should be ordered");
@@ -376,6 +373,19 @@ public class Server {
       gameManager.incrCurrTime();
       double interval = gameManager.calculateCustomerInterval();
       Map<String, Object> variables = ImmutableMap.of("interval", interval);
+      return GSON.toJson(variables);
+    }
+  }
+  
+  private class TrashHandler implements Route {
+    
+    @Override
+    public Object handle(Request req, Response res) {
+      QueryParamsMap qm = req.queryMap();
+      int numTrashed = Integer.parseInt(qm.value("numTrashed"));
+      double moneyLost = gameManager.trash(numTrashed);
+      
+      Map<String, Object> variables = ImmutableMap.of("moneyLost", moneyLost);
       return GSON.toJson(variables);
     }
   }

@@ -11,6 +11,7 @@ public class DayData {
   private int totalPurchases;
   private double totalProfit;
   private double totalTips;
+  private double totalLosses;
 
   public void newPurchase(String station, double price) {
     switch(station) {
@@ -32,6 +33,10 @@ public class DayData {
     }
     totalPurchases++;
     totalProfit += price;
+  }
+  
+  public void newLoss(double amt) {
+    totalLosses += amt;
   }
 
   // i'll probably end up coming up with a better way to handle all of the different kinds of profit -
@@ -71,6 +76,10 @@ public class DayData {
 
   public int getCoffeeCount() {
     return coffeeCount;
+  }
+  
+  public double getLosses() {
+    return totalLosses;
   }
 
   @Override
