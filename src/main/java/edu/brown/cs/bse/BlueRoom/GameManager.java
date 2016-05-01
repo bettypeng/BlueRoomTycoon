@@ -35,10 +35,18 @@ public class GameManager {
     baselineInterval = 10;
   }
 
+  // for when user makes sandwich
   public double purchase(FoodItem purchase, Customer cust) {
-    System.out.println("purchase method called");
     double price = purchase.getPrice();
     price += (purchase.compareToOrder(cust.getOrder()) * cust.getHappiness() * 6);
+    manager.handlePurchase(price, cust.getStation());
+    return price;
+  }
+  
+  // for when employee makes sandwich
+  public double purchase(double quality, Customer cust) {
+    double price = cust.getOrder().getPrice();
+    price += (quality * cust.getHappiness() * 6);
     manager.handlePurchase(price, cust.getStation());
     return price;
   }

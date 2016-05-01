@@ -312,21 +312,19 @@ public class Server {
 
       Employee employee = GSON.fromJson(qm.value("employee"), Employee.class);
 
-      Customer customer = GSON.fromJson(qm.value("customer"), Customer.class);
+      Customer customer = gameManager.getCustomer(qm.value("customer"));
 
       String type = qm.value("type");
-
-      FoodItem fi;
+      
+      double quality = 0;
 
       if (type.equals("sandwich")) {
-        fi = new Sandwich(employee, (Sandwich)customer.getOrder());
+        quality = employee.fillOrder();
       } else {
-        fi = null;
         System.out.println("Nothing other than sandwiches should be ordered");
       }
 
-      Double moneyMade = gameManager.purchase(fi, customer);
-
+      Double moneyMade = gameManager.purchase(quality, customer);
 
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("moneyMade", moneyMade).build();

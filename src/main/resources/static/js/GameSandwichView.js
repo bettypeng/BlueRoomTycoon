@@ -365,11 +365,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         currOrderElem = null;
     },
 
-<<<<<<< HEAD
-    /*BlueRoom.Game.prototype.trash = function () {
-=======
     BlueRoom.Game.prototype.trashButton = function () {
->>>>>>> 3b76e9a3b28deff8e021d52768b20d2c90aaca10
         if (nonSandwich.length != 0) {
             for (var i=0; i<nonSandwich.length; i++) {
                 movableElements.remove(nonSandwich[i]);
@@ -400,11 +396,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
                 sandwichViewElements.push(currOrderElem);
             }, this);
         }
-<<<<<<< HEAD
-    },*/
-=======
     },
->>>>>>> 3b76e9a3b28deff8e021d52768b20d2c90aaca10
     
     BlueRoom.Game.prototype.orderElems= function () {
         // console.log("orderElems");

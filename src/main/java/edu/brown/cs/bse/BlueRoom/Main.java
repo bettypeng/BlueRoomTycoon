@@ -14,6 +14,7 @@ import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import edu.brown.cs.bse.elements.Bread;
 import edu.brown.cs.bse.elements.Customer;
+import edu.brown.cs.bse.elements.Employee;
 import edu.brown.cs.bse.elements.Sandwich;
 import edu.brown.cs.bse.elements.SandwichIngredient;
 
@@ -78,6 +79,14 @@ public class Main {
             
           case "m":
             System.out.println(String.format("%.2f", manager.getCurrentMoney()));
+            break;
+           
+          case "e":
+            Customer newCust = new Customer("c1", OrderFactory.getSandwichOrder(), "sandwich");
+            newCust.setHappiness(Math.random());
+            Employee emp = new Employee();
+            double quality = emp.fillOrder();
+            System.out.println(manager.purchase(quality, newCust));
             break;
 
           default:
