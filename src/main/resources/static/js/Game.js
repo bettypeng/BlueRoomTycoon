@@ -226,9 +226,17 @@ BlueRoom.Game.prototype = {
         if(managerView){
             this.managerUpdate();
             this.hideSandwichView();
+            employeeList.forEach(function(item){
+                item.visible = true;
+            });
+        } else{
+              employeeList.forEach(function(item){
+                item.visible = false;
+            });
         }
         if(sandwichView){
             this.sandwichUpdate();
+          
         }
         if(!isBlueRoomOpen && numCustomer <=0){
             if(!dayEndView){
