@@ -1,7 +1,7 @@
 var upgradeViewElements = new Array();
 var currentlyDisplayedUpgrade = 0;
 var NUMBEROFUPGRADES = 3;
-var upgradeList = ["coffeeBar", "bakery", "magazineRack"];
+var upgradeList = ["coffee station", "bakery station", "magazine rack"];
 var upgradeCostList = [];
 var costtext;
 var buyUpgradeButton;
@@ -20,9 +20,9 @@ BlueRoom.Game.prototype.createUpgradeView= function () {
 
 	upgradeViewElements.push(title);
 
-	upgradeCostList["coffeeBar"] = 500;
-	upgradeCostList["bakery"] = 1000;
-	upgradeCostList["magazineRack"] = 50;
+	upgradeCostList["coffee station"] = 500;
+	upgradeCostList["bakery station"] = 1000;
+	upgradeCostList["magazine rack"] = 50;
 
 	var labelStyle = { font: "16px Roboto-Light", fill: "#000000", align: "center"};
 	var currbalance = this.game.add.text(this.game.width/2, 140, 'Current Balance: $' + statusBar.money.toFixed(2), labelStyle);
@@ -45,6 +45,7 @@ BlueRoom.Game.prototype.createUpgradeView= function () {
 
 	this.upgradeA = game.add.sprite(upgradeboxX, upgradeboxY, upgradeList[0]);
     this.upgradeA.anchor.setTo(0.5, 0.5);
+    currentlyDisplayedUpgrade = 0;
 
     this.upgradeB = game.add.sprite(upgradeboxX, upgradeboxY, upgradeList[1]);
     this.upgradeB.anchor.setTo(0.5, 0.5);
@@ -118,20 +119,21 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
  };
 
  BlueRoom.Game.prototype.buyUpgrade = function() {
- 	//CHECK IF ITS A STATION FIRST YO;
- 	if(upgradeList[currentlyDisplayedUpgrade] == "coffeeBar"){
+ 	if(upgradeList[currentlyDisplayedUpgrade] == "coffee station"){
  		NUMBEROFSTATIONS++;
  		this.coffeeStation.visible = true;
 		activeButtons.push(this.coffeeButton);
  	}
- 	else if(upgradeList[currentlyDisplayedUpgrade] =="bakery"){
+ 	else if(upgradeList[currentlyDisplayedUpgrade] =="bakery station"){
  		NUMBEROFSTATIONS++;
  		this.bakeryStation.visible = true;
- 		//this.bakeryButton.visible = true;
  		activeButtons.push(this.bakeryButton);
-
  	}
  	console.log("BUYING: " + upgradeList[currentlyDisplayedUpgrade]);
+ 	this.createPurchaseAlert("bought a new", upgradeList[currentlyDisplayedUpgrade], upgradeCostList[upgradeList[currentlyDisplayedUpgrade]]);
+	upgradeList.splice(currentlyDisplayedUpgrade, 1);
+	NUMBEROFUPGRADES--;
+	console.log(upgradeList);
  };
 
 

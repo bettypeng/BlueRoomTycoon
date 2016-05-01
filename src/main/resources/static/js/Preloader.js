@@ -116,9 +116,9 @@ BlueRoom.Preloader.prototype = {
 
 		//UPGRADE PAGE
 		this.load.image('buyButton', 'images/buy_button.png');
-		this.load.image('coffeeBar', 'images/coffee_bar.png');
-		this.load.image('bakery', 'images/bakery.png');
-		this.load.image('magazineRack', 'images/magazine_rack.png');
+		this.load.image('coffee station', 'images/coffee_bar.png');
+		this.load.image('bakery station', 'images/bakery.png');
+		this.load.image('magazine rack', 'images/magazine_rack.png');
 
 
 		//this.load.atlas('playButton', 'images/play_button.png', 'images/play_button.json');
