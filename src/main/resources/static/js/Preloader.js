@@ -126,10 +126,24 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('fiveStar', 'images/hire/five_star.png');
 
 		//UPGRADE PAGE
-		this.load.image('buyButton', 'images/buy_button.png');
-		this.load.image('coffee station', 'images/coffee_bar.png');
-		this.load.image('bakery station', 'images/bakery.png');
-		this.load.image('magazine rack', 'images/magazine_rack.png');
+		this.load.image('buyButton', 'images/upgrades/buy_button.png');
+		this.load.image('coffee station', 'images/upgrades/coffee_bar.png');
+		this.load.image('bakery station', 'images/upgrades/bakery.png');
+		this.load.image('magazine rack', 'images/upgrades/magazine_rack.png');
+
+		//INVENTORY
+		this.load.image('inventoryUp', 'images/inventory/up_arrow.png');
+		this.load.image('inventoryDown', 'images/inventory/down_arrow.png');
+		this.load.image('sellButton', 'images/inventory/sell_button.png');
+		this.load.image('fireButton', 'images/inventory/fire_button.png');
+		this.load.image('i_erik', 'images/inventory/erik.png');
+		this.load.image('i_alex', 'images/inventory/alex.png');
+		this.load.image('i_rachel', 'images/inventory/rachel.png');
+		this.load.image('i_coffee station', 'images/inventory/coffee.png');
+		this.load.image('i_bakery station', 'images/inventory/bakery.png');
+		this.load.image('i_magazine rack', 'images/inventory/magazine.png');
+
+
 
 
 		//this.load.atlas('playButton', 'images/play_button.png', 'images/play_button.json');

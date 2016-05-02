@@ -1,11 +1,6 @@
 
 BlueRoom.GameManagerView = function (game) {
-    this.bmd = null;
-    // points arrays - one for x and one for y
-    this.points = {
-    'x': [440, 550],
-    'y': [675, 400]
-    };
+
     this.sandwichLinePos = {'x': new Array(), 'y':new Array()};
     this.cashierLinePos = {'x': new Array(), 'y':new Array()};
 
@@ -33,12 +28,6 @@ var currThis = this;
 // BlueRoom.GameManagerView.prototype = {
 
     BlueRoom.Game.prototype.createManager = function () {
-        this.bmd = null;
-        // points arrays - one for x and one for y
-        this.points = {
-        'x': [440, 550],
-        'y': [675, 400]
-        };
         this.sandwichLinePos = {'x': new Array(), 'y':new Array()};
         this.cashierLinePos = {'x': new Array(), 'y':new Array()};
         // BlueRoom.Game.prototype.create.call(this);
@@ -98,9 +87,9 @@ var currThis = this;
         this.timerStopped = true;
         this.timer = null;
 
-        setTimeout(function(){
-            getCustomer();
-        }, 500);
+        // setTimeout(function(){
+        //     getCustomer();
+        // }, 500);
     
         this.startMovement();        
     };
@@ -116,25 +105,10 @@ var currThis = this;
     
     BlueRoom.Game.prototype.startMovement= function(){
         var myGame = this;
-        //var counter = 0;
         window.setInterval(function(){
-            //if(managerView){
-                //counter++;
-                // if(counter%5 == 0){
-                //     if(numCashier<20){
-                //         myGame.toCashier();
-                //     }
-                // }
-                // if(counter%15 ==0){
-                //     myGame.toLeaveBlueRoom();
-                // }
-                if(!leaving){
-                    myGame.moveLineUp(sandwichLine, myGame.sandwichLinePos, 2000);
-                }
-                //myGame.moveLineUp(cashierLine, myGame.cashierLinePos, 3000);
-
-            //}
-           
+            if(!leaving){
+                myGame.moveLineUp(sandwichLine, myGame.sandwichLinePos, 2000);
+            }
         }, 100);
 
         
@@ -251,12 +225,6 @@ var currThis = this;
         }
     };
     
-    BlueRoom.Game.prototype.drawPath= function(){
-        this.points['x'][2] = this.sandwichLinePos['x'][numSandwich];
-        this.points['y'][2] = this.sandwichLinePos['y'][numSandwich];
-        console.log(this.sandwichLinePos['x'][numSandwich]);
-    };
-
     BlueRoom.Game.prototype.managerUpdate= function () {
         currThis = this;
         managerCounter++;

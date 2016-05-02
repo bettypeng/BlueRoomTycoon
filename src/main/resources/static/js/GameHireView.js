@@ -6,6 +6,7 @@ var EMPLOYEEWAGE = 100;
 var hireMeButton;
 
 BlueRoom.Game.prototype.createHireView= function () {
+	this.disableDayEndButtons();
 	var bg = this.add.sprite(0, 0, 'dayEndBg');
 	hireViewElements.push(bg);
 
@@ -143,6 +144,8 @@ BlueRoom.Game.prototype.updateNext = function(thingA, thingB, newImg) {
 };
 
 BlueRoom.Game.prototype.hideHireView= function(){
+	this.enableDayEndButtons();
+
 	hireViewElements.forEach(function(item){
 		item.destroy();
 	});

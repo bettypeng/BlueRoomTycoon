@@ -1,4 +1,5 @@
 var dayEndViewElements = new Array();
+var dayEndButtons = new Array();
 
 
 BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
@@ -36,6 +37,12 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 	var close = this.add.button(890, 370, 'exitViewButton', this.destroyDayEndView, this);
 	close.anchor.setTo(0.5, 0);
 
+	dayEndButtons.push(viewInventory);
+	dayEndButtons.push(hire);
+	dayEndButtons.push(upgrade);
+	dayEndButtons.push(close);
+
+
 	dayEndViewElements.push(title);
 	dayEndViewElements.push(today);
 	dayEndViewElements.push(tips);
@@ -55,6 +62,18 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 
 
 };
+
+BlueRoom.Game.prototype.disableDayEndButtons = function(){
+	dayEndButtons.forEach(function(item){
+		item.visible = false;
+	});
+}
+
+BlueRoom.Game.prototype.enableDayEndButtons = function(){
+	dayEndButtons.forEach(function(item){
+		item.visible = true;
+	});
+}
 
 // BlueRoom.Game.prototype.showDayEndView= function(){
 //     sandwichViewElements.forEach(function(item){

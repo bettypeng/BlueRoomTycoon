@@ -8,6 +8,8 @@ var buyUpgradeButton;
 
 
 BlueRoom.Game.prototype.createUpgradeView= function () {
+	this.disableDayEndButtons();
+
 	var bg = this.add.sprite(0, 0, 'dayEndBg');
 	upgradeViewElements.push(bg);
 
@@ -147,6 +149,7 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
 // // };
 
 BlueRoom.Game.prototype.hideUpgradeView= function(){
+	this.enableDayEndButtons();
 	upgradeViewElements.forEach(function(item){
 		item.destroy();
 	});
