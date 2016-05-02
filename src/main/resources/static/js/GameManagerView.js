@@ -19,7 +19,6 @@ var customerGroup;
 var numSandwich;
 var numCustomer;
 var leaving;
-//var left;
 var sandwichLine = new Array();
 var cashierLine = new Array();
 var managerCounter = 0;
@@ -99,20 +98,11 @@ var currThis = this;
         this.timerStopped = true;
         this.timer = null;
 
-        setTimeout(function(){
-            getCustomer();
-        }, 500);
+        // setTimeout(function(){
+        //     getCustomer();
+        // }, 500);
     
-        this.startMovement();
-        // Draw the path 
-        // this.bmd = this.add.bitmapData(this.game.width/2, this.game.height/2);
-        // this.bmd.addToWorld();
-        // for (var i = 0; i < 1; i += this.increment) {
-        //   var px = this.math.catmullRomInterpolation(this.points.x, i);
-        //   var py = this.math.catmullRomInterpolation(this.points.y, i);
-        //   this.bmd.rect(px, py, 3, 3, 'rgba(245, 0, 0, 1)');
-        // } 
-        
+        this.startMovement();        
     };
     
     BlueRoom.Game.prototype.hideManagerView = function(){
@@ -225,14 +215,10 @@ var currThis = this;
     // };
     
     BlueRoom.Game.prototype.cashCustomerOut= function(customer){
-        // if(cashierLine.length>0 && cashierLine[0]!=null && !leaving){
-            // var c = cashierLine[0];
             var c = customer;
             console.log(c);
             purchase("sandwich", c.ingredients, c.ingMap, "wheat", c.id, c.happinessBarProgress/30, true);
             leaving = true;
-            //left = cashierLine.shift().sprite;
-            // left = customer.sprite;
             var tween = this.add.tween(customer.sprite).to( { x: 450, y: 700 }, 1000, null, true);
             customer.moving = true;
             tween.onComplete.add(onLeaveMoveComplete, this);
@@ -241,14 +227,6 @@ var currThis = this;
                 numCustomer--;
                 leaving = false;
             }
-            //tween.onComplete.add(done, this);
-            // function done(){
-            //     c = null;
-            // }
-            //BlueRoom.Game.prototype.addMoney.call(this);
-            //this.shiftFirstInLine(cashierLine, this.cashierLinePos);
-        // }
-
     };
 
     BlueRoom.Game.prototype.steal = function(customer){
@@ -256,22 +234,13 @@ var currThis = this;
         console.log(c);
         purchase("sandwich", c.ingredients, c.ingMap, "wheat", c.id, c.happiness, false);
         leaving = true;
-        //left = cashierLine.shift().sprite;
-        //left = customer.sprite;
         var tween = this.add.tween(customer.sprite).to( { x: 450, y: 700 }, 1000, null, true);
         tween.onComplete.add(onLeaveMoveComplete, this);
-         function onLeaveMoveComplete(){
-                customer.sprite.visible = false;
-                numCustomer--;
-                leaving = false;
-            }
-        //tween.onComplete.add(done, this);
-        // function done(){
-        //     c = null;
-        // }
-        //BlueRoom.Game.prototype.addMoney.call(this);
-        //this.shiftFirstInLine(cashierLine, this.cashierLinePos);
-    // }
+        function onLeaveMoveComplete(){
+            customer.sprite.visible = false;
+            numCustomer--;
+            leaving = false;
+        }
     }
     
     BlueRoom.Game.prototype.moveLineUp=function(line, linePos, speed){
@@ -289,8 +258,6 @@ var currThis = this;
     };
 
     BlueRoom.Game.prototype.managerUpdate= function () {
-        // this just takes care of resetting
-        // the timer so the movement repeats
         currThis = this;
         managerCounter++;
         if(managerCounter % CUSTOMERINTERVAL == 0 && numSandwich<15 && isBlueRoomOpen){
@@ -298,15 +265,8 @@ var currThis = this;
         }
         
     };
-
-    // var currThis = BlueRoom.Game.prototype;
     
     BlueRoom.Game.prototype.newCustomerReturned = function(customer){
-        // var currThis = this;
-        // console.log(customer);
-        // console.log(currThis.add);
-        // console.log(this);
-
         currThis.customer = customer.sprite;
         customerGroup.add(currThis.customer);
         numSandwich++;
@@ -320,39 +280,5 @@ var currThis = this;
             customer.moving = false;
             sandwichLine.push(customer);
         }
-        // currThis.customer = customer.sprite;
-        // customerGroup.add(currThis.customer);
-        // numSandwich++;
-        // currThis.drawPath();
-        // //currThis.customer.anchor.setTo(0.5, 0.5);
-        // currThis.timer.loop(.001, function(){
-        //     var posx = currThis.math.bezierInterpolation(currThis.points.x, currThis.i);
-        //     var posy = currThis.math.bezierInterpolation(currThis.points.y, currThis.i);
-        //     currThis.customer.x = posx;
-        //     currThis.customer.y = posy;
-        //     currThis.i += currThis.increment;
-        //     if (posx > currThis.points['x'][2]) {
-        //         currThis.timer.stop();
-        //         currThis.timer.destroy();
-        //         currThis.i = 0;
-        //         currThis.timerStopped = true;
-        //         sandwichLine.push(customer);
-        //     }
-        // }, currThis);
-        // currThis.timer.start();
     };
     
-    // BlueRoom.Game.prototype.plot= function() {
-    //     var posx = this.math.bezierInterpolation(this.points.x, this.i);
-    //     var posy = this.math.bezierInterpolation(this.points.y, this.i);
-    //     this.customer.x = posx;
-    //     this.customer.y = posy;
-    //     this.i += this.increment;
-    //     if (posx > this.points['x'][2]) {
-    //         this.timer.stop();
-    //         this.timer.destroy();
-    //         this.i = 0;
-    //         this.timerStopped = true;
-    //         sandwichLine.push(customer);
-    //     }
-    // };

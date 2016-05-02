@@ -241,24 +241,17 @@ BlueRoom.Game.prototype = {
                 item.visible = false;
             });
         }
+
         if(sandwichView){
-            this.sandwichUpdate();
-          
+            this.sandwichUpdate(); 
         }
+
         if(dayEndView){
-            // this.managerButton.visible = false;
-            // this.sandwichButton.visible = false;
-            // this.coffeeButton.visible = false;
-            // this.bakeryButton.visible = false;
             activeButtons.forEach(function(item){
                 item.visible = false;
             });
         }
         else{
-            // this.managerButton.visible = true;
-            // this.sandwichButton.visible = true;
-            // this.coffeeButton.visible = true;
-            // this.bakeryButton.visible = true;
             activeButtons.forEach(function(item){
                 item.visible = true;
             });
@@ -267,7 +260,8 @@ BlueRoom.Game.prototype = {
             if(!dayEndView){
                 dayEndView = true;
                 // this.createDayEndView();
-                endDay();
+                //endDay();
+                this.createDayEndAlert();
             }
         }
     },

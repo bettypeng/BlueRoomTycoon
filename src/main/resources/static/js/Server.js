@@ -93,6 +93,7 @@ function endDay() {
         var dailyInfo = responseObject.dailyInfo;
         var totalInfo = responseObject.totalInfo;
 
+        game.hideDayEndAlert();
         game.createDayEndView(dailyInfo, totalInfo);
     
         //show these profits on the screen
