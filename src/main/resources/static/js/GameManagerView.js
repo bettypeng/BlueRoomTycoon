@@ -47,8 +47,8 @@ var currThis = this;
         this.sandwichStation = this.add.sprite(652, 146, 'sandwichStation');
         this.bakeryStation = this.add.sprite(400, 152, 'bakeryStation');
         this.coffeeStation = this.add.sprite(130, 155, 'coffeeStation');
-        this.bakeryStation.visible = false;
-        this.coffeeStation.visible = false;
+        // this.bakeryStation.visible = false;
+        // this.coffeeStation.visible = false;
 
         var smallstyle = { font: "10px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "center" };
         this.employeeBreakStation = this.add.sprite(10, 430, 'employeeBreakStation');

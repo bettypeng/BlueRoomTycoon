@@ -2,7 +2,7 @@ var hireViewElements = new Array();
 var NUMBEROFHIRES = 3;
 var currentlyDisplayedHire = 0;
 var hireList = ["erik", "alex", "rachel"];
-var EMPLOYEEHOURLYWAGE = 10;
+var EMPLOYEEWAGE = 100;
 var hireMeButton;
 
 BlueRoom.Game.prototype.createHireView= function () {
@@ -20,7 +20,7 @@ BlueRoom.Game.prototype.createHireView= function () {
 	var currbalance = this.game.add.text(this.game.width/2, 140, 'Current Balance: $' + statusBar.money.toFixed(2), labelStyle);
 	currbalance.anchor.setTo(0.5, 0,5);
 
-	var wages = this.game.add.text(this.game.width/2, 480, "Wages: $" +EMPLOYEEHOURLYWAGE + " / hr", labelStyle);
+	var wages = this.game.add.text(this.game.width/2, 480, "Wages: $" +EMPLOYEEWAGE + " / day", labelStyle);
 	wages.anchor.setTo(0.5, 0,5);
 
 	hireMeButton = this.add.button(this.game.width/2, 510, 'hireMeButton', this.hireNewEmployee, this);
@@ -80,7 +80,7 @@ BlueRoom.Game.prototype.createHireView= function () {
 BlueRoom.Game.prototype.checkHireButton = function(currButton){
 	console.log("checking button");
 
-	if(Number(statusBar.money) <= Number(EMPLOYEEHOURLYWAGE) || NUMBEROFSTATIONS<=NUMBEROFEMPLOYEES){
+	if(Number(statusBar.money) <= Number(EMPLOYEEWAGE) || NUMBEROFSTATIONS<=NUMBEROFEMPLOYEES){
 		this.disableButton(currButton);
 	}
 	else{
@@ -100,8 +100,9 @@ BlueRoom.Game.prototype.hireNewEmployee = function(){
 
 	var emp = new Employee();
 	employeeList.push(emp.employeeSprite);
-	this.createPurchaseAlert("hired", capitalizeFirstLetter(hireList[currentlyDisplayedHire]), EMPLOYEEHOURLYWAGE);
+	this.createPurchaseAlert("hired", capitalizeFirstLetter(hireList[currentlyDisplayedHire]), EMPLOYEEWAGE);
 	hireList.splice(currentlyDisplayedHire, 1);
+	this.fadeHireForward();
 	console.log(hireList);
 	function capitalizeFirstLetter(string) {
 	    return string.charAt(0).toUpperCase() + string.slice(1);

@@ -51,7 +51,7 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('sandwichBg', 'images/sandwich_bg.png');
 		this.load.image('sandwichBg2', 'images/sandwich_bg_2.png');
 
-		this.load.image('purchaseAlert', 'images/purchase_alert.png');
+		this.load.image('alertBox', 'images/alert.png');
 
 
 		// MANAGER VIEW
@@ -97,6 +97,9 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('upgradeButton', 'images/upgrade_button.png');
 		this.load.image('hireButton', 'images/hire_button.png');
 		this.load.image('exitViewButton', 'images/start_new_day.png');
+		this.load.image('continueButton', 'images/continue.png');
+		this.load.image('continueShopping', 'images/continue_shopping.png');
+		this.load.image('exitViewSmallButton', 'images/start_new_day_small.png');
 
 		// HIRE PAGE
 		this.load.image('next', 'images/next_btn.png');
