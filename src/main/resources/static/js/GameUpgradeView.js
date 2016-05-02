@@ -3,6 +3,9 @@ var currentlyDisplayedUpgrade = 0;
 var NUMBEROFUPGRADES = 3;
 var upgradeList = ["coffee station", "bakery station", "magazine rack"];
 var upgradeCostList = [];
+upgradeCostList["coffee station"] = 500;
+upgradeCostList["bakery station"] = 1000;
+upgradeCostList["magazine rack"] = 50;
 var costtext;
 var buyUpgradeButton;
 
@@ -21,10 +24,6 @@ BlueRoom.Game.prototype.createUpgradeView= function () {
 	title.anchor.setTo(0.5, 0,5);
 
 	upgradeViewElements.push(title);
-
-	upgradeCostList["coffee station"] = 500;
-	upgradeCostList["bakery station"] = 1000;
-	upgradeCostList["magazine rack"] = 50;
 
 	var labelStyle = { font: "16px Roboto-Light", fill: "#000000", align: "center"};
 	var currbalance = this.game.add.text(this.game.width/2, 140, 'Current Balance: $' + statusBar.money.toFixed(2), labelStyle);

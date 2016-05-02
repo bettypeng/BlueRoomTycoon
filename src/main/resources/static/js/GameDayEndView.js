@@ -67,13 +67,13 @@ BlueRoom.Game.prototype.disableDayEndButtons = function(){
 	dayEndButtons.forEach(function(item){
 		item.visible = false;
 	});
-}
+};
 
 BlueRoom.Game.prototype.enableDayEndButtons = function(){
 	dayEndButtons.forEach(function(item){
 		item.visible = true;
 	});
-}
+};
 
 // BlueRoom.Game.prototype.showDayEndView= function(){
 //     sandwichViewElements.forEach(function(item){

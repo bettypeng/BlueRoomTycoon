@@ -1,4 +1,7 @@
 var inventoryViewElements = new Array();
+var inventoryEmployee = 0;
+var inventoryUpgrade = 0;
+var sellingPrice;
 
 
 BlueRoom.Game.prototype.createInventoryView= function () {
@@ -22,13 +25,21 @@ BlueRoom.Game.prototype.createInventoryView= function () {
 	var upgrades = this.game.add.text(2*(this.game.width/3), 130, 'UPDATES', labelStyle);
 	upgrades.anchor.setTo(0.5, 0);
 
-	var upEmployeeArrow = this.add.button(this.game.width/3, 170, 'inventoryUp', this.hideInventoryView, this);
+	var upEmployeeArrow = this.add.button(this.game.width/3, 170, 'inventoryUp', this.fadeInventoryEmployeeForward, this);
 	upEmployeeArrow.anchor.setTo(0.5, 0);
 
-	var invE1 = this.add.sprite(this.game.width/3, 170 + 33, 'i_erik');
-	invE1.anchor.setTo(0.5, 0);
+	// var invE1 = this.add.sprite(this.game.width/3, 170 + 33, 'i_erik');
+	// invE1.anchor.setTo(0.5, 0);
 
-	var downEmployeeArrow = this.add.button(this.game.width/3, 170 + 33+ 225, 'inventoryDown', this.hideInventoryView, this);
+	this.invE1 = this.add.sprite(this.game.width/3, 170 + 33, "i_" + hireList[0]);
+    this.invE1.anchor.setTo(0.5, 0);
+    inventoryEmployee = 0;
+
+    this.invE2 = this.add.sprite(this.game.width/3, 170 + 33, "i_" + hireList[1]);
+    this.invE2.anchor.setTo(0.5, 0);
+    this.invE2.alpha = 0;
+
+	var downEmployeeArrow = this.add.button(this.game.width/3, 170 + 33+ 225, 'inventoryDown', this.fadeInventoryEmployeeBackward, this);
 	downEmployeeArrow.anchor.setTo(0.5, 0);
 
 	var employeePrice = this.game.add.text(this.game.width/3, 170 + 33 + 270, "Current employee wages: $" + EMPLOYEEWAGE + " / day", detailStyle);
@@ -37,16 +48,24 @@ BlueRoom.Game.prototype.createInventoryView= function () {
 	var fireButton = this.add.button(this.game.width/3, 170 + 33 + 300, 'fireButton', this.hideInventoryView, this);
 	fireButton.anchor.setTo(0.5, 0);
 
-	var upUpgradeArrow = this.add.button(2*(this.game.width/3), 170, 'inventoryUp', this.hideInventoryView, this);
+	var upUpgradeArrow = this.add.button(2*(this.game.width/3), 170, 'inventoryUp', this.fadeInventoryUpgradeForward, this);
 	upUpgradeArrow.anchor.setTo(0.5, 0);
 
-	var invU1 = this.add.sprite(2*(this.game.width/3), 170 + 33, 'i_coffee station');
-	invU1.anchor.setTo(0.5, 0);
+	// var invU1 = this.add.sprite(2*(this.game.width/3), 170 + 33, 'i_coffee station');
+	// invU1.anchor.setTo(0.5, 0);
 
-	var downUpgradeArrow = this.add.button(2*(this.game.width/3), 170 + 33+ 225, 'inventoryDown', this.hideInventoryView, this);
+	this.invU1 = this.add.sprite(2*(this.game.width/3), 170+33, "i_" + upgradeList[0]);
+    this.invU1.anchor.setTo(0.5, 0);
+    inventoryUpgrade = 0;
+
+    this.invU2 = this.add.sprite(2*(this.game.width/3), 170+33, "i_" + upgradeList[1]);
+    this.invU2.anchor.setTo(0.5, 0);
+    this.invU2.alpha = 0;
+
+	var downUpgradeArrow = this.add.button(2*(this.game.width/3), 170 + 33+ 225, 'inventoryDown', this.fadeInventoryUpgradeBackward, this);
 	downUpgradeArrow.anchor.setTo(0.5, 0);
 
-	var sellingPrice = this.game.add.text(2*(this.game.width/3), 170 + 33 + 270, 'Selling price: ' , detailStyle);
+	sellingPrice = this.game.add.text(2*(this.game.width/3), 170 + 33 + 270, 'Selling price: $' + upgradeCostList[upgradeList[inventoryUpgrade]], detailStyle);
 	sellingPrice.anchor.setTo(0.5, 0);
 
 	var sellButton = this.add.button(2*(this.game.width/3), 170 + 33 + 300, 'sellButton', this.hideInventoryView, this);
@@ -57,14 +76,14 @@ BlueRoom.Game.prototype.createInventoryView= function () {
 	inventoryViewElements.push(upgrades);
 	inventoryViewElements.push(upEmployeeArrow);
 	inventoryViewElements.push(downEmployeeArrow);
-	inventoryViewElements.push(invE1);
+	inventoryViewElements.push(this.invE1);
 	inventoryViewElements.push(upUpgradeArrow);
 	inventoryViewElements.push(downUpgradeArrow);
-	inventoryViewElements.push(invU1);
+	inventoryViewElements.push(this.invU1);
 
 	inventoryViewElements.push(employeePrice);
 	inventoryViewElements.push(sellingPrice);
-	
+
 	inventoryViewElements.push(fireButton);
 	inventoryViewElements.push(sellButton);
 
@@ -74,6 +93,44 @@ BlueRoom.Game.prototype.createInventoryView= function () {
 	this.sandwichButton.visible = false;
 
 };
+
+BlueRoom.Game.prototype.fadeInventoryEmployeeForward = function() {
+    inventoryEmployee++;
+ 	if (inventoryEmployee >= NUMBEROFHIRES)
+    {
+        inventoryEmployee = 0;
+    }
+    this.updateNext(this.invE1, this.invE2, "i_" + hireList[inventoryEmployee]);
+};
+
+BlueRoom.Game.prototype.fadeInventoryEmployeeBackward = function() {
+    inventoryEmployee--;
+ 	if (inventoryEmployee < 0)
+    {
+        inventoryEmployee = NUMBEROFHIRES-1;
+    }
+    this.updateNext(this.invE1, this.invE2, "i_" + hireList[inventoryEmployee]);
+ };
+
+ BlueRoom.Game.prototype.fadeInventoryUpgradeForward = function() {
+    inventoryUpgrade++;
+ 	if (inventoryUpgrade >= NUMBEROFHIRES)
+    {
+        inventoryUpgrade = 0;
+    }
+    sellingPrice.setText('Selling price: $' + upgradeCostList[upgradeList[inventoryUpgrade]]);
+    this.updateNext(this.invU1, this.invU2, "i_" + upgradeList[inventoryUpgrade]);
+};
+
+BlueRoom.Game.prototype.fadeInventoryUpgradeBackward = function() {
+    inventoryUpgrade--;
+ 	if (inventoryUpgrade < 0)
+    {
+        inventoryUpgrade = NUMBEROFHIRES-1;
+    }
+    sellingPrice.setText('Selling price: $' + upgradeCostList[upgradeList[inventoryUpgrade]]);
+    this.updateNext(this.invU1, this.invU2, "i_" + upgradeList[inventoryUpgrade]);
+ };
 
 // BlueRoom.Game.prototype.showUpgradeView= function(){
 //     upgradeViewElements.forEach(function(item){
