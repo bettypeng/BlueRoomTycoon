@@ -131,6 +131,7 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
  		activeButtons.push(this.bakeryButton);
  	}
  	console.log("BUYING: " + upgradeList[currentlyDisplayedUpgrade]);
+ 	this.addToUpgradeInventory(upgradeList[currentlyDisplayedUpgrade]);
  	this.createPurchaseAlert("bought a new", upgradeList[currentlyDisplayedUpgrade], upgradeCostList[upgradeList[currentlyDisplayedUpgrade]]);
 	upgradeList.splice(currentlyDisplayedUpgrade, 1);
 	NUMBEROFUPGRADES--;

@@ -102,6 +102,7 @@ BlueRoom.Game.prototype.hireNewEmployee = function(){
 	var emp = new Employee();
 	employeeList.push(emp.employeeSprite);
 	this.createPurchaseAlert("hired", capitalizeFirstLetter(hireList[currentlyDisplayedHire]), EMPLOYEEWAGE);
+	this.addToEmployeeInventory(hireList[currentlyDisplayedHire]);
 	hireList.splice(currentlyDisplayedHire, 1);
 	this.fadeHireForward();
 	console.log(hireList);
