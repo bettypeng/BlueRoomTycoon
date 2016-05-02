@@ -34,6 +34,10 @@ BlueRoom.Game.prototype.createDayEndAlert= function () {
 	dayEndAlertElements.push(drinksServed);
 	dayEndAlertElements.push(bakedGoodsSold);
 	dayEndAlertElements.push(cont);
+
+	managerView = false;
+	sandwichView = false;
+	dayEndView = true;
 }
 
 BlueRoom.Game.prototype.hideDayEndAlert= function(){

@@ -53,6 +53,14 @@ BlueRoom.Preloader.prototype = {
 
 		this.load.image('alertBox', 'images/alert.png');
 
+		//PAUSE SCREEN
+		this.load.image('pauseButton', 'images/pause_game_button.png');
+		this.load.image('pauseScreen', 'images/pause_test_screen.png');
+		this.load.image('resumeGameButton', 'images/resume_game_button.png');
+		this.load.image('restartGameButton', 'images/restart_game_button.png');
+		this.load.image('quitGameButton', 'images/quit_game_button.png');
+
+
 
 		// MANAGER VIEW
 		this.load.image('employee', 'images/employee.png');

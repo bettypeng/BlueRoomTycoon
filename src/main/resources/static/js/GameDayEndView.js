@@ -52,11 +52,6 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 	dayEndViewElements.push(hire);
 	dayEndViewElements.push(close);
 
-		
-
-	managerView = false;
-	sandwichView = false;
-	dayEndView = true;
 
 
 };
