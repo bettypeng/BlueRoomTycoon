@@ -1,4 +1,18 @@
 var EMPLOYEEINTERVAL = 300;
+//sandwich station coords
+var SSX = 750;
+var SSY = 107;
+//bakery station coords
+var BSX = 500;
+var BSY = 107;
+//coffee station coords
+var CSX = 270;
+var CSY = 108;
+
+var sandwichStationFilled = false;
+var bakeryStationFilled = false;
+var coffeeStationFilled = false;
+
 
 function Employee(){
     this.employeeSprite = currThis.game.add.group();
@@ -21,10 +35,10 @@ function Employee(){
     this.working = false;
     this.recharging = false;
     this.workHours = 8;
+    this.numStationSwitches = 0; //to discourage just switching your employee back and forth between stations
 
     this.createBar();
     this.setUpInteractions();
-
 }
 
 
@@ -57,6 +71,7 @@ Employee.prototype = {
         this.workHoursSprite.visible = false;
         this.working = false;
         this.recharging = false;
+        this.unstationEmployee();
         console.log("DRAGGING EMPLOYEE");
     },
 
@@ -77,31 +92,71 @@ Employee.prototype = {
         this.e.x = 0;
         this.e.y = 0;    
 
-    
-        // if (!sprite.overlap(dropZone) || sprite.overlap(platform))
-        // {
-        //     this.add.tween(this.sprite).to( { x: dragPosition.x, y: dragPosition.y }, 500, "Back.easeOut", true);
-        // }
-        if(sprite.overlap(currThis.sandwichStation)){
-            console.log("WORKING AT SANDWICH STATION");
-            //sprite.input.draggable = false;
-            this.employeeSprite.x = 750;
-            this.employeeSprite.y = 107; 
-            this.e.loadTexture('employeeHalf');
-            this.working = true;
-            this.recharging = false;
-            //this.renewTopping(curr.x, curr.y, curr.key);
-
+        if(sprite.overlap(currThis.sandwichStation) && !sandwichStationFilled){
+            this.placeEmployee(SSX, SSY);
+            this.station = "sandwich";
+        }
+        else if(sprite.overlap(currThis.bakeryStation) && !bakeryStationFilled){
+            this.placeEmployee(BSX, BSY);
+        }
+        else if(sprite.overlap(currThis.coffeeStation) && !coffeeStationFilled){
+            this.placeEmployee(CSX, CSY);
         }
         else if (sprite.overlap(currThis.employeeBreakStation)){
             console.log("TAKING A BREAK");
             this.working = false;
             this.recharging = true;
+            this.numStationSwitches = 0;
         } else{
             this.working = false;
             this.recharging = false;
         }
-    
+
+        this.stationEmployee();
+    },
+
+    placeEmployee: function(x, y){
+        this.numStationSwitches++;
+        if(this.numStationSwitches > 1){
+            this.workHoursProgress/=2;
+        }
+        this.employeeSprite.x = x;
+        this.employeeSprite.y = y; 
+        this.e.loadTexture('employeeHalf');
+        this.working = true;
+        this.recharging = false;
+    },
+
+    stationEmployee: function(){
+        var currEmployee = this;
+        if(currEmployee.employeeSprite.x == SSX && currEmployee.employeeSprite.y==SSY){
+            console.log("SANDWICH STATION FILLED");
+            sandwichStationFilled = true;
+        } 
+        if(currEmployee.employeeSprite.x == BSX && currEmployee.employeeSprite.y==BSY){
+            console.log("BAKERY STATION FILLED");
+            bakeryStationFilled = true;
+        }
+        if(currEmployee.employeeSprite.x == CSX && currEmployee.employeeSprite.y==CSY){
+            console.log("COFFEE STATION FILLED");
+            coffeeStationFilled = true;
+        }
+    },
+
+    unstationEmployee: function(){
+        var currEmployee = this;
+        if(currEmployee.employeeSprite.x == SSX && currEmployee.employeeSprite.y==SSY){
+            console.log("SANDWICH STATION UNFILLED");
+            sandwichStationFilled = false;
+        } 
+        if(currEmployee.employeeSprite.x == BSX && currEmployee.employeeSprite.y==BSY){
+            console.log("BAKERY STATION UNFILLED");
+            bakeryStationFilled = false;
+        }
+        if(currEmployee.employeeSprite.x == CSX && currEmployee.employeeSprite.y==CSY){
+            console.log("COFFEE STATION UNFILLED");
+            coffeeStationFilled = false;
+        }
     },
 
     createBar : function(){

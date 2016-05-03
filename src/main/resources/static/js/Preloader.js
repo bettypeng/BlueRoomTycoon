@@ -45,11 +45,21 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('whiteBg', 'images/white.png');
 		this.load.image('managerBg', 'images/manager_view.png');
 		this.load.image('sandwichStation', 'images/sandwich_station.png');
+		this.load.image('coffeeStation', 'images/coffee_station.png');
+		this.load.image('bakeryStation', 'images/bakery_station.png');
 
 		this.load.image('sandwichBg', 'images/sandwich_bg.png');
 		this.load.image('sandwichBg2', 'images/sandwich_bg_2.png');
 
-		this.load.image('purchaseAlert', 'images/purchase_alert.png');
+		this.load.image('alertBox', 'images/alert.png');
+
+		//PAUSE SCREEN
+		this.load.image('pauseButton', 'images/pause_game_button.png');
+		this.load.image('pauseScreen', 'images/pause_test_screen.png');
+		this.load.image('resumeGameButton', 'images/resume_game_button.png');
+		this.load.image('restartGameButton', 'images/restart_game_button.png');
+		this.load.image('quitGameButton', 'images/quit_game_button.png');
+
 
 
 		// MANAGER VIEW
@@ -87,6 +97,33 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('noface', 'images/noface.png');
 		this.load.image('glasses', 'images/glasses.png');
 
+		//COFFEE STATION
+		this.load.image('coffeeBg', 'images/coffee/coffee_station.png');
+		this.load.image('iceMachine', 'images/coffee/ice_machine.png');
+		this.load.image('syrupDispenser', 'images/coffee/syrup_dispenser.png');
+		this.load.image('syrupButton', 'images/coffee/syrup_button.png');
+
+		this.load.image('drinkDropZone', 'images/coffee/drink_dropzone.png');
+		this.load.image('drinkDispenser', 'images/coffee/drink_dispenser.png');
+		this.load.image('drinkButton', 'images/coffee/drink_button.png');
+		this.load.image('smallCup', 'images/coffee/small_cup.png');
+		this.load.image('mediumCup', 'images/coffee/medium_cup.png');
+		this.load.image('largeCup', 'images/coffee/large_cup.png');
+
+		//BAKERY STATION
+		this.load.image('bakeryBg', 'images/bakery/bakery.png');
+		this.load.image('muffinPlate', 'images/bakery/plate.png');
+		this.load.image('pistachio', 'images/bakery/pistachio_muffin.png');
+		this.load.image('doubleChoc', 'images/bakery/double_chocolate_muffin.png');
+		this.load.image('chocChip', 'images/bakery/chocolate_chip_muffin.png');
+		this.load.image('tripleBerry', 'images/bakery/triple_berry_muffin.png');
+		this.load.image('bananaNut', 'images/bakery/banana_nut_muffin.png');
+		this.load.image('bran', 'images/bakery/bran_muffin.png');
+		this.load.image('batterMenu', 'images/bakery/batter_menu.png');
+		this.load.image('muffinTin', 'images/bakery/muffin_tin.png');
+		this.load.image('oven', 'images/bakery/bake_oven.png');
+
+
 		//END OF DAY VIEW
 		this.load.image('dayEndBg', 'images/day_end_bg.png');
 		this.load.image('exitButton', 'images/exit_button.png');
@@ -95,6 +132,9 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('upgradeButton', 'images/upgrade_button.png');
 		this.load.image('hireButton', 'images/hire_button.png');
 		this.load.image('exitViewButton', 'images/start_new_day.png');
+		this.load.image('continueButton', 'images/continue_button.png');
+		this.load.image('continueShopping', 'images/continue_shopping.png');
+		this.load.image('exitViewSmallButton', 'images/start_new_day_small.png');
 
 		// HIRE PAGE
 		this.load.image('next', 'images/next_btn.png');
@@ -113,10 +153,24 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('fiveStar', 'images/hire/five_star.png');
 
 		//UPGRADE PAGE
-		this.load.image('buyButton', 'images/buy_button.png');
-		this.load.image('coffeeBar', 'images/coffee_bar.png');
-		this.load.image('bakery', 'images/bakery.png');
-		this.load.image('magazineRack', 'images/magazine_rack.png');
+		this.load.image('buyButton', 'images/upgrades/buy_button.png');
+		this.load.image('coffee station', 'images/upgrades/coffee_bar.png');
+		this.load.image('bakery station', 'images/upgrades/bakery.png');
+		this.load.image('magazine rack', 'images/upgrades/magazine_rack.png');
+
+		//INVENTORY
+		this.load.image('inventoryUp', 'images/inventory/up_arrow.png');
+		this.load.image('inventoryDown', 'images/inventory/down_arrow.png');
+		this.load.image('sellButton', 'images/inventory/sell_button.png');
+		this.load.image('fireButton', 'images/inventory/fire_button.png');
+		this.load.image('i_erik', 'images/inventory/erik.png');
+		this.load.image('i_alex', 'images/inventory/alex.png');
+		this.load.image('i_rachel', 'images/inventory/rachel.png');
+		this.load.image('i_coffee station', 'images/inventory/coffee.png');
+		this.load.image('i_bakery station', 'images/inventory/bakery.png');
+		this.load.image('i_magazine rack', 'images/inventory/magazine.png');
+
+
 
 
 		//this.load.atlas('playButton', 'images/play_button.png', 'images/play_button.json');

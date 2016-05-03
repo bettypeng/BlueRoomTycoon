@@ -12,3 +12,5 @@
     font-family: Roboto;
     src: url(/roboto/Roboto-Regular.ttf);
 }
+
+.fontPreload{    position:absolute;    left:-100px;}

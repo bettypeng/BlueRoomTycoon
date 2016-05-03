@@ -14,10 +14,13 @@ public class GameManager {
 
   private final static int UUID_LEN = 8;
   private static final double INITIAL_MONEY = 1000;
+  private static final double TRASH_CONST = 0.3;
+  
   private MoneyManager manager;
   private List<Customer> customers;
   private List<Employee> employees;
   private Map<String, Customer> customerMap;
+  private Map<String, Employee> employeeMap;
 
   private int baselineInterval;
   private int currTime;
@@ -53,8 +56,14 @@ public class GameManager {
   
   public double steal(FoodItem stolen, Customer cust) {
     double price = stolen.getPrice();
-    manager.handleTheft(price, cust.getStation());
+    manager.handleLoss(price);
     return price;
+  }
+  
+  public double trash(int numIngredients) {
+    double loss = numIngredients * TRASH_CONST;
+    manager.handleLoss(loss);
+    return loss;
   }
 
   public Customer newCustomer() {
@@ -75,6 +84,13 @@ public class GameManager {
     customers.add(newCustomer);
     customerMap.put(id, newCustomer);
     return newCustomer;
+  }
+  
+  public Employee hireEmployee(String name) {
+   Employee emp = new Employee(name);
+   employees.add(emp);
+   employeeMap.put(name, emp);
+   return emp;
   }
 
   public Customer getFrontCustomer() {
@@ -98,10 +114,6 @@ public class GameManager {
     return manager.getTotalInfo();
   }
 
-  public void addEmployee(Employee emp) {
-    employees.add(emp);
-  }
-
   public void addStation(String stationName) {
     availableStations.add(stationName);
   }
@@ -113,6 +125,10 @@ public class GameManager {
    */
   public Customer getCustomer(String id) {
     return customerMap.get(id);
+  }
+  
+  public Employee getEmployee(String name) {
+    return employeeMap.get(name);
   }
 
   public double getCurrentMoney() {

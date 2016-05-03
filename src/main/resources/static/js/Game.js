@@ -25,6 +25,9 @@ BlueRoom.Game = function (game) {
 
 var managerView = true;
 var sandwichView = false;
+var coffeeView = false;
+var bakeryView = false;
+
 var dayEndView = false;
 
 var gameTimer;
@@ -35,12 +38,13 @@ var timetext;
 var daytext;
 var ampmtext;
 var closedtext;
+var activeButtons = new Array();
 
 var dayCounter = 4;
 var twelveCounter = 0;
 
 var MANAGERTIMEINTERVAL = 1; //250 standard
-var SANDWICHTIMEINTERVAL = 500;
+var STATIONTIMEINTERVAL = 500;
 
 var game;
 
@@ -57,25 +61,38 @@ BlueRoom.Game.prototype = {
         this.add.sprite(0, 0, 'whiteBg');
         this.managerButton = this.add.button(10, 10, 'managerButton', goToManagerView, this);
 		this.sandwichButton = this.add.button(10, 80, 'sandwichButton', goToSandwichView, this);
-		//this.coffeeButton = this.add.button(10, 150, 'coffeeButton', goToCoffeeView, this);
-        //this.bakeryButton = this.add.button(10, 220, 'bakeryButton', goToBakeryView, this);
+		this.coffeeButton = this.add.button(10, 150, 'coffeeButton', goToCoffeeView, this);
+        this.bakeryButton = this.add.button(10, 220, 'bakeryButton', goToBakeryView, this);
         this.status_bar = this.add.sprite(0, 600, 'status_bar');
+        this.pauseButton = this.add.button(1000, 630, 'pauseButton', this.showPauseScreen, this);
+
+        activeButtons.push(this.managerButton);
+        activeButtons.push(this.sandwichButton);
+
+        activeButtons.push(this.coffeeButton);
+        activeButtons.push(this.bakeryButton);
+
+        //this.coffeeButton.visible = false;
+        //this.bakeryButton.visible = false;
         
         gamegroup.add(this.status_bar);
         gamegroup.add(this.managerButton);
         gamegroup.add(this.sandwichButton);
-        //gamegroup.add(this.bakeryButton);
-        //gamegroup.add(this.coffeeButton);
+        gamegroup.add(this.bakeryButton);
+        gamegroup.add(this.coffeeButton);
+        gamegroup.add(this.pauseButton);
+
         
         var status = statusBar;
         var style = { font: "32px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "left", boundsAlignH: "left", backgroundColor: "#ffffff" };
 
         moneytext = this.game.add.text(100, 650, '$' + (status.money.toFixed(2)), style);
         daytext = this.game.add.text(500, 650,  status.day[dayCounter%7], style);
-        timetext = this.game.add.text(900, 650,  status.hour + ':' + status.minute, style);
-        ampmtext = this.game.add.text(970, 650,  status.ampm[twelveCounter%2], style);
-        closedtext = this.game.add.text(900, 650,  "CLOSED!", style);
+        timetext = this.game.add.text(800, 650,  status.hour + ':' + status.minute, style);
+        ampmtext = this.game.add.text(870, 650,  status.ampm[twelveCounter%2], style);
+        closedtext = this.game.add.text(800, 650,  "CLOSED!", style);
         this.closedSign(false);
+
 
 
         this.moneytextTween = this.add.tween(moneytext.scale).to({ x: 1.5, y: 1.5}, 200, Phaser.Easing.Linear.In).to({ x: 1, y: 1}, 200, Phaser.Easing.Linear.In);
@@ -97,45 +114,79 @@ BlueRoom.Game.prototype = {
       
         this.createManager();
         this.createSandwichView();
+        this.createBakeryView();
+        this.createCoffeeView();
         this.hideSandwichView();
+        this.hideCoffeeView();
+        this.hideBakeryView();
+
        
         //this.showSandwichView();
         
         function goToManagerView(pointer) {
 		    managerView = true;
 		    sandwichView = false;
+            coffeeView = false;
+            bakeryView = false;
             dayEndView = false;
-		    mygame.hideSandwichView();
+    		mygame.hideSandwichView();
+            mygame.hideCoffeeView();
+            mygame.hideBakeryView();
             mygame.disableButton(this.managerButton);
             mygame.enableButton(this.sandwichButton);
-            // this.managerButton.alpha = 0.5;
-            // this.sandwichButton.alpha = 1;
-
+            mygame.enableButton(this.coffeeButton);
+            mygame.enableButton(this.bakeryButton);
             this.setTimer(MANAGERTIMEINTERVAL);
     	};
     	
     	function goToSandwichView(pointer) {
-    	    sandwichView = true;
     	    managerView = false;
+            sandwichView = true;
+            coffeeView = false;
+            bakeryView = false;
             dayEndView = false;
     	    mygame.showSandwichView();
-            mygame.disableButton(this.sandwichButton);
+            mygame.hideCoffeeView();
+            mygame.hideBakeryView();
             mygame.enableButton(this.managerButton);
-            // this.sandwichButton.alpha = 0.5;
-            // this.managerButton.alpha = 1;
-            this.setTimer(SANDWICHTIMEINTERVAL);
+            mygame.disableButton(this.sandwichButton);
+            mygame.enableButton(this.coffeeButton);
+            mygame.enableButton(this.bakeryButton);
+            this.setTimer(STATIONTIMEINTERVAL);
     	};
     	
     	function goToCoffeeView(pointer) {
+            managerView = false;
+            sandwichView = false;
+            coffeeView = true;
+            bakeryView = false;
+            dayEndView = false;
+            mygame.hideSandwichView();
+            mygame.showCoffeeView();
+            mygame.hideBakeryView();
+            mygame.enableButton(this.managerButton);
+            mygame.enableButton(this.sandwichButton);
+            mygame.disableButton(this.coffeeButton);
+            mygame.enableButton(this.bakeryButton);
+            this.setTimer(STATIONTIMEINTERVAL);
     	};
     	
     	function goToBakeryView(pointer) {
+            managerView = false;
+            sandwichView = false;
+            coffeeView = false;
+            bakeryView = true;
+            dayEndView = false;
+            mygame.hideSandwichView();
+            mygame.hideCoffeeView();
+            mygame.showBakeryView();
+            mygame.enableButton(this.managerButton);
+            mygame.enableButton(this.sandwichButton);
+            mygame.enableButton(this.coffeeButton);
+            mygame.disableButton(this.bakeryButton);
+            this.setTimer(STATIONTIMEINTERVAL);
     	};
     	
-        function quitGame(pointer) {
-            this.state.start('MainMenu');
-        };
-
     },
     
     // addMoney: function(amt){
@@ -234,15 +285,27 @@ BlueRoom.Game.prototype = {
                 item.visible = false;
             });
         }
+
         if(sandwichView){
-            this.sandwichUpdate();
-          
+            this.sandwichUpdate(); 
+        }
+
+        if(dayEndView){
+            activeButtons.forEach(function(item){
+                item.visible = false;
+            });
+        }
+        else{
+            activeButtons.forEach(function(item){
+                item.visible = true;
+            });
         }
         if(!isBlueRoomOpen && numCustomer <=0){
             if(!dayEndView){
                 dayEndView = true;
                 // this.createDayEndView();
-                endDay();
+                //endDay();
+                this.createDayEndAlert();
             }
         }
     },
@@ -310,7 +373,11 @@ BlueRoom.Game.prototype = {
         this.setTimer(MANAGERTIMEINTERVAL);
     },
 
-    quitGame: function (pointer) {
+    restartGame: function(){
+        this.state.start('Game');
+    },
+
+    quitGame: function () {
 
         //  Destroy anything you no longer need.
         //  Stop music, delete sprites, purge caches, free resources, all that good stuff.

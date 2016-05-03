@@ -84,7 +84,7 @@ public class Main {
           case "e":
             Customer newCust = new Customer("c1", OrderFactory.getSandwichOrder(), "sandwich");
             newCust.setHappiness(Math.random());
-            Employee emp = new Employee();
+            Employee emp = new Employee("alex");
             double quality = emp.fillOrder();
             System.out.println(manager.purchase(quality, newCust));
             break;
