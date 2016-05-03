@@ -97,6 +97,19 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('noface', 'images/noface.png');
 		this.load.image('glasses', 'images/glasses.png');
 
+		//COFFEE STATION
+		this.load.image('coffeeBg', 'images/coffee/coffee_station.png');
+		this.load.image('iceMachine', 'images/coffee/ice_machine.png');
+		this.load.image('syrupDispenser', 'images/coffee/syrup_dispenser.png');
+		this.load.image('syrupButton', 'images/coffee/syrup_button.png');
+
+		this.load.image('drinkDropZone', 'images/coffee/drink_dropzone.png');
+		this.load.image('drinkDispenser', 'images/coffee/drink_dispenser.png');
+		this.load.image('drinkButton', 'images/coffee/drink_button.png');
+		this.load.image('smallCup', 'images/coffee/small_cup.png');
+		this.load.image('mediumCup', 'images/coffee/medium_cup.png');
+		this.load.image('largeCup', 'images/coffee/large_cup.png');
+
 		//END OF DAY VIEW
 		this.load.image('dayEndBg', 'images/day_end_bg.png');
 		this.load.image('exitButton', 'images/exit_button.png');
