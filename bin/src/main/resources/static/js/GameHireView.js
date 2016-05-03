@@ -94,6 +94,7 @@ BlueRoom.Game.prototype.updateCurrHire = function(){
 
 BlueRoom.Game.prototype.hireNewEmployee = function(){
 	console.log("Hiring: " + hireList[currentlyDisplayedHire]);
+	hire(currentlyDisplayedHire);
 	var emp = new Employee();
 	employeeList.push(emp.employeeSprite);
 	this.createPurchaseAlert("hired", capitalizeFirstLetter(hireList[currentlyDisplayedHire]), EMPLOYEEHOURLYWAGE);
