@@ -37,8 +37,9 @@ public class MoneyManager {
     currDay.newPurchase(station, incr);
   }
 
-  public void handleTheft(double amt, String station) {
+  public void handleLoss(double amt) {
     money -= amt;
+    currDay.newLoss(amt);
   }
 
   public double getMoney() {

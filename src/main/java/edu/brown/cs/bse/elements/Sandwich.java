@@ -19,7 +19,7 @@ public class Sandwich extends FoodItem {
     for (SandwichIngredient i : ingredients) {
       deltas.put(i, 0.0);
     }
-    setPrice(6.95);
+    setPrice(4);
   }
 
   public Sandwich(List<SandwichIngredient> ingredients,
@@ -28,18 +28,6 @@ public class Sandwich extends FoodItem {
     this.bread = bread;
     this.deltas = deltas;
     setPrice(4);
-  }
-
-  public Sandwich(Employee emp, Sandwich ordered) {
-
-  }
-
-  public double getOverallDistToCenter() {
-    double total = 0;
-    for (Double dist : deltas.values()) {
-      total += dist;
-    }
-    return total;
   }
 
   @Override

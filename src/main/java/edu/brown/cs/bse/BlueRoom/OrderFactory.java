@@ -37,15 +37,9 @@ public class OrderFactory {
     List<SandwichIngredient> ingreds = new ArrayList<>();
     //ingreds.addAll(getSauces());
 
-    //temporary!!
-//    ingreds.add(new SandwichIngredient("bottom_bun"));
-
     ingreds.addAll(getMeats());
     ingreds.addAll(getCheese());
     ingreds.addAll(getVeggies());
-
-    //temporary!!
-//    ingreds.add(new SandwichIngredient("top_bun"));
 
     Bread bread = getBread();
     return new Sandwich(ingreds, bread);
