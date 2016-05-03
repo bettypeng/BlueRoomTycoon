@@ -401,10 +401,6 @@ BlueRoom.Game.prototype.createSandwichView= function () {
             }, this);
         }
     },
-<<<<<<< HEAD
-=======
-
->>>>>>> f255760c0f62b1940ddf6dc0d1837d902d544586
     
     BlueRoom.Game.prototype.orderElems= function () {
         // console.log("orderElems");

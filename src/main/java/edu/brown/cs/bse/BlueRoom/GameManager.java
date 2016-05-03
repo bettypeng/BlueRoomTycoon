@@ -41,7 +41,7 @@ public class GameManager {
   // for when user makes sandwich
   public double purchase(FoodItem purchase, Customer cust) {
     double price = purchase.getPrice();
-    price += (purchase.compareToOrder(cust.getOrder()) * cust.getHappiness() * 6);
+    price += (purchase.compareToOrder(cust.getOrder()) * cust.getHappiness() * purchase.getMaxTip());
     manager.handlePurchase(price, cust.getStation());
     return price;
   }
@@ -49,11 +49,12 @@ public class GameManager {
   // for when employee makes sandwich
   public double purchase(double quality, Customer cust) {
     double price = cust.getOrder().getPrice();
-    price += (quality * cust.getHappiness() * 6);
+    price += (quality * cust.getHappiness() * cust.getOrder().getMaxTip());
     manager.handlePurchase(price, cust.getStation());
     return price;
   }
   
+  // THEFT!
   public double steal(FoodItem stolen, Customer cust) {
     double price = stolen.getPrice();
     manager.handleLoss(price);

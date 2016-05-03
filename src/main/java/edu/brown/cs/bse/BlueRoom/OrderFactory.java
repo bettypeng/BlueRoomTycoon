@@ -1,9 +1,12 @@
 package edu.brown.cs.bse.BlueRoom;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import edu.brown.cs.bse.elements.Bread;
+import edu.brown.cs.bse.elements.Drink;
 import edu.brown.cs.bse.elements.Sandwich;
 import edu.brown.cs.bse.elements.SandwichIngredient;
 
@@ -155,7 +158,27 @@ public class OrderFactory {
   }
 
   // DRINK ORDERS
-
-
+  private static final String[] DRINK_TYPES = {"latte", "cappuccino", "coffee", "tea", "hot_chocolate", "tequila"};
+  
+  
+  public static Drink getDrinkOrder() {
+    return new Drink("latte", "small", Arrays.asList("vanilla"), true);
+  }
+  
+  private static String getType() {
+    return "";
+  }
+  
+  private static String getSize() {
+    return "";
+  }
+  
+  private static List<String> getFlavoring() {
+    return Collections.emptyList();
+  }
+  
+  private static boolean getIced() {
+    return false;
+  }
 
 }

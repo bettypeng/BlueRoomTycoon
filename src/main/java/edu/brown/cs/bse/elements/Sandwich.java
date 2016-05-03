@@ -20,6 +20,7 @@ public class Sandwich extends FoodItem {
       deltas.put(i, 0.0);
     }
     setPrice(4);
+    setMaxTip(6);
   }
 
   public Sandwich(List<SandwichIngredient> ingredients,

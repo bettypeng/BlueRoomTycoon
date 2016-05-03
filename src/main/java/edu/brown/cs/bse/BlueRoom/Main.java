@@ -63,7 +63,23 @@ public class Main {
             break;
 
           case "o":
-            System.out.println(OrderFactory.getSandwichOrder());
+            System.out.println("Type 'sandwich', 'drink', or 'bakery' to choose your order type");
+            line = reader.readLine();
+            switch(line) {
+            case "sandwich":
+              System.out.println(OrderFactory.getSandwichOrder());
+              break;
+            case "drink":
+              System.out.println(OrderFactory.getDrinkOrder());
+              break;
+            case "bakery":
+              System.out.println("bakery doesn't exist yet lol");
+              break;
+            default:
+              System.out.println("not a valid order type");
+              break;
+            }
+            //System.out.println(OrderFactory.getSandwichOrder());
             break;
 
           case "p":
@@ -90,14 +106,14 @@ public class Main {
             break;
 
           default:
-            List<SandwichIngredient> testList = Arrays.asList(new SandwichIngredient("turkey"), new SandwichIngredient("cheese"));
-            Sandwich original = new Sandwich(testList, new Bread("ciabatta"));
-            Map<SandwichIngredient, Double> del = new HashMap<>();
-            del.put(new SandwichIngredient("turkey"), 0.2);
-            del.put(new SandwichIngredient("cheese"), 0.1);
-            List<SandwichIngredient> list = Arrays.asList(new SandwichIngredient("turkey"), new SandwichIngredient("cheese"));
-            Sandwich test = new Sandwich(list, del, new Bread("ciabatta"));
-            System.out.println(test.compareToOrder(original));
+//            List<SandwichIngredient> testList = Arrays.asList(new SandwichIngredient("turkey"), new SandwichIngredient("cheese"));
+//            Sandwich original = new Sandwich(testList, new Bread("ciabatta"));
+//            Map<SandwichIngredient, Double> del = new HashMap<>();
+//            del.put(new SandwichIngredient("turkey"), 0.2);
+//            del.put(new SandwichIngredient("cheese"), 0.1);
+//            List<SandwichIngredient> list = Arrays.asList(new SandwichIngredient("turkey"), new SandwichIngredient("cheese"));
+//            Sandwich test = new Sandwich(list, del, new Bread("ciabatta"));
+//            System.out.println(test.compareToOrder(original));
             break;
           }
 
