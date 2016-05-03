@@ -110,6 +110,20 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('mediumCup', 'images/coffee/medium_cup.png');
 		this.load.image('largeCup', 'images/coffee/large_cup.png');
 
+		//BAKERY STATION
+		this.load.image('bakeryBg', 'images/bakery/bakery.png');
+		this.load.image('muffinPlate', 'images/bakery/plate.png');
+		this.load.image('pistachio', 'images/bakery/pistachio_muffin.png');
+		this.load.image('doubleChoc', 'images/bakery/double_chocolate_muffin.png');
+		this.load.image('chocChip', 'images/bakery/chocolate_chip_muffin.png');
+		this.load.image('tripleBerry', 'images/bakery/triple_berry_muffin.png');
+		this.load.image('bananaNut', 'images/bakery/banana_nut_muffin.png');
+		this.load.image('bran', 'images/bakery/bran_muffin.png');
+		this.load.image('batterMenu', 'images/bakery/batter_menu.png');
+		this.load.image('muffinTin', 'images/bakery/muffin_tin.png');
+		this.load.image('oven', 'images/bakery/bake_oven.png');
+
+
 		//END OF DAY VIEW
 		this.load.image('dayEndBg', 'images/day_end_bg.png');
 		this.load.image('exitButton', 'images/exit_button.png');
