@@ -29,6 +29,7 @@ public class Sandwich extends FoodItem {
     this.bread = bread;
     this.deltas = deltas;
     setPrice(4);
+    setMaxTip(6);
   }
 
   @Override

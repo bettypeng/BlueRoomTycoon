@@ -158,3 +158,13 @@ function purchase (type, ingredients, ingMap, bread, id, happiness, paid) {
     });
     
 }
+
+function updateIntervals() {
+    
+    $.post("/interval", function(responseJSON) {
+
+        var responseObject = JSON.parse(responseJSON);
+        var customerInterval = responseObject.customerInt;
+        var employeeInts = responseObject.employeeInts;
+    });
+}

@@ -43,6 +43,7 @@ public class Main {
     }
 
     GameManager manager = new GameManager();
+    OrderFactory.setMuffinWeights();
 
     if (options.has("gui")) {
       System.out.println("run spark server");
@@ -73,13 +74,12 @@ public class Main {
               System.out.println(OrderFactory.getDrinkOrder());
               break;
             case "bakery":
-              System.out.println("bakery doesn't exist yet lol");
+              System.out.println(OrderFactory.getMuffinOrder());
               break;
             default:
               System.out.println("not a valid order type");
               break;
             }
-            //System.out.println(OrderFactory.getSandwichOrder());
             break;
 
           case "p":
@@ -114,6 +114,7 @@ public class Main {
 //            List<SandwichIngredient> list = Arrays.asList(new SandwichIngredient("turkey"), new SandwichIngredient("cheese"));
 //            Sandwich test = new Sandwich(list, del, new Bread("ciabatta"));
 //            System.out.println(test.compareToOrder(original));
+            System.out.println("not a valid input, please try again");
             break;
           }
 
