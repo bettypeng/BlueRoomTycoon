@@ -6,7 +6,7 @@ var SSY = 107;
 var BSX = 500;
 var BSY = 107;
 //coffee station coords
-var CSX = 270;
+var CSX = 250;
 var CSY = 108;
 
 var sandwichStationFilled = false;
