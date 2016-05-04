@@ -43,6 +43,14 @@ function getCustomer(game) {
         //store customer is customer queue when necessary
     });
     
+} 
+
+//possibly only call this on string of lost customers
+function leaveHandler () {
+    var postParameters = {};
+
+    $.post("/leave", postParameters, function(responseJSON) {});
+
 }
     
 // function getFrontCustomer(station) {
@@ -158,6 +166,8 @@ function purchase (type, ingredients, ingMap, bread, id, happiness, paid) {
     });
     
 }
+
+// window.setInterval()
 
 function updateIntervals() {
     

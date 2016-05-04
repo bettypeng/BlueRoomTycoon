@@ -110,13 +110,14 @@ var currThis = this;
                 myGame.moveLineUp(sandwichLine, myGame.sandwichLinePos, 2000);
             }
         }, 100);
-
         
     };
     
     BlueRoom.Game.prototype.abandonLine = function(customer){
         var myGame = this;
+
         myGame.deleteCurrSandwich(customer);
+        leavingHandler();
         leaving = true;
         //var outer = this;
         var c = customer;
