@@ -219,6 +219,7 @@ BlueRoom.Game.prototype.cashCustomerOut= function(customer){
 
 BlueRoom.Game.prototype.steal = function(customer){
     var c = customer;
+    c.cust.tint = 0xff7777;
     console.log(c);
     purchase("sandwich", c.ingredients, c.ingMap, "wheat", c.id, c.happiness, false);
     leaving = true;

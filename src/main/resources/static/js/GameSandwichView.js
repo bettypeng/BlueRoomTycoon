@@ -446,6 +446,8 @@ BlueRoom.Game.prototype.createSandwichView= function () {
 
                         if (incorrSandCount != 0 && incorrSandCount >= currCustomerOrder.length/2) {
                             currThis.steal(currCustomer);
+                            clearInterval(currCustomer.barTimer);
+                            clearInterval(currCustomer.myTimer);
                         }
 
                         //get next customer
