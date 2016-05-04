@@ -4,19 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import joptsimple.OptionException;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
-import edu.brown.cs.bse.elements.Bread;
 import edu.brown.cs.bse.elements.Customer;
 import edu.brown.cs.bse.elements.Employee;
 import edu.brown.cs.bse.elements.Sandwich;
-import edu.brown.cs.bse.elements.SandwichIngredient;
 
 public class Main {
 
@@ -44,6 +38,8 @@ public class Main {
 
     GameManager manager = new GameManager();
     OrderFactory.setMuffinWeights();
+    manager.addStation("bakery");
+    manager.saveGame("outFile.txt");
 
     if (options.has("gui")) {
       System.out.println("run spark server");

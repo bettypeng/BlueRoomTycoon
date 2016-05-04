@@ -1,13 +1,13 @@
 package edu.brown.cs.bse.BlueRoom;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
-import com.google.common.collect.ImmutableList;
 
 import edu.brown.cs.bse.elements.Customer;
 import edu.brown.cs.bse.elements.Employee;
@@ -27,6 +27,7 @@ public class GameManager {
 
   private int baselineInterval;
   private int currTime;
+  private int leftToday;
 
   private List<String> availableStations;
 
@@ -39,6 +40,7 @@ public class GameManager {
     employeeMap = new HashMap<>();
     availableStations.add("sandwich");
     currTime = 0;
+    leftToday = 0;
     baselineInterval = 10;
   }
 
@@ -62,6 +64,7 @@ public class GameManager {
   public double steal(FoodItem stolen, Customer cust) {
     double price = stolen.getPrice();
     manager.handleLoss(price);
+    leftToday++;
     return price;
   }
   
@@ -97,6 +100,7 @@ public class GameManager {
     return newCustomer;
   }
   
+  // this needs to take into account the money spent on employee!!
   public Employee hireEmployee(String name) {
    Employee emp = new Employee(name);
    employees.add(emp);
@@ -163,6 +167,7 @@ public class GameManager {
     manager.startDay();
     OrderFactory.setMuffinWeights();
     currTime = 0;
+    leftToday = 0;
     baselineInterval--;
   }
 
@@ -172,6 +177,10 @@ public class GameManager {
     manager.endDay();
     customerMap.clear();
     return today;
+  }
+  
+  public void leave() {
+    leftToday++;
   }
 
   public int getDayNum() {
@@ -184,7 +193,27 @@ public class GameManager {
 
   public double calculateCustomerInterval() {
     // between 150 and 180 seconds is currently "4 pm rush"
-    return baselineInterval;
+    return baselineInterval + (leftToday * 0.2);
+  }
+  
+  public void saveGame(String filename) {
+    try(BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+      for (String station : availableStations) {
+        writer.write(station, 0, station.length());
+        writer.write(" ", 0, 1);
+      }
+      writer.newLine();
+      for (Employee e : employees) {
+        String name = e.getName();
+        writer.write(name, 0, name.length());
+        writer.write(" ", 0, 1);
+      }
+      writer.newLine();
+      manager.save(writer);
+      writer.flush();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
 }

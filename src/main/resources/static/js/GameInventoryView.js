@@ -26,7 +26,7 @@ BlueRoom.Game.prototype.createInventoryView= function () {
 	var employees = this.game.add.text(this.game.width/3, 130, 'EMPLOYEES', labelStyle);
 	employees.anchor.setTo(0.5, 0);
 
-	var upgrades = this.game.add.text(2*(this.game.width/3), 130, 'UPDATES', labelStyle);
+	var upgrades = this.game.add.text(2*(this.game.width/3), 130, 'UPGRADES', labelStyle);
 	upgrades.anchor.setTo(0.5, 0);
 
 	var noEmployees = this.game.add.text(this.game.width/3, 170 + 100, "No employees!", detailStyle);
