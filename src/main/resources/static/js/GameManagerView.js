@@ -117,7 +117,7 @@ var currThis = this;
         var myGame = this;
 
         myGame.deleteCurrSandwich(customer);
-        leavingHandler();
+        leaveHandler();
         leaving = true;
         //var outer = this;
         var c = customer;

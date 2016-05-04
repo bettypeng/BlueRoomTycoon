@@ -44,6 +44,7 @@ var stopUpdate = false;
 var nonSandwich = [];
 var sandIngWasted = [];
 var nonSandElem;
+var incorrSandCount = 0;
 
 var mypointer;
 
@@ -339,6 +340,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         currDelts = {};
         currCustomer = null;
         currOrderElem = null;
+        incorrSandCount = 0;
     },
 
     BlueRoom.Game.prototype.trashButton = function () {
@@ -366,6 +368,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
                 currDelts = {};
                 currSandSprites = [];
                 currPlace = 0;
+                incorrSandCount = 0;
                 exclamation.visible = false;
                 exclamation.alpha = 1;
 
@@ -403,6 +406,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
                 }
 
                 if (item.key != currCustomerOrder[currPlace]) {
+                    incorrSandCount++;
                     if (Math.abs(item.x-firstX) > 60) {
                         currThis.showGlasses();
                     } else {
@@ -433,12 +437,19 @@ BlueRoom.Game.prototype.createSandwichView= function () {
                     
                         currCustomer.ingredients = currSandwich;
                         currCustomer.ingMap = currDelts;
+
+                        if (incorrSandCount >= currCustomerOrder.length/2) {
+                            currThis.steal(currCustomer);
+                            // purchase("sandwich", currCustomer.ingredients, currCustomer.ingMap, "wheat", currCustomer.id, currCustomer.happinessBarProgress/30, false);
+                        }
+
                         //get next customer
                         currPlace = 0;
                         currSandwich = [];
                         currSandSprites = [];
                         currCustomerOrder = [];
                         currDelts = {};
+                        incorrSandCount = 0;
                         currCustomer = null;
                         currOrderElem = null;
                         transitioning = false;
