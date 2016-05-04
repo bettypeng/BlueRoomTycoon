@@ -43,6 +43,14 @@ function getCustomer(game) {
         //store customer is customer queue when necessary
     });
     
+} 
+
+//possibly only call this on string of lost customers
+function leaveHandler () {
+    var postParameters = {};
+
+    $.post("/leave", postParameters, function(responseJSON) {});
+
 }
     
 // function getFrontCustomer(station) {
@@ -75,9 +83,9 @@ function buy (station) {
     
 }
     
-function hire(worker) {
+function hire(employee) {
     
-    var postParameters = {employee: worker};
+    var postParameters = {employee: employee};
     
     $.post("/newemployee", postParameters, function(responseJSON){});
     
@@ -101,9 +109,9 @@ function endDay() {
     
 }
     
-function employeePurchase (type, employee, customer) {
+function employeePurchase (employee, customer, workHoursProgress, happiness) {
     
-	var postParameters = {employee: employee, type: type, customer: customer};
+	var postParameters = {employee: employee, customer: customer, energy: workHoursProgress, happiness: happiness};
     
     $.post("/employee", postParameters, function(responseJSON){
     
@@ -114,22 +122,34 @@ function employeePurchase (type, employee, customer) {
     });
     
 }
+
+function trashHandler (type, numTrashed) {
+    if (numTrashed == 0) {
+        return;
+    }
+
+    var  postParameters = {type: type, numTrashed: numTrashed};
+
+    $.post("/trash", postParameters, function(responseJSON) {
+
+        var responseObject = JSON.parse(responseJSON);
+        var moneyLost = responseObject.moneyLost;
+
+        game.loseMoney(500, 530, "- $"+moneyLost.toFixed(2), moneyLost);
+    });
+
+}
     
 function purchase (type, ingredients, ingMap, bread, id, happiness, paid) {
     //bread will be null if the type is not sandwich
-    // var type = "sandwich";
-    // var ingredients = ["tomato", "mustard", "ham"];
-    // var ingMap = {tomato: 0.1, mustard: 0.1, ham: 0.1};
-    // var bread = "ciabatta";
     
     
     // var id = customer.id;
     var ing = JSON.stringify(ingredients);
     var iMap = JSON.stringify(ingMap);
     var happ = JSON.stringify(happiness);
-    console.log(ing);
-    console.log(iMap);
-	var postParameters = {type: type, ingredients: ing, map: iMap, id: id, bread: bread, happiness: happ};
+    var payment = JSON.stringify(paid);
+	var postParameters = {type: type, ingredients: ing, map: iMap, id: id, bread: bread, happiness: happ, paid: payment};
     
     $.post("/purchase", postParameters, function(responseJSON){
     
@@ -148,4 +168,16 @@ function purchase (type, ingredients, ingMap, bread, id, happiness, paid) {
     
     });
     
+}
+
+// window.setInterval()
+
+function updateIntervals() {
+    
+    $.post("/interval", function(responseJSON) {
+
+        var responseObject = JSON.parse(responseJSON);
+        var customerInterval = responseObject.customerInt;
+        var employeeInts = responseObject.employeeInts;
+    });
 }

@@ -75,9 +75,9 @@ function buy (station) {
     
 }
     
-function hire(worker) {
+function hire(employee) {
     
-    var postParameters = {employee: worker};
+    var postParameters = {employee: employee};
     
     $.post("/newemployee", postParameters, function(responseJSON){});
     
@@ -93,6 +93,7 @@ function endDay() {
         var dailyInfo = responseObject.dailyInfo;
         var totalInfo = responseObject.totalInfo;
 
+        game.hideDayEndAlert();
         game.createDayEndView(dailyInfo, totalInfo);
     
         //show these profits on the screen
@@ -100,9 +101,9 @@ function endDay() {
     
 }
     
-function employeePurchase (type, employee, customer) {
+function employeePurchase (employee, customer, workHoursProgress, happiness) {
     
-	var postParameters = {employee: employee, type: type, customer: customer};
+	var postParameters = {employee: employee, customer: customer, energy: workHoursProgress, happiness: happiness};
     
     $.post("/employee", postParameters, function(responseJSON){
     
@@ -113,22 +114,31 @@ function employeePurchase (type, employee, customer) {
     });
     
 }
+
+function trashHandler (type, numTrashed) {
+
+    var  postParameters = {type: type, numTrashed: numTrashed};
+
+    $.post("/trash", postParameters, function(responseJSON) {
+
+        var responseObject = JSON.parse(responseJSON);
+        var moneyLost = responseObject.moneyLost;
+
+        game.loseMoney(500, 530, "- $"+moneyMade.toFixed(2), moneyMade);
+    });
+
+}
     
 function purchase (type, ingredients, ingMap, bread, id, happiness, paid) {
     //bread will be null if the type is not sandwich
-    // var type = "sandwich";
-    // var ingredients = ["tomato", "mustard", "ham"];
-    // var ingMap = {tomato: 0.1, mustard: 0.1, ham: 0.1};
-    // var bread = "ciabatta";
     
     
     // var id = customer.id;
     var ing = JSON.stringify(ingredients);
     var iMap = JSON.stringify(ingMap);
     var happ = JSON.stringify(happiness);
-    console.log(ing);
-    console.log(iMap);
-	var postParameters = {type: type, ingredients: ing, map: iMap, id: id, bread: bread, happiness: happ};
+    var payment = JSON.stringify(paid);
+	var postParameters = {type: type, ingredients: ing, map: iMap, id: id, bread: bread, happiness: happ, paid: payment};
     
     $.post("/purchase", postParameters, function(responseJSON){
     

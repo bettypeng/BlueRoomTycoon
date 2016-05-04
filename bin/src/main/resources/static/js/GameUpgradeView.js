@@ -1,13 +1,18 @@
 var upgradeViewElements = new Array();
 var currentlyDisplayedUpgrade = 0;
 var NUMBEROFUPGRADES = 3;
-var upgradeList = ["coffeeBar", "bakery", "magazineRack"];
+var upgradeList = ["coffee station", "bakery station", "magazine rack"];
 var upgradeCostList = [];
+upgradeCostList["coffee station"] = 500;
+upgradeCostList["bakery station"] = 1000;
+upgradeCostList["magazine rack"] = 50;
 var costtext;
 var buyUpgradeButton;
 
 
 BlueRoom.Game.prototype.createUpgradeView= function () {
+	this.disableDayEndButtons();
+
 	var bg = this.add.sprite(0, 0, 'dayEndBg');
 	upgradeViewElements.push(bg);
 
@@ -19,10 +24,6 @@ BlueRoom.Game.prototype.createUpgradeView= function () {
 	title.anchor.setTo(0.5, 0,5);
 
 	upgradeViewElements.push(title);
-
-	upgradeCostList["coffeeBar"] = 500;
-	upgradeCostList["bakery"] = 1000;
-	upgradeCostList["magazineRack"] = 50;
 
 	var labelStyle = { font: "16px Roboto-Light", fill: "#000000", align: "center"};
 	var currbalance = this.game.add.text(this.game.width/2, 140, 'Current Balance: $' + statusBar.money.toFixed(2), labelStyle);
@@ -45,6 +46,7 @@ BlueRoom.Game.prototype.createUpgradeView= function () {
 
 	this.upgradeA = game.add.sprite(upgradeboxX, upgradeboxY, upgradeList[0]);
     this.upgradeA.anchor.setTo(0.5, 0.5);
+    currentlyDisplayedUpgrade = 0;
 
     this.upgradeB = game.add.sprite(upgradeboxX, upgradeboxY, upgradeList[1]);
     this.upgradeB.anchor.setTo(0.5, 0.5);
@@ -118,9 +120,23 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
  };
 
  BlueRoom.Game.prototype.buyUpgrade = function() {
- 	//CHECK IF ITS A STATION FIRST YO;
- 	NUMBEROFSTATIONS++;
+ 	if(upgradeList[currentlyDisplayedUpgrade] == "coffee station"){
+ 		NUMBEROFSTATIONS++;
+ 		this.coffeeStation.visible = true;
+		activeButtons.push(this.coffeeButton);
+ 	}
+ 	else if(upgradeList[currentlyDisplayedUpgrade] =="bakery station"){
+ 		NUMBEROFSTATIONS++;
+ 		this.bakeryStation.visible = true;
+ 		activeButtons.push(this.bakeryButton);
+ 	}
  	console.log("BUYING: " + upgradeList[currentlyDisplayedUpgrade]);
+ 	this.addToUpgradeInventory(upgradeList[currentlyDisplayedUpgrade]);
+ 	this.createPurchaseAlert("bought a new", upgradeList[currentlyDisplayedUpgrade], upgradeCostList[upgradeList[currentlyDisplayedUpgrade]]);
+	upgradeList.splice(currentlyDisplayedUpgrade, 1);
+	NUMBEROFUPGRADES--;
+	this.fadeUpgradeForward();
+	console.log(upgradeList);
  };
 
 
@@ -133,6 +149,7 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
 // // };
 
 BlueRoom.Game.prototype.hideUpgradeView= function(){
+	this.enableDayEndButtons();
 	upgradeViewElements.forEach(function(item){
 		item.destroy();
 	});

@@ -127,63 +127,65 @@ BlueRoom.Game.prototype.startMovement= function(){
 };
 
 BlueRoom.Game.prototype.abandonLine = function(customer){
-    var myGame = this;
-    myGame.deleteCurrSandwich(customer);
-    leaving = true;
-    //var outer = this;
-    var c = customer;
-    var curr= sandwichLine.shift();
-    c.inLine = false;
-    var currCustomer = c.sprite;
-    //left= currCustomer;
-    numSandwich--;
-    var tween = this.add.tween(currCustomer).to( { x: 450, y: 700 }, 2000, null, true);
-    
-    tween.onComplete.add(onLeaveMoveComplete, this);
-    // function onLeft(){
-    //     //outer.shiftFirstInLine(sandwichLine, this.sandwichLinePos);
-    //     outer.onLeaveMoveComplete();
-    // }
+        var myGame = this;
 
-     function onLeaveMoveComplete(){
-            customer.sprite.visible = false;
-            numCustomer--;
-            leaving = false;
-        }
-    
-    //c = null;
-
-}
-
-BlueRoom.Game.prototype.toCashier= function(){
-    if(sandwichLine.length>0){
+        myGame.deleteCurrSandwich(customer);
+        leaveHandler();
+        leaving = true;
+        //var outer = this;
+        var c = customer;
         var curr= sandwichLine.shift();
-        curr.inLine = false;
-        curr.moving = true;
-        var currCustomer = curr.sprite;
-        //currCustomer.destroy();
+        c.inLine = false;
+        var currCustomer = c.sprite;
+        //left= currCustomer;
         numSandwich--;
-        // var xpos = this.cashierLinePos['x'][numCashier];
-        // var ypos = this.cashierLinePos['y'][numCashier];
-        var xpos = this.game.rnd.integerInRange(300, 700);
-        var ypos = this.game.rnd.integerInRange(300, 500);
-        var tween = this.add.tween(currCustomer).to( { x: xpos, y: ypos }, 2000, null, true);
-        tween.onComplete.add(onCashierMoveComplete, this);
-        // numCashier++;
-
+        var tween = this.add.tween(currCustomer).to( { x: 450, y: 700 }, 2000, null, true);
         
-        function onCashierMoveComplete(){
-            curr.moving = false;
-        //     cashierLine.push(curr);
-            //this.shiftFirstInLine(sandwichLine, this.sandwichLinePos);
-            //this.moveLineUp(sandwichLine, this.sandwichLinePos, 5000);
-            curr.flashDollar();
-            curr.setUpInteractions();
-        }
-       // cashierLine.push(currCustomer);
-    }
-};
+        tween.onComplete.add(onLeaveMoveComplete, this);
+        // function onLeft(){
+        //     //outer.shiftFirstInLine(sandwichLine, this.sandwichLinePos);
+        //     outer.onLeaveMoveComplete();
+        // }
 
+         function onLeaveMoveComplete(){
+                customer.sprite.visible = false;
+                numCustomer--;
+                leaving = false;
+            }
+        
+        //c = null;
+
+    }
+
+    BlueRoom.Game.prototype.toCashier= function(){
+        if(sandwichLine.length>0){
+            var curr= sandwichLine.shift();
+            curr.inLine = false;
+            curr.moving = true;
+            var currCustomer = curr.sprite;
+            //currCustomer.destroy();
+            numSandwich--;
+            // var xpos = this.cashierLinePos['x'][numCashier];
+            // var ypos = this.cashierLinePos['y'][numCashier];
+            var xpos = this.game.rnd.integerInRange(300, 700);
+            var ypos = this.game.rnd.integerInRange(300, 500);
+            var tween = this.add.tween(currCustomer).to( { x: xpos, y: ypos }, 2000, null, true);
+            tween.onComplete.add(onCashierMoveComplete, this);
+            // numCashier++;
+
+            
+            function onCashierMoveComplete(){
+                curr.moving = false;
+            //     cashierLine.push(curr);
+                //this.shiftFirstInLine(sandwichLine, this.sandwichLinePos);
+                //this.moveLineUp(sandwichLine, this.sandwichLinePos, 5000);
+                curr.flashDollar();
+                curr.setUpInteractions();
+            }
+           // cashierLine.push(currCustomer);
+        }
+    };
+    
 // BlueRoom.Game.prototype.onLeaveMoveComplete= function(){
 //     //this.shiftFirstInLine(sandwichLine, this.sandwichLinePos);
 //     leaving = false;

@@ -79,7 +79,7 @@ public class Server {
     // Setup Spark Routes
     Spark.get("/blueroom", new FrontHandler(), freeMarker);
     Spark.post("/purchase", new PurchaseHandler());
-//    Spark.post("/finance", new FinanceHandler());
+//    Spark.post("/finances", new FinanceHandler());
     Spark.post("/endday", new EndDayHandler());
     Spark.post("/customer", new CustomerHandler());
     Spark.post("/newemployee", new NewEmployeeHandler());
@@ -117,14 +117,13 @@ public class Server {
       QueryParamsMap qm = req.queryMap();
       System.out.println("purchasing");
 
-      //this is the order that was made to compare the actual received item to
       String id = qm.value("id");
-      System.out.println(id);
+      //System.out.println(id);
 
       String type = qm.value("type");
       double happiness = Double.parseDouble(qm.value("happiness"));
 
-      System.out.println(qm.value("ingredients"));
+      System.out.println("sandwich made: " + qm.value("ingredients"));
 
       FoodItem purchase;
 
@@ -137,8 +136,6 @@ public class Server {
       //each part of the purchase to how far it was from the center (sandwiches)
       //how far from well cooked it is (bakery good)
       Map<String, Double> ingMap = GSON.fromJson(qm.value("map"), Map.class);
-
-
 
       //handling if the type is sandwich
       if (type.equals("sandwich")) {
@@ -165,6 +162,7 @@ public class Server {
         b = new Bread(bread);
         //get the bread out of this and do something with it
         purchase = new Sandwich(sWichIng, sWichMap, b);
+        System.out.println("parsed purchase: " + purchase);
 
       } else {
         purchase = null;
@@ -172,15 +170,17 @@ public class Server {
       }
 
       Customer customer = gameManager.getCustomer(id);
+      System.out.println("ordered: " + customer.getOrder());
 
       customer.setHappiness(happiness);
-      System.out.println(customer.getHappiness());
+      //System.out.println(customer.getHappiness());
       double moneyMade;
       if (paid) {
         moneyMade = gameManager.purchase(purchase, customer);
       } else {
         moneyMade = gameManager.steal(purchase, customer);
       }
+      System.out.println("total money made: " + moneyMade);
 
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("moneyMade", moneyMade).build();
@@ -265,6 +265,8 @@ public class Server {
   private class NewEmployeeHandler implements Route {
     @Override
     public Object handle(final Request req, final Response res) {
+      Map<String, Object> variables = null;
+//      try {
       QueryParamsMap qm = req.queryMap();
 
       //this can be if we ever want different employees to have different traits
@@ -275,8 +277,12 @@ public class Server {
 
       List<String> results = new ArrayList<>();
 
-      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+      variables = new ImmutableMap.Builder<String, Object>()
           .put("results", results).build();
+      
+//      } catch(Exception e) {
+//        e.printStackTrace();
+//      }
 
       return GSON.toJson(variables);
     }
@@ -372,7 +378,8 @@ public class Server {
     public Object handle(Request req, Response res) {
       gameManager.incrCurrTime();
       double interval = gameManager.calculateCustomerInterval();
-      Map<String, Object> variables = ImmutableMap.of("interval", interval);
+      Map<String, Double> employeeIntMap = gameManager.calculateEmployeeIntervals();
+      Map<String, Object> variables = ImmutableMap.of("customerInt", interval, "employeeInts", employeeIntMap);
       return GSON.toJson(variables);
     }
   }

@@ -13,6 +13,10 @@ public class Employee {
     this.name = name;
   }
   
+  public String getName() {
+    return name;
+  }
+  
   public void setStation(String newStation) {
     station = newStation;
   }
@@ -28,6 +32,20 @@ public class Employee {
   public double fillOrder() {
     double rand = Math.random() * QUALITY_RANGE + (energy - (QUALITY_RANGE / 2));
     return rand;
+  }
+  
+  public double calcInterval() {
+    int baseline = 1;
+    double interval = baseline / energy;
+    if (interval > 10) {
+      return 10;
+    }
+    return interval;
+  }
+  
+  @Override
+  public String toString() {
+    return name;
   }
 
 }

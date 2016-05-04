@@ -3,9 +3,18 @@ package edu.brown.cs.bse.elements;
 public abstract class FoodItem {
   
   private double price;
+  private double maxTip;
   
   public double getPrice() {
     return price;
+  }
+  
+  public double getMaxTip() {
+    return maxTip;
+  }
+  
+  public void setMaxTip(double tip) {
+    maxTip = tip;
   }
   
   protected void setPrice(double newprice) {

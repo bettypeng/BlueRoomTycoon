@@ -1,10 +1,13 @@
 package edu.brown.cs.bse.BlueRoom;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+import com.google.common.collect.ImmutableList;
 
 import edu.brown.cs.bse.elements.Customer;
 import edu.brown.cs.bse.elements.Employee;
@@ -33,6 +36,7 @@ public class GameManager {
     employees = new ArrayList<>();
     availableStations = new ArrayList<>();
     customerMap = new HashMap<>();
+    employeeMap = new HashMap<>();
     availableStations.add("sandwich");
     currTime = 0;
     baselineInterval = 10;
@@ -41,7 +45,7 @@ public class GameManager {
   // for when user makes sandwich
   public double purchase(FoodItem purchase, Customer cust) {
     double price = purchase.getPrice();
-    price += (purchase.compareToOrder(cust.getOrder()) * cust.getHappiness() * 6);
+    price += (purchase.compareToOrder(cust.getOrder()) * cust.getHappiness() * purchase.getMaxTip());
     manager.handlePurchase(price, cust.getStation());
     return price;
   }
@@ -49,11 +53,12 @@ public class GameManager {
   // for when employee makes sandwich
   public double purchase(double quality, Customer cust) {
     double price = cust.getOrder().getPrice();
-    price += (quality * cust.getHappiness() * 6);
+    price += (quality * cust.getHappiness() * cust.getOrder().getMaxTip());
     manager.handlePurchase(price, cust.getStation());
     return price;
   }
   
+  // THEFT!
   public double steal(FoodItem stolen, Customer cust) {
     double price = stolen.getPrice();
     manager.handleLoss(price);
@@ -75,12 +80,18 @@ public class GameManager {
 
     int rand = (int) (Math.random() * availableStations.size());
     String station = availableStations.get(rand);
-    Customer newCustomer;
+    FoodItem order;
     switch (station) {
+    case "bakery":
+      order = OrderFactory.getMuffinOrder();
+      break;
+    case "coffee":
+      order = OrderFactory.getDrinkOrder();
     default:
-      newCustomer = new Customer(id, OrderFactory.getSandwichOrder(), station);
+      order = OrderFactory.getSandwichOrder();
       break;
     }
+    Customer newCustomer = new Customer(id, order, station);
     customers.add(newCustomer);
     customerMap.put(id, newCustomer);
     return newCustomer;
@@ -130,13 +141,27 @@ public class GameManager {
   public Employee getEmployee(String name) {
     return employeeMap.get(name);
   }
+  
+//  public List<Employee> getEmployees() {
+//    return ImmutableList.copyOf(employees);
+//  }
 
+  public Map<String, Double> calculateEmployeeIntervals() {
+    Map<String, Double> nameToInterval = new HashMap<>();
+    for (Employee emp : employees) {
+      double interval = emp.calcInterval();
+      nameToInterval.put(emp.getName(), interval);
+    }
+    return nameToInterval;
+  }
+  
   public double getCurrentMoney() {
     return manager.getMoney();
   }
 
   public void startDay() {
     manager.startDay();
+    OrderFactory.setMuffinWeights();
     currTime = 0;
     baselineInterval--;
   }
@@ -159,9 +184,6 @@ public class GameManager {
 
   public double calculateCustomerInterval() {
     // between 150 and 180 seconds is currently "4 pm rush"
-    if (currTime >= 150 && currTime <= 180) {
-      return baselineInterval / (double)2;
-    }
     return baselineInterval;
   }
 
