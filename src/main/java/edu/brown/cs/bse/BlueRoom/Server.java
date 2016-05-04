@@ -88,6 +88,8 @@ public class Server {
     Spark.post("/line", new LineHandler());
     Spark.post("/interval", new IntervalHandler());
     Spark.post("/trash", new TrashHandler());
+    Spark.post("/leave", new LeaveHandler());
+    Spark.post("/save",  new SaveHandler());
   }
 
   /**
@@ -393,6 +395,35 @@ public class Server {
       double moneyLost = gameManager.trash(numTrashed);
       
       Map<String, Object> variables = ImmutableMap.of("moneyLost", moneyLost);
+      return GSON.toJson(variables);
+    }
+  }
+  
+  private class LeaveHandler implements Route {
+    
+    @Override
+    public Object handle(Request req, Response res) {
+      
+      gameManager.leave();
+      
+      List<String> results = new ArrayList<>();
+      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+          .put("results", results).build();
+      return GSON.toJson(variables);
+    }
+  }
+  
+  private class SaveHandler implements Route {
+    
+    @Override
+    public Object handle(Request req, Response res) {
+      QueryParamsMap qm = req.queryMap();
+      String filename = qm.value("file");
+      gameManager.saveGame(filename);
+      
+      List<String> results = new ArrayList<>();
+      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+          .put("results", results).build();
       return GSON.toJson(variables);
     }
   }

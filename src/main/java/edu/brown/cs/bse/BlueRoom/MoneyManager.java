@@ -1,5 +1,7 @@
 package edu.brown.cs.bse.BlueRoom;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +19,7 @@ public class MoneyManager {
     dataOverTime = new ArrayList<>();
     gameData = new GameData();
     money = startMoney;
-    currDay = new DayData();
+    currDay = new DayData(DAILY_EXPENSES);
   }
 
   public List<DayData> getTotalData() {
@@ -52,8 +54,18 @@ public class MoneyManager {
   }
 
   public void startDay() {
-    currDay = new DayData();
+    currDay = new DayData(DAILY_EXPENSES);
     money -= DAILY_EXPENSES;
+  }
+  
+  public void save(BufferedWriter writer) throws IOException {
+    String mon = String.valueOf(money);
+    writer.write(mon, 0, mon.length());
+    writer.newLine();
+    gameData.save(writer);
+    String numDays = String.valueOf(dataOverTime.size());
+    writer.write(numDays, 0, numDays.length());
+    writer.newLine();
   }
 
 }
