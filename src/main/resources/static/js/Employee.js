@@ -6,12 +6,14 @@ var SSY = 107;
 var BSX = 500;
 var BSY = 107;
 //coffee station coords
-var CSX = 270;
+var CSX = 250;
 var CSY = 108;
 
 var sandwichStationFilled = false;
 var bakeryStationFilled = false;
 var coffeeStationFilled = false;
+
+var currThis = this;
 
 
 function Employee(){
@@ -132,14 +134,17 @@ Employee.prototype = {
         if(currEmployee.employeeSprite.x == SSX && currEmployee.employeeSprite.y==SSY){
             console.log("SANDWICH STATION FILLED");
             sandwichStationFilled = true;
+            game.disableButton(currThis.sandwichButton);
         } 
         if(currEmployee.employeeSprite.x == BSX && currEmployee.employeeSprite.y==BSY){
             console.log("BAKERY STATION FILLED");
             bakeryStationFilled = true;
+            game.disableButton(currThis.bakeryButton);
         }
         if(currEmployee.employeeSprite.x == CSX && currEmployee.employeeSprite.y==CSY){
             console.log("COFFEE STATION FILLED");
             coffeeStationFilled = true;
+            game.disableButton(currThis.coffeeButton);
         }
     },
 
@@ -148,14 +153,17 @@ Employee.prototype = {
         if(currEmployee.employeeSprite.x == SSX && currEmployee.employeeSprite.y==SSY){
             console.log("SANDWICH STATION UNFILLED");
             sandwichStationFilled = false;
+            game.enableButton(currThis.sandwichButton);
         } 
         if(currEmployee.employeeSprite.x == BSX && currEmployee.employeeSprite.y==BSY){
             console.log("BAKERY STATION UNFILLED");
             bakeryStationFilled = false;
+            game.enableButton(currThis.bakeryButton);
         }
         if(currEmployee.employeeSprite.x == CSX && currEmployee.employeeSprite.y==CSY){
             console.log("COFFEE STATION UNFILLED");
             coffeeStationFilled = false;
+            game.enableButton(currThis.coffeeButton);
         }
     },
 

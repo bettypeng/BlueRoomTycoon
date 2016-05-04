@@ -43,6 +43,14 @@ function getCustomer(game) {
         //store customer is customer queue when necessary
     });
     
+} 
+
+//possibly only call this on string of lost customers
+function leaveHandler () {
+    var postParameters = {};
+
+    $.post("/leave", postParameters, function(responseJSON) {});
+
 }
     
 // function getFrontCustomer(station) {
@@ -116,6 +124,9 @@ function employeePurchase (employee, customer, workHoursProgress, happiness) {
 }
 
 function trashHandler (type, numTrashed) {
+    if (numTrashed == 0) {
+        return;
+    }
 
     var  postParameters = {type: type, numTrashed: numTrashed};
 
@@ -124,7 +135,7 @@ function trashHandler (type, numTrashed) {
         var responseObject = JSON.parse(responseJSON);
         var moneyLost = responseObject.moneyLost;
 
-        game.loseMoney(500, 530, "- $"+moneyMade.toFixed(2), moneyMade);
+        game.loseMoney(500, 530, "- $"+moneyLost.toFixed(2), moneyLost);
     });
 
 }
@@ -158,6 +169,8 @@ function purchase (type, ingredients, ingMap, bread, id, happiness, paid) {
     });
     
 }
+
+// window.setInterval()
 
 function updateIntervals() {
     

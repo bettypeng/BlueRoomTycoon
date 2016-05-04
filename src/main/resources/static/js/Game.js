@@ -133,9 +133,15 @@ BlueRoom.Game.prototype = {
             mygame.hideCoffeeView();
             mygame.hideBakeryView();
             mygame.disableButton(this.managerButton);
-            mygame.enableButton(this.sandwichButton);
-            mygame.enableButton(this.coffeeButton);
-            mygame.enableButton(this.bakeryButton);
+            if (!sandwichStationFilled ) {
+                mygame.enableButton(this.sandwichButton);
+            }
+            if (!coffeeStationFilled) {
+                mygame.enableButton(this.coffeeButton);
+            }
+            if (!bakeryStationFilled) {
+                mygame.enableButton(this.bakeryButton);
+            }
             this.setTimer(MANAGERTIMEINTERVAL);
     	};
     	
@@ -150,8 +156,12 @@ BlueRoom.Game.prototype = {
             mygame.hideBakeryView();
             mygame.enableButton(this.managerButton);
             mygame.disableButton(this.sandwichButton);
-            mygame.enableButton(this.coffeeButton);
-            mygame.enableButton(this.bakeryButton);
+            if (!coffeeStationFilled) {
+                mygame.enableButton(this.coffeeButton);
+            }
+            if (!bakeryStationFilled) {
+                mygame.enableButton(this.bakeryButton);
+            }
             this.setTimer(STATIONTIMEINTERVAL);
     	};
     	
@@ -165,9 +175,13 @@ BlueRoom.Game.prototype = {
             mygame.showCoffeeView();
             mygame.hideBakeryView();
             mygame.enableButton(this.managerButton);
-            mygame.enableButton(this.sandwichButton);
             mygame.disableButton(this.coffeeButton);
-            mygame.enableButton(this.bakeryButton);
+            if (!sandwichStationFilled ) {
+                mygame.enableButton(this.sandwichButton);
+            }
+            if (!bakeryStationFilled) {
+                mygame.enableButton(this.bakeryButton);
+            }
             this.setTimer(STATIONTIMEINTERVAL);
     	};
     	
@@ -181,9 +195,13 @@ BlueRoom.Game.prototype = {
             mygame.hideCoffeeView();
             mygame.showBakeryView();
             mygame.enableButton(this.managerButton);
-            mygame.enableButton(this.sandwichButton);
-            mygame.enableButton(this.coffeeButton);
             mygame.disableButton(this.bakeryButton);
+            if (!sandwichStationFilled ) {
+                mygame.enableButton(this.sandwichButton);
+            }
+            if (!coffeeStationFilled) {
+                mygame.enableButton(this.coffeeButton);
+            }
             this.setTimer(STATIONTIMEINTERVAL);
     	};
     	
