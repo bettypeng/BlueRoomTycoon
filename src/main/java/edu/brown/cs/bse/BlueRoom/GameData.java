@@ -1,11 +1,14 @@
 package edu.brown.cs.bse.BlueRoom;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 public class GameData {
 
-  private int totalPurchases;
+  private double totalRevenue;
   private double totalProfit;
-  private double totalTips;
   private double totalExpenses;
+  private double totalLosses;
 
   // i'll probably end up coming up with a better way to handle all of the different kinds of profit -
   // this is not extensible were we to add more stations (need a polymorphic way/even just a method that
@@ -14,19 +17,24 @@ public class GameData {
     return totalProfit;
   }
 
-  public int getTotalPurchases() {
-    return totalPurchases;
+  public double getTotalRevenue() {
+    return totalRevenue;
   }
 
   public void addDayData(DayData d) {
-    totalProfit += d.getTotalProfit();
-    totalTips += d.getTotalTips();
-    totalPurchases += d.getTotalPurchases();
+    totalRevenue += d.getTotalRevenue();
+    totalLosses += d.getLosses();
+    totalExpenses += d.getExpenses();
+    totalProfit += (d.getTotalRevenue() - (d.getLosses() + d.getExpenses()));
   }
-
-  @Override
-  public String toString() {
-    return String.format("Today's profit: %.2f, number of purchases: %d", totalProfit, totalPurchases);
+  
+  public void save(BufferedWriter writer) throws IOException {
+    double[] nums = { totalRevenue, totalExpenses, totalLosses, totalProfit };
+    for (double d : nums) {
+      String str = String.valueOf(d);
+      writer.write(str, 0, str.length());
+      writer.newLine();
+    }
   }
 
 }
