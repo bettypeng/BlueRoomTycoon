@@ -170,7 +170,6 @@ Customer.prototype = {
         if(!this.cashedOut){
             if(this.ingredients!=null){
                 currThis.steal(this);
-                this.cust.tint = 0xff7777;
                 console.log("STEAL");
             }
             else{

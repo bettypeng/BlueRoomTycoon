@@ -98,7 +98,7 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('glasses', 'images/glasses.png');
 
 		//COFFEE STATION
-		this.load.image('coffeeBg', 'images/coffee/coffee_station.png');
+		this.load.image('coffeeBg', 'images/coffee/coffee_bg.png');
 		this.load.image('iceMachine', 'images/coffee/ice_machine.png');
 		this.load.image('syrupDispenser', 'images/coffee/syrup_dispenser.png');
 		this.load.image('syrupButton', 'images/coffee/syrup_button.png');
@@ -106,9 +106,24 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('drinkDropZone', 'images/coffee/drink_dropzone.png');
 		this.load.image('drinkDispenser', 'images/coffee/drink_dispenser.png');
 		this.load.image('drinkButton', 'images/coffee/drink_button.png');
-		this.load.image('smallCup', 'images/coffee/small_cup.png');
-		this.load.image('mediumCup', 'images/coffee/medium_cup.png');
-		this.load.image('largeCup', 'images/coffee/large_cup.png');
+
+		//SMALL
+		this.load.image('smCup', 'images/coffee/sm_cup.png');
+		this.load.image('smIce', 'images/coffee/sm_ice.png');
+		this.load.image('smDrink', 'images/coffee/sm_drink.png');
+		this.load.image('smSyrup', 'images/coffee/sm_syrup.png');
+
+		//MEDIUM
+		this.load.image('mdCup', 'images/coffee/md_cup.png');
+		this.load.image('mdIce', 'images/coffee/md_ice.png');
+		this.load.image('mdDrink', 'images/coffee/md_drink.png');
+		this.load.image('mdSyrup', 'images/coffee/md_syrup.png');
+		//LARGE
+		this.load.image('lgCup', 'images/coffee/lg_cup.png');
+		this.load.image('lgIce', 'images/coffee/lg_ice.png');
+		this.load.image('lgDrink', 'images/coffee/lg_drink.png');
+		this.load.image('lgSyrup', 'images/coffee/lg_syrup.png');
+
 
 		//BAKERY STATION
 		this.load.image('bakeryBg', 'images/bakery/bakery.png');

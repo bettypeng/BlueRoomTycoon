@@ -1,4 +1,3 @@
-
 function getFinanaces() {
     
 	var postParameters = {}
@@ -90,12 +89,28 @@ function hire(employee) {
     $.post("/newemployee", postParameters, function(responseJSON){});
     
 }
+
+function endDayStats() {
+
+    var postParameters = {}
     
-function endDay() {
+    $.post("/enddaystats", postParameters, function(responseJSON){
+    
+        var responseObject = JSON.parse(responseJSON);
+        var dailyInfo = responseObject.dailyInfo;
+
+        game.createDayEndAlert(dailyInfo);
+    
+        //show these profits on the screen
+    });
+
+}
+    
+function endDayScreen() {
     
     var postParameters = {}
     
-    $.post("/endday", postParameters, function(responseJSON){
+    $.post("/enddayscreen", postParameters, function(responseJSON){
     
         var responseObject = JSON.parse(responseJSON);
         var dailyInfo = responseObject.dailyInfo;
@@ -180,4 +195,10 @@ function updateIntervals() {
         var customerInterval = responseObject.customerInt;
         var employeeInts = responseObject.employeeInts;
     });
+}
+
+function saveGame(filename) {
+	var postParameters = { file: filename };
+	
+	$.post("/save", postParameters, function(responseJSON) {});
 }
