@@ -129,28 +129,6 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         
         this.orderElems();
 
-        
-        // staticElements.forEach(function(item) {
-        //     myGame.setUpInteractions(item);
-        // });
-        
-        // movableElements.forEach(function(item) {
-        //     myGame.setUpInteractions(item);
-        // });
-        
-        //  Make them all input enabled
-        // staticElements.setAll('inputEnabled', true);
-        // staticElements.callAll('input.enableDrag', 'input');
-
-        // movableElements.setAll('inputEnabled', true);
-        // movableElements.callAll('input.enableDrag', true);
-    
-        //  And allow them all to be dragged
-        // movableElements.callAll('input.enableDrag', 'input');
-        // movableElements.setAll('body.collideWorldBounds', true);
-        //
-        //elements.setAll('body.gravity.y', 2000);
-
     };
 
     BlueRoom.Game.prototype.changeSpriteFace = function(x, y, imgName) {
@@ -483,7 +461,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
     },
     
     BlueRoom.Game.prototype.sandwichComplete= function () {
-        this.toCashier();
+        this.toCashier("sandwich");
     },
 
     BlueRoom.Game.prototype.sandwichUpdate= function () {
@@ -493,6 +471,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         if (sandwichLine.length != 0 && currCustomer == null) {
             currCustomer = sandwichLine[0];
             currCustomerOrder.push('bottom_bun');
+            console.log(currCustomer);
             for (var i=0; i<currCustomer.order.ingreds.length; i++) {
                 currCustomerOrder.push(currCustomer.order.ingreds[i].type);
             }

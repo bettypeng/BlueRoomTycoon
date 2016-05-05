@@ -58,6 +58,14 @@ public class MoneyManager {
     money -= DAILY_EXPENSES;
   }
   
+  public void handleAbandon() {
+    currDay.customerLost();
+  }
+  
+  public void handleTheft() {
+    currDay.customerTheft();
+  }
+  
   public void save(BufferedWriter writer) throws IOException {
     String mon = String.valueOf(money);
     writer.write(mon, 0, mon.length());

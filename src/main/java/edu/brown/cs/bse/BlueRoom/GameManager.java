@@ -64,6 +64,7 @@ public class GameManager {
   public double steal(FoodItem stolen, Customer cust) {
     double price = stolen.getPrice();
     manager.handleLoss(price);
+    manager.handleTheft();
     leftToday++;
     return price;
   }
@@ -181,6 +182,7 @@ public class GameManager {
   
   public void leave() {
     leftToday++;
+    manager.handleAbandon();
   }
 
   public int getDayNum() {

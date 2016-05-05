@@ -1,7 +1,7 @@
 var dayEndAlertElements = new Array();
 
 
-BlueRoom.Game.prototype.createDayEndAlert= function () {
+BlueRoom.Game.prototype.createDayEndAlert= function (dailyInfo) {
 	var alertBg = game.add.sprite(0, 0, 'alertBox');
 	dayEndAlertElements.push(alertBg);
 
@@ -14,15 +14,15 @@ BlueRoom.Game.prototype.createDayEndAlert= function () {
     today.anchor.setTo(0.5, 0.5)
 
     var labelstyle = { font: "20px Roboto-Thin", fill: "#000000", wordWrap: true, wordWrapWidth: 400, align: "center" };
-    var customersServed = this.game.add.text(280, 260, "Customers served: ", labelstyle);
-    var customersLost = this.game.add.text(280, 290, "Customers lost: ", labelstyle);
-    var numThefts = this.game.add.text(280, 320, "Thefts: ", labelstyle);
+    var customersServed = this.game.add.text(280, 260, "Customers served: "+dailyInfo.totalPurchases, labelstyle);
+    var customersLost = this.game.add.text(280, 290, "Customers lost: "+dailyInfo.customersLost, labelstyle);
+    var numThefts = this.game.add.text(280, 320, "Thefts: "+dailyInfo.thefts, labelstyle);
 
-    var sandwichesMade = this.game.add.text(550, 260, "Sandwiches made: ", labelstyle);
-    var drinksServed = this.game.add.text(550, 290, "Drinks served: ", labelstyle);
-    var bakedGoodsSold = this.game.add.text(550, 320, "Baked goods sold: ", labelstyle);
+    var sandwichesMade = this.game.add.text(550, 260, "Sandwiches made: "+dailyInfo.sandwichCount, labelstyle);
+    var drinksServed = this.game.add.text(550, 290, "Drinks served: "+dailyInfo.coffeeCount, labelstyle);
+    var bakedGoodsSold = this.game.add.text(550, 320, "Baked goods sold: "+dailyInfo.bakeryCount, labelstyle);
 
-	var cont = this.add.button(this.game.width/2, 400, 'continueButton', endDay, this);
+	var cont = this.add.button(this.game.width/2, 400, 'continueButton', endDayScreen, this);
 	cont.anchor.setTo(0.5, 0.5);
 
 	dayEndAlertElements.push(alert);
