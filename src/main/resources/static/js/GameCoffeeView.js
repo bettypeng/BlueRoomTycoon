@@ -44,9 +44,9 @@ BlueRoom.Game.prototype.createCoffeeView= function () {
 
     var drinkDropZone = this.add.sprite(920, 355, 'drinkDropZone');
 
-	var sm = this.add.sprite(180, 470, 'smallCup');
-	var md = this.add.sprite(90, 448, 'mediumCup');
-	var lg = this.add.sprite(20, 435, 'largeCup');
+	var sm = this.add.sprite(190, 500, 'smCup');
+	var md = this.add.sprite(110, 472, 'mdCup');
+	var lg = this.add.sprite(20, 435, 'lgCup');
     coffeeViewElements.push(iceMachine);
     coffeeViewElements.push(syrupDispenser);
     coffeeViewElements.push(drinkDispenser);
