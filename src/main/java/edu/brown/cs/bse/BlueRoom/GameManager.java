@@ -145,13 +145,13 @@ public class GameManager {
 //    return ImmutableList.copyOf(employees);
 //  }
 
-  public Map<String, Double> calculateEmployeeIntervals() {
-    Map<String, Double> nameToInterval = new HashMap<>();
-    for (Employee emp : employees) {
-      double interval = emp.calcInterval();
-      nameToInterval.put(emp.getName(), interval);
-    }
-    return nameToInterval;
+  public double calculateEmployeeInterval(String name, double energy) {
+    Employee emp = getEmployee(name);
+    emp.setEnergy(energy);
+    System.out.println(energy);
+    double interval = emp.calcInterval();
+
+    return interval;
   }
   
   public double getCurrentMoney() {

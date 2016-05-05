@@ -89,6 +89,7 @@ public class Server {
     Spark.post("/employee", new EmployeeHandler());
     Spark.post("/newstation", new NewStationHandler());
     Spark.post("/interval", new IntervalHandler());
+    Spark.post("employeeInterval", new EmployeeIntervalHandler());
     Spark.post("/trash", new TrashHandler());
     Spark.post("/leave", new LeaveHandler());
     Spark.post("/save",  new SaveHandler());
@@ -306,10 +307,10 @@ public class Server {
 
       Customer customer = gameManager.getCustomer(qm.value("customer"));
       
-      double energy = Double.parseDouble(qm.value("energy"));
+//      double energy = Double.parseDouble(qm.value("energy"));
       double happiness = Double.parseDouble(qm.value("happiness"));
       
-      employee.setEnergy(energy);
+//      employee.setEnergy(energy);
       customer.setHappiness(happiness);
       
       double quality = 0;
@@ -358,9 +359,34 @@ public class Server {
     public Object handle(Request req, Response res) {
       gameManager.incrCurrTime();
       double interval = gameManager.calculateCustomerInterval();
-      Map<String, Double> employeeIntMap = gameManager.calculateEmployeeIntervals();
-      Map<String, Object> variables = ImmutableMap.of("customerInt", interval, "employeeInts", employeeIntMap);
+      
+      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+          .put("customerInt", interval).build();
       return GSON.toJson(variables);
+    }
+  }
+  
+  private class EmployeeIntervalHandler implements Route {
+    @Override
+    public Object handle(final Request req, final Response res) {
+      QueryParamsMap qm = req.queryMap();
+      
+      try {
+
+      String empName = qm.value("name");
+      System.out.println(qm.value("energy"));
+      Double energy = Double.parseDouble(qm.value("energy"));
+      
+      Double employeeInt = gameManager.calculateEmployeeInterval(empName, energy);
+      
+      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+          .put("employeeInt", employeeInt).build();
+
+      return GSON.toJson(variables);
+      }catch(Exception e) {
+        e.printStackTrace();
+      }
+      return null;
     }
   }
   
