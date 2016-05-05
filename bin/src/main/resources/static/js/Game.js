@@ -43,7 +43,7 @@ var activeButtons = new Array();
 var dayCounter = 4;
 var twelveCounter = 0;
 
-var MANAGERTIMEINTERVAL = 1; //250 standard
+var MANAGERTIMEINTERVAL = 250; //250 standard
 var STATIONTIMEINTERVAL = 500;
 
 var game;
@@ -119,6 +119,10 @@ BlueRoom.Game.prototype = {
         this.hideSandwichView();
         this.hideCoffeeView();
         this.hideBakeryView();
+
+        window.setInterval(function(){
+            updateIntervals();
+        }, 1000);
 
        
         //this.showSandwichView();

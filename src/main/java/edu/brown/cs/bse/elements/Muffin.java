@@ -6,6 +6,12 @@ public class Muffin extends FoodItem {
   
   public Muffin(String type) {
     this.type = type;
+    setPrice(3);
+    setMaxTip(3);
+  }
+  
+  public String getType() {
+    return type;
   }
   
   @Override
