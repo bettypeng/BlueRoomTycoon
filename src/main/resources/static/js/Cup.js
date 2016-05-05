@@ -47,7 +47,6 @@ Cup.prototype = {
 
         this.cup.inputEnabled = true;
         this.cup.input.enableDrag();
-        // // this.cust.draggable = false;
         this.cup.events.onInputOver.add(this.onOver, this);
         this.cup.events.onInputOut.add(this.onOut, this);
         this.cup.events.onDragStart.add(this.onDragStart, this);
@@ -74,7 +73,6 @@ Cup.prototype = {
     },
     
     onDragStart : function(sprite, pointer) {
-        // this.e.loadTexture('employee');
         currCup = this;
     	this.cup.moves = false;
         dragPosition.set(this.group.x, this.group.y);
@@ -83,8 +81,6 @@ Cup.prototype = {
 		this.group.children.forEach(function(cup){
 		    cup.anchor.setTo(0.5,0.5);
 		});
-        
-     
     },
 
     onDragUpdate: function(sprite, pointer){
@@ -96,13 +92,6 @@ Cup.prototype = {
     
     onDragStop: function(sprite, pointer) {
     	sprite.tint = 0xe6f2ff;
-
-        // var currThis = this;
-        // setTimeout(function(){
-        //     this.moving = false;
-        // }, 500);
-        // console.log("NOT DRAGGING THE SPRITE:  " + this.moving);
-        console.log("NOT DRAGGING THE CUP");
         if(sprite.overlap(iceMachine)){
 	        this.cupDropZone(iceX);
         } else if(sprite.overlap(drinkDispenser)){

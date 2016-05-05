@@ -7,8 +7,6 @@ var batterMap = {};
 var batterCount = 0;
 var bakedBatter = new Array();
 
-// pistachio, double chocolate, chocolate chip, banana nut, triple berry, bran 
-
 function MuffinEl(x, y, img){
     this.x = x;
     this.y = y;
@@ -200,28 +198,19 @@ BlueRoom.Game.prototype.setUpMuffinInteractions =function(sprite){
 };
 
 BlueRoom.Game.prototype.onMuffinOver= function(sprite, pointer) {
-
     sprite.tint = 0xcccccc;
-
 };
 
 BlueRoom.Game.prototype.onMuffinOut= function(sprite, pointer) {
-
     sprite.tint = 0xffffff;
-
 };
 
 BlueRoom.Game.prototype.onMuffinDragStart = function(sprite, pointer) {
-    // var dragOut = staticElementMap[sprite.key];
-    // sprite.loadTexture(dragOut, 0);
     dragPosition.set(sprite.x, sprite.y);
-    // mypointer.alpha = 1;
 };
 
 BlueRoom.Game.prototype.onMuffinDragStop= function(sprite, pointer) {
     sprite.tint = 0xffffff;
-    // sprite.body.moves = true;
-    // mypointer.alpha = 0;
 
     if (!sprite.overlap(muffinDropZone))
     {
