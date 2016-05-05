@@ -261,7 +261,7 @@ BlueRoom.Game.prototype.setUpInteractions =function(sprite){
     
 BlueRoom.Game.prototype.onOver= function(sprite, pointer) {
 
-    sprite.tint = 0xff7777;
+    sprite.tint = 0xcccccc;
 
 },
 

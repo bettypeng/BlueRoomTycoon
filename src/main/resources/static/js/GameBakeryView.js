@@ -1,10 +1,11 @@
 var bakeryViewElements = new Array();
 var muffinList = new Array();
 var muffinDropZone;
+var muffinTinGroup;
 
 // pistachio, double chocolate, chocolate chip, banana nut, triple berry, bran 
 
-function Muffin(x, y, img){
+function MuffinEl(x, y, img){
     this.x = x;
     this.y = y;
     this.img = img;
@@ -57,15 +58,37 @@ BlueRoom.Game.prototype.createBakeryView= function () {
     bakeryViewElements.push(berryText);
     bakeryViewElements.push(branText);
 
-
+    muffinTinGroup = this.game.add.group();
     var oven = this.add.sprite(this.game.width/2, 310, 'oven');
     oven.anchor.setTo(0.5, 0);
-    var batterMenu = this.add.sprite(60, 350, 'batterMenu');
+    //var batterMenu = this.add.sprite(60, 350, 'batterMenu');
     var muffinTin = this.add.sprite(this.game.width/2, 463, 'muffinTin');
     muffinTin.anchor.setTo(0.5, 0);
-    bakeryViewElements.push(batterMenu);
+    //bakeryViewElements.push(batterMenu);
     bakeryViewElements.push(oven);
     bakeryViewElements.push(muffinTin);
+
+    this.setUpBatterDropZone(413, 475, 'batterDropZone');
+    this.setUpBatterDropZone(476, 475, 'batterDropZone');
+    this.setUpBatterDropZone(539, 475, 'batterDropZone');
+    this.setUpBatterDropZone(603, 475, 'batterDropZone');
+
+    this.setUpBatterDropZone(407, 510, 'batterDropZone');
+    this.setUpBatterDropZone(474, 510, 'batterDropZone');
+    this.setUpBatterDropZone(539, 510, 'batterDropZone');
+    this.setUpBatterDropZone(608, 510, 'batterDropZone');
+
+    this.setUpBatterDropZone(399, 547, 'batterDropZone');
+    this.setUpBatterDropZone(473, 547, 'batterDropZone');
+    this.setUpBatterDropZone(542, 547, 'batterDropZone');
+    this.setUpBatterDropZone(612, 547, 'batterDropZone');
+
+    this.setUpMuffinBatter(260, 350, 'pistachioBatter');
+    this.setUpMuffinBatter(260, 390, 'doubleChocBatter');
+    this.setUpMuffinBatter(260, 430, 'chocChipBatter');
+    this.setUpMuffinBatter(260, 470, 'tripleBerryBatter');
+    this.setUpMuffinBatter(260, 510, 'bananaNutBatter');
+    this.setUpMuffinBatter(260, 550, 'branBatter');
 
     this.setUpMuffin(85, 140, 'pistachio');
     this.setUpMuffin(245, 140, 'doubleChoc');
@@ -77,13 +100,56 @@ BlueRoom.Game.prototype.createBakeryView= function () {
 
 };
 
+BlueRoom.Game.prototype.setUpBatterDropZone = function(x, y, img){
+    var hole = this.add.sprite(x, y, img);
+    muffinTinGroup.add(hole);
+    bakeryViewElements.push(hole);
+}
+
+BlueRoom.Game.prototype.setUpMuffinBatter = function(x, y, img){
+    var staticMuffinBatter = this.add.sprite(x, y, img);
+    var m = new MuffinEl(x, y, img);
+    muffinList[img] = m;
+    bakeryViewElements.push(staticMuffinBatter);
+    this.makeMovableMuffinBatter(x, y, img);
+}
+
+BlueRoom.Game.prototype.makeMovableMuffinBatter = function(x, y, img){
+    var muffBat = this.add.sprite(x, y, img);
+    bakeryViewElements.push(muffBat);
+    this.setUpMuffinBatterInteractions(muffBat);
+}
+
+BlueRoom.Game.prototype.setUpMuffinBatterInteractions =function(sprite){
+    sprite.inputEnabled = true;
+    sprite.input.enableDrag();
+    sprite.events.onInputOver.add(this.onMuffinOver, this);
+    sprite.events.onInputOut.add(this.onMuffinOut, this);
+    sprite.events.onDragStart.add(this.onMuffinDragStart, this);
+    sprite.events.onDragStop.add(this.onMuffinBatterDragStop, this);
+};
+
+BlueRoom.Game.prototype.onMuffinBatterDragStop= function(sprite, pointer) {
+    sprite.tint = 0xffffff;
+
+   if (!sprite.overlap(muffinTinGroup))
+    {
+        this.add.tween(sprite).to( { x: dragPosition.x, y: dragPosition.y }, 500, "Back.easeOut", true);
+    }
+    else{
+        sprite.inputEnabled = false;
+        var posX = muffinList[sprite.key].x
+        var posY = muffinList[sprite.key].y;
+        this.makeMovableMuffinBatter(posX, posY, sprite.key);
+    }
+};
+
 BlueRoom.Game.prototype.setUpMuffin = function(x, y, img){
     var staticMuffin = this.add.sprite(x, y, img);
-    var m = new Muffin(x, y, img);
+    var m = new MuffinEl(x, y, img);
     muffinList[img] = m;
     bakeryViewElements.push(staticMuffin);
     this.makeMovableMuffin(x, y, img);
-
 }
 
 BlueRoom.Game.prototype.makeMovableMuffin = function(x, y, img){
@@ -121,7 +187,6 @@ BlueRoom.Game.prototype.onMuffinDragStart = function(sprite, pointer) {
 };
 
 BlueRoom.Game.prototype.onMuffinDragStop= function(sprite, pointer) {
-    dragging = false;
     sprite.tint = 0xffffff;
     // sprite.body.moves = true;
     // mypointer.alpha = 0;
@@ -131,9 +196,9 @@ BlueRoom.Game.prototype.onMuffinDragStop= function(sprite, pointer) {
         this.add.tween(sprite).to( { x: dragPosition.x, y: dragPosition.y }, 500, "Back.easeOut", true);
     }
     else{
-        posX = muffinList[sprite.key].x
-        posY = muffinList[sprite.key].y;
-        this.makeMovableMuffin(posX, posY, sprite.key)
+        var posX = muffinList[sprite.key].x
+        var posY = muffinList[sprite.key].y;
+        this.makeMovableMuffin(posX, posY, sprite.key);
         sprite.x = 660;
         sprite.y = 20;
         sprite.inputEnabled = false;
