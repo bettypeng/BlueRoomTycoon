@@ -45,35 +45,13 @@ function getCustomer(game) {
 } 
 
 //possibly only call this on string of lost customers
-function leaveHandler () {
-    var postParameters = {};
+function leaveHandler (station) {
+    var postParameters = {station: station};
 
     $.post("/leave", postParameters, function(responseJSON) {});
 
 }
-    
-// function getFrontCustomer(station) {
-        
-//     var postParameters = {type: station};
-    
-//     $.post("/line", postParameters, function(responseJSON) {
-    
-//         var responseObject = JSON.parse(responseJSON);
-//         var frontCust = responseObject.customer;
-        
-//         if (frontCust.order.type == "sandwich") {
-            
-//         }
-    
-//         //can get the order from this customer using frontCust.order which we can
-//         //then display on the screen
-            
-//         //call showing of first item on screen
-//         //if station == sandwich: call sanwich view's method for showing
-//         //thing
-//     });
-// }
-    
+
 function buy (station) {
     
 	var postParameters = {name: station};
@@ -192,12 +170,14 @@ function updateIntervals() {
     $.post("/interval", function(responseJSON) {
 
         var responseObject = JSON.parse(responseJSON);
-        var customerInterval = responseObject.customerInt;
-        var employeeInts = responseObject.employeeInts;
+        console.log(responseObject.customerInt);
+        CUSTOMERINTERVAL = responseObject.customerInt;
+        // var employeeInts = responseObject.employeeInts;
     });
 }
 
-function saveGame(filename) {
+function saveGame() {
+    var filename = "game1";
 	var postParameters = { file: filename };
 	
 	$.post("/save", postParameters, function(responseJSON) {});

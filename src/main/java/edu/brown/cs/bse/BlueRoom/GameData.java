@@ -1,5 +1,6 @@
 package edu.brown.cs.bse.BlueRoom;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
@@ -10,9 +11,6 @@ public class GameData {
   private double totalExpenses;
   private double totalLosses;
 
-  // i'll probably end up coming up with a better way to handle all of the different kinds of profit -
-  // this is not extensible were we to add more stations (need a polymorphic way/even just a method that
-  // runs a switch on station name for a getter)
   public double getTotalProfit() {
     return totalProfit;
   }
@@ -35,6 +33,13 @@ public class GameData {
       writer.write(str, 0, str.length());
       writer.newLine();
     }
+  }
+  
+  public void load(BufferedReader reader) throws IOException {
+    totalRevenue = Double.valueOf(reader.readLine());
+    totalExpenses = Double.valueOf(reader.readLine());
+    totalLosses = Double.valueOf(reader.readLine());
+    totalProfit = Double.valueOf(reader.readLine());
   }
 
 }

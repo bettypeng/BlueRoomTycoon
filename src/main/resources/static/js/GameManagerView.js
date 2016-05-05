@@ -138,18 +138,20 @@ BlueRoom.Game.prototype.abandonLine = function(customer){
         var myGame = this;
 
         myGame.deleteCurrSandwich(customer);
-        leaveHandler();
         leaving = true;
         //var outer = this;
         var c = customer;
         var curr;
         if (c.station == "sandwich") {
+            leaveHandler("sandwich");
             curr= sandwichLine.shift();
             numSandwich--;
         } else if (c.station == "bakery") {
+            leaveHandler("bakery");
             curr= bakeryLine.shift();
             numBakery--;
         } else {
+            leaveHandler("coffee");
             curr= coffeeLine.shift();
             numCoffee--;
         }
@@ -292,7 +294,6 @@ BlueRoom.Game.prototype.newCustomerReturned = function(customer){
     currThis.customer = customer.sprite;
     customerGroup.add(currThis.customer);
     numCustomer++;
-    console.log(customer);
     var posx;
     var posy;
     if (customer.station == "sandwich") {
