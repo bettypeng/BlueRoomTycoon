@@ -67,6 +67,7 @@ public class GameManager {
   public double steal(FoodItem stolen, Customer cust) {
     double price = stolen.getPrice();
     manager.handleLoss(price);
+    manager.handleTheft();
     leftToday++;
     return price;
   }
@@ -119,7 +120,7 @@ public class GameManager {
   }
 
   // gets the data about today's profits and whatever else
-  public DayData getDailyProfits() {
+  public DayData getDayData() {
     return manager.getTodayInfo();
   }
 
@@ -180,6 +181,7 @@ public class GameManager {
   
   public void leave() {
     leftToday++;
+    manager.handleAbandon();
   }
 
 //  public int getDayNum() {

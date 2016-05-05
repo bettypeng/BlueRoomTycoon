@@ -21,7 +21,7 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 	var revenue = this.game.add.text(280, 210, 'Revenue: $', detailStyle);
 	var losses = this.game.add.text(280, 250, 'Thefts & Losses:', detailStyle);
 	var expenses = this.game.add.text(280, 290, 'Utilities & Wages:', detailStyle);
-	var profit = this.game.add.text(280, 330, 'Today\'s Net: $'+dailyInfo.totalProfit.toFixed(2), detailStyle);
+	var profit = this.game.add.text(280, 330, 'Today\'s Net: $', detailStyle);
 
 	var total = this.game.add.text(2*(this.game.width/3), 150, 'TOTAL', labelStyle);
 	total.anchor.setTo(0.5, 0,5);
@@ -30,7 +30,7 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 	var trevenue = this.game.add.text(620, 210, 'Revenue: $', detailStyle);
 	var tlosses = this.game.add.text(620, 250, 'Thefts & Losses:', detailStyle);
 	var texpenses = this.game.add.text(620, 290, 'Utilities & Wages:', detailStyle);
-	var tprofit = this.game.add.text(620, 330, 'Total Net: $'+totalInfo.totalProfit.toFixed(2), detailStyle);
+	var tprofit = this.game.add.text(620, 330, 'Total Net: $', detailStyle);
 
 	var viewInventory = this.add.button(150, 420, 'viewInventoryButton', this.createInventoryView, this);
 	viewInventory.anchor.setTo(0.5, 0);

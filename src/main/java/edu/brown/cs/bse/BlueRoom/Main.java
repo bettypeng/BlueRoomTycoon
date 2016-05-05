@@ -90,7 +90,7 @@ public class Main {
             break;
             
           case "d":
-            System.out.println(manager.getDailyProfits());
+            System.out.println(manager.getDayData());
             break;
             
           case "m":
