@@ -120,6 +120,10 @@ BlueRoom.Game.prototype = {
         this.hideCoffeeView();
         this.hideBakeryView();
 
+        window.setInterval(function(){
+            updateIntervals();
+        }, 1000);
+
        
         //this.showSandwichView();
         

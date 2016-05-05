@@ -42,7 +42,7 @@ public class GameManager {
     availableStations.add("sandwich");
     currTime = 0;
     leftToday = 0;
-    baselineInterval = 10;
+    baselineInterval = 500;
   }
 
   // for when user makes sandwich
@@ -170,9 +170,9 @@ public class GameManager {
     return today;
   }
   
-  public void leave() {
+  public void leave(String station) {
     leftToday++;
-    manager.handleAbandon();
+    manager.handleAbandon(station);
   }
 
   public int getDayNum() {
@@ -185,7 +185,7 @@ public class GameManager {
 
   public double calculateCustomerInterval() {
     // between 150 and 180 seconds is currently "4 pm rush"
-    return baselineInterval + (leftToday * 0.2);
+    return baselineInterval + (leftToday * 1);
   }
   
   public void saveGame(String filename) {

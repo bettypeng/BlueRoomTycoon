@@ -67,8 +67,10 @@ public class MoneyManager {
     dayNum++;
   }
   
-  public void handleAbandon() {
+  public void handleAbandon(String station) {
     currDay.customerLost();
+    //switch on the station to decrement money by baseline price for item at 
+    //that station
   }
   
   public void handleTheft() {

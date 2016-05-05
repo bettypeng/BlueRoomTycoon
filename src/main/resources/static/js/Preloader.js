@@ -150,6 +150,7 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('continueButton', 'images/continue_button.png');
 		this.load.image('continueShopping', 'images/continue_shopping.png');
 		this.load.image('exitViewSmallButton', 'images/start_new_day_small.png');
+		this.load.image('saveButton', 'images/save_game.png');
 
 		// HIRE PAGE
 		this.load.image('next', 'images/next_btn.png');

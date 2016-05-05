@@ -40,6 +40,7 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 	upgrade.anchor.setTo(0.5, 0);
 	var close = this.add.button(890, 370, 'exitViewButton', this.destroyDayEndView, this);
 	close.anchor.setTo(0.5, 0);
+	var save = this.add.button(870, 30, 'saveButton', saveGame, this)
 
 	dayEndButtons.push(viewInventory);
 	dayEndButtons.push(hire);
