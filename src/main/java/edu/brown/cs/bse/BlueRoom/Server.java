@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,12 +76,14 @@ public class Server {
     Spark.exception(Exception.class, new ExceptionPrinter());
 
     FreeMarkerEngine freeMarker = createEngine();
+    
+    Spark.setPort(6789);
 
     // Setup Spark Routes
     Spark.get("/blueroom", new FrontHandler(), freeMarker);
     Spark.post("/purchase", new PurchaseHandler());
-//    Spark.post("/finances", new FinanceHandler());
-    Spark.post("/endday", new EndDayHandler());
+    Spark.post("/enddaystats", new EndDayStatsHandler());
+    Spark.post("/enddayscreen", new EndDayScreenHandler());
     Spark.post("/customer", new CustomerHandler());
     Spark.post("/newemployee", new NewEmployeeHandler());
     Spark.post("/employee", new EmployeeHandler());
@@ -101,6 +104,7 @@ public class Server {
 
     @Override
     public ModelAndView handle(Request req, Response res) {
+      
       Map<String, Object> variables =
           ImmutableMap.of("title", "Blue Room Tycoon");
       return new ModelAndView(variables, "index.ftl");
@@ -197,20 +201,24 @@ public class Server {
    * @author srw
    *
    */
-//  private class FinanceHandler implements Route {
-//    @Override
-//    public Object handle(final Request req, final Response res) {
-//      QueryParamsMap qm = req.queryMap();
-//
-//      List<Double> profits = gameManager.getDailyProfits();
-//
-//
-//      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
-//          .put("profits", profits).build();
-//
-//      return GSON.toJson(variables);
-//    }
-//  }
+  private class EndDayScreenHandler implements Route {
+    @Override
+    public Object handle(final Request req, final Response res) {
+
+      DayData dailyInfo = gameManager.endDay();
+      //List<DayData> dataOverTime = gameManager.getTotalStats();
+      List<DayData> dataOverTime = Collections.emptyList();
+      GameData totalInfo = gameManager.getGameData();
+
+
+      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+          .put("dailyInfo", dailyInfo)
+          .put("dataOverTime", dataOverTime)
+          .put("totalInfo", totalInfo).build();
+
+      return GSON.toJson(variables);
+    }
+  }
 
   /**
    * Triggered at the end of the day in the game - returns to the front end
@@ -218,20 +226,14 @@ public class Server {
    * @author srw
    *
    */
-  private class EndDayHandler implements Route {
+  private class EndDayStatsHandler implements Route {
     @Override
     public Object handle(final Request req, final Response res) {
-      QueryParamsMap qm = req.queryMap();
 
-      DayData dailyInfo = gameManager.endDay();
-      List<DayData> dataOverTime = gameManager.getTotalStats();
-      GameData totalInfo = gameManager.getGameData();
-
+      DayData dailyInfo = gameManager.getDayData();
 
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
-          .put("dailyInfo", dailyInfo)
-          .put("totalInfo", totalInfo)
-          .put("dataOverTime", dataOverTime).build();
+          .put("dailyInfo", dailyInfo).build();
 
       return GSON.toJson(variables);
     }

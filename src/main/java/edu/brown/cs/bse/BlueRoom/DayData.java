@@ -11,10 +11,14 @@ public class DayData {
   private int totalPurchases;
   private double totalRevenue;
   private double totalLosses;
+  private double customersLost;
+  private double thefts;
   private double expenses;
   
   public DayData(double expenses) {
     this.expenses = expenses;
+    customersLost = 0;
+    thefts = 0;
   }
 
   public void newPurchase(String station, double price) {
@@ -40,6 +44,14 @@ public class DayData {
   
   public void newLoss(double amt) {
     totalLosses += amt;
+  }
+  
+  public void customerLost() {
+    customersLost++;
+  }
+  
+  public void customerTheft() {
+    thefts++;
   }
 
   // i'll probably end up coming up with a better way to handle all of the different kinds of Revenue -

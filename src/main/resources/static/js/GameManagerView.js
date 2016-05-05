@@ -1,8 +1,12 @@
 var customerGroup;
 var numSandwich;
+var numBakery;
+var numCoffee;
 var numCustomer;
 var leaving;
 var sandwichLine = new Array();
+var bakeryLine = new Array();
+var coffeeLine = new Array();
 var cashierLine = new Array();
 var managerCounter = 0;
 var NUMBEROFSTATIONS = 1;
@@ -35,6 +39,8 @@ BlueRoom.Game.prototype.createManager = function () {
     
     var style = { font: "30px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "center" };
     numSandwich = 0;
+    numBakery = 0;
+    numCoffee = 0;
     numCustomer= 0;
     leaving = false;
     customerGroup = this.add.group();
@@ -65,16 +71,16 @@ BlueRoom.Game.prototype.createManager = function () {
         this.coffeeLinePos['y'].push(y);
     }
 
-    for(var i = 0; i < 12; i++){
-        var cust = this.add.sprite(this.bakeryLinePos['x'][i], this.bakeryLinePos['y'][i], 'customer');
-        cust.anchor.setTo(0.5, 0.5);
+    // for(var i = 0; i < 12; i++){
+    //     var cust = this.add.sprite(this.bakeryLinePos['x'][i], this.bakeryLinePos['y'][i], 'customer');
+    //     cust.anchor.setTo(0.5, 0.5);
 
-    }
+    // }
 
-    for(var i = 0; i < 12; i++){
-        var cust = this.add.sprite(this.coffeeLinePos['x'][i], this.coffeeLinePos['y'][i], 'customer');
-        cust.anchor.setTo(0.5, 0.5);
-    }
+    // for(var i = 0; i < 12; i++){
+    //     var cust = this.add.sprite(this.coffeeLinePos['x'][i], this.coffeeLinePos['y'][i], 'customer');
+    //     cust.anchor.setTo(0.5, 0.5);
+    // }
     
     // for(var j = 0; j < 5; j++){
     //     var xdiff = this.game.rnd.integerInRange(48, 51);
@@ -120,6 +126,8 @@ BlueRoom.Game.prototype.startMovement= function(){
     window.setInterval(function(){
         if(!leaving){
             myGame.moveLineUp(sandwichLine, myGame.sandwichLinePos, 2000);
+            myGame.moveLineUp(bakeryLine, myGame.bakeryLinePos, 2000);
+            myGame.moveLineUp(coffeeLine, myGame.coffeeLinePos, 2000);
         }
     }, 100);
 
@@ -134,11 +142,22 @@ BlueRoom.Game.prototype.abandonLine = function(customer){
         leaving = true;
         //var outer = this;
         var c = customer;
-        var curr= sandwichLine.shift();
+        var curr;
+        if (c.station == "sandwich") {
+            curr= sandwichLine.shift();
+            numSandwich--;
+        } else if (c.station == "bakery") {
+            curr= bakeryLine.shift();
+            numBakery--;
+        } else {
+            curr= coffeeLine.shift();
+            numCoffee--;
+        }
+        // var curr= sandwichLine.shift();
         c.inLine = false;
         var currCustomer = c.sprite;
         //left= currCustomer;
-        numSandwich--;
+        
         var tween = this.add.tween(currCustomer).to( { x: 450, y: 700 }, 2000, null, true);
         
         tween.onComplete.add(onLeaveMoveComplete, this);
@@ -157,33 +176,53 @@ BlueRoom.Game.prototype.abandonLine = function(customer){
 
     }
 
-    BlueRoom.Game.prototype.toCashier= function(){
-        if(sandwichLine.length>0){
-            var curr= sandwichLine.shift();
-            curr.inLine = false;
-            curr.moving = true;
-            var currCustomer = curr.sprite;
-            //currCustomer.destroy();
-            numSandwich--;
-            // var xpos = this.cashierLinePos['x'][numCashier];
-            // var ypos = this.cashierLinePos['y'][numCashier];
-            var xpos = this.game.rnd.integerInRange(300, 700);
-            var ypos = this.game.rnd.integerInRange(300, 500);
-            var tween = this.add.tween(currCustomer).to( { x: xpos, y: ypos }, 2000, null, true);
-            tween.onComplete.add(onCashierMoveComplete, this);
-            // numCashier++;
-
-            
-            function onCashierMoveComplete(){
-                curr.moving = false;
-            //     cashierLine.push(curr);
-                //this.shiftFirstInLine(sandwichLine, this.sandwichLinePos);
-                //this.moveLineUp(sandwichLine, this.sandwichLinePos, 5000);
-                curr.flashDollar();
-                curr.setUpInteractions();
+    BlueRoom.Game.prototype.toCashier= function(station){
+        var curr;
+        if (station == "sandwich") {
+            if(sandwichLine.length>0){
+                curr= sandwichLine.shift();
+                numSandwich--;
+            } else {
+                return;
             }
-           // cashierLine.push(currCustomer);
+        } else if (station == "bakery") {
+            if(bakeryLine.length>0){
+                curr= bakeryLine.shift();
+                numBakery--;
+            } else {
+                return;
+            }
+        } else {
+           if(coffeeLine.length>0){
+                curr= coffeeLine.shift();
+                numCoffee--;
+            } else {
+                return;
+            } 
         }
+
+        curr.inLine = false;
+        curr.moving = true;
+        var currCustomer = curr.sprite;
+        //currCustomer.destroy();
+        // var xpos = this.cashierLinePos['x'][numCashier];
+        // var ypos = this.cashierLinePos['y'][numCashier];
+        var xpos = this.game.rnd.integerInRange(300, 700);
+        var ypos = this.game.rnd.integerInRange(300, 500);
+        var tween = this.add.tween(currCustomer).to( { x: xpos, y: ypos }, 2000, null, true);
+        tween.onComplete.add(onCashierMoveComplete, this);
+        // numCashier++;
+
+        
+        function onCashierMoveComplete(){
+            curr.moving = false;
+        //     cashierLine.push(curr);
+            //this.shiftFirstInLine(sandwichLine, this.sandwichLinePos);
+            //this.moveLineUp(sandwichLine, this.sandwichLinePos, 5000);
+            curr.flashDollar();
+            curr.setUpInteractions();
+        }
+           // cashierLine.push(currCustomer);
     };
     
 // BlueRoom.Game.prototype.onLeaveMoveComplete= function(){
@@ -221,7 +260,7 @@ BlueRoom.Game.prototype.steal = function(customer){
     var c = customer;
     c.cust.tint = 0xff7777;
     console.log(c);
-    purchase("sandwich", c.ingredients, c.ingMap, "wheat", c.id, c.happiness, false);
+    purchase(c.station, c.ingredients, c.ingMap, "wheat", c.id, c.happiness, false);
     leaving = true;
     var tween = this.add.tween(customer.sprite).to( { x: 450, y: 700 }, 1000, null, true);
     tween.onComplete.add(onLeaveMoveComplete, this);
@@ -243,7 +282,7 @@ BlueRoom.Game.prototype.moveLineUp=function(line, linePos, speed){
 BlueRoom.Game.prototype.managerUpdate= function () {
     currThis = this;
     managerCounter++;
-    if(managerCounter % CUSTOMERINTERVAL == 0 && numSandwich<15 && isBlueRoomOpen){
+    if(managerCounter % CUSTOMERINTERVAL == 0 && numSandwich<15 && numCoffee<11 && numBakery<11 && isBlueRoomOpen){
         getCustomer();
     }
     
@@ -252,16 +291,37 @@ BlueRoom.Game.prototype.managerUpdate= function () {
 BlueRoom.Game.prototype.newCustomerReturned = function(customer){
     currThis.customer = customer.sprite;
     customerGroup.add(currThis.customer);
-    numSandwich++;
     numCustomer++;
-    var posx = currThis.sandwichLinePos['x'][numSandwich];
-    var posy = currThis.sandwichLinePos['y'][numSandwich];
+    console.log(customer);
+    var posx;
+    var posy;
+    if (customer.station == "sandwich") {
+        numSandwich++;
+        posx = currThis.sandwichLinePos['x'][numSandwich];
+        posy = currThis.sandwichLinePos['y'][numSandwich];
+    } else if (customer.station == "bakery") {
+        numBakery++;
+        posx = currThis.bakeryLinePos['x'][numBakery];
+        posy = currThis.bakeryLinePos['y'][numBakery];
+    } else {
+        numCoffee++;
+        posx = currThis.coffeeLinePos['x'][numCoffee];
+        posy = currThis.coffeeLinePos['y'][numCoffee];
+    }
+    
     customer.moving = true;
     var tween = currThis.add.tween(currThis.customer).to( { x: posx, y: posy }, 2000, null, true);
     tween.onComplete.add(onComplete, this);
     function onComplete(){
         customer.moving = false;
-        sandwichLine.push(customer);
+        if (customer.station == "sandwich") {
+            sandwichLine.push(customer);
+        } else if (customer.station == "bakery") {
+            bakeryLine.push(customer);
+        } else {
+            coffeeLine.push(customer);
+        }
+        
     }
 };
 

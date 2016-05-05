@@ -38,8 +38,12 @@ public class Main {
 
     GameManager manager = new GameManager();
     OrderFactory.setMuffinWeights();
-    manager.addStation("bakery");
+//    manager.addStation("bakery");
+//    manager.hireEmployee("alex");
+//    manager.hireEmployee("erik");
+//    manager.hireEmployee("rachel");
     manager.saveGame("outFile.txt");
+    manager.load("outFile.txt");
 
     if (options.has("gui")) {
       System.out.println("run spark server");
@@ -86,7 +90,7 @@ public class Main {
             break;
             
           case "d":
-            System.out.println(manager.getDailyProfits());
+            System.out.println(manager.getDayData());
             break;
             
           case "m":

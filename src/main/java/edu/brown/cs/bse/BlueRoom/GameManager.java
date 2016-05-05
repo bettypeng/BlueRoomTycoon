@@ -1,6 +1,8 @@
 package edu.brown.cs.bse.BlueRoom;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ public class GameManager {
   private final static int UUID_LEN = 8;
   private static final double INITIAL_MONEY = 1000;
   private static final double TRASH_CONST = 0.3;
+  private static final int EMPLOYEE_COST = 100;
   
   private MoneyManager manager;
   private List<Customer> customers;
@@ -64,6 +67,7 @@ public class GameManager {
   public double steal(FoodItem stolen, Customer cust) {
     double price = stolen.getPrice();
     manager.handleLoss(price);
+    manager.handleTheft();
     leftToday++;
     return price;
   }
@@ -95,7 +99,6 @@ public class GameManager {
       break;
     }
     Customer newCustomer = new Customer(id, order, station);
-    customers.add(newCustomer);
     customerMap.put(id, newCustomer);
     return newCustomer;
   }
@@ -105,6 +108,7 @@ public class GameManager {
    Employee emp = new Employee(name);
    employees.add(emp);
    employeeMap.put(name, emp);
+   manager.changeMoney(EMPLOYEE_COST * -1);
    return emp;
   }
 
@@ -116,14 +120,14 @@ public class GameManager {
   }
 
   // gets the data about today's profits and whatever else
-  public DayData getDailyProfits() {
+  public DayData getDayData() {
     return manager.getTodayInfo();
   }
 
   // gets data about total profits over time. could make this a list of DayData?
-  public List<DayData> getTotalStats() {
-    return manager.getTotalData();
-  }
+//  public List<DayData> getTotalStats() {
+//    return manager.getTotalData();
+//  }
 
   public GameData getGameData() {
     return manager.getTotalInfo();
@@ -163,29 +167,26 @@ public class GameManager {
     return manager.getMoney();
   }
 
-  public void startDay() {
-    manager.startDay();
-    OrderFactory.setMuffinWeights();
-    currTime = 0;
-    leftToday = 0;
-    baselineInterval--;
-  }
-
   // returns the DayData for the day that's ending
   public DayData endDay() {
     DayData today = manager.getTodayInfo();
     manager.endDay();
     customerMap.clear();
+    OrderFactory.setMuffinWeights();
+    currTime = 0;
+    leftToday = 0;
+    baselineInterval--;
     return today;
   }
   
   public void leave() {
     leftToday++;
+    manager.handleAbandon();
   }
 
-  public int getDayNum() {
-    return manager.getTotalData().size() + 1;
-  }
+//  public int getDayNum() {
+//    return manager.getTotalData().size() + 1;
+//  }
 
   public void incrCurrTime() {
     currTime++;
@@ -211,6 +212,31 @@ public class GameManager {
       writer.newLine();
       manager.save(writer);
       writer.flush();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+  
+  public void load(String file) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+      
+      String line = reader.readLine();
+      String[] stationNames = line.split(" ");
+      availableStations.clear();
+      for (String station : stationNames) {
+        addStation(station);
+      }
+      
+      employees.clear();
+      employeeMap.clear();
+      line = reader.readLine();
+      String[] employeeNames = line.split(" ");
+      for (String eName : employeeNames) {
+        hireEmployee(eName);
+      }
+      
+      manager = new MoneyManager(Double.valueOf(reader.readLine()));
+      //manager.load(reader);
     } catch (IOException e) {
       e.printStackTrace();
     }

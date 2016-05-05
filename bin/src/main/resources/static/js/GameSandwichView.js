@@ -44,6 +44,7 @@ var stopUpdate = false;
 var nonSandwich = [];
 var sandIngWasted = [];
 var nonSandElem;
+var incorrSandCount = 0;
 
 var mypointer;
 
@@ -295,7 +296,6 @@ BlueRoom.Game.prototype.createSandwichView= function () {
     BlueRoom.Game.prototype.onDragStart = function(sprite, pointer) {
         var dragOut = staticElementMap[sprite.key];
         sprite.loadTexture(dragOut, 0);
-        console.log("DRAGGING");
         dragPosition.set(sprite.x, sprite.y);
         mypointer.alpha = 1;
     },
@@ -339,6 +339,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         currDelts = {};
         currCustomer = null;
         currOrderElem = null;
+        incorrSandCount = 0;
     },
 
     BlueRoom.Game.prototype.trashButton = function () {
@@ -351,10 +352,10 @@ BlueRoom.Game.prototype.createSandwichView= function () {
             for (var i=0; i<nonSandwich.length; i++) {
                 movableElements.remove(nonSandwich[i]);
             }
+            nonSandwich = [];
         }
         if (currSandSprites.length != 0) {
-            totalTrash += nonSandwich.length;
-            console.log(currSandSprites.length);
+            totalTrash += currSandSprites.length;
             for (var i=0; i<currSandSprites.length; i++) {
                 movableElements.remove(currSandSprites[i]);
             }
@@ -366,6 +367,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
                 currDelts = {};
                 currSandSprites = [];
                 currPlace = 0;
+                incorrSandCount = 0;
                 exclamation.visible = false;
                 exclamation.alpha = 1;
 
@@ -384,12 +386,19 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         var currThis = this;
         
         window.setInterval(function() {
-            if (currCustomer == null)  {
-                currThis.noCustomer();
-                nonSandwich.push(nonSandElem);
+            if (transitioning) {
+                if (nonSandElem != null) {
+                    nonSandwich.push(nonSandElem);
+                    nonSandElem = null;
+                }
                 return;
             }
-            if (transitioning) {
+            if (currCustomer == null)  {
+                currThis.noCustomer();
+                if (nonSandElem != null) {
+                    nonSandwich.push(nonSandElem);
+                    nonSandElem = null;
+                }
                 return;
             }
           
@@ -403,6 +412,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
                 }
 
                 if (item.key != currCustomerOrder[currPlace]) {
+                    incorrSandCount++;
                     if (Math.abs(item.x-firstX) > 60) {
                         currThis.showGlasses();
                     } else {
@@ -433,15 +443,22 @@ BlueRoom.Game.prototype.createSandwichView= function () {
                     
                         currCustomer.ingredients = currSandwich;
                         currCustomer.ingMap = currDelts;
+
+                        if (incorrSandCount != 0 && incorrSandCount >= currCustomerOrder.length/2) {
+                            currThis.steal(currCustomer);
+                        }
+
                         //get next customer
                         currPlace = 0;
                         currSandwich = [];
                         currSandSprites = [];
                         currCustomerOrder = [];
                         currDelts = {};
+                        incorrSandCount = 0;
                         currCustomer = null;
                         currOrderElem = null;
                         transitioning = false;
+                        collidedElem = null;
                     }, this);
                     
                     //reset all variables
@@ -472,7 +489,6 @@ BlueRoom.Game.prototype.createSandwichView= function () {
         this.physics.arcade.collide(movableElements, platform);
         
         if (sandwichLine.length != 0 && currCustomer == null) {
-            console.log("here");
             currCustomer = sandwichLine[0];
             currCustomerOrder.push('bottom_bun');
             for (var i=0; i<currCustomer.order.ingreds.length; i++) {
@@ -505,7 +521,9 @@ BlueRoom.Game.prototype.createSandwichView= function () {
                     i--;
                     window.setTimeout(function(){
                         e.body.moves = false;
-                        if (currCustomer != null) {
+                        if (transitioning) {
+                            nonSandElem = e;
+                        }else if (currCustomer != null) {
                             collidedElem = e;
                         } else {
                             nonSandElem = e;
