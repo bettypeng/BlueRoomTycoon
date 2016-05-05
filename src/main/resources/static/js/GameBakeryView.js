@@ -1,7 +1,11 @@
 var bakeryViewElements = new Array();
 var muffinList = new Array();
 var muffinDropZone;
+var muffinTin;
 var muffinTinGroup;
+var batterMap = {};
+var batterCount = 0;
+var bakedBatter = new Array();
 
 // pistachio, double chocolate, chocolate chip, banana nut, triple berry, bran 
 
@@ -9,6 +13,11 @@ function MuffinEl(x, y, img){
     this.x = x;
     this.y = y;
     this.img = img;
+}
+
+function Batter(textName, amt){
+    this.textName = textName;
+    this.amt = amt;
 }
 
 BlueRoom.Game.prototype.createBakeryView= function () {
@@ -25,6 +34,7 @@ BlueRoom.Game.prototype.createBakeryView= function () {
     var p4 = this.add.sprite(540, 220, 'muffinPlate');
     var p5 = this.add.sprite(700, 220, 'muffinPlate');
     var p6 = this.add.sprite(860, 220, 'muffinPlate');
+
     bakeryViewElements.push(p1);
     bakeryViewElements.push(p2);
     bakeryViewElements.push(p3);
@@ -33,24 +43,13 @@ BlueRoom.Game.prototype.createBakeryView= function () {
     bakeryViewElements.push(p6);
 
     var style = { font: "18px Roboto-Thin", fill: "#000000", wordWrap: true, wordWrapWidth: 400, align: "center" };
-    //var pist = this.add.sprite(85, 140, 'pistachio');
     var pistText = this.game.add.text(100, 263, "COUNT: 0"  , style);
-    // var dchoc = this.add.sprite(245, 140, 'doubleChoc');
     var dchocText = this.game.add.text(260, 263, "COUNT: 0"  , style);
-    // var chocChip = this.add.sprite(405, 140, 'chocChip');
     var chocChipText = this.game.add.text(420, 263, "COUNT: 0"  , style);
-    // var banana = this.add.sprite(565, 140, 'bananaNut');
     var bananaText = this.game.add.text(580, 263, "COUNT: 0"  , style);
-    // var berry = this.add.sprite(725, 140, 'tripleBerry');
     var berryText = this.game.add.text(740, 263, "COUNT: 0"  , style);
-    // var bran = this.add.sprite(885, 140, 'bran');
     var branText = this.game.add.text(900, 263, "COUNT: 0"  , style);
-    // bakeryViewElements.push(pist);
-    // bakeryViewElements.push(dchoc);
-    // bakeryViewElements.push(chocChip);
-    // bakeryViewElements.push(banana);    
-    // bakeryViewElements.push(berry);
-    // bakeryViewElements.push(bran);
+
     bakeryViewElements.push(pistText);
     bakeryViewElements.push(dchocText);
     bakeryViewElements.push(chocChipText);
@@ -62,7 +61,7 @@ BlueRoom.Game.prototype.createBakeryView= function () {
     var oven = this.add.sprite(this.game.width/2, 310, 'oven');
     oven.anchor.setTo(0.5, 0);
     //var batterMenu = this.add.sprite(60, 350, 'batterMenu');
-    var muffinTin = this.add.sprite(this.game.width/2, 463, 'muffinTin');
+    muffinTin = this.add.sprite(this.game.width/2, 463, 'muffinTin');
     muffinTin.anchor.setTo(0.5, 0);
     //bakeryViewElements.push(batterMenu);
     bakeryViewElements.push(oven);
@@ -83,12 +82,12 @@ BlueRoom.Game.prototype.createBakeryView= function () {
     this.setUpBatterDropZone(542, 547, 'batterDropZone');
     this.setUpBatterDropZone(612, 547, 'batterDropZone');
 
-    this.setUpMuffinBatter(260, 350, 'pistachioBatter');
-    this.setUpMuffinBatter(260, 390, 'doubleChocBatter');
-    this.setUpMuffinBatter(260, 430, 'chocChipBatter');
-    this.setUpMuffinBatter(260, 470, 'tripleBerryBatter');
-    this.setUpMuffinBatter(260, 510, 'bananaNutBatter');
-    this.setUpMuffinBatter(260, 550, 'branBatter');
+    this.setUpMuffinBatter(260, 350, 'pistachioBatter', 'pistText');
+    this.setUpMuffinBatter(260, 390, 'doubleChocBatter', 'dchocText');
+    this.setUpMuffinBatter(260, 430, 'chocChipBatter', 'chocChipText');
+    this.setUpMuffinBatter(260, 470, 'tripleBerryBatter', 'berryText');
+    this.setUpMuffinBatter(260, 510, 'bananaNutBatter', 'bananaText');
+    this.setUpMuffinBatter(260, 550, 'branBatter', 'branText');
 
     this.setUpMuffin(85, 140, 'pistachio');
     this.setUpMuffin(245, 140, 'doubleChoc');
@@ -96,8 +95,6 @@ BlueRoom.Game.prototype.createBakeryView= function () {
     this.setUpMuffin(565, 140, 'bananaNut');
     this.setUpMuffin(725, 140, 'tripleBerry');
     this.setUpMuffin(885, 140, 'bran');
-
-
 };
 
 BlueRoom.Game.prototype.setUpBatterDropZone = function(x, y, img){
@@ -106,7 +103,9 @@ BlueRoom.Game.prototype.setUpBatterDropZone = function(x, y, img){
     bakeryViewElements.push(hole);
 }
 
-BlueRoom.Game.prototype.setUpMuffinBatter = function(x, y, img){
+BlueRoom.Game.prototype.setUpMuffinBatter = function(x, y, img, textName){
+    var b = new Batter(textName, 0);
+    batterMap[img] = b;
     var staticMuffinBatter = this.add.sprite(x, y, img);
     var m = new MuffinEl(x, y, img);
     muffinList[img] = m;
@@ -131,17 +130,50 @@ BlueRoom.Game.prototype.setUpMuffinBatterInteractions =function(sprite){
 
 BlueRoom.Game.prototype.onMuffinBatterDragStop= function(sprite, pointer) {
     sprite.tint = 0xffffff;
+    var batterX = null;
+    var batterY = null;
 
-   if (!sprite.overlap(muffinTinGroup))
-    {
-        this.add.tween(sprite).to( { x: dragPosition.x, y: dragPosition.y }, 500, "Back.easeOut", true);
-    }
-    else{
+    muffinTinGroup.children.forEach(function(item){
+        if (!sprite.overlap(item))
+        {
+            currThis.add.tween(sprite).to( { x: dragPosition.x, y: dragPosition.y }, 200, Phaser.Easing.Exponential.In, true);
+            matched = true;
+        }
+        else{
+            batterX = item.x;
+            batterY = item.y;
+            return;
+        }
+    });      
+
+    if(batterX !== null && batterY!==null){
         sprite.inputEnabled = false;
+        bakedBatter.push(sprite);
         var posX = muffinList[sprite.key].x
         var posY = muffinList[sprite.key].y;
         this.makeMovableMuffinBatter(posX, posY, sprite.key);
+        var t = currThis.add.tween(sprite).to( { x: batterX, y: batterY }, 200, Phaser.Easing.Exponential.In, true);
+        batterMap[sprite.key].amt++;
+        console.log(batterMap[sprite.key].amt);
+        batterCount++;
+        t.onComplete.add(function(){
+            if(batterCount>=12){
+                currThis.bakeMuffins();
+            }
+        });
+        
     }
+};
+
+BlueRoom.Game.prototype.bakeMuffins = function(){
+    currThis.add.tween(muffinTin).to( { x: muffinTin.x, y: muffinTin.y-140 }, 1000, Phaser.Easing.Exponential.In, true);
+
+    muffinTinGroup.children.forEach(function(item){
+        currThis.add.tween(item).to( { x: item.x, y: item.y-140 }, 1000, Phaser.Easing.Exponential.In, true);
+    });
+    bakedBatter.forEach(function(item){
+        currThis.add.tween(item).to( { x: item.x, y: item.y-140 }, 1000, Phaser.Easing.Exponential.In, true);
+    });
 };
 
 BlueRoom.Game.prototype.setUpMuffin = function(x, y, img){
