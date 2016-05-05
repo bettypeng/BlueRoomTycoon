@@ -7,6 +7,7 @@ function Cup(cupSize, cup, drink, syrup, ice, x, y) {
     this.group.x = x;
     this.group.y = y;
 	this.cup = currThis.game.add.sprite(0, 0, cup);
+	this.cup.tint = 0xe6f2ff;
     this.drink = currThis.game.add.sprite(0, 0, drink);
     this.syrup = currThis.game.add.sprite(0, 0, syrup);
     this.ice = currThis.game.add.sprite(0, 0, ice);
@@ -62,12 +63,12 @@ Cup.prototype = {
     },
 
     onOver: function(sprite, pointer) {
-        sprite.tint = 0x99ccff;
+        sprite.tint = 0xffffff;
     
     },
     
     onOut: function(sprite, pointer) {
-        sprite.tint = 0xffffff;
+        sprite.tint = 0xe6f2ff;
     },
     
     onDragStart : function(sprite, pointer) {
@@ -92,7 +93,7 @@ Cup.prototype = {
     },
     
     onDragStop: function(sprite, pointer) {
-    	sprite.tint = 0xffffff;
+    	sprite.tint = 0xe6f2ff;
 
         // var currThis = this;
         // setTimeout(function(){

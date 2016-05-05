@@ -66,7 +66,7 @@ BlueRoom.Game.prototype.createCoffeeView= function () {
     var peppermint = this.add.button(130, 105, 'syrupButton', this.peppermintSyrup, this);
     peppermint.tint = 0xff6666;
     var kahlua = this.add.button(130, 135, 'syrupButton', this.kahluaSyrup, this);
-    kahlua.tint = 0xcc7a00;
+    kahlua.tint = 0xb36b00;
 	syrupDispenser.add(syrup);
     syrupDispenser.add(caramel);
     syrupDispenser.add(hazelnut);
@@ -216,7 +216,7 @@ BlueRoom.Game.prototype.peppermintSyrup = function(){
 
 };
 BlueRoom.Game.prototype.kahluaSyrup = function(){
-    this.addSyrup(0xcc7a00);
+    this.addSyrup(0xb36b00);
 
 };
 

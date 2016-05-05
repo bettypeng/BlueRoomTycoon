@@ -127,6 +127,7 @@ BlueRoom.Preloader.prototype = {
 
 		//BAKERY STATION
 		this.load.image('bakeryBg', 'images/bakery/bakery.png');
+		this.load.image('muffinDropZone', 'images/bakery/muffin_drop_zone.png');
 		this.load.image('muffinPlate', 'images/bakery/plate.png');
 		this.load.image('pistachio', 'images/bakery/pistachio_muffin.png');
 		this.load.image('doubleChoc', 'images/bakery/double_chocolate_muffin.png');
