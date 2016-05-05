@@ -19,6 +19,8 @@ function Cup(cupSize, cup, drink, syrup, ice, x, y) {
     this.drink.visible = false;
     this.syrup.visible = false;
     this.ice.visible = false;
+    this.lastX;
+    this.lastY;
 
     this.cup.anchor.setTo(0.5, 0.5);
     this.drink.anchor.setTo(0.5, 0.5);
@@ -75,7 +77,7 @@ Cup.prototype = {
         // this.e.loadTexture('employee');
         currCup = this;
     	this.cup.moves = false;
-        dragPosition.set(sprite.x, sprite.y);
+        dragPosition.set(this.group.x, this.group.y);
       
         console.log("DRAGGING CUP");
 		this.group.children.forEach(function(cup){
@@ -122,7 +124,7 @@ Cup.prototype = {
         		currCup= null;
         	});
         }else {
-        	currThis.game.add.tween(this.group).to( { x: this.startX, y: this.startY }, 500, "Back.easeOut", true);
+        	currThis.game.add.tween(this.group).to( { x: dragPosition.x, y: dragPosition.y}, 500, "Back.easeOut", true);
         }
     },
 
