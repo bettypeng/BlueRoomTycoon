@@ -79,6 +79,9 @@ BlueRoom.Game.prototype.createManager = function () {
         this.coffeeLinePos['y'].push(y);
     }
 
+    // var emp = new Employee("eric");
+    // employeeList.push(emp.employeeSprite);
+
     // for(var i = 0; i < 12; i++){
     //     var cust = this.add.sprite(this.bakeryLinePos['x'][i], this.bakeryLinePos['y'][i], 'customer');
     //     cust.anchor.setTo(0.5, 0.5);
@@ -116,6 +119,13 @@ BlueRoom.Game.prototype.createManager = function () {
     setTimeout(function(){
         getCustomer();
     }, 500);
+
+    setInterval(function() {
+        managerCounter++;
+        if(managerCounter % CUSTOMERINTERVAL == 0 && numSandwich<15 && numCoffee<11 && numBakery<11 && isBlueRoomOpen){
+            getCustomer();
+        }
+    }, 1);
 
     this.startMovement();        
 };
@@ -297,10 +307,10 @@ BlueRoom.Game.prototype.moveLineUp=function(line, linePos, speed){
 
 BlueRoom.Game.prototype.managerUpdate= function () {
     currThis = this;
-    managerCounter++;
-    if(managerCounter % CUSTOMERINTERVAL == 0 && numSandwich<15 && numCoffee<11 && numBakery<11 && isBlueRoomOpen){
-        getCustomer();
-    }
+    // managerCounter++;
+    // if(managerCounter % CUSTOMERINTERVAL == 0 && numSandwich<15 && numCoffee<11 && numBakery<11 && isBlueRoomOpen){
+    //     getCustomer();
+    // }
 
     if (sandwichStationFilled && !empMakingSandwich && sandwichLine.length != 0) {
         empMakingSandwich = true;
@@ -321,6 +331,7 @@ BlueRoom.Game.prototype.employeeMakeProduct= function (stationName, atStation, m
     // makingProduct = true;
     var currThis = this;
     console.log(interval);
+    console.log(numSandwich);
 
     window.setTimeout(function(){
 

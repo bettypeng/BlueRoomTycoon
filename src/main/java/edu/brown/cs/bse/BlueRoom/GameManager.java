@@ -42,7 +42,7 @@ public class GameManager {
     availableStations.add("sandwich");
     currTime = 0;
     leftToday = 0;
-    baselineInterval = 500;
+    baselineInterval = 10000;
   }
 
   // for when user makes sandwich

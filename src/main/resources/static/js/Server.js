@@ -191,7 +191,7 @@ function getEmployeeInterval(stationName, atStation, makingProduct, line, employ
     var employeeName = employee.name;
     var employeeEnergy = employee.workHoursProgress/30;
 
-    console.log(employeeEnergy);
+    // console.log(employeeEnergy);
 
     var empE = JSON.stringify(employeeEnergy);
 
@@ -202,6 +202,7 @@ function getEmployeeInterval(stationName, atStation, makingProduct, line, employ
         var responseObject = JSON.parse(responseJSON);
 
         var employeeInt = responseObject.employeeInt;
+        console.log("EMPLOYEE INTERVAL: "+employeeInt);
         
         BlueRoom.Game.prototype.employeeMakeProduct(stationName, atStation, makingProduct, line, employee, employeeInt);
     });
@@ -214,4 +215,13 @@ function saveGame() {
 	var postParameters = { file: filename };
 	
 	$.post("/save", postParameters, function(responseJSON) {});
+}
+
+function loadGame(filename) {
+    filename = "game1";
+    var postParameters = { file: filename };
+    
+    $.post("/save", postParameters, function(responseJSON) {
+
+    });
 }
