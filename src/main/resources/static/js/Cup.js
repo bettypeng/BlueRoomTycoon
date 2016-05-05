@@ -7,6 +7,7 @@ function Cup(cupSize, cup, drink, syrup, ice, x, y) {
     this.group.x = x;
     this.group.y = y;
 	this.cup = currThis.game.add.sprite(0, 0, cup);
+	this.cup.tint = 0xe6f2ff;
     this.drink = currThis.game.add.sprite(0, 0, drink);
     this.syrup = currThis.game.add.sprite(0, 0, syrup);
     this.ice = currThis.game.add.sprite(0, 0, ice);
@@ -18,6 +19,8 @@ function Cup(cupSize, cup, drink, syrup, ice, x, y) {
     this.drink.visible = false;
     this.syrup.visible = false;
     this.ice.visible = false;
+    this.lastX;
+    this.lastY;
 
     this.cup.anchor.setTo(0.5, 0.5);
     this.drink.anchor.setTo(0.5, 0.5);
@@ -44,7 +47,6 @@ Cup.prototype = {
 
         this.cup.inputEnabled = true;
         this.cup.input.enableDrag();
-        // // this.cust.draggable = false;
         this.cup.events.onInputOver.add(this.onOver, this);
         this.cup.events.onInputOut.add(this.onOut, this);
         this.cup.events.onDragStart.add(this.onDragStart, this);
@@ -62,26 +64,23 @@ Cup.prototype = {
     },
 
     onOver: function(sprite, pointer) {
-        sprite.tint = 0x99ccff;
+        sprite.tint = 0xffffff;
     
     },
     
     onOut: function(sprite, pointer) {
-        sprite.tint = 0xffffff;
+        sprite.tint = 0xe6f2ff;
     },
     
     onDragStart : function(sprite, pointer) {
-        // this.e.loadTexture('employee');
         currCup = this;
     	this.cup.moves = false;
-        dragPosition.set(sprite.x, sprite.y);
+        dragPosition.set(this.group.x, this.group.y);
       
         console.log("DRAGGING CUP");
 		this.group.children.forEach(function(cup){
 		    cup.anchor.setTo(0.5,0.5);
 		});
-        
-     
     },
 
     onDragUpdate: function(sprite, pointer){
@@ -92,14 +91,7 @@ Cup.prototype = {
     },
     
     onDragStop: function(sprite, pointer) {
-    	sprite.tint = 0xffffff;
-
-        // var currThis = this;
-        // setTimeout(function(){
-        //     this.moving = false;
-        // }, 500);
-        // console.log("NOT DRAGGING THE SPRITE:  " + this.moving);
-        console.log("NOT DRAGGING THE CUP");
+    	sprite.tint = 0xe6f2ff;
         if(sprite.overlap(iceMachine)){
 	        this.cupDropZone(iceX);
         } else if(sprite.overlap(drinkDispenser)){
@@ -121,7 +113,7 @@ Cup.prototype = {
         		currCup= null;
         	});
         }else {
-        	currThis.game.add.tween(this.group).to( { x: this.startX, y: this.startY }, 500, "Back.easeOut", true);
+        	currThis.game.add.tween(this.group).to( { x: dragPosition.x, y: dragPosition.y}, 500, "Back.easeOut", true);
         }
     },
 
