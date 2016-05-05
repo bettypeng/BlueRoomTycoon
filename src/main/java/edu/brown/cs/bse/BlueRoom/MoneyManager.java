@@ -7,8 +7,9 @@ import java.util.List;
 
 public class MoneyManager {
 
-  private List<DayData> dataOverTime;
+  //private List<DayData> dataOverTime;
   private DayData currDay;
+  private int dayNum;
   private GameData gameData;
   private double money;
 
@@ -16,15 +17,16 @@ public class MoneyManager {
   private static final double DAILY_EXPENSES = 200;
 
   public MoneyManager(double startMoney) {
-    dataOverTime = new ArrayList<>();
+    //dataOverTime = new ArrayList<>();
     gameData = new GameData();
     money = startMoney;
     currDay = new DayData(DAILY_EXPENSES);
+    dayNum = 1;
   }
 
-  public List<DayData> getTotalData() {
-    return dataOverTime;
-  }
+//  public List<DayData> getTotalData() {
+//    return dataOverTime;
+//  }
 
   public GameData getTotalInfo() {
     return gameData;
@@ -47,15 +49,17 @@ public class MoneyManager {
   public double getMoney() {
     return money;
   }
-
-  public void endDay() {
-    dataOverTime.add(currDay);
-    gameData.addDayData(currDay);
+  
+  public void changeMoney(double delta) {
+    money += delta;
   }
 
-  public void startDay() {
+  public void endDay() {
+    //dataOverTime.add(currDay);
+    gameData.addDayData(currDay);
     currDay = new DayData(DAILY_EXPENSES);
     money -= DAILY_EXPENSES;
+    dayNum++;
   }
   
   public void save(BufferedWriter writer) throws IOException {
@@ -63,7 +67,8 @@ public class MoneyManager {
     writer.write(mon, 0, mon.length());
     writer.newLine();
     gameData.save(writer);
-    String numDays = String.valueOf(dataOverTime.size());
+    //String numDays = String.valueOf(dataOverTime.size());
+    String numDays = String.valueOf(dayNum);
     writer.write(numDays, 0, numDays.length());
     writer.newLine();
   }

@@ -181,3 +181,9 @@ function updateIntervals() {
         var employeeInts = responseObject.employeeInts;
     });
 }
+
+function saveGame(filename) {
+	var postParameters = { file: filename };
+	
+	$.post("/save", postParameters, function(responseJSON) {});
+}

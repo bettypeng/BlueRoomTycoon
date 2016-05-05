@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -221,12 +222,11 @@ public class Server {
   private class EndDayHandler implements Route {
     @Override
     public Object handle(final Request req, final Response res) {
-      QueryParamsMap qm = req.queryMap();
 
       DayData dailyInfo = gameManager.endDay();
-      List<DayData> dataOverTime = gameManager.getTotalStats();
+      //List<DayData> dataOverTime = gameManager.getTotalStats();
+      List<DayData> dataOverTime = Collections.emptyList();
       GameData totalInfo = gameManager.getGameData();
-
 
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("dailyInfo", dailyInfo)
