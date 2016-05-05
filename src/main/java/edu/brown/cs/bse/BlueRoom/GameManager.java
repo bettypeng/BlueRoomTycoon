@@ -23,7 +23,6 @@ public class GameManager {
   private static final int EMPLOYEE_COST = 100;
   
   private MoneyManager manager;
-  private List<Customer> customers;
   private List<Employee> employees;
   private Map<String, Customer> customerMap;
   private Map<String, Employee> employeeMap;
@@ -36,7 +35,6 @@ public class GameManager {
 
   public GameManager() {
     manager = new MoneyManager(INITIAL_MONEY);
-    customers = new ArrayList<>();
     employees = new ArrayList<>();
     availableStations = new ArrayList<>();
     customerMap = new HashMap<>();
@@ -112,13 +110,6 @@ public class GameManager {
    return emp;
   }
 
-  public Customer getFrontCustomer() {
-    if (customers.isEmpty()) {
-      return null;
-    }
-    return customers.remove(0);
-  }
-
   // gets the data about today's profits and whatever else
   public DayData getDayData() {
     return manager.getTodayInfo();
@@ -184,9 +175,9 @@ public class GameManager {
     manager.handleAbandon();
   }
 
-//  public int getDayNum() {
-//    return manager.getTotalData().size() + 1;
-//  }
+  public int getDayNum() {
+    return manager.getDayNum();
+  }
 
   public void incrCurrTime() {
     currTime++;
@@ -234,9 +225,9 @@ public class GameManager {
       for (String eName : employeeNames) {
         hireEmployee(eName);
       }
-      
-      manager = new MoneyManager(Double.valueOf(reader.readLine()));
-      //manager.load(reader);
+
+      int dayNum = manager.load(reader);
+      baselineInterval = 11 - dayNum;
     } catch (IOException e) {
       e.printStackTrace();
     }

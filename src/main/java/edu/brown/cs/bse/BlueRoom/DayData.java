@@ -64,30 +64,6 @@ public class DayData {
   public int getTotalPurchases() {
     return totalPurchases;
   }
-
-  public double getCoffeeRevenue() {
-    return coffeeRevenue;
-  }
-
-  public int getSandwichCount() {
-    return sandwichCount;
-  }
-
-  public double getSandwichRevenue() {
-    return sandwichRevenue;
-  }
-
-  public int getBakeryCount() {
-    return bakeryCount;
-  }
-
-  public double getBakeryRevenue() {
-    return bakeryRevenue;
-  }
-
-  public int getCoffeeCount() {
-    return coffeeCount;
-  }
   
   public double getLosses() {
     return totalLosses;
