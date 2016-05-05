@@ -88,7 +88,6 @@ public class Server {
     Spark.post("/newemployee", new NewEmployeeHandler());
     Spark.post("/employee", new EmployeeHandler());
     Spark.post("/newstation", new NewStationHandler());
-    Spark.post("/line", new LineHandler());
     Spark.post("/interval", new IntervalHandler());
     Spark.post("/trash", new TrashHandler());
     Spark.post("/leave", new LeaveHandler());
@@ -287,29 +286,6 @@ public class Server {
 //      } catch(Exception e) {
 //        e.printStackTrace();
 //      }
-
-      return GSON.toJson(variables);
-    }
-  }
-
-  /**
-   * Triggered when new customer gets to front of line
-   * @author srw
-   *
-   */
-  private class LineHandler implements Route {
-    @Override
-    public Object handle(final Request req, final Response res) {
-      QueryParamsMap qm = req.queryMap();
-
-      //this can be if we ever want different employees to have different traits
-//      String employeeName = qm.value("employee");
-
-      //sends the knowledge of the new employee to the game manager
-      Customer front = gameManager.getFrontCustomer();
-
-      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
-          .put("customer", front).build();
 
       return GSON.toJson(variables);
     }
