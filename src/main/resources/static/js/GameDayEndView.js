@@ -18,19 +18,19 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 	var detailStyle = { font: "20px Roboto-Thin", fill: "#000000", align: "center"};
 	// var tips = this.game.add.text(200, 210, 'Tips: $'+dailyInfo.totalTips.toFixed(2), detailStyle);
 	// var revenue = this.game.add.text(200, 250, 'Revenue: $'+(dailyInfo.totalProfit - dailyInfo.totalTips).toFixed(2), detailStyle);
-	var revenue = this.game.add.text(280, 210, 'Revenue: $', detailStyle);
-	var losses = this.game.add.text(280, 250, 'Thefts & Losses:', detailStyle);
-	var expenses = this.game.add.text(280, 290, 'Utilities & Wages:', detailStyle);
-	var profit = this.game.add.text(280, 330, 'Today\'s Net: $', detailStyle);
+	var revenue = this.game.add.text(280, 210, 'Revenue: $'+(dailyInfo.totalRevenue).toFixed(2), detailStyle);
+	var losses = this.game.add.text(280, 250, 'Thefts & Losses: $'+(dailyInfo.totalLosses).toFixed(2), detailStyle);
+	var expenses = this.game.add.text(280, 290, 'Utilities & Wages: $'+(dailyInfo.expenses).toFixed(2), detailStyle);
+	var profit = this.game.add.text(280, 330, 'Today\'s Net: $'+(dailyInfo.totalRevenue-(dailyInfo.totalLosses+dailyInfo.expenses)).toFixed(2), detailStyle);
 
 	var total = this.game.add.text(2*(this.game.width/3), 150, 'TOTAL', labelStyle);
 	total.anchor.setTo(0.5, 0,5);
 	// var ttips = this.game.add.text(720, 210, 'Tips: $'+ totalInfo.totalTips.toFixed(2), detailStyle);
 	// var trevenue = this.game.add.text(720, 250, 'Revenue: $'+(totalInfo.totalProfit - totalInfo.totalTips).toFixed(2), detailStyle);
-	var trevenue = this.game.add.text(620, 210, 'Revenue: $', detailStyle);
-	var tlosses = this.game.add.text(620, 250, 'Thefts & Losses:', detailStyle);
-	var texpenses = this.game.add.text(620, 290, 'Utilities & Wages:', detailStyle);
-	var tprofit = this.game.add.text(620, 330, 'Total Net: $', detailStyle);
+	var trevenue = this.game.add.text(620, 210, 'Revenue: $'+(totalInfo.totalRevenue).toFixed(2), detailStyle);
+	var tlosses = this.game.add.text(620, 250, 'Thefts & Losses: $'+(totalInfo.totalLosses).toFixed(2), detailStyle);
+	var texpenses = this.game.add.text(620, 290, 'Utilities & Wages: $'+(totalInfo.totalExpenses).toFixed(2), detailStyle);
+	var tprofit = this.game.add.text(620, 330, 'Total Net: $'+(totalInfo.totalProfit).toFixed(2), detailStyle);
 
 	var viewInventory = this.add.button(150, 420, 'viewInventoryButton', this.createInventoryView, this);
 	viewInventory.anchor.setTo(0.5, 0);
@@ -63,8 +63,7 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 	dayEndViewElements.push(hire);
 	dayEndViewElements.push(close);
 
-
-
+	game.loseMoney(500, 530, "- $"+(dailyInfo.expenses).toFixed(2), dailyInfo.expenses);
 };
 
 BlueRoom.Game.prototype.disableDayEndButtons = function(){
