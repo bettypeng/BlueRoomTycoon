@@ -229,7 +229,7 @@ public class Server {
     @Override
     public Object handle(final Request req, final Response res) {
 
-      DayData dailyInfo = gameManager.endDay();
+      DayData dailyInfo = gameManager.getDayData();
 
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("dailyInfo", dailyInfo).build();

@@ -65,9 +65,10 @@ BlueRoom.Game.prototype.createCoffeeView= function () {
 
     drinkDropZone = this.add.sprite(920, 355, 'drinkDropZone');
 
-	// var sm = this.add.sprite(180, 470, 'smallCup');
-	// var md = this.add.sprite(90, 448, 'mediumCup');
-	// var lg = this.add.sprite(20, 435, 'largeCup');
+	// var sm = this.add.sprite(190, 500, 'smCup');
+	// var md = this.add.sprite(110, 472, 'mdCup');
+	// var lg = this.add.sprite(20, 435, 'lgCup');
+
     coffeeViewElements.push(iceMachine);
     coffeeViewElements.push(syrupDispenser);
     coffeeViewElements.push(drinkDispenser);
@@ -80,9 +81,9 @@ BlueRoom.Game.prototype.createCoffeeView= function () {
     coffeeStaticElements = this.add.group();
     coffeeMovableElements =  this.add.physicsGroup();
         
-    this.newCup(220, 520, 'smallCup', 'smallCup');
-    this.newCup(140, 508, 'mediumCup', 'mediumCup');
-    this.newCup(60, 500, 'largeCup', 'largeCup');
+    this.newCup(230, 530, 'smCup', 'smCup');
+    this.newCup(147, 520, 'mdCup', 'mdCup');
+    this.newCup(60, 500, 'lgCup', 'lgCup');
     console.log(coffeeViewElements);
 
 };
@@ -188,6 +189,7 @@ BlueRoom.Game.prototype.newCup=function(x, y, staticImg, movableImg){
     
     BlueRoom.Game.prototype.coffeeonDragStop= function(sprite, pointer) {
         dragging = false;
+        sprite.tint = 0xffffff;
         sprite.body.moves = true;
         mypointer.alpha = 0;
     

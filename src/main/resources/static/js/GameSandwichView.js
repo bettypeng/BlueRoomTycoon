@@ -280,6 +280,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
     
     BlueRoom.Game.prototype.onDragStop= function(sprite, pointer) {
         dragging = false;
+        sprite.tint = 0xffffff;
         sprite.body.moves = true;
         mypointer.alpha = 0;
     
