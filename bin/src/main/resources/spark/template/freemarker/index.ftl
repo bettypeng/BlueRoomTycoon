@@ -19,6 +19,8 @@
 	<script src="js/Customer.js"></script>
 	<script src="js/Employee.js"></script>
 	<script src="js/Server.js"></script>
+	<script src="js/Cup.js"></script>
+
 
 	<script src="js/GameDayEndAlertView.js"></script>
 	<script src="js/GamePurchaseAlertView.js"></script>

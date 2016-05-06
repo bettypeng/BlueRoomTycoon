@@ -14,12 +14,18 @@ public class Drink extends FoodItem {
     this.type = type;
     this.flavoring = flavors;
     this.iced = iced;
-    setPrice(1);
-    setMaxTip(2);
+    setPrice(2);
+    setMaxTip(3);
   }
   
   @Override
-  public double compareToOrder(FoodItem other) {
+  public double compareToOrder(FoodItem ordered) {
+    if (!(ordered instanceof Drink)) {
+      return 0;
+    }
+    double quality = 1;
+    Drink order = (Drink) ordered;
+    double valueOfEach = quality / 4;
     return 0;
   }
   
