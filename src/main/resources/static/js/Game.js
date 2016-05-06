@@ -43,8 +43,8 @@ var activeButtons = new Array();
 var dayCounter = 4;
 var twelveCounter = 0;
 
-var MANAGERTIMEINTERVAL = 1; //250 standard
-var STATIONTIMEINTERVAL = 1;
+var MANAGERTIMEINTERVAL = 100; //250 standard
+var STATIONTIMEINTERVAL = 100;
 
 
 var game;
