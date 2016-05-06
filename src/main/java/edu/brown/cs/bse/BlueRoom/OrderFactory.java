@@ -160,11 +160,11 @@ public class OrderFactory {
 
   // DRINK ORDERS
   private static final String[] DRINK_TYPES = {"latte", "cappuccino", "coffee", "tea", "hot_chocolate"};
-  
+
   private static final String[] FLAVORS = {"vanilla", "caramel", "hazelnut", "peppermint", "kahlua" };
-  
+
   private static final int NUM_SIZES = 3;
-  
+
   public static Drink getDrinkOrder() {
     //return new Drink("latte", "small", Arrays.asList("vanilla"), true);
     String type = getType();
@@ -173,12 +173,12 @@ public class OrderFactory {
     boolean iced = getIced();
     return new Drink(type, size, flavor, iced);
   }
-  
+
   private static String getType() {
     int rand = (int)(Math.random() * DRINK_TYPES.length);
     return DRINK_TYPES[rand];
   }
-  
+
   private static String getSize() {
     int rand = (int)(Math.random() * NUM_SIZES);
     String size;
@@ -194,7 +194,7 @@ public class OrderFactory {
     }
     return size;
   }
-  
+
   private static List<String> getFlavoring() {
     int rand = (int)(Math.random() * 3);
     boolean flavor = false;
@@ -212,7 +212,7 @@ public class OrderFactory {
       return Collections.emptyList();
     }
   }
-  
+
   private static boolean getIced() {
      int rand = (int)(Math.random() * 2);
      if (rand == 0) {
@@ -221,14 +221,14 @@ public class OrderFactory {
        return false;
      }
   }
-  
+
   // MUFFIN ORDERS
-  
-  private static final String[] MUFFIN_TYPES = {"pistachio", "double_chocolate", "chocolate_chip", "banana_nut", "triple_berry", "bran"};
+
+  private static final String[] MUFFIN_TYPES = {"pistachio", "doubleChoc", "chocChip", "bananaNut", "tripleBerry", "bran"};
   private static final int[] WEIGHTS = {3, 2, 2, 1, 1, 1};
-  
+
   private static int[] TODAY_WEIGHTS = {3, 2, 2, 1, 1, 1};
-  
+
   public static void setMuffinWeights() {
     List<Integer> remainingIndex = new ArrayList<>();
     for (int i = 0; i < WEIGHTS.length; i++) {
@@ -242,12 +242,12 @@ public class OrderFactory {
     }
     //System.out.println(Arrays.toString(TODAY_WEIGHTS));
   }
-  
+
   public static Muffin getMuffinOrder() {
     String popularMuff = "";
     List<String> mediumMuff = new ArrayList<>();
     List<String> leastMuff = new ArrayList<>();
-    
+
     for (int i = 0; i < TODAY_WEIGHTS.length; i++) {
       switch(TODAY_WEIGHTS[i]) {
       case 3:

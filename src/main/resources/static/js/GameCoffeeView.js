@@ -25,7 +25,7 @@ var mediumCup = [];
 var largeCup = [];
 
 var coffeeSpeechBubble;
-var coffeCustomerFace;
+var coffeeCustomerFace;
 var coffeeExclamation;
 
 var coffeeTransitioning = false;

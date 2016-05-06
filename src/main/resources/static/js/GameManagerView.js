@@ -273,7 +273,7 @@ BlueRoom.Game.prototype.cashCustomerOut= function(customer){
         if (c.station == "sandwich") {
             sandwichPurchase(c.ingredients, c.ingMap, "wheat", c.id, c.happinessBarProgress/30, true);
         } else if (c.station == "coffee") {
-            coffeePurchase(c.type, c.iced, c.size, c.flavor, c.id, c.happinessBarProgress/30, true);
+            coffeePurchase(c.drinkType, c.iced, c.drinkSize, c.drinkFlavor, c.id, c.happinessBarProgress/30, true);
         } else {
             bakeryPurchase(c.type, c.id, c.happinessBarProgress/30, true);
         }   
@@ -298,7 +298,7 @@ BlueRoom.Game.prototype.steal = function(customer){
         if (c.station == "sandwich") {
             sandwichPurchase(c.ingredients, c.ingMap, "wheat", c.id, c.happinessBarProgress/30, false);
         } else if (c.station == "coffee") {
-            coffeePurchase(c.type, c.iced, c.size, c.flavor, c.id, c.happinessBarProgress/30, false);
+            coffeePurchase(c.drinkType, c.drinkIced, c.drinkSize, c.drinkFlavor, c.id, c.happinessBarProgress/30, false);
         } else {
             bakeryPurchase(c.type, c.id, c.happinessBarProgress/30, true);
         } 
@@ -333,7 +333,7 @@ BlueRoom.Game.prototype.managerUpdate= function () {
         getEmployeeInterval("sandwich", atSandwichStation, empMakingSandwich, sandwichLine, atSandwichStation);
     }
     if (coffeeStationFilled && !empMakingCoffee && coffeeLine.length != 0) {
-        empMakingCoffe = true;
+        empMakingCoffee = true;
         getEmployeeInterval("coffee", atCoffeeStation, empMakingCoffee, coffeeLine, atCoffeeStation);
     }
     if (bakeryStationFilled && !empMakingMuffin && bakeryLine.length != 0) {
@@ -359,6 +359,7 @@ BlueRoom.Game.prototype.employeeMakeProduct= function (stationName, atStation, m
             }
             return;
         }
+        console.log(line);
         var frontCust = line[0];
         frontCust.employee = employee.name;
 

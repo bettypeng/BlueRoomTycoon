@@ -22,6 +22,11 @@ var bananaText;
 var berryText;
 var branText;
 
+var currBakeryCustomer;
+var bakerySpeechBubble;
+var bakeryCustomerFace;
+var currBakeryOrderSprite;
+
 function MuffinEl(x, y, img){
     this.x = x;
     this.y = y;
@@ -36,6 +41,16 @@ function Batter(textName, amt){
 
 BlueRoom.Game.prototype.createBakeryView= function () {
 	var bg = this.add.sprite(0, 0, 'whiteBg');
+
+    bakeryCustomerFace = this.add.sprite(200, 20, "neutral");
+    bakerySpeechBubble = this.add.sprite(350, -30, "speechBubble");
+    // currBakeryOrderSprite = this.add.sprite(300, 30, "pistachio");
+    // var coffeeGarbageCan = this.add.button(950, 495, 'trash', this.coffeeTrashButton, this);
+    bakeryExclamation = this.add.sprite(400, 40, 'exclamation');
+    bakeryExclamation.visible = false;
+
+    this.noBakeryCustomer();
+
     muffinDropZone = this.add.sprite(620, 0, 'muffinDropZone');
 	var bakeryBg = this.add.sprite(0,0, 'bakeryBg');
     bakeryViewElements.push(bg);
@@ -430,12 +445,23 @@ BlueRoom.Game.prototype.showBakeryView= function(){
     bakeryViewElements.forEach(function(item){
         item.visible = true;
     });
+    if (currBakeryCustomer != null) {
+        bakeryCustomerFace.visible = true;
+        bakerySpeechBubble.visible = true;
+        currBakeryOrderSprite.visible = true;
+    }
 };
 
 BlueRoom.Game.prototype.hideBakeryView= function(){
     bakeryViewElements.forEach(function(item){
         item.visible = false;
     });
+    this.noBakeryCustomer();
+
+    if (currBakeryOrderSprite != null) {
+        currBakeryOrderSprite.visible = true;
+    }
+
 };
 
 BlueRoom.Game.prototype.checkMuffinNumber = function(name){
@@ -457,6 +483,31 @@ BlueRoom.Game.prototype.muffinUpdate = function(){
     this.checkMuffinNumber("bran");
 };
 
-BlueRoom.Game.prototype.bakeryUpdate= function () {
-    // 
+BlueRoom.Game.prototype.noBakeryCustomer = function() {
+    bakerySpeechBubble.visible = false;
+    bakeryCustomerFace.visible = false;
 };
+
+BlueRoom.Game.prototype.changeBakerySpriteFace = function(x, y, imgName) {
+    bakeryCustomerFace.visible = true;
+    bakeryCustomerFace.loadTexture(imgName);
+    bakeryCustomerFace.x = x;
+    bakeryCustomerFace.y = y;
+};
+
+BlueRoom.Game.prototype.bakeryUpdate= function () {
+
+    if (bakeryLine.length != 0 && currBakeryCustomer == null) {
+        currBakeryCustomer = bakeryLine[0];
+        console.log(currBakeryCustomer);
+
+        // currBakeryOrderSprite = this.add.sprite(400, 40, currBakeryCustomer.order.type);
+        
+        bakeryCustomerFace.visible = true;
+        this.changeBakerySpriteFace(200, 20, "neutral");
+        bakerySpeechBubble.visible = true;
+    } else if (bakeryLine.length == 0) {
+        this.noBakeryCustomer();
+    } 
+};
+
