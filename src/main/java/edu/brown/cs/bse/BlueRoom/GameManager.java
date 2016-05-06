@@ -43,6 +43,7 @@ public class GameManager {
     currTime = 0;
     leftToday = 0;
     baselineInterval = 10000;
+    OrderFactory.setMuffinWeights();
   }
 
   // for when user makes sandwich
@@ -92,6 +93,7 @@ public class GameManager {
       break;
     case "coffee":
       order = OrderFactory.getDrinkOrder();
+      break;
     default:
       order = OrderFactory.getSandwichOrder();
       break;
@@ -113,6 +115,18 @@ public class GameManager {
   // gets the data about today's profits and whatever else
   public DayData getDayData() {
     return manager.getTodayInfo();
+  }
+  
+  public List<String> getAvailableStations() {
+    return availableStations;
+  }
+  
+  public List<String> getEmployeeNames() {
+    List<String> result = new ArrayList<>();
+    for (Employee e : employees) {
+      result.add(e.getName());
+    }
+    return result;
   }
 
   // gets data about total profits over time. could make this a list of DayData?

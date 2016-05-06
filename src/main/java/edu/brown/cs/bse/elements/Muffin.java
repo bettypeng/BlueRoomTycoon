@@ -7,16 +7,19 @@ public class Muffin extends FoodItem {
   public Muffin(String type) {
     this.type = type;
     setPrice(3);
-    setMaxTip(3);
-  }
-  
-  public String getType() {
-    return type;
+    setMaxTip(1);
   }
   
   @Override
   public double compareToOrder(FoodItem other) {
-    return 0;
+    if (!(other instanceof Muffin)) {
+      return 0;
+    }
+    Muffin order = (Muffin) other;
+    if (!type.equals(order.type)) {
+      return 0;
+    }
+    return 1;
   }
   
   @Override

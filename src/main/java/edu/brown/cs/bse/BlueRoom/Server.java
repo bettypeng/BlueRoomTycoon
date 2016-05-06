@@ -99,6 +99,7 @@ public class Server {
     Spark.post("/trash", new TrashHandler());
     Spark.post("/leave", new LeaveHandler());
     Spark.post("/save", new SaveHandler());
+    Spark.post("/load", new LoadHandler());
   }
 
   /**
@@ -377,8 +378,7 @@ public class Server {
     @Override
     public Object handle(final Request req, final Response res) {
       QueryParamsMap qm = req.queryMap();
-      // GSON.fromJson(value, String.class)
-
+      
       Employee employee = gameManager.getEmployee(qm.value("employee"));
 
       Customer customer = gameManager.getCustomer(qm.value("customer"));
@@ -390,13 +390,7 @@ public class Server {
 //      employee.setEnergy(energy);
       customer.setHappiness(happiness);
 
-      double quality = 0;
-
-      if (customer.getStation().equals("sandwich")) {
-        quality = employee.fillOrder();
-      } else {
-        System.out.println("Nothing other than sandwiches should be ordered");
-      }
+      double quality = employee.fillOrder();
 
       Double moneyMade = gameManager.purchase(quality, customer);
 
@@ -509,6 +503,26 @@ public class Server {
       List<String> results = new ArrayList<>();
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("results", results).build();
+      return GSON.toJson(variables);
+    }
+  }
+  
+  private class LoadHandler implements Route {
+    
+    @Override
+    public Object handle(Request req, Response res) {
+      QueryParamsMap qm = req.queryMap();
+      String filename = qm.value("file");
+      gameManager.load(filename);
+      
+      List<String> stations = gameManager.getAvailableStations();
+      List<String> employees = gameManager.getEmployeeNames();
+      
+      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+          .put("stations", stations)
+          .put("employees", employees)
+          .put("money", gameManager.getCurrentMoney())
+          .build();
       return GSON.toJson(variables);
     }
   }

@@ -222,6 +222,18 @@ function loadGame(filename) {
     var postParameters = { file: filename };
     
     $.post("/save", postParameters, function(responseJSON) {
-
+		var responseObject = JSON.parse(responseJSON);
+		var stations = responseObject.stations;
+		for (var i = 0; i < stations.length; i++) {
+			var station = stations[i];
+			// do something to add the station to the front end
+		}
+		var employees = responseObject.employees;
+		for (var i = 0; i < employees.length; i++) {
+			// add each employee
+		}
+		var balance = responseObject.money;
+		// check if this is actually a valid way to change the money
+		statusBar.money = balance;
     });
 }
