@@ -313,6 +313,10 @@ BlueRoom.Game.prototype = {
             this.sandwichUpdate(); 
         }
 
+        if(coffeeView) {
+            this.coffeeUpdate();
+        }
+
         if(dayEndView){
             activeButtons.forEach(function(item){
                 item.visible = false;

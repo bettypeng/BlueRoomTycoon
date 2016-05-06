@@ -112,6 +112,7 @@ Cup.prototype = {
         		currThis.enableCups();
         		currCup= null;
         	});
+            currThis.giveCoffeeToCustomer();
         }else {
         	currThis.game.add.tween(this.group).to( { x: dragPosition.x, y: dragPosition.y}, 500, "Back.easeOut", true);
         }

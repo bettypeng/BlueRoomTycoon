@@ -18,12 +18,12 @@ var dragging;
 var platform;
 var currSprite;
 
-var happy;
-var sad;
-var neutral;
-var sideEye;
-var noface;
-var glasses;
+// var happy;
+// var sad;
+// var neutral;
+// var sideEye;
+// var noface;
+// var glasses;
 var speechBubble;
 var exclamation;
 var customerFace;
@@ -67,23 +67,23 @@ BlueRoom.Game.prototype.createSandwichView= function () {
     sandwichViewElements.push(bg);
     platform = this.add.sprite(0, 450, 'whiteBg');
 
-    happy = this.add.sprite(170, 0, "happy");
-    sad = this.add.sprite(190, 20, "sad");
-    neutral = this.add.sprite(200, 20, "neutral");
-    noface = this.add.sprite(200, 20, "noface");
-    glasses = this.add.sprite(200, 20, "glasses");
-    sideEye = this.add.sprite(200, 0, "leaving");
+    // happy = this.add.sprite(170, 0, "happy");
+    // sad = this.add.sprite(190, 20, "sad");
+    // neutral = this.add.sprite(200, 20, "neutral");
+    // noface = this.add.sprite(200, 20, "noface");
+    // glasses = this.add.sprite(200, 20, "glasses");
+    // sideEye = this.add.sprite(200, 0, "leaving");
     customerFace = this.add.sprite(200, 20, "neutral");
     speechBubble = this.add.sprite(350, -30, "speechBubble");
     var garbageCan = this.add.button(950, 495, 'trash', this.trashButton, this);
     exclamation = this.add.sprite(400, 40, 'exclamation');
 
-    happy.visible = false;
-    sad.visible = false;
-    neutral.visible = false;
-    sideEye.visible = false;
-    noface.visible = false;
-    glasses.visible = false;
+    // happy.visible = false;
+    // sad.visible = false;
+    // neutral.visible = false;
+    // sideEye.visible = false;
+    // noface.visible = false;
+    // glasses.visible = false;
     speechBubble.visible = false;
     exclamation.visible = false;
     customerFace.visible = false;
@@ -417,7 +417,7 @@ BlueRoom.Game.prototype.orderElems= function () {
                     for (var i=0; i<currSandSprites.length; i++) {
                         movableElements.remove(currSandSprites[i]);
                     }
-                    currThis.sandwichComplete();
+                    // currThis.sandwichComplete();
                     currThis.noCustomer();
                 
                     currCustomer.ingredients = currSandwich;
@@ -427,6 +427,8 @@ BlueRoom.Game.prototype.orderElems= function () {
                         currThis.steal(currCustomer);
                         clearInterval(currCustomer.barTimer);
                         clearInterval(currCustomer.myTimer);
+                    } else {
+                        currThis.sandwichComplete();
                     }
 
                     //get next customer

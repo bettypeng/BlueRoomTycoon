@@ -264,21 +264,27 @@ BlueRoom.Game.prototype.abandonLine = function(customer){
 // };
 
 BlueRoom.Game.prototype.cashCustomerOut= function(customer){
-        var c = customer;
-        if (c.employee != null) {
-            employeePurchase(c.employee, c.id, c.happinessBarProgress/30, true);
+    var c = customer;
+    if (c.employee != null) {
+        employeePurchase(c.employee, c.id, c.happinessBarProgress/30, true);
+    } else {
+        if (c.station == "sandwich") {
+            sandwichPurchase(c.ingredients, c.ingMap, "wheat", c.id, c.happinessBarProgress/30, true);
+        } else if (c.station == "coffee") {
+            coffeePurchase(c.type, c.iced, c.size, c.flavor, c.id, c.happinessBarProgress/30, true);
         } else {
-            purchase(customer.station, c.ingredients, c.ingMap, "wheat", c.id, c.happinessBarProgress/30, true);
-        }
-        leaving = true;
-        var tween = this.add.tween(customer.sprite).to( { x: 450, y: 700 }, 1000, null, true);
-        customer.moving = true;
-        tween.onComplete.add(onLeaveMoveComplete, this);
-        function onLeaveMoveComplete(){
-            customer.sprite.visible = false;
-            numCustomer--;
-            leaving = false;
-        }
+            bakeryPurchase(c.type, c.id, c.happinessBarProgress/30, true);
+        }   
+    }
+    leaving = true;
+    var tween = this.add.tween(customer.sprite).to( { x: 450, y: 700 }, 1000, null, true);
+    customer.moving = true;
+    tween.onComplete.add(onLeaveMoveComplete, this);
+    function onLeaveMoveComplete(){
+        customer.sprite.visible = false;
+        numCustomer--;
+        leaving = false;
+    }
 };
 
 BlueRoom.Game.prototype.steal = function(customer){
@@ -287,7 +293,13 @@ BlueRoom.Game.prototype.steal = function(customer){
     if (c.employee != null) {
         employeePurchase(c.employee, c.id, c.happinessBarProgress/30, false);
     } else {
-        purchase(customer.station, c.ingredients, c.ingMap, "wheat", c.id, c.happinessBarProgress/30, false);
+        if (c.station == "sandwich") {
+            sandwichPurchase(c.ingredients, c.ingMap, "wheat", c.id, c.happinessBarProgress/30, false);
+        } else if (c.station == "coffee") {
+            coffeePurchase(c.type, c.iced, c.size, c.flavor, c.id, c.happinessBarProgress/30, false);
+        } else {
+            bakeryPurchase(c.type, c.id, c.happinessBarProgress/30, true);
+        } 
     }
     leaving = true;
     var tween = this.add.tween(customer.sprite).to( { x: 450, y: 700 }, 1000, null, true);
