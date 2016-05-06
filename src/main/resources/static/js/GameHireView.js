@@ -107,7 +107,6 @@ BlueRoom.Game.prototype.hireNewEmployee = function(){
 	employeeMap[hireList[currentlyDisplayedHire]] = emp;
 	this.createPurchaseAlert("hired", capitalizeFirstLetter(hireList[currentlyDisplayedHire]), EMPLOYEEWAGE);
 	this.addToEmployeeInventory(hireList[currentlyDisplayedHire]);
-	inventoryEmployeeListMap[hireList[currentlyDisplayedHire]] = inventoryEmployeeList.length-1;
 	hireList.splice(currentlyDisplayedHire, 1);
 	this.fadeHireForward();
 	this.checkHireButton(hireMeButton);
@@ -121,6 +120,8 @@ BlueRoom.Game.prototype.firedEmployeeBackOnMarket = function(name){
 	NUMBEROFHIRES++;
 	NUMBEROFEMPLOYEES--;
 
+	console.log(name);
+	console.log(employeeMap[name]);
 	var emp = employeeMap[name];
 	if(emp.station === "sandwich"){
 		sandwichStationFilled = false;
@@ -143,8 +144,6 @@ BlueRoom.Game.prototype.firedEmployeeBackOnMarket = function(name){
 	employeeMap[name] = null;
 	hireList.push(name);
 	this.checkHireButton(hireMeButton);
-	inventoryEmployeeList.splice(inventoryEmployeeListMap[name]);
-	delete inventoryEmployeeListMap[name];
 	delete employeeMap[name];
 
 };

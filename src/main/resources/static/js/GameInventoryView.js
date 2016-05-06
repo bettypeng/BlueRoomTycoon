@@ -4,7 +4,6 @@ var inventoryUpgradeElements = new Array();
 var inventoryEmployee = 0;
 var inventoryUpgrade = 0;
 var inventoryEmployeeList = new Array();
-var inventoryEmployeeListMap = {};
 var inventoryUpgradeList = new Array();
 var sellingPrice;
 
@@ -63,11 +62,13 @@ BlueRoom.Game.prototype.addToEmployeeInventory = function(employee){
 
 BlueRoom.Game.prototype.removeFromEmployeeInventory = function(){
 	this.firedEmployeeBackOnMarket(inventoryEmployeeList[inventoryEmployee]);
+	inventoryEmployeeList.splice(inventoryEmployee, 1);
 	if(inventoryEmployeeList.length <1){
 		inventoryEmployeeElements.forEach(function(item){
 			item.destroy();
 		});
-	} else{
+	}
+	else{
 		this.fadeInventoryEmployeeForward();
 	}
 
