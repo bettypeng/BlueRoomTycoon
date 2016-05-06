@@ -1,4 +1,3 @@
-
 function getFinanaces() {
     
 	var postParameters = {}
@@ -46,35 +45,13 @@ function getCustomer(game) {
 } 
 
 //possibly only call this on string of lost customers
-function leaveHandler () {
-    var postParameters = {};
+function leaveHandler (station) {
+    var postParameters = {station: station};
 
     $.post("/leave", postParameters, function(responseJSON) {});
 
 }
-    
-// function getFrontCustomer(station) {
-        
-//     var postParameters = {type: station};
-    
-//     $.post("/line", postParameters, function(responseJSON) {
-    
-//         var responseObject = JSON.parse(responseJSON);
-//         var frontCust = responseObject.customer;
-        
-//         if (frontCust.order.type == "sandwich") {
-            
-//         }
-    
-//         //can get the order from this customer using frontCust.order which we can
-//         //then display on the screen
-            
-//         //call showing of first item on screen
-//         //if station == sandwich: call sanwich view's method for showing
-//         //thing
-//     });
-// }
-    
+
 function buy (station) {
     
 	var postParameters = {name: station};
@@ -90,12 +67,28 @@ function hire(employee) {
     $.post("/newemployee", postParameters, function(responseJSON){});
     
 }
+
+function endDayStats() {
+
+    var postParameters = {}
     
-function endDay() {
+    $.post("/enddaystats", postParameters, function(responseJSON){
+    
+        var responseObject = JSON.parse(responseJSON);
+        var dailyInfo = responseObject.dailyInfo;
+
+        game.createDayEndAlert(dailyInfo);
+    
+        //show these profits on the screen
+    });
+
+}
+    
+function endDayScreen() {
     
     var postParameters = {}
     
-    $.post("/endday", postParameters, function(responseJSON){
+    $.post("/enddayscreen", postParameters, function(responseJSON){
     
         var responseObject = JSON.parse(responseJSON);
         var dailyInfo = responseObject.dailyInfo;
@@ -177,7 +170,15 @@ function updateIntervals() {
     $.post("/interval", function(responseJSON) {
 
         var responseObject = JSON.parse(responseJSON);
-        var customerInterval = responseObject.customerInt;
-        var employeeInts = responseObject.employeeInts;
+        console.log(responseObject.customerInt);
+        CUSTOMERINTERVAL = responseObject.customerInt;
+        // var employeeInts = responseObject.employeeInts;
     });
+}
+
+function saveGame() {
+    var filename = "game1";
+	var postParameters = { file: filename };
+	
+	$.post("/save", postParameters, function(responseJSON) {});
 }

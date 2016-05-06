@@ -472,14 +472,12 @@ BlueRoom.Game.prototype.sandwichUpdate= function () {
     if (sandwichLine.length != 0 && currCustomer == null) {
         currCustomer = sandwichLine[0];
         currCustomerOrder.push('bottom_bun');
-        console.log(currCustomer);
         for (var i=0; i<currCustomer.order.ingreds.length; i++) {
             currCustomerOrder.push(currCustomer.order.ingreds[i].type);
         }
         currCustomerOrder.push('top_bun');
         this.showNeutral();
         speechBubble.visible = true;
-        console.log(currCustomer);
     }
     
     if (currCustomer != null && currOrderElem == null) {

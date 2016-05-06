@@ -26,16 +26,18 @@ import com.google.gson.Gson;
 
 import edu.brown.cs.bse.elements.Bread;
 import edu.brown.cs.bse.elements.Customer;
+import edu.brown.cs.bse.elements.Drink;
 import edu.brown.cs.bse.elements.Employee;
 import edu.brown.cs.bse.elements.FoodItem;
+import edu.brown.cs.bse.elements.Muffin;
 import edu.brown.cs.bse.elements.Sandwich;
 import edu.brown.cs.bse.elements.SandwichIngredient;
 import freemarker.template.Configuration;
 
-
 /**
- * Models the server that allows the user to interact with the gui. Sets up
- * and interacts with what the user inputs using several private classes.
+ * Models the server that allows the user to interact with the gui. Sets up and
+ * interacts with what the user inputs using several private classes.
+ * 
  * @author srw
  *
  */
@@ -44,10 +46,13 @@ public class Server {
   private final static Gson GSON = new Gson();
   private final static int EXCEPTION_NUM = 500;
   private GameManager gameManager;
+
   /**
    * Constructor for Server. Starts the spark server and stores the command
    * processor to be user later.
-   * @param cp Command Processor to user to parse user commands
+   * 
+   * @param cp
+   *          Command Processor to user to parse user commands
    */
   public Server(GameManager gm) {
     gameManager = gm;
@@ -68,20 +73,21 @@ public class Server {
   }
 
   /**
-   * Starts the Spark server which will allow the user to interact
-   * with the gui.
+   * Starts the Spark server which will allow the user to interact with the gui.
    */
   private void runSparkServer() {
     Spark.externalStaticFileLocation("src/main/resources/static");
     Spark.exception(Exception.class, new ExceptionPrinter());
 
     FreeMarkerEngine freeMarker = createEngine();
-    
+
     Spark.setPort(6789);
 
     // Setup Spark Routes
     Spark.get("/blueroom", new FrontHandler(), freeMarker);
-    Spark.post("/purchase", new PurchaseHandler());
+    Spark.post("/sandwich", new SandwichHandler());
+    Spark.post("/coffee", new CoffeeHandler());
+    Spark.post("/bakery", new BakeryHandler());
     Spark.post("/enddaystats", new EndDayStatsHandler());
     Spark.post("/enddayscreen", new EndDayScreenHandler());
     Spark.post("/customer", new CustomerHandler());
@@ -89,13 +95,15 @@ public class Server {
     Spark.post("/employee", new EmployeeHandler());
     Spark.post("/newstation", new NewStationHandler());
     Spark.post("/interval", new IntervalHandler());
+    Spark.post("employeeInterval", new EmployeeIntervalHandler());
     Spark.post("/trash", new TrashHandler());
     Spark.post("/leave", new LeaveHandler());
-    Spark.post("/save",  new SaveHandler());
+    Spark.post("/save", new SaveHandler());
   }
 
   /**
    * Displays the initial gui that the user can interact with.
+   * 
    * @author srw
    *
    */
@@ -103,82 +111,71 @@ public class Server {
 
     @Override
     public ModelAndView handle(Request req, Response res) {
-      
-      Map<String, Object> variables =
-          ImmutableMap.of("title", "Blue Room Tycoon");
+
+      Map<String, Object> variables = ImmutableMap.of("title",
+          "Blue Room Tycoon");
       return new ModelAndView(variables, "index.ftl");
     }
   }
 
   /**
-   * Triggered when a purchase is made in the front end - returns the details
-   * of the purchase through this handler
+   * Triggered when a purchase is made in the front end - returns the details of
+   * the purchase through this handler
+   * 
    * @author srw
    *
    */
-  private class PurchaseHandler implements Route {
+  private class SandwichHandler implements Route {
     @Override
     public Object handle(final Request req, final Response res) {
       QueryParamsMap qm = req.queryMap();
       System.out.println("purchasing");
 
       String id = qm.value("id");
-      //System.out.println(id);
 
-      String type = qm.value("type");
       double happiness = Double.parseDouble(qm.value("happiness"));
 
       System.out.println("sandwich made: " + qm.value("ingredients"));
 
-      FoodItem purchase;
-
       List<String> lingredients = GSON.fromJson(qm.value("ingredients"), List.class);
-      
+
       boolean paid = Boolean.parseBoolean(qm.value("paid"));
 
-      Bread b = null;
-      //recieves what makes up the purchase in the form of a map which maps
-      //each part of the purchase to how far it was from the center (sandwiches)
-      //how far from well cooked it is (bakery good)
+      // how far from well cooked it is (bakery good)
       Map<String, Double> ingMap = GSON.fromJson(qm.value("map"), Map.class);
 
-      //handling if the type is sandwich
-      if (type.equals("sandwich")) {
-        List<SandwichIngredient> sWichIng = new ArrayList<>();
-        Map<SandwichIngredient, Double> sWichMap = new HashMap<>();
+      List<SandwichIngredient> sWichIng = new ArrayList<>();
+      Map<SandwichIngredient, Double> sWichMap = new HashMap<>();
 
-        for (Entry<String, Double> e: ingMap.entrySet()) {
-          int index = Integer.parseInt(e.getKey());
-          Double val = e.getValue();
-          if (lingredients.get(index).equals("top_bun") || lingredients.get(index).equals("bottom_bun")) {
-            continue;
-          }
-          SandwichIngredient ing = new SandwichIngredient(lingredients.get(index));
-          sWichMap.put(ing, val);
+      for (Entry<String, Double> e : ingMap.entrySet()) {
+        int index = Integer.parseInt(e.getKey());
+        Double val = e.getValue();
+        if (lingredients.get(index).equals("top_bun")
+            || lingredients.get(index).equals("bottom_bun")) {
+          continue;
         }
-        for (String s : lingredients) {
-          if (s.equals("top_bun") || s.equals("bottom_bun")) {
-            continue;
-          }
-          sWichIng.add(new SandwichIngredient(s));
-        }
-        String bread = qm.value("bread");
-
-        b = new Bread(bread);
-        //get the bread out of this and do something with it
-        purchase = new Sandwich(sWichIng, sWichMap, b);
-        System.out.println("parsed purchase: " + purchase);
-
-      } else {
-        purchase = null;
-        System.out.println("Not a sandwich - no other foods implemented yet");
+        SandwichIngredient ing = new SandwichIngredient(
+            lingredients.get(index));
+        sWichMap.put(ing, val);
       }
+      for (String s : lingredients) {
+        if (s.equals("top_bun") || s.equals("bottom_bun")) {
+          continue;
+        }
+        sWichIng.add(new SandwichIngredient(s));
+      }
+      String bread = qm.value("bread");
+
+      Bread b = new Bread(bread);
+      // get the bread out of this and do something with it
+      Sandwich purchase = new Sandwich(sWichIng, sWichMap, b);
+      System.out.println("parsed purchase: " + purchase);
 
       Customer customer = gameManager.getCustomer(id);
       System.out.println("ordered: " + customer.getOrder());
 
       customer.setHappiness(happiness);
-      //System.out.println(customer.getHappiness());
+      // System.out.println(customer.getHappiness());
       double moneyMade;
       if (paid) {
         moneyMade = gameManager.purchase(purchase, customer);
@@ -194,9 +191,86 @@ public class Server {
     }
   }
 
+  private class CoffeeHandler implements Route {
+
+    @Override
+    public Object handle(Request req, Response res) {
+      QueryParamsMap qm = req.queryMap();
+      
+      // parse customer
+      String custID = qm.value("id");
+      Customer customer = gameManager.getCustomer(custID);
+      double happiness = Double.parseDouble(qm.value("happiness"));
+      customer.setHappiness(happiness);
+      
+      // parse drink
+      String type = qm.value("type");
+      boolean iced = Boolean.parseBoolean(qm.value("iced"));
+      String size = qm.value("size");
+      String flavor = qm.value("flavor");
+      List<String> flavorList = new ArrayList<>();
+      
+      if (!flavor.equals("none")) {
+        flavorList.add(flavor);
+      }
+      
+      Drink purchase = new Drink(type, size, flavorList, iced);
+      
+      boolean paid = Boolean.parseBoolean(qm.value("paid"));
+      
+      // make purchase
+      double moneyMade;
+      if (paid) {
+        moneyMade = gameManager.purchase(purchase, customer);
+      } else {
+        moneyMade = gameManager.steal(purchase, customer);
+      }
+      
+      // return $$
+      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+          .put("moneyMade", moneyMade).build();
+
+      return GSON.toJson(variables);
+    }
+  }
+
+  private class BakeryHandler implements Route {
+
+    @Override
+    public Object handle(Request req, Response res) {
+      
+      QueryParamsMap qm = req.queryMap();
+      
+      String custID = qm.value("id");
+      Customer customer = gameManager.getCustomer(custID);
+      double happiness = Double.parseDouble(qm.value("happiness"));
+      customer.setHappiness(happiness);
+      
+      String muffinType = qm.value("type");
+      Muffin purchase = new Muffin(muffinType);
+      
+      boolean paid = Boolean.parseBoolean(qm.value("paid"));
+      
+      // make purchase
+      double moneyMade;
+      if (paid) {
+        moneyMade = gameManager.purchase(purchase, customer);
+      } else {
+        moneyMade = gameManager.steal(purchase, customer);
+      }
+      
+      // return $$
+      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+          .put("moneyMade", moneyMade).build();
+
+      return GSON.toJson(variables);
+    }
+  }
+
   /**
    * Triggered when user requests finance information (clicks on cashier or
    * money count on lower left of screen)
+   * 
    * @author srw
    *
    */
@@ -205,14 +279,12 @@ public class Server {
     public Object handle(final Request req, final Response res) {
 
       DayData dailyInfo = gameManager.endDay();
-      //List<DayData> dataOverTime = gameManager.getTotalStats();
+      // List<DayData> dataOverTime = gameManager.getTotalStats();
       List<DayData> dataOverTime = Collections.emptyList();
       GameData totalInfo = gameManager.getGameData();
 
-
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
-          .put("dailyInfo", dailyInfo)
-          .put("dataOverTime", dataOverTime)
+          .put("dailyInfo", dailyInfo).put("dataOverTime", dataOverTime)
           .put("totalInfo", totalInfo).build();
 
       return GSON.toJson(variables);
@@ -220,8 +292,9 @@ public class Server {
   }
 
   /**
-   * Triggered at the end of the day in the game - returns to the front end
-   * the profits of the day and for the total game-play so far
+   * Triggered at the end of the day in the game - returns to the front end the
+   * profits of the day and for the total game-play so far
+   * 
    * @author srw
    *
    */
@@ -241,6 +314,7 @@ public class Server {
   /**
    * Triggered on interval from front end to generate a customer with a unique
    * order
+   * 
    * @author srw
    *
    */
@@ -262,6 +336,7 @@ public class Server {
   /**
    * Triggered in upgrade screen when user wants to add a new employee, stores
    * knowledge of this employee in backend
+   * 
    * @author srw
    *
    */
@@ -269,23 +344,24 @@ public class Server {
     @Override
     public Object handle(final Request req, final Response res) {
       Map<String, Object> variables = null;
-//      try {
+      // try {
       QueryParamsMap qm = req.queryMap();
 
-      //this can be if we ever want different employees to have different traits
+      // this can be if we ever want different employees to have different
+      // traits
       String employeeName = qm.value("employee");
 
-      //sends the knowledge of the new employee to the game manager
+      // sends the knowledge of the new employee to the game manager
       gameManager.hireEmployee(employeeName);
 
       List<String> results = new ArrayList<>();
 
       variables = new ImmutableMap.Builder<String, Object>()
           .put("results", results).build();
-      
-//      } catch(Exception e) {
-//        e.printStackTrace();
-//      }
+
+      // } catch(Exception e) {
+      // e.printStackTrace();
+      // }
 
       return GSON.toJson(variables);
     }
@@ -293,6 +369,7 @@ public class Server {
 
   /**
    * Triggered when a sandwich is made by just an employee, no user interaction
+   * 
    * @author srw
    *
    */
@@ -300,18 +377,19 @@ public class Server {
     @Override
     public Object handle(final Request req, final Response res) {
       QueryParamsMap qm = req.queryMap();
-      //GSON.fromJson(value, String.class)
+      // GSON.fromJson(value, String.class)
 
       Employee employee = gameManager.getEmployee(qm.value("employee"));
 
       Customer customer = gameManager.getCustomer(qm.value("customer"));
+
       
-      double energy = Double.parseDouble(qm.value("energy"));
+//      double energy = Double.parseDouble(qm.value("energy"));
       double happiness = Double.parseDouble(qm.value("happiness"));
       
-      employee.setEnergy(energy);
+//      employee.setEnergy(energy);
       customer.setHappiness(happiness);
-      
+
       double quality = 0;
 
       if (customer.getStation().equals("sandwich")) {
@@ -331,6 +409,7 @@ public class Server {
 
   /**
    * Triggered when user buys a new station
+   * 
    * @author srw
    *
    */
@@ -358,50 +437,75 @@ public class Server {
     public Object handle(Request req, Response res) {
       gameManager.incrCurrTime();
       double interval = gameManager.calculateCustomerInterval();
-      Map<String, Double> employeeIntMap = gameManager.calculateEmployeeIntervals();
-      Map<String, Object> variables = ImmutableMap.of("customerInt", interval, "employeeInts", employeeIntMap);
+      
+      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+          .put("customerInt", interval).build();
       return GSON.toJson(variables);
     }
   }
   
+  private class EmployeeIntervalHandler implements Route {
+    @Override
+    public Object handle(final Request req, final Response res) {
+      QueryParamsMap qm = req.queryMap();
+      
+      try {
+
+      String empName = qm.value("name");
+      System.out.println(qm.value("energy"));
+      Double energy = Double.parseDouble(qm.value("energy"));
+      
+      Double employeeInt = gameManager.calculateEmployeeInterval(empName, energy);
+      
+      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+          .put("employeeInt", employeeInt).build();
+
+      return GSON.toJson(variables);
+      }catch(Exception e) {
+        e.printStackTrace();
+      }
+      return null;
+    }
+  }
+
   private class TrashHandler implements Route {
-    
+
     @Override
     public Object handle(Request req, Response res) {
       QueryParamsMap qm = req.queryMap();
       int numTrashed = Integer.parseInt(qm.value("numTrashed"));
       double moneyLost = gameManager.trash(numTrashed);
-      
+
       Map<String, Object> variables = ImmutableMap.of("moneyLost", moneyLost);
       return GSON.toJson(variables);
     }
   }
-  
+
   private class LeaveHandler implements Route {
-    
+
     @Override
     public Object handle(Request req, Response res) {
       QueryParamsMap qm = req.queryMap();
-      
+
       String station = qm.value("station");
-      
+
       gameManager.leave(station);
-      
+
       List<String> results = new ArrayList<>();
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("results", results).build();
       return GSON.toJson(variables);
     }
   }
-  
+
   private class SaveHandler implements Route {
-    
+
     @Override
     public Object handle(Request req, Response res) {
       QueryParamsMap qm = req.queryMap();
       String filename = qm.value("file");
       gameManager.saveGame(filename);
-      
+
       List<String> results = new ArrayList<>();
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("results", results).build();
@@ -411,6 +515,7 @@ public class Server {
 
   /**
    * Handle's printing exceptions.
+   * 
    * @author srw
    *
    */

@@ -21,7 +21,7 @@ public class GameManager {
   private static final double INITIAL_MONEY = 1000;
   private static final double TRASH_CONST = 0.3;
   private static final int EMPLOYEE_COST = 100;
-  
+
   private MoneyManager manager;
   private List<Employee> employees;
   private Map<String, Customer> customerMap;
@@ -42,7 +42,7 @@ public class GameManager {
     availableStations.add("sandwich");
     currTime = 0;
     leftToday = 0;
-    baselineInterval = 500;
+    baselineInterval = 5000;
   }
 
   // for when user makes sandwich
@@ -52,7 +52,7 @@ public class GameManager {
     manager.handlePurchase(price, cust.getStation());
     return price;
   }
-  
+
   // for when employee makes sandwich
   public double purchase(double quality, Customer cust) {
     double price = cust.getOrder().getPrice();
@@ -60,7 +60,7 @@ public class GameManager {
     manager.handlePurchase(price, cust.getStation());
     return price;
   }
-  
+
   // THEFT!
   public double steal(FoodItem stolen, Customer cust) {
     double price = stolen.getPrice();
@@ -69,7 +69,7 @@ public class GameManager {
     leftToday++;
     return price;
   }
-  
+
   public double trash(int numIngredients) {
     double loss = numIngredients * TRASH_CONST;
     manager.handleLoss(loss);
@@ -100,7 +100,7 @@ public class GameManager {
     customerMap.put(id, newCustomer);
     return newCustomer;
   }
-  
+
   // this needs to take into account the money spent on employee!!
   public Employee hireEmployee(String name) {
    Employee emp = new Employee(name);
@@ -136,24 +136,25 @@ public class GameManager {
   public Customer getCustomer(String id) {
     return customerMap.get(id);
   }
-  
+
   public Employee getEmployee(String name) {
     return employeeMap.get(name);
   }
-  
+
 //  public List<Employee> getEmployees() {
 //    return ImmutableList.copyOf(employees);
 //  }
 
-  public Map<String, Double> calculateEmployeeIntervals() {
-    Map<String, Double> nameToInterval = new HashMap<>();
-    for (Employee emp : employees) {
-      double interval = emp.calcInterval();
-      nameToInterval.put(emp.getName(), interval);
-    }
-    return nameToInterval;
+  public double calculateEmployeeInterval(String name, double energy) {
+    Employee emp = getEmployee(name);
+    emp.setEnergy(energy);
+    System.out.println(energy);
+    double interval = emp.calcInterval();
+    System.out.println(interval);
+
+    return interval;
   }
-  
+
   public double getCurrentMoney() {
     return manager.getMoney();
   }
@@ -169,7 +170,7 @@ public class GameManager {
     baselineInterval--;
     return today;
   }
-  
+
   public void leave(String station) {
     leftToday++;
     manager.handleAbandon(station);
@@ -187,7 +188,7 @@ public class GameManager {
     // between 150 and 180 seconds is currently "4 pm rush"
     return baselineInterval + (leftToday * 1);
   }
-  
+
   public void saveGame(String filename) {
     try(BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
       for (String station : availableStations) {
@@ -207,17 +208,17 @@ public class GameManager {
       e.printStackTrace();
     }
   }
-  
+
   public void load(String file) {
     try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-      
+
       String line = reader.readLine();
       String[] stationNames = line.split(" ");
       availableStations.clear();
       for (String station : stationNames) {
         addStation(station);
       }
-      
+
       employees.clear();
       employeeMap.clear();
       line = reader.readLine();

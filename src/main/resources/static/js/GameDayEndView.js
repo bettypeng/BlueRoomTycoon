@@ -46,6 +46,7 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 	dayEndButtons.push(hire);
 	dayEndButtons.push(upgrade);
 	dayEndButtons.push(close);
+	dayEndButtons.push(save);
 
 
 	dayEndViewElements.push(title);
@@ -63,6 +64,7 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 	dayEndViewElements.push(upgrade);
 	dayEndViewElements.push(hire);
 	dayEndViewElements.push(close);
+	dayEndViewElements.push(save);
 
 	game.loseMoney(500, 530, "- $"+(dailyInfo.expenses).toFixed(2), dailyInfo.expenses);
 };

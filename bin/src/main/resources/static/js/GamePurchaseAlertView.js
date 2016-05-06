@@ -19,12 +19,15 @@ BlueRoom.Game.prototype.createPurchaseAlert= function (type, purchase, cost) {
 	var close = this.add.button(690, 300, 'exitViewSmallButton', this.closeFromPurchaseAlert, this);
 	close.anchor.setTo(0.5, 0);
 	purchaseAlertElements.push(close);
+
+	this.disableDayEndButtons();
 }
 
 BlueRoom.Game.prototype.returnFromPurchaseAlert= function(){
 	purchaseAlertElements.forEach(function(item){
 		item.destroy();
 	});
+	this.enableDayEndButtons();
 }
 
 BlueRoom.Game.prototype.closeFromPurchaseAlert= function(){
