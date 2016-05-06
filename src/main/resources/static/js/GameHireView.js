@@ -81,7 +81,7 @@ BlueRoom.Game.prototype.createHireView= function () {
 BlueRoom.Game.prototype.checkHireButton = function(currButton){
 	console.log("checking button");
 
-	if(Number(statusBar.money) <= Number(EMPLOYEEWAGE) || NUMBEROFSTATIONS<=NUMBEROFEMPLOYEES){
+	if(Number(statusBar.money) <= Number(EMPLOYEEWAGE) || NUMBEROFSTATIONS<=NUMBEROFEMPLOYEES || hireList.length <= 0){
 		this.disableButton(currButton);
 	}
 	else{
@@ -108,6 +108,7 @@ BlueRoom.Game.prototype.hireNewEmployee = function(){
 	this.addToEmployeeInventory(hireList[currentlyDisplayedHire]);
 	hireList.splice(currentlyDisplayedHire, 1);
 	this.fadeHireForward();
+	this.checkHireButton(hireMeButton);
 	console.log(hireList);
 	function capitalizeFirstLetter(string) {
 	    return string.charAt(0).toUpperCase() + string.slice(1);

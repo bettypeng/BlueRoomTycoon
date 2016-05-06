@@ -10,8 +10,10 @@ var ovenClosed;
 var openOven;
 var timerBg;
 var bakeTimer;
+var ovenCounter = 0;
 var ovenTimerSprite;
 var movableMuffinMap = {};
+var bakingMode;
 
 var pistText;
 var dchocText;
@@ -96,6 +98,7 @@ BlueRoom.Game.prototype.createBakeryView= function () {
     this.setUpMuffin(885, 140, 'bran');
 
     this.muffinUpdate();
+    bakingMode = false;
 
 };
 
@@ -152,20 +155,25 @@ BlueRoom.Game.prototype.onMuffinBatterDragStop= function(sprite, pointer) {
     var batterX = null;
     var batterY = null;
     var itemToDelete = null;
+    if(bakingMode){
+        currThis.add.tween(sprite).to( { x: dragPosition.x, y: dragPosition.y }, 200, Phaser.Easing.Exponential.In, true);
 
-    muffinTinGroup.children.forEach(function(item){
-        if (!sprite.overlap(item))
-        {
-            currThis.add.tween(sprite).to( { x: dragPosition.x, y: dragPosition.y }, 200, Phaser.Easing.Exponential.In, true);
-            matched = true;
-        }
-        else{
-            batterX = item.x;
-            batterY = item.y;
-            itemToDelete = item;
-            return;
-        }
-    });      
+    }
+    else{
+        muffinTinGroup.children.forEach(function(item){
+            if (!sprite.overlap(item))
+            {
+                currThis.add.tween(sprite).to( { x: dragPosition.x, y: dragPosition.y }, 200, Phaser.Easing.Exponential.In, true);
+                matched = true;
+            }
+            else{
+                batterX = item.x;
+                batterY = item.y;
+                itemToDelete = item;
+                return;
+            }
+        });    
+    }  
 
     muffinTinGroup.remove(itemToDelete);
     if(batterX !== null && batterY!==null){
@@ -215,24 +223,52 @@ BlueRoom.Game.prototype.createOvenTimer = function(){
 BlueRoom.Game.prototype.ovenTimerUpdate= function() {
     // ensure you clear the context each time you update it or the bar will draw on top of itself
     this.ovenTimer.context.clearRect(0, 0, this.ovenTimer.width, this.ovenTimer.height);
-
+    ovenCounter++;
     if (this.ovenTimerTime < 15) {
-       this.ovenTimer.context.fillStyle = '#f00';   
+       if(ovenCounter%2==0){
+            openOven.tint = 0xff0000; 
+            this.ovenTimer.context.fillStyle = '#f00';  
+       } else{
+            openOven.tint = 0xff9999;
+            this.ovenTimer.context.fillStyle = '#800';  
+       }
     }
     else if (this.ovenTimerTime < 30) {
-        this.ovenTimer.context.fillStyle = '#ff0';
+        this.ovenTimer.context.fillStyle = '#ff0';  
+        if(ovenCounter%2==0){
+            openOven.tint = 0xff0000; 
+       } else{
+            openOven.tint = 0xff9999;
+       }
     }
     else if(this.ovenTimerTime < 50){
         this.ovenTimer.context.fillStyle = '#00cc00'
+        if(ovenCounter%2==0){
+            openOven.tint = 0xffffff; 
+       } else{
+            openOven.tint = 0x00cc00;
+       }
     }
     else {
         this.ovenTimer.context.fillStyle = '#ff9900';
+        openOven.tint = 0xcccccc;
     }
 
-    if(this.ovenTimerTime < 0){
-        // this.leaveBlueRoom();
-        // clearInterval(this.barTimer);
-        // clearInterval(this.myTimer);
+    if(this.ovenTimerTime < 5){
+        var scoreFont = "80px Roboto";
+        var textAnimation = this.game.add.text(this.game.width/2, 300, "THE MUFFINS ARE BURNT!", {font: scoreFont, fill: "#f00", stroke: "#ffffff", strokeThickness: 15}); 
+        textAnimation.anchor.setTo(0.5, 0);
+        textAnimation.align = 'center';
+        clearInterval(bakeTimer);
+     
+        //Tween this score label to the total score label
+        var textTween = this.game.add.tween(textAnimation).to({x:this.game.world.centerX, y: 50}, 1500, Phaser.Easing.Exponential.In, true);
+
+        textTween.onComplete.add(function(){
+            textAnimation.destroy();
+            this.getMuffinsOut(true);
+            this.loseMoney(this.game.width/2, 500, "- $6.00", 6.00);
+        }, this);
     }
     
     this.ovenTimer.context.fillRect(0, 0, 20, this.ovenTimerTime);
@@ -240,10 +276,12 @@ BlueRoom.Game.prototype.ovenTimerUpdate= function() {
 };
 
 BlueRoom.Game.prototype.bakeMuffins = function(){
+    bakingMode = true;
     var t = currThis.add.tween(muffinTin).to( { x: muffinTin.x, y: muffinTin.y-140 }, 1000, Phaser.Easing.Exponential.In, true);
 
     muffinTinGroup.children.forEach(function(item){
-        currThis.add.tween(item).to( { x: item.x, y: item.y-140 }, 1000, Phaser.Easing.Exponential.In, true);
+        //currThis.add.tween(item).to( { x: item.x, y: item.y-140 }, 1000, Phaser.Easing.Exponential.In, true);
+        item.destroy();
     });
     bakedBatter.forEach(function(item){
         currThis.add.tween(item).to( { x: item.x, y: item.y-140 }, 1000, Phaser.Easing.Exponential.In, true);
@@ -263,13 +301,40 @@ BlueRoom.Game.prototype.endBakeMuffins = function(){
     if(currThis.ovenTimerTime > 50){
         console.log("Not yet!");
     }
-    else if(currThis.ovenTimerTime <5){
-        console.log("BURNT");
-    }
+    // else if(currThis.ovenTimerTime <5){
+    //     console.log("BURNT");
+    // }
     else if(currThis.ovenTimerTime<50 && currThis.ovenTimerTime >5){
         console.log("muffins baked!");
-        ovenClosed.destroy();
+        currThis.getMuffinsOut(false);
+        
+    }
+        
+    //     var t = currThis.add.tween(muffinTin).to( { x: muffinTin.x, y: muffinTin.y+140 }, 1000, Phaser.Easing.Exponential.In, true);
+    //     t.onComplete.add(function(){
+    //         currThis.addBatterToMuffinTin();
+    //         batterCount = 0;
+    //     });
+    //     clearInterval(bakeTimer);
+    //     ovenClosed.destroy();
+    //     openOven.destroy();
+    //     timerBg.destroy();
+    //     ovenTimerSprite.destroy();
+    // }
+};
 
+BlueRoom.Game.prototype.getMuffinsOut= function(burnt){
+    if(burnt){
+        bakedBatter.forEach(function(item){
+            item.tint = 0x000000;
+            currThis.add.tween(item).to( { x: item.x, y: item.y+300 }, 1000, Phaser.Easing.Exponential.In, true);
+            var t = currThis.add.tween(item).to( { alpha: 0 }, 1000, Phaser.Easing.Exponential.In, true);
+            t.onComplete.add(function(){
+                item.destroy();
+            });
+        });
+    }
+    else{
         bakedBatter.forEach(function(item){
             currThis.add.tween(item).to( { x: item.x, y: item.y-300 }, 1000, Phaser.Easing.Exponential.In, true);
             var t = currThis.add.tween(item).to( { alpha: 0 }, 1000, Phaser.Easing.Exponential.In, true);
@@ -282,19 +347,19 @@ BlueRoom.Game.prototype.endBakeMuffins = function(){
                 item.destroy();
             });
         });
-      
-        
-        var t = currThis.add.tween(muffinTin).to( { x: muffinTin.x, y: muffinTin.y+140 }, 1000, Phaser.Easing.Exponential.In, true);
-        t.onComplete.add(function(){
-            currThis.addBatterToMuffinTin();
-            batterCount = 0;
-        });
-        clearInterval(bakeTimer);
-        openOven.destroy();
-        timerBg.destroy();
-        ovenTimerSprite.destroy();
     }
-};
+    bakingMode = false;
+    var t = currThis.add.tween(muffinTin).to( { x: muffinTin.x, y: muffinTin.y+140 }, 1000, Phaser.Easing.Exponential.In, true);
+    t.onComplete.add(function(){
+        currThis.addBatterToMuffinTin();
+        batterCount = 0;
+    });
+    clearInterval(bakeTimer);
+    ovenClosed.destroy();
+    openOven.destroy();
+    timerBg.destroy();
+    ovenTimerSprite.destroy();
+}
 
 BlueRoom.Game.prototype.setUpMuffin = function(x, y, img){
     var staticMuffin = this.add.sprite(x, y, img);
@@ -381,7 +446,7 @@ BlueRoom.Game.prototype.checkMuffinNumber = function(name){
         movableMuffinMap[name].inputEnabled = false;
         movableMuffinMap[name].alpha = 0.3;
     }
-}
+};
 
 BlueRoom.Game.prototype.muffinUpdate = function(){
     this.checkMuffinNumber("pistachio");
@@ -390,7 +455,7 @@ BlueRoom.Game.prototype.muffinUpdate = function(){
     this.checkMuffinNumber("bananaNut");
     this.checkMuffinNumber("tripleBerry");
     this.checkMuffinNumber("bran");
-}
+};
 
 BlueRoom.Game.prototype.bakeryUpdate= function () {
     // 

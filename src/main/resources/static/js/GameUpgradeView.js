@@ -29,8 +29,13 @@ BlueRoom.Game.prototype.createUpgradeView= function () {
 	var currbalance = this.game.add.text(this.game.width/2, 140, 'Current Balance: $' + statusBar.money.toFixed(2), labelStyle);
 	currbalance.anchor.setTo(0.5, 0,5);
 
+
 	costtext = this.game.add.text(this.game.width/2, 480, 'Cost: $' + upgradeCostList[upgradeList[0]], labelStyle);
 	costtext.anchor.setTo(0.5, 0,5);
+	if(NUMBEROFUPGRADES<=0){
+		costtext.setText('');
+	}
+
 
 	buyUpgradeButton = this.add.button(this.game.width/2, 510, 'buyButton', this.buyUpgrade, this);
 	buyUpgradeButton.anchor.setTo(0.5, 0,5);
@@ -72,7 +77,7 @@ BlueRoom.Game.prototype.createUpgradeView= function () {
 BlueRoom.Game.prototype.checkBuyUpgradeButton = function(currButton){
 	console.log("checking button");
 
-	if(Number(statusBar.money) <= Number(upgradeCostList[upgradeList[currentlyDisplayedUpgrade]])){
+	if(Number(statusBar.money) <= Number(upgradeCostList[upgradeList[currentlyDisplayedUpgrade]]) || NUMBEROFUPGRADES <= 0){
 		this.disableButton(currButton);
 	}
 	else{
@@ -93,7 +98,11 @@ BlueRoom.Game.prototype.enableButton = function(currButton) {
 BlueRoom.Game.prototype.updateCurrUpgrade = function(){
 	console.log("upgrade");
 	this.checkBuyUpgradeButton(buyUpgradeButton);
-	costtext.setText('Cost: $' + upgradeCostList[upgradeList[currentlyDisplayedUpgrade]]);
+	if(NUMBEROFUPGRADES>0){
+		costtext.setText('Cost: $' + upgradeCostList[upgradeList[currentlyDisplayedUpgrade]]);
+	} else{
+		costtext.setText('');
+	}
 
 };
 
@@ -136,6 +145,7 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
 	upgradeList.splice(currentlyDisplayedUpgrade, 1);
 	NUMBEROFUPGRADES--;
 	this.fadeUpgradeForward();
+	this.updateCurrUpgrade();
 	console.log(upgradeList);
  };
 

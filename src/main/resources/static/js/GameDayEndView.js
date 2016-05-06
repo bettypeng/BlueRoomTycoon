@@ -92,8 +92,25 @@ BlueRoom.Game.prototype.destroyDayEndView= function(){
 		item.destroy();
 	});
 	dayEndViewElements = new Array();
-	managerView = true;
-	sandwichView = false;
-	dayEndView = false;
+
+		    managerView = true;
+		    sandwichView = false;
+            coffeeView = false;
+            bakeryView = false;
+            dayEndView = false;
+    		this.hideSandwichView();
+            this.hideCoffeeView();
+            this.hideBakeryView();
+            this.disableButton(this.managerButton);
+            if (!sandwichStationFilled ) {
+                this.enableButton(this.sandwichButton);
+            }
+            if (!coffeeStationFilled) {
+                this.enableButton(this.coffeeButton);
+            }
+            if (!bakeryStationFilled) {
+                this.enableButton(this.bakeryButton);
+            }
+
 	this.resetGameDay();
 };

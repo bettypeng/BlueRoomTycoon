@@ -148,7 +148,7 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('muffinTin', 'images/bakery/baking_tin.png');
 		this.load.image('oven', 'images/bakery/baked_oven.png');
 		this.load.image('ovenClosed', 'images/bakery/closed_oven.png');
-		this.load.image('openOven', 'images/bakery/open_oven_button.png');
+		this.load.image('openOven', 'images/bakery/white_open_oven_button.png');
 
 
 
