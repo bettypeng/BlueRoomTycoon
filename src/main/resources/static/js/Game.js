@@ -44,7 +44,7 @@ var dayCounter = 4;
 var twelveCounter = 0;
 
 var MANAGERTIMEINTERVAL = 1; //250 standard
-var STATIONTIMEINTERVAL = 500;
+var STATIONTIMEINTERVAL = 1;
 
 var game;
 
@@ -84,13 +84,14 @@ BlueRoom.Game.prototype = {
 
         
         var status = statusBar;
-        var style = { font: "32px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "left", boundsAlignH: "left", backgroundColor: "#ffffff" };
+        var style = { font: "32px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left", backgroundColor: "#ffffff" };
 
         moneytext = this.game.add.text(100, 650, '$' + (status.money.toFixed(2)), style);
         daytext = this.game.add.text(500, 650,  status.day[dayCounter%7], style);
-        timetext = this.game.add.text(800, 650,  status.hour + ':' + status.minute, style);
-        ampmtext = this.game.add.text(870, 650,  status.ampm[twelveCounter%2], style);
-        closedtext = this.game.add.text(800, 650,  "CLOSED!", style);
+        //timetext = this.game.add.text(800, 650,  status.hour + ':' + status.minute, style);
+        timetext = this.game.add.text(800, 650,  status.hour, style);
+        ampmtext = this.game.add.text(840, 650,  status.ampm[twelveCounter%2], style);
+        closedtext = this.game.add.text(800, 650,  "CLOSING TIME!", style);
         this.closedSign(false);
 
 
@@ -240,7 +241,7 @@ BlueRoom.Game.prototype = {
         scoreAnimation.align = 'center';
      
         //Tween this score label to the total score label
-        var scoreTween = this.game.add.tween(scoreAnimation).to({x:this.game.world.centerX, y: 50}, 800, Phaser.Easing.Exponential.In, true);
+        var scoreTween = this.game.add.tween(scoreAnimation).to({x:this.game.world.centerX, y: 50}, 1500, Phaser.Easing.Exponential.In, true);
      
         //When the animation finishes, destroy this score label, trigger the total score labels animation and add the score
         scoreTween.onComplete.add(function(){
@@ -258,7 +259,7 @@ BlueRoom.Game.prototype = {
         scoreAnimation.align = 'center';
      
         //Tween this score label to the total score label
-        var scoreTween = this.game.add.tween(scoreAnimation).to({x:this.game.world.centerX, y: 50}, 1000, Phaser.Easing.Exponential.In, true);
+        var scoreTween = this.game.add.tween(scoreAnimation).to({x:this.game.world.centerX, y: 50}, 1500, Phaser.Easing.Exponential.In, true);
      
         //When the animation finishes, destroy this score label, trigger the total score labels animation and add the score
         scoreTween.onComplete.add(function(){
@@ -290,7 +291,7 @@ BlueRoom.Game.prototype = {
             minute = statusBar.minute;
         }
         moneytext.setText('$' + statusBar.money.toFixed(2));
-        timetext.setText(statusBar.hour + ':' + minute);
+        timetext.setText(statusBar.hour);
         ampmtext.setText(statusBar.ampm[twelveCounter%2]);
         daytext.setText(statusBar.day[dayCounter%7]);
 
