@@ -1,10 +1,10 @@
 var upgradeViewElements = new Array();
 var currentlyDisplayedUpgrade = 0;
 var NUMBEROFUPGRADES = 3;
-var upgradeList = ["coffee station", "bakery station", "magazine rack"];
+var upgradeList = ["coffee", "bakery", "magazine rack"];
 var upgradeCostList = [];
-upgradeCostList["coffee station"] = 500;
-upgradeCostList["bakery station"] = 1000;
+upgradeCostList["coffee"] = 500;
+upgradeCostList["bakery"] = 1000;
 upgradeCostList["magazine rack"] = 50;
 var costtext;
 var buyUpgradeButton;
@@ -129,13 +129,13 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
  };
 
  BlueRoom.Game.prototype.buyUpgrade = function() {
- 	if(upgradeList[currentlyDisplayedUpgrade] == "coffee station"){
+ 	if(upgradeList[currentlyDisplayedUpgrade] == "coffee"){
  		NUMBEROFSTATIONS++;
  		this.coffeeStation.visible = true;
 		activeButtons.push(this.coffeeButton);
 		buy(upgradeList[currentlyDisplayedUpgrade]);
  	}
- 	else if(upgradeList[currentlyDisplayedUpgrade] =="bakery station"){
+ 	else if(upgradeList[currentlyDisplayedUpgrade] =="bakery"){
  		NUMBEROFSTATIONS++;
  		this.bakeryStation.visible = true;
  		activeButtons.push(this.bakeryButton);
@@ -143,7 +143,7 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
  	}
  	console.log("BUYING: " + upgradeList[currentlyDisplayedUpgrade]);
  	this.addToUpgradeInventory(upgradeList[currentlyDisplayedUpgrade]);
- 	this.createPurchaseAlert("bought a new", upgradeList[currentlyDisplayedUpgrade], upgradeCostList[upgradeList[currentlyDisplayedUpgrade]]);
+ 	this.createPurchaseAlert("bought a new", upgradeList[currentlyDisplayedUpgrade]+" station", upgradeCostList[upgradeList[currentlyDisplayedUpgrade]]);
 	upgradeList.splice(currentlyDisplayedUpgrade, 1);
 	NUMBEROFUPGRADES--;
 	this.fadeUpgradeForward();

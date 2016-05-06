@@ -92,6 +92,7 @@ public class GameManager {
       break;
     case "coffee":
       order = OrderFactory.getDrinkOrder();
+      break;
     default:
       order = OrderFactory.getSandwichOrder();
       break;

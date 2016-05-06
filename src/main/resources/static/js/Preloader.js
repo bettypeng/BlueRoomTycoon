@@ -183,8 +183,8 @@ BlueRoom.Preloader.prototype = {
 
 		//UPGRADE PAGE
 		this.load.image('buyButton', 'images/upgrades/buy_button.png');
-		this.load.image('coffee station', 'images/upgrades/coffee_bar.png');
-		this.load.image('bakery station', 'images/upgrades/bakery.png');
+		this.load.image('coffee', 'images/upgrades/coffee_bar.png');
+		this.load.image('bakery', 'images/upgrades/bakery.png');
 		this.load.image('magazine rack', 'images/upgrades/magazine_rack.png');
 
 		//INVENTORY

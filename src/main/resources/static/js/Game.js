@@ -315,6 +315,10 @@ BlueRoom.Game.prototype = {
             this.sandwichUpdate(); 
         }
 
+        if(coffeeView) {
+            this.coffeeUpdate();
+        }
+
         if(bakeryView){
             this.bakeryUpdate();
         }

@@ -29,6 +29,12 @@ function Customer(id, station, order){
     this.happiness = 1;
     this.ingredients = null;
     this.ingMap = null;
+
+    this.drinkType = null;
+    this.drinkIced = null;
+    this.drinkFlavor = null;
+    this.drinkSize = null;
+
     this.createBar();
 
     this.inLine = true;
