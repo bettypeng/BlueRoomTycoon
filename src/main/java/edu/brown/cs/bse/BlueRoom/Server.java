@@ -28,7 +28,6 @@ import edu.brown.cs.bse.elements.Bread;
 import edu.brown.cs.bse.elements.Customer;
 import edu.brown.cs.bse.elements.Drink;
 import edu.brown.cs.bse.elements.Employee;
-import edu.brown.cs.bse.elements.FoodItem;
 import edu.brown.cs.bse.elements.Muffin;
 import edu.brown.cs.bse.elements.Sandwich;
 import edu.brown.cs.bse.elements.SandwichIngredient;
@@ -37,7 +36,7 @@ import freemarker.template.Configuration;
 /**
  * Models the server that allows the user to interact with the gui. Sets up and
  * interacts with what the user inputs using several private classes.
- * 
+ *
  * @author srw
  *
  */
@@ -50,7 +49,7 @@ public class Server {
   /**
    * Constructor for Server. Starts the spark server and stores the command
    * processor to be user later.
-   * 
+   *
    * @param cp
    *          Command Processor to user to parse user commands
    */
@@ -104,7 +103,7 @@ public class Server {
 
   /**
    * Displays the initial gui that the user can interact with.
-   * 
+   *
    * @author srw
    *
    */
@@ -122,7 +121,7 @@ public class Server {
   /**
    * Triggered when a purchase is made in the front end - returns the details of
    * the purchase through this handler
-   * 
+   *
    * @author srw
    *
    */
@@ -197,28 +196,30 @@ public class Server {
     @Override
     public Object handle(Request req, Response res) {
       QueryParamsMap qm = req.queryMap();
-      
+      try {
+
       // parse customer
       String custID = qm.value("id");
       Customer customer = gameManager.getCustomer(custID);
       double happiness = Double.parseDouble(qm.value("happiness"));
       customer.setHappiness(happiness);
-      
+
       // parse drink
       String type = qm.value("type");
       boolean iced = Boolean.parseBoolean(qm.value("iced"));
       String size = qm.value("size");
       String flavor = qm.value("flavor");
+      System.out.println(flavor);
       List<String> flavorList = new ArrayList<>();
-      
+
       if (!flavor.equals("none")) {
         flavorList.add(flavor);
       }
-      
+
       Drink purchase = new Drink(type, size, flavorList, iced);
-      
+
       boolean paid = Boolean.parseBoolean(qm.value("paid"));
-      
+
       // make purchase
       double moneyMade;
       if (paid) {
@@ -226,32 +227,37 @@ public class Server {
       } else {
         moneyMade = gameManager.steal(purchase, customer);
       }
-      
+
       // return $$
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("moneyMade", moneyMade).build();
 
       return GSON.toJson(variables);
+      }catch(Exception e) {
+        e.printStackTrace();
+      }
+      return null;
     }
+
   }
 
   private class BakeryHandler implements Route {
 
     @Override
     public Object handle(Request req, Response res) {
-      
+
       QueryParamsMap qm = req.queryMap();
-      
+
       String custID = qm.value("id");
       Customer customer = gameManager.getCustomer(custID);
       double happiness = Double.parseDouble(qm.value("happiness"));
       customer.setHappiness(happiness);
-      
+
       String muffinType = qm.value("type");
       Muffin purchase = new Muffin(muffinType);
-      
+
       boolean paid = Boolean.parseBoolean(qm.value("paid"));
-      
+
       // make purchase
       double moneyMade;
       if (paid) {
@@ -259,7 +265,7 @@ public class Server {
       } else {
         moneyMade = gameManager.steal(purchase, customer);
       }
-      
+
       // return $$
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("moneyMade", moneyMade).build();
@@ -271,7 +277,7 @@ public class Server {
   /**
    * Triggered when user requests finance information (clicks on cashier or
    * money count on lower left of screen)
-   * 
+   *
    * @author srw
    *
    */
@@ -295,7 +301,7 @@ public class Server {
   /**
    * Triggered at the end of the day in the game - returns to the front end the
    * profits of the day and for the total game-play so far
-   * 
+   *
    * @author srw
    *
    */
@@ -315,7 +321,7 @@ public class Server {
   /**
    * Triggered on interval from front end to generate a customer with a unique
    * order
-   * 
+   *
    * @author srw
    *
    */
@@ -337,7 +343,7 @@ public class Server {
   /**
    * Triggered in upgrade screen when user wants to add a new employee, stores
    * knowledge of this employee in backend
-   * 
+   *
    * @author srw
    *
    */
@@ -370,7 +376,7 @@ public class Server {
 
   /**
    * Triggered when a sandwich is made by just an employee, no user interaction
-   * 
+   *
    * @author srw
    *
    */
@@ -383,10 +389,10 @@ public class Server {
 
       Customer customer = gameManager.getCustomer(qm.value("customer"));
 
-      
+
 //      double energy = Double.parseDouble(qm.value("energy"));
       double happiness = Double.parseDouble(qm.value("happiness"));
-      
+
 //      employee.setEnergy(energy);
       customer.setHappiness(happiness);
 
@@ -403,7 +409,7 @@ public class Server {
 
   /**
    * Triggered when user buys a new station
-   * 
+   *
    * @author srw
    *
    */
@@ -431,26 +437,26 @@ public class Server {
     public Object handle(Request req, Response res) {
       gameManager.incrCurrTime();
       double interval = gameManager.calculateCustomerInterval();
-      
+
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("customerInt", interval).build();
       return GSON.toJson(variables);
     }
   }
-  
+
   private class EmployeeIntervalHandler implements Route {
     @Override
     public Object handle(final Request req, final Response res) {
       QueryParamsMap qm = req.queryMap();
-      
+
       try {
 
       String empName = qm.value("name");
       System.out.println(qm.value("energy"));
       Double energy = Double.parseDouble(qm.value("energy"));
-      
+
       Double employeeInt = gameManager.calculateEmployeeInterval(empName, energy);
-      
+
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("employeeInt", employeeInt).build();
 
@@ -529,7 +535,7 @@ public class Server {
 
   /**
    * Handle's printing exceptions.
-   * 
+   *
    * @author srw
    *
    */
