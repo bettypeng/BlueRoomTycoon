@@ -46,7 +46,7 @@ BlueRoom.Game.prototype.createHireView= function () {
     this.hireA.anchor.setTo(0.5, 0.5);
     currentlyDisplayedHire = 0;
 
-    this.hireB = game.add.sprite(hireboxX, hireboxY, hireList[1]);
+    this.hireB = game.add.sprite(hireboxX, hireboxY, hireList[0]);
     this.hireB.anchor.setTo(0.5, 0.5);
     this.hireB.alpha = 0;
 
@@ -103,7 +103,8 @@ BlueRoom.Game.prototype.hireNewEmployee = function(){
 	NUMBEROFEMPLOYEES++;
 
 	var emp = new Employee(hireList[currentlyDisplayedHire]);
-	employeeList.push(emp.employeeSprite);
+	employeeGroup.add(emp.employeeSprite);
+	employeeMap[hireList[currentlyDisplayedHire]] = emp;
 	this.createPurchaseAlert("hired", capitalizeFirstLetter(hireList[currentlyDisplayedHire]), EMPLOYEEWAGE);
 	this.addToEmployeeInventory(hireList[currentlyDisplayedHire]);
 	hireList.splice(currentlyDisplayedHire, 1);
@@ -113,6 +114,38 @@ BlueRoom.Game.prototype.hireNewEmployee = function(){
 	function capitalizeFirstLetter(string) {
 	    return string.charAt(0).toUpperCase() + string.slice(1);
 	}
+};
+
+BlueRoom.Game.prototype.firedEmployeeBackOnMarket = function(name){
+	NUMBEROFHIRES++;
+	NUMBEROFEMPLOYEES--;
+
+	console.log(name);
+	console.log(employeeMap[name]);
+	var emp = employeeMap[name];
+	if(emp.station === "sandwich"){
+		sandwichStationFilled = false;
+        atSandwichStation = null;
+        game.enableButton(currThis.sandwichButton);
+	} else if (emp.station === "bakery"){
+		bakeryStationFilled = false;
+        atBakeryStation = null;
+        game.enableButton(currThis.bakeryButton);
+	} else if (emp.station ==="coffee"){
+		coffeeStationFilled = false;
+        atCoffeeStation = null;
+        game.enableButton(currThis.coffeeButton);
+	}
+		employeeGroup.remove(emp.employeeSprite);
+
+		employeeMap[name].discard();
+
+	employeeMap[name].employeeSprite.destroy();
+	employeeMap[name] = null;
+	hireList.push(name);
+	this.checkHireButton(hireMeButton);
+	delete employeeMap[name];
+
 };
 
 BlueRoom.Game.prototype.fadeHireForward = function() {
