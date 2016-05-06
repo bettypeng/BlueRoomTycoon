@@ -124,11 +124,13 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
  		NUMBEROFSTATIONS++;
  		this.coffeeStation.visible = true;
 		activeButtons.push(this.coffeeButton);
+		buy(upgradeList[currentlyDisplayedUpgrade]);
  	}
  	else if(upgradeList[currentlyDisplayedUpgrade] =="bakery station"){
  		NUMBEROFSTATIONS++;
  		this.bakeryStation.visible = true;
  		activeButtons.push(this.bakeryButton);
+ 		buy(upgradeList[currentlyDisplayedUpgrade]);
  	}
  	console.log("BUYING: " + upgradeList[currentlyDisplayedUpgrade]);
  	this.addToUpgradeInventory(upgradeList[currentlyDisplayedUpgrade]);

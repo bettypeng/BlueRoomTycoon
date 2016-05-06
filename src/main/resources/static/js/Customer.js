@@ -18,6 +18,7 @@ function Customer(id, station, order){
     this.barSprite.anchor.setTo(0.5, 0.5);
     this.sprite.add(this.barSprite);
 
+    this.employee = null; //this indicates when an employee has served this customer
 
     this.moving = true;
     this.cashedOut = false;

@@ -97,7 +97,7 @@ BlueRoom.Game.prototype = {
 
         this.moneytextTween = this.add.tween(moneytext.scale).to({ x: 1.5, y: 1.5}, 200, Phaser.Easing.Linear.In).to({ x: 1, y: 1}, 200, Phaser.Easing.Linear.In);
 
-        console.log(status.money);
+        // console.log(status.money);
         
         textgroup.add(moneytext);
         textgroup.add(timetext);
@@ -121,7 +121,7 @@ BlueRoom.Game.prototype = {
         this.hideBakeryView();
 
         window.setInterval(function(){
-            updateIntervals();
+            updateCustomerInterval();
         }, 1000);
 
        

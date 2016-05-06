@@ -102,14 +102,25 @@ function endDayScreen() {
     
 }
     
-function employeePurchase (employee, customer, workHoursProgress, happiness) {
+function employeePurchase (employee, customer, happiness, paid) {
+
+    var payment = JSON.stringify(paid);
+    var happ = JSON.stringify(happiness);
     
-	var postParameters = {employee: employee, customer: customer, energy: workHoursProgress, happiness: happiness};
+	var postParameters = {employee: employee, customer: customer, happiness: happ, paid: payment};
     
     $.post("/employee", postParameters, function(responseJSON){
     
         var responseObject = JSON.parse(responseJSON);
         var moneyMade = responseObject.moneyMade;
+
+        if (paid){
+            //BlueRoom.Game.prototype.addMoney(moneyMade);
+            game.addMoney(500, 530, "+ $"+moneyMade.toFixed(2), moneyMade);
+        }
+        else{
+            game.loseMoney(500, 530, "- $"+moneyMade.toFixed(2), moneyMade);
+        }
     
         //have the money that was made appear on screen and increment lower left money counter
     });
@@ -165,15 +176,38 @@ function purchase (type, ingredients, ingMap, bread, id, happiness, paid) {
 
 // window.setInterval()
 
-function updateIntervals() {
+function updateCustomerInterval() {
     
     $.post("/interval", function(responseJSON) {
 
         var responseObject = JSON.parse(responseJSON);
-        console.log(responseObject.customerInt);
+        // console.log(responseObject.customerInt);
         CUSTOMERINTERVAL = responseObject.customerInt;
         // var employeeInts = responseObject.employeeInts;
     });
+}
+
+function getEmployeeInterval(stationName, atStation, makingProduct, line, employee) {
+    var employeeName = employee.name;
+    var employeeEnergy = employee.workHoursProgress/30;
+
+    // console.log(employeeEnergy);
+
+    var empE = JSON.stringify(employeeEnergy);
+
+    var postParameters = {name: employeeName, energy: empE};
+
+    $.post("/employeeInterval", postParameters, function(responseJSON) {
+
+        var responseObject = JSON.parse(responseJSON);
+
+        var employeeInt = responseObject.employeeInt;
+        console.log("EMPLOYEE INTERVAL: "+employeeInt);
+        
+        BlueRoom.Game.prototype.employeeMakeProduct(stationName, atStation, makingProduct, line, employee, employeeInt);
+    });
+
+
 }
 
 function saveGame() {
@@ -181,4 +215,13 @@ function saveGame() {
 	var postParameters = { file: filename };
 	
 	$.post("/save", postParameters, function(responseJSON) {});
+}
+
+function loadGame(filename) {
+    filename = "game1";
+    var postParameters = { file: filename };
+    
+    $.post("/save", postParameters, function(responseJSON) {
+
+    });
 }
