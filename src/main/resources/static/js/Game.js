@@ -312,6 +312,10 @@ BlueRoom.Game.prototype = {
             this.sandwichUpdate(); 
         }
 
+        if(bakeryView){
+            this.bakeryUpdate();
+        }
+
         if(dayEndView){
             activeButtons.forEach(function(item){
                 item.visible = false;
