@@ -300,7 +300,7 @@ BlueRoom.Game.prototype.steal = function(customer){
         } else if (c.station == "coffee") {
             coffeePurchase(c.drinkType, c.drinkIced, c.drinkSize, c.drinkFlavor, c.id, c.happinessBarProgress/30, false);
         } else {
-            bakeryPurchase(c.type, c.id, c.happinessBarProgress/30, true);
+            bakeryPurchase(c.type, c.id, c.happinessBarProgress/30, false);
         } 
     }
     leaving = true;

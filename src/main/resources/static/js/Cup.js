@@ -99,20 +99,25 @@ Cup.prototype = {
         } else if (sprite.overlap(syrupDispenser)){
         	this.cupDropZone(syrupX);
         } else if(sprite.overlap(drinkDropZone)){
-        	var thisCup = this;
-        	this.group.children.forEach(function(cup){
-			    cup.anchor.setTo(0.5,1);
-			});      
-        	this.group.x = endX;
-        	this.group.y = lineY;
-        	currThis.enableCups();
-        	var t = currThis.add.tween(this.group).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
-        	t.onComplete.add(function () {
-        		thisCup.group.destroy();
-        		currThis.enableCups();
-        		currCup= null;
-        	});
-            currThis.giveCoffeeToCustomer();
+            console.log(currCoffeeCustomer);
+            if (currCoffeeCustomer == null) {
+                currThis.game.add.tween(this.group).to( { x: dragPosition.x, y: dragPosition.y}, 500, "Back.easeOut", true);
+            } else {
+            	var thisCup = this;
+            	this.group.children.forEach(function(cup){
+    			    cup.anchor.setTo(0.5,1);
+    			});      
+            	this.group.x = endX;
+            	this.group.y = lineY;
+            	currThis.enableCups();
+            	var t = currThis.add.tween(this.group).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
+            	t.onComplete.add(function () {
+            		thisCup.group.destroy();
+            		currThis.enableCups();
+            		currCup= null;
+            	});
+                currThis.giveCoffeeToCustomer();
+            }   
         }else {
         	currThis.game.add.tween(this.group).to( { x: dragPosition.x, y: dragPosition.y}, 500, "Back.easeOut", true);
         }
