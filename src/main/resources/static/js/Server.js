@@ -233,7 +233,6 @@ function updateCustomerInterval() {
     $.post("/interval", function(responseJSON) {
 
         var responseObject = JSON.parse(responseJSON);
-        // console.log(responseObject.customerInt);
         CUSTOMERINTERVAL = responseObject.customerInt;
         // var employeeInts = responseObject.employeeInts;
     });
