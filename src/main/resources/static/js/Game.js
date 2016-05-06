@@ -302,11 +302,11 @@ BlueRoom.Game.prototype = {
         if(managerView){
             this.managerUpdate();
             this.hideSandwichView();
-            employeeList.forEach(function(item){
+            employeeGroup.children.forEach(function(item){
                 item.visible = true;
             });
         } else{
-              employeeList.forEach(function(item){
+              employeeGroup.children.forEach(function(item){
                 item.visible = false;
             });
         }

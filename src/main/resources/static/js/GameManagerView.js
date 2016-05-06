@@ -12,7 +12,8 @@ var managerCounter = 0;
 var NUMBEROFSTATIONS = 1;
 var NUMBEROFEMPLOYEES = 0;
 var CUSTOMERINTERVAL = 500; //500 standard
-var employeeList = new Array();
+var employeeGroup;
+var employeeMap = {};
 var isBlueRoomOpen = true;
 
 var empMakingSandwich = false;
@@ -52,6 +53,7 @@ BlueRoom.Game.prototype.createManager = function () {
     numCustomer= 0;
     leaving = false;
     customerGroup = this.add.group();
+    employeeGroup = this.add.group();
 
     for(var i = 0; i < 16; i++){
         var curve = this.game.rnd.integerInRange(8, 12);
