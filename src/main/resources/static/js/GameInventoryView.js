@@ -61,7 +61,8 @@ BlueRoom.Game.prototype.addToEmployeeInventory = function(employee){
 };
 
 BlueRoom.Game.prototype.removeFromEmployeeInventory = function(){
-	this.firedEmployeeBackOnMarket(inventoryEmployeeList[inventoryEmployee]);
+	var name = inventoryEmployeeList[inventoryEmployee];
+	this.firedEmployeeBackOnMarket(name);
 	inventoryEmployeeList.splice(inventoryEmployee, 1);
 	if(inventoryEmployeeList.length <1){
 		inventoryEmployeeElements.forEach(function(item){
@@ -71,6 +72,8 @@ BlueRoom.Game.prototype.removeFromEmployeeInventory = function(){
 	else{
 		this.fadeInventoryEmployeeForward();
 	}
+
+	this.createFireAlert(name);
 
 };
 
