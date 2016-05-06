@@ -155,7 +155,7 @@ function purchase (type, ingredients, ingMap, bread, id, happiness, paid) {
     var payment = JSON.stringify(paid);
 	var postParameters = {type: type, ingredients: ing, map: iMap, id: id, bread: bread, happiness: happ, paid: payment};
     
-    $.post("/purchase", postParameters, function(responseJSON){
+    $.post("/sandwich", postParameters, function(responseJSON){
     
         var responseObject = JSON.parse(responseJSON);
         var moneyMade = responseObject.moneyMade;
