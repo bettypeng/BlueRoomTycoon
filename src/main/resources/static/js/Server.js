@@ -160,7 +160,6 @@ function purchase (type, ingredients, ingMap, bread, id, happiness, paid) {
         var responseObject = JSON.parse(responseJSON);
         var moneyMade = responseObject.moneyMade;
 
-        console.log(moneyMade);
         if (paid){
             //BlueRoom.Game.prototype.addMoney(moneyMade);
             game.addMoney(500, 530, "+ $"+moneyMade.toFixed(2), moneyMade);

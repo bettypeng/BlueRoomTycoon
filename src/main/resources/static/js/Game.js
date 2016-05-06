@@ -43,7 +43,7 @@ var activeButtons = new Array();
 var dayCounter = 4;
 var twelveCounter = 0;
 
-var MANAGERTIMEINTERVAL = 1; //250 standard
+var MANAGERTIMEINTERVAL = 50; //250 standard
 var STATIONTIMEINTERVAL = 500;
 
 var game;
@@ -97,7 +97,6 @@ BlueRoom.Game.prototype = {
 
         this.moneytextTween = this.add.tween(moneytext.scale).to({ x: 1.5, y: 1.5}, 200, Phaser.Easing.Linear.In).to({ x: 1, y: 1}, 200, Phaser.Easing.Linear.In);
 
-        // console.log(status.money);
         
         textgroup.add(moneytext);
         textgroup.add(timetext);
@@ -121,7 +120,9 @@ BlueRoom.Game.prototype = {
         this.hideBakeryView();
 
         window.setInterval(function(){
-            updateCustomerInterval();
+            if (isBlueRoomOpen) {
+                updateCustomerInterval();
+            }
         }, 1000);
 
        
