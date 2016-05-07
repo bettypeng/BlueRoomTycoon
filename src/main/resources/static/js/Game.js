@@ -44,9 +44,7 @@ var closedtext;
 var customerAlert;
 var leavingAlert;
 var stealingAlert;
-var customerAlertText;
-var leavingAlertText;
-var stealingAlertText;
+var checkoutAlert;
 
 
 var dayCounter = 4;
@@ -78,9 +76,11 @@ BlueRoom.Game.prototype = {
         this.status_bar = this.add.sprite(0, 600, 'status_bar');
         this.pauseButton = this.add.button(1000, 630, 'pauseButton', this.showPauseScreen, this);
 
-        customerAlert = this.add.sprite(20, 630, 'radiobutton');
-        leavingAlert = this.add.sprite(20, 655, 'radiobutton');
-        stealingAlert = this.add.sprite(20, 680, 'radiobutton');
+        customerAlert = this.add.sprite(20, 625, 'radiobutton');
+        leavingAlert = this.add.sprite(20, 645, 'radiobutton');
+        stealingAlert = this.add.sprite(20, 665, 'radiobutton');
+        checkoutAlert = this.add.sprite(20, 685, 'radiobutton');
+
 
         coffeeButtonOn = false;
         this.coffeeButton.visible = false;
@@ -106,11 +106,12 @@ BlueRoom.Game.prototype = {
         closedtext = this.game.add.text(820, 650,  "CLOSING TIME!", style);
         this.closedSign(false);
 
-        var newstyle = { font: "16px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left", backgroundColor: "#ffffff" };
+        var newstyle = { font: "12px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left", backgroundColor: "#ffffff" };
 
-        customerAlertText = this.game.add.text(40, 620, "NEW CUSTOMER", newstyle);
-        leavingAlertText = this.game.add.text(40, 645, "LEAVING", newstyle);
-        stealingAlertText = this.game.add.text(40, 670, "STEALING", newstyle);
+        var customerAlertText = this.game.add.text(40, 615, "NEW CUSTOMER", newstyle);
+        var leavingAlertText = this.game.add.text(40, 635, "LEAVING", newstyle);
+        var stealingAlertText = this.game.add.text(40, 655, "STEALING", newstyle);
+        var checkoutAlertText = this.game.add.text(40, 675, "CHECKOUT", newstyle);
 
 
         this.moneytextTween = this.add.tween(moneytext.scale).to({ x: 1.5, y: 1.5}, 200, Phaser.Easing.Linear.In).to({ x: 1, y: 1}, 200, Phaser.Easing.Linear.In);
@@ -124,9 +125,11 @@ BlueRoom.Game.prototype = {
         textgroup.add(customerAlert);
         textgroup.add(leavingAlert);
         textgroup.add(stealingAlert);
+        textgroup.add(checkoutAlert);
         textgroup.add(customerAlertText);
         textgroup.add(leavingAlertText);
         textgroup.add(stealingAlertText);
+        textgroup.add(checkoutAlertText);
 
         textgroup.forEach(function(item) {
             item.anchor.set(0.5);
@@ -135,6 +138,7 @@ BlueRoom.Game.prototype = {
         customerAlertText.anchor.setTo(0, 0);
         leavingAlertText.anchor.setTo(0, 0);
         stealingAlertText.anchor.setTo(0, 0);
+        checkoutAlertText.anchor.setTo(0,0);
         
         this.setTimer(MANAGERTIMEINTERVAL);
         this.disableButton(this.managerButton);
@@ -240,44 +244,74 @@ BlueRoom.Game.prototype = {
     	
     },
 
-    newCustAlert: function() {
+    statusAlert: function(alerttype) {
         var counter = 0;
-        customerTimer = setInterval(function(){
+        var color;
+        if(alerttype==customerAlert){
+            color = 0x00FF00;
+        } else if (alerttype==leavingAlert){
+            color = 0xffff00;
+        } else if (alerttype ==stealingAlert){
+            color = 0xff0000;
+        } else if(alerttype ==checkoutAlert){
+            color = 0x0099cc;
+        }
+        
+        timer = setInterval(function(){
             counter++;
             if (counter%2==0) {
-                customerAlert.tint = 0x00FF00;
+                alerttype.tint = color;
             } else {
-                customerAlert.tint = 0xFFFFFF;
+                alerttype.tint = 0xFFFFFF;
             }
         }, 90);
-        return customerTimer;
+
+        setTimeout(function() {
+            clearInterval(timer);
+        }, 1900);
+
+        alerttype.tint = 0xFFFFFF;
+
     },
 
-    custLeavingAlert: function() {
-        var counter = 0;
-        leavingTimer = setInterval(function(){
-            counter++;
-            if (counter%2==0) {
-                leavingAlert.tint = 0xFFFF00;
-            } else {
-                leavingAlert.tint = 0xFFFFFF;
-            }
-        }, 90);
-        return leavingTimer;
-    },
+    // custLeavingAlert: function() {
+    //     var counter = 0;
+    //     leavingTimer = setInterval(function(){
+    //         counter++;
+    //         if (counter%2==0) {
+    //             leavingAlert.tint = 0xFFFF00;
+    //         } else {
+    //             leavingAlert.tint = 0xFFFFFF;
+    //         }
+    //     }, 90);
+    //     return leavingTimer;
+    // },
 
-    custStealingAlert: function() {
-        var counter = 0;
-        stealingTimer = setInterval(function(){
-            counter++;
-            if (counter%2==0) {
-                stealingAlert.tint = 0xFF0000;
-            } else {
-                stealingAlert.tint = 0xFFFFFF;
-            }
-        }, 90);
-        return stealingTimer;
-    },
+    // custStealingAlert: function() {
+    //     var counter = 0;
+    //     stealingTimer = setInterval(function(){
+    //         counter++;
+    //         if (counter%2==0) {
+    //             stealingAlert.tint = 0xFF0000;
+    //         } else {
+    //             stealingAlert.tint = 0xFFFFFF;
+    //         }
+    //     }, 90);
+    //     return stealingTimer;
+    // },
+
+    // checkoutAlert: function(){
+    //     var counter = 0;
+    //     checkoutTimer = setInterval(function(){
+    //         counter++;
+    //         if (counter%2==0) {
+    //             checkoutAlert.tint = 0x0099cc;
+    //         } else {
+    //             checkoutAlert.tint = 0xFFFFFF;
+    //         }
+    //     }, 90);
+    //     return checkoutTimer;
+    // },
     
     // addMoney: function(amt){
     //     statusBar.money += Number(amt);

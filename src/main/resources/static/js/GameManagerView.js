@@ -121,10 +121,7 @@ BlueRoom.Game.prototype.createManager = function () {
 
     setTimeout(function(){
         getCustomer();
-        var custTimer = currThis.newCustAlert();
-        setTimeout(function() {
-            clearInterval(custTimer);
-        }, 1900);
+        currThis.statusAlert(customerAlert);
     }, 500);
 
     setInterval(function() {
@@ -133,10 +130,7 @@ BlueRoom.Game.prototype.createManager = function () {
         // console.log(CUSTOMERINTERVAL);
         if(managerCounter % CUSTOMERINTERVAL == 0 && numSandwich<15 && numCoffee<11 && numBakery<11 && isBlueRoomOpen){
             getCustomer();
-            var custTimer = currThis.newCustAlert();
-            setTimeout(function() {
-                clearInterval(custTimer);
-            }, 1900);
+            currThis.statusAlert(customerAlert);
         }
     }, 1);
 
@@ -168,10 +162,7 @@ BlueRoom.Game.prototype.startMovement= function(){
 BlueRoom.Game.prototype.abandonLine = function(customer){
         var myGame = this;
 
-        var leaveTimer = currThis.custLeavingAlert();
-        setTimeout(function() {
-            clearInterval(leaveTimer);
-        }, 1900);
+        this.statusAlert(leavingAlert);
 
         // myGame.deleteCurrSandwich(customer);
         leaving = true;
@@ -216,6 +207,7 @@ BlueRoom.Game.prototype.abandonLine = function(customer){
 
     BlueRoom.Game.prototype.toCashier= function(station){
         var curr;
+
         if (station == "sandwich") {
             if(sandwichLine.length>0){
                 curr= sandwichLine.shift();
@@ -259,6 +251,8 @@ BlueRoom.Game.prototype.abandonLine = function(customer){
             //this.moveLineUp(sandwichLine, this.sandwichLinePos, 5000);
             curr.flashDollar();
             curr.setUpInteractions();
+            currThis.statusAlert(checkoutAlert);
+
         }
            // cashierLine.push(currCustomer);
     };
@@ -304,10 +298,7 @@ BlueRoom.Game.prototype.cashCustomerOut= function(customer){
 };
 
 BlueRoom.Game.prototype.steal = function(customer){
-    var stealTimer = currThis.custStealingAlert();
-    setTimeout(function() {
-        clearInterval(stealTimer);
-    }, 1900);
+    this.statusAlert(stealingAlert);
 
     var c = customer;
     c.cust.tint = 0xff7777;

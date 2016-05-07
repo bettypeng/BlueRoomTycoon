@@ -73,7 +73,7 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('customer', 'images/customer.png');
 		this.load.image('employeeBreakStation', 'images/employee_break_station.png');
 
-		this.load.image('radiobutton', 'images/radiobutton.png');
+		this.load.image('radiobutton', 'images/alertbutton.png');
 
 		this.load.image('dollar', 'images/dollar.png');
 		this.load.image('dollarSign', 'images/dollar_sign.png');
