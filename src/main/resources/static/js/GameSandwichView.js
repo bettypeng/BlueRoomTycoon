@@ -50,6 +50,7 @@ var mypointer;
 
 var movableElems = [];
 var sandwichViewElements = new Array();
+var currCustomerStatusBar;
 
 
 function Topping( x, y, key) {
@@ -413,6 +414,7 @@ BlueRoom.Game.prototype.orderElems= function () {
             
                 currThis.changeSpriteFace(200, 0, "leaving");
                 var tw = currThis.add.tween(customerFace).to( { x: 1000 }, 3000, null, true);
+                currCustomerStatusBar.discard();
                 tw.onComplete.add(function () {
                     for (var i=0; i<currSandSprites.length; i++) {
                         movableElements.remove(currSandSprites[i]);
@@ -476,6 +478,8 @@ BlueRoom.Game.prototype.sandwichUpdate= function () {
     
     if (sandwichLine.length != 0 && currCustomer == null) {
         currCustomer = sandwichLine[0];
+        currCustomerStatusBar = new CustomerStatusBar(currCustomer, 250, 10);
+        sandwichViewElements.push(currCustomerStatusBar.barSprite);
         currCustomerOrder.push('bottom_bun');
         for (var i=0; i<currCustomer.order.ingreds.length; i++) {
             currCustomerOrder.push(currCustomer.order.ingreds[i].type);
