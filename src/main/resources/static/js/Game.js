@@ -268,7 +268,10 @@ BlueRoom.Game.prototype = {
 
         setTimeout(function() {
             clearInterval(timer);
-        }, 2000);
+        }, 1900);
+
+        alerttype.tint = 0xFFFFFF;
+
     },
 
     // custLeavingAlert: function() {
