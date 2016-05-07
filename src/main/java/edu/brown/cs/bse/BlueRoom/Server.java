@@ -414,9 +414,12 @@ public class Server {
       QueryParamsMap qm = req.queryMap();
 
       String stationName = qm.value("name");
-
+      if (stationName.equals("magazineRack")) {
+    	gameManager.addMagazineRack();
+      } else {
       // I think the price should be sent back!
-      gameManager.addStation(stationName, GameManager.UPGRADE_COSTS.get(stationName));
+    	gameManager.addStation(stationName, GameManager.UPGRADE_COSTS.get(stationName));
+      }
 
       List<String> results = new ArrayList<>();
 
@@ -494,8 +497,10 @@ public class Server {
     @Override
     public Object handle(Request req, Response res) {
       QueryParamsMap qm = req.queryMap();
+      
+      int gameNum = Integer.parseInt(qm.value("number"));
       String filename = qm.value("file");
-      gameManager.saveGame(filename);
+      gameManager.saveGame(filename, gameNum);
 
       List<String> results = new ArrayList<>();
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
@@ -524,6 +529,7 @@ public class Server {
           .put("employees", employees)
           .put("money", gameManager.getCurrentMoney())
           .put("dayNum", gameManager.getDayNum())
+          .put("magazineRack", gameManager.hasMagazineRack())
           .build();
       return GSON.toJson(variables);
     }
@@ -534,13 +540,12 @@ public class Server {
     @Override
     public Object handle(Request req, Response res) {
       QueryParamsMap qm = req.queryMap();
-      String station = qm.value("station");
+      String station = qm.value("name");
       
       gameManager.sellStation(station, GameManager.UPGRADE_COSTS.get(station) / 2);
       
-      List<String> results = new ArrayList<>();
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
-          .put("results", results).build();
+          .put("moneyGained", GameManager.UPGRADE_COSTS.get(station) / 2).build();
       return GSON.toJson(variables);
     }
     
@@ -553,6 +558,7 @@ public class Server {
       String name = qm.value("name");
       
       gameManager.fire(name);
+      
       
       List<String> results = new ArrayList<>();
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()

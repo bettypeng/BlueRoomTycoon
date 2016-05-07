@@ -79,6 +79,10 @@ public class MoneyManager {
     currDay.customerTheft();
   }
   
+  public void handleTrash(int numTrashed) {
+	currDay.trash(numTrashed);
+  }
+  
   public void addDailyExpenses(double amt) {
     dailyExpenses += amt;
   }

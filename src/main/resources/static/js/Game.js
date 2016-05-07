@@ -56,6 +56,7 @@ var twelveCounter = 0;
 var MANAGERTIMEINTERVAL = 50; //250 standard
 var STATIONTIMEINTERVAL = 50;
 
+
 var saveNumber;
 
 var game;
@@ -495,8 +496,25 @@ BlueRoom.Game.prototype = {
 
     },
 
-    load: function(station, employees, balance, dayNum) {
+    load: function(stations, employees, balance, dayNum, magRack) {
+        console.log(stations);
+        for (var i = 0; i < stations.length; i++) {
+            var station = stations[i];
+            // do something to add the station to the front end
 
+        }
+        console.log(employees);
+        for (var i = 0; i < employees.length; i++) {
+            // add each employee
+        }
+        console.log(balance);
+        // check if this is actually a valid way to change the money
+        statusBar.money = balance;
+        console.log(dayNum);
+        // do something with dayNum to make sure day of the week is correct
+        console.log(magRack);
+        // do something to tell game if magazine rack has been purchased
+        currThis.state.start('Game');
     }
 
 };

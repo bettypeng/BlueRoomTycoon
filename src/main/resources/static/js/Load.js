@@ -34,7 +34,7 @@ BlueRoom.Load.prototype = {
 		var savedText = "CLICK HERE TO LOAD GAME";
 		
 		if (savedGames[0]) {
-			currThis.add.text(202, 310, "GAME 1", style);
+			currThis.add.text(202, 310, "GAME 0", style);
 			currThis.add.text(138, 410, savedText, style);
 			currThis.add.button(37, 560, 'eraseButton', currThis.eraseGameZero, this);
 		} else {
@@ -43,7 +43,7 @@ BlueRoom.Load.prototype = {
 		}
 		
 		if (savedGames[1]) {
-			currThis.add.text(502, 310, "GAME 2", style);
+			currThis.add.text(502, 310, "GAME 1", style);
 			currThis.add.text(438, 410, savedText, style);
 			currThis.add.button(337, 560, 'eraseButton', currThis.eraseGameOne, this);
 		} else {
@@ -52,7 +52,7 @@ BlueRoom.Load.prototype = {
 		}
 		
 		if (savedGames[2]) {
-			currThis.add.text(802, 310, "GAME 3", style);
+			currThis.add.text(802, 310, "GAME 2", style);
 			currThis.add.text(738, 410, savedText, style);
 			currThis.add.button(637, 560, 'eraseButton', currThis.eraseGameTwo, this);
 		} else {

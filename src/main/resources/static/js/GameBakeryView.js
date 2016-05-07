@@ -14,6 +14,7 @@ var ovenCounter = 0;
 var ovenTimerSprite;
 var movableMuffinMap = {};
 var bakingMode;
+var muffinsTrashed;
 
 var pistText;
 var dchocText;
@@ -141,6 +142,9 @@ BlueRoom.Game.prototype.setUpBatterDropZone = function(x, y, img){
     var hole = this.add.sprite(x, y, img);
     muffinTinGroup.add(hole);
     bakeryViewElements.push(hole);
+    if(!bakeryView){
+        hole.visible = false;
+    }
 }
 
 BlueRoom.Game.prototype.setUpMuffinBatter = function(x, y, img, textName){
@@ -211,6 +215,22 @@ BlueRoom.Game.prototype.onMuffinBatterDragStop= function(sprite, pointer) {
         });
         
     }
+};
+
+BlueRoom.Game.prototype.muffinEndOfDay = function(){
+    muffinsTrashed = this.resetMuffin('pistachioBatter') + this.resetMuffin('doubleChocBatter') + this.resetMuffin('chocChipBatter') + this.resetMuffin('tripleBerryBatter')+ this.resetMuffin('bananaNutBatter') + this.resetMuffin('branBatter');
+    trashHandler("bakery", muffinsTrashed);
+    this.muffinUpdate();
+
+    console.log("WASTED " +muffinsTrashed + " MUFFINS TODAY");
+};
+
+BlueRoom.Game.prototype.resetMuffin = function(muffinName){
+    var muff = batterMap[muffinName].amt;
+    batterMap[muffinName].amt = 0;
+    batterMap[muffinName].displayAmt = 0;
+    batterMap[muffinName].textName.setText("COUNT: " + batterMap[muffinName].displayAmt);
+    return muff;
 };
 
 BlueRoom.Game.prototype.createOvenTimer = function(){
@@ -289,7 +309,7 @@ BlueRoom.Game.prototype.ovenTimerUpdate= function() {
         textTween.onComplete.add(function(){
             textAnimation.destroy();
             this.getMuffinsOut(true);
-            trashHandler("bakery", 1);
+            trashHandler("bakery", 12);
             // this.loseMoney(this.game.width/2, 500, "- $6.00", 6.00);
         }, this);
     }
@@ -323,6 +343,19 @@ BlueRoom.Game.prototype.bakeMuffins = function(){
 BlueRoom.Game.prototype.endBakeMuffins = function(){
     if(currThis.ovenTimerTime > 50){
         console.log("Not yet!");
+
+        var scoreFont = "30px Roboto";
+        var textAnimation = this.game.add.text(currThis.game.width/2, 380, "Not done yet!", {font: scoreFont, fill: "#abcdef"}); 
+        textAnimation.anchor.setTo(0.5, 0);
+        textAnimation.align = 'center';
+     
+        //Tween this score label to the total score label
+        var textTween = this.game.add.tween(textAnimation).to({alpha: 0}, 1000, Phaser.Easing.Exponential.In, true);
+
+        textTween.onComplete.add(function(){
+            textAnimation.destroy();
+        }, this);
+
     }
     // else if(currThis.ovenTimerTime <5){
     //     console.log("BURNT");
@@ -350,11 +383,15 @@ BlueRoom.Game.prototype.getMuffinsOut= function(burnt){
     if(burnt){
         bakedBatter.forEach(function(item){
             item.tint = 0x000000;
-            currThis.add.tween(item).to( { x: item.x, y: item.y+300 }, 1000, Phaser.Easing.Exponential.In, true);
-            var t = currThis.add.tween(item).to( { alpha: 0 }, 1000, Phaser.Easing.Exponential.In, true);
-            t.onComplete.add(function(){
-                item.destroy();
-            });
+            // if(currThis.muffinView){
+                currThis.add.tween(item).to( { x: item.x, y: item.y+300 }, 1000, Phaser.Easing.Exponential.In, true);
+                var t = currThis.add.tween(item).to( { alpha: 0 }, 1000, Phaser.Easing.Exponential.In, true);
+                t.onComplete.add(function(){
+                    item.destroy();
+                });
+            // } else{
+            //     item.destroy();
+            // }
         });
     }
     else{

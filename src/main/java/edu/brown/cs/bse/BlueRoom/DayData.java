@@ -14,11 +14,13 @@ public class DayData {
   private double customersLost;
   private double thefts;
   private double expenses;
+  private int itemsTrashed;
   
   public DayData(double expenses) {
     this.expenses = expenses;
     customersLost = 0;
     thefts = 0;
+    itemsTrashed = 0;
   }
 
   public void newPurchase(String station, double price) {
@@ -53,10 +55,11 @@ public class DayData {
   public void customerTheft() {
     thefts++;
   }
-
-  // i'll probably end up coming up with a better way to handle all of the different kinds of Revenue -
-  // this is not extensible were we to add more stations (need a polymorphic way/even just a method that
-  // runs a switch on station name for a getter)
+  
+  public void trash(int num) {
+	itemsTrashed += num;
+  }
+  
   public double getTotalRevenue() {
     return totalRevenue;
   }
