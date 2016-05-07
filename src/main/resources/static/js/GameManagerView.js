@@ -26,15 +26,7 @@ var atCoffeeStation = null;
 
 var currThis = this;
 
-var activeButtons;
-
-
 BlueRoom.Game.prototype.createManager = function () {
-
-    activeButtons = this.add.group();
-    activeButtons.add(this.managerButton);
-    activeButtons.add(this.sandwichButton);
-    activeButtons.add(this.coffeeButton);
     
     this.sandwichLinePos = {'x': new Array(), 'y':new Array()};
     this.bakeryLinePos = {'x': new Array(), 'y':new Array()};

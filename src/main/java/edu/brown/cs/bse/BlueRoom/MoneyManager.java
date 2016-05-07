@@ -15,13 +15,14 @@ public class MoneyManager {
   private double money;
 
   // this will change
-  private static final double DAILY_EXPENSES = 200;
+  private double dailyExpenses;
 
   public MoneyManager(double startMoney) {
     dailyNetProfits = new ArrayList<>();
     gameData = new GameData();
     money = startMoney;
-    currDay = new DayData(DAILY_EXPENSES);
+    dailyExpenses = 50;
+    currDay = new DayData(dailyExpenses);
     dayNum = 1;
   }
 
@@ -62,8 +63,9 @@ public class MoneyManager {
   public void endDay() {
     dailyNetProfits.add(currDay.getTotalRevenue() - (currDay.getExpenses() + currDay.getLosses()));
     gameData.addDayData(currDay);
-    currDay = new DayData(DAILY_EXPENSES);
-    money -= DAILY_EXPENSES;
+    currDay = new DayData(dailyExpenses);
+    money -= dailyExpenses;
+    System.out.println(dailyExpenses);
     dayNum++;
   }
   
@@ -75,6 +77,10 @@ public class MoneyManager {
   
   public void handleTheft() {
     currDay.customerTheft();
+  }
+  
+  public void addDailyExpenses(double amt) {
+    dailyExpenses += amt;
   }
   
   public void save(BufferedWriter writer) throws IOException {
@@ -92,15 +98,15 @@ public class MoneyManager {
     }
   }
   
-  public int load(BufferedReader reader) throws IOException {
-    money = Double.valueOf(reader.readLine());
+  public int load(BufferedReader reader) throws IOException, NumberFormatException {
+    money = Double.parseDouble(reader.readLine());
     gameData.load(reader);
-    dayNum = Integer.valueOf(reader.readLine());
+    dayNum = Integer.parseInt(reader.readLine());
     dailyNetProfits = new ArrayList<>();
     for (int i = 1; i < dayNum; i++) {
       dailyNetProfits.add(Double.parseDouble(reader.readLine()));
     }
-    currDay = new DayData(DAILY_EXPENSES);
+    currDay = new DayData(dailyExpenses);
     return dayNum;
   }
 

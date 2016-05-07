@@ -46,6 +46,7 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 	dayEndButtons.push(hire);
 	dayEndButtons.push(upgrade);
 	dayEndButtons.push(close);
+	dayEndButtons.push(save);
 
 
 	dayEndViewElements.push(title);
@@ -63,6 +64,7 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 	dayEndViewElements.push(upgrade);
 	dayEndViewElements.push(hire);
 	dayEndViewElements.push(close);
+	dayEndViewElements.push(save);
 
 	game.loseMoney(500, 530, "- $"+(dailyInfo.expenses).toFixed(2), dailyInfo.expenses);
 };
@@ -92,8 +94,25 @@ BlueRoom.Game.prototype.destroyDayEndView= function(){
 		item.destroy();
 	});
 	dayEndViewElements = new Array();
-	managerView = true;
-	sandwichView = false;
-	dayEndView = false;
+
+		    managerView = true;
+		    sandwichView = false;
+            coffeeView = false;
+            bakeryView = false;
+            dayEndView = false;
+    		this.hideSandwichView();
+            this.hideCoffeeView();
+            this.hideBakeryView();
+            this.disableButton(this.managerButton);
+            if (!sandwichStationFilled ) {
+                this.enableButton(this.sandwichButton);
+            }
+            if (!coffeeStationFilled) {
+                this.enableButton(this.coffeeButton);
+            }
+            if (!bakeryStationFilled) {
+                this.enableButton(this.bakeryButton);
+            }
+
 	this.resetGameDay();
 };

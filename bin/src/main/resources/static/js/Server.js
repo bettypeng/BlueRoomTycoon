@@ -102,14 +102,25 @@ function endDayScreen() {
     
 }
     
-function employeePurchase (employee, customer, workHoursProgress, happiness) {
+function employeePurchase (employee, customer, happiness, paid) {
+
+    var payment = JSON.stringify(paid);
+    var happ = JSON.stringify(happiness);
     
-	var postParameters = {employee: employee, customer: customer, energy: workHoursProgress, happiness: happiness};
+	var postParameters = {employee: employee, customer: customer, happiness: happ, paid: payment};
     
     $.post("/employee", postParameters, function(responseJSON){
     
         var responseObject = JSON.parse(responseJSON);
         var moneyMade = responseObject.moneyMade;
+
+        if (paid){
+            //BlueRoom.Game.prototype.addMoney(moneyMade);
+            game.addMoney(500, 530, "+ $"+moneyMade.toFixed(2), moneyMade);
+        }
+        else{
+            game.loseMoney(500, 530, "- $"+moneyMade.toFixed(2), moneyMade);
+        }
     
         //have the money that was made appear on screen and increment lower left money counter
     });
@@ -133,7 +144,7 @@ function trashHandler (type, numTrashed) {
 
 }
     
-function purchase (type, ingredients, ingMap, bread, id, happiness, paid) {
+function sandwichPurchase (ingredients, ingMap, bread, id, happiness, paid) {
     //bread will be null if the type is not sandwich
     
     
@@ -142,14 +153,66 @@ function purchase (type, ingredients, ingMap, bread, id, happiness, paid) {
     var iMap = JSON.stringify(ingMap);
     var happ = JSON.stringify(happiness);
     var payment = JSON.stringify(paid);
-	var postParameters = {type: type, ingredients: ing, map: iMap, id: id, bread: bread, happiness: happ, paid: payment};
+	var postParameters = {ingredients: ing, map: iMap, id: id, bread: bread, happiness: happ, paid: payment};
     
-    $.post("/purchase", postParameters, function(responseJSON){
+    $.post("/sandwich", postParameters, function(responseJSON){
     
         var responseObject = JSON.parse(responseJSON);
         var moneyMade = responseObject.moneyMade;
 
-        console.log(moneyMade);
+        if (paid){
+            //BlueRoom.Game.prototype.addMoney(moneyMade);
+            game.addMoney(500, 530, "+ $"+moneyMade.toFixed(2), moneyMade);
+        }
+        else{
+            game.loseMoney(500, 530, "- $"+moneyMade.toFixed(2), moneyMade);
+        }
+        //have money that was made appear on screen and increment lower left money counter
+    
+    });
+    
+}
+
+function bakeryPurchase (type, id, happiness, paid) {
+    //bread will be null if the type is not sandwich
+    
+    
+    // var id = customer.id;
+    var payment = JSON.stringify(paid);
+    var postParameters = {type: type, id: id, happiness: happiness, paid: payment};
+    
+    $.post("/bakery", postParameters, function(responseJSON){
+    
+        var responseObject = JSON.parse(responseJSON);
+        var moneyMade = responseObject.moneyMade;
+
+        if (paid){
+            //BlueRoom.Game.prototype.addMoney(moneyMade);
+            game.addMoney(500, 530, "+ $"+moneyMade.toFixed(2), moneyMade);
+        }
+        else{
+            game.loseMoney(500, 530, "- $"+moneyMade.toFixed(2), moneyMade);
+        }
+        //have money that was made appear on screen and increment lower left money counter
+    
+    });
+    
+}
+
+function coffeePurchase (type, iced, size, flavor, id, happiness, paid) {
+    //bread will be null if the type is not sandwich
+    
+    
+    // var id = customer.id;
+    var ice = JSON.stringify(iced);
+    var payment = JSON.stringify(paid);
+    var postParameters = {type: type, iced: iced, size: size, flavor: flavor, id: id, happiness: happiness, paid: payment};
+    
+    $.post("/coffee", postParameters, function(responseJSON){
+    
+        var responseObject = JSON.parse(responseJSON);
+        var moneyMade = responseObject.moneyMade;
+
         if (paid){
             //BlueRoom.Game.prototype.addMoney(moneyMade);
             game.addMoney(500, 530, "+ $"+moneyMade.toFixed(2), moneyMade);
@@ -165,15 +228,37 @@ function purchase (type, ingredients, ingMap, bread, id, happiness, paid) {
 
 // window.setInterval()
 
-function updateIntervals() {
+function updateCustomerInterval() {
     
     $.post("/interval", function(responseJSON) {
 
         var responseObject = JSON.parse(responseJSON);
-        console.log(responseObject.customerInt);
         CUSTOMERINTERVAL = responseObject.customerInt;
         // var employeeInts = responseObject.employeeInts;
     });
+}
+
+function getEmployeeInterval(stationName, atStation, makingProduct, line, employee) {
+    var employeeName = employee.name;
+    var employeeEnergy = employee.workHoursProgress/30;
+
+    // console.log(employeeEnergy);
+
+    var empE = JSON.stringify(employeeEnergy);
+
+    var postParameters = {name: employeeName, energy: empE};
+
+    $.post("/employeeInterval", postParameters, function(responseJSON) {
+
+        var responseObject = JSON.parse(responseJSON);
+
+        var employeeInt = responseObject.employeeInt;
+        console.log("EMPLOYEE INTERVAL: "+employeeInt);
+        
+        BlueRoom.Game.prototype.employeeMakeProduct(stationName, atStation, makingProduct, line, employee, employeeInt);
+    });
+
+
 }
 
 function saveGame() {
@@ -181,4 +266,30 @@ function saveGame() {
 	var postParameters = { file: filename };
 	
 	$.post("/save", postParameters, function(responseJSON) {});
+}
+
+function loadGame(filename) {
+    filename = "game1";
+    var postParameters = { file: filename };
+    
+<<<<<<< HEAD
+    $.post("/save", postParameters, function(responseJSON) {
+		var responseObject = JSON.parse(responseJSON);
+		var stations = responseObject.stations;
+		for (var i = 0; i < stations.length; i++) {
+			var station = stations[i];
+			// do something to add the station to the front end
+		}
+		var employees = responseObject.employees;
+		for (var i = 0; i < employees.length; i++) {
+			// add each employee
+		}
+		var balance = responseObject.money;
+		// check if this is actually a valid way to change the money
+		statusBar.money = balance;
+=======
+    $.post("/load", postParameters, function(responseJSON) {
+
+>>>>>>> 895ba887bfc9253d4325cbd54321637348a62763
+    });
 }
