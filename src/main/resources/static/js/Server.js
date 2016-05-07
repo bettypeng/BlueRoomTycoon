@@ -54,7 +54,10 @@ function fireHandler(empName) {
 function sellHandler(stationName, price) {
     var postParameters = {name: stationName, price: price};
 
-    $.post("/sell", postParameters, function(responseJSON) {});
+    $.post("/sell", postParameters, function(responseJSON) {
+
+        game.addMoney(500, 530, "+ $"+price.toFixed(2), price);
+    });
 }
 
 

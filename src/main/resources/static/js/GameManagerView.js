@@ -334,14 +334,17 @@ BlueRoom.Game.prototype.managerUpdate= function () {
 
     if (sandwichStationFilled && !empMakingSandwich && sandwichLine.length != 0) {
         empMakingSandwich = true;
+        sandwichLine[0].stopBar();
         getEmployeeInterval("sandwich", atSandwichStation, empMakingSandwich, sandwichLine, atSandwichStation);
     }
     if (coffeeStationFilled && !empMakingCoffee && coffeeLine.length != 0) {
         empMakingCoffee = true;
+        coffeeLine[0].stopBar();
         getEmployeeInterval("coffee", atCoffeeStation, empMakingCoffee, coffeeLine, atCoffeeStation);
     }
     if (bakeryStationFilled && !empMakingMuffin && bakeryLine.length != 0) {
         empMakingMuffin = true;
+        bakeryLine[0].stopBar();
         getEmployeeInterval("bakery", atBakeryStation, empMakingMuffin, bakeryLine, atBakeryStation);
     }
     
@@ -352,20 +355,35 @@ BlueRoom.Game.prototype.employeeMakeProduct= function (stationName, atStation, m
     var currThis = this;
 
     window.setTimeout(function(){
+        console.log("making product");
 
-        if (atStation != employee) {
-            if (stationName == "sandwich") {
+        // if (atStation != employee) {
+        if (stationName == "sandwich") {
+            if (atSandwichStation != employee) {
+                line[0].createBar();
                 empMakingSandwich = false;
-            } else if (stationName == "coffee") {
-                empMakingCoffee = false;
-            } else {
-                empMakingMuffin = false;
+                return;
             }
-            return;
+        } else if (stationName == "coffee") {
+            if (atCoffeeStation != employee) {
+                line[0].createBar();
+                empMakingCoffee = false;
+                return;
+            }          
+        } else {
+            if (atBakeryStation != employee) {
+                console.log("not that same");
+                line[0].createBar();
+                empMakingMuffin = false;
+                return;
+            }           
         }
-        console.log(line);
+        // return;
+        // }
+        console.log("THIS IS THE THING");
         var frontCust = line[0];
         frontCust.employee = employee.name;
+        frontCust.createBar();
 
         currThis.toCashier(stationName);
 

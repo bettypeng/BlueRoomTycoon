@@ -202,8 +202,10 @@ BlueRoom.Game.prototype.showSandwichView= function(){
         item.visible = true;
     });
     if (currCustomer != null) {
-        this.showNeutral();
-        speechBubble.visible = true;
+        if (!transitioning) {
+            this.showNeutral();
+            speechBubble.visible = true;
+        }
     }
 };
 
