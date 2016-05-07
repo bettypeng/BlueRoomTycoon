@@ -2,14 +2,18 @@ package edu.brown.cs.bse.BlueRoom;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+import com.google.common.collect.ImmutableMap;
 
 import edu.brown.cs.bse.elements.Customer;
 import edu.brown.cs.bse.elements.Employee;
@@ -18,17 +22,26 @@ import edu.brown.cs.bse.elements.FoodItem;
 public class GameManager {
 
   private final static int UUID_LEN = 8;
-  private static final double INITIAL_MONEY = 1000;
+  private static final double INITIAL_MONEY = 50;
   private static final double SANDWICH_TRASH_CONST = 0.3;
   private static final double BAKERY_TRASH_CONST = 6;
   private static final double COFFEE_TRASH_CONST = 1;
   private static final double EMPLOYEE_WAGE = 50;
-  private static final double STATION_UTIL_COST = 10;
+  public static final Map<String, Double> UPGRADE_COSTS = new ImmutableMap.Builder<String, Double>()
+      .put("bakery", 400.0)
+      .put("coffee", 200.0)
+      .build();
+  private static final Map<String, Double> STATION_UPKEEPS = new ImmutableMap.Builder<String, Double>()
+      .put("bakery", 15.0)
+      .put("coffee", 10.0)
+      .put("sandwich", 0.0)
+      .build();
 
   private MoneyManager manager;
   private List<Employee> employees;
   private Map<String, Customer> customerMap;
   private Map<String, Employee> employeeMap;
+  private boolean[] savedGames;
 
   private int baselineInterval;
   private int currTime;
@@ -47,6 +60,8 @@ public class GameManager {
     currTime = 0;
     leftToday = 0;
     baselineInterval = 5000;
+    savedGames = new boolean[3];
+    loadConfig("gameConfig.brt");
     OrderFactory.setMuffinWeights();
   }
 
@@ -157,10 +172,10 @@ public class GameManager {
 
   // adds a station to the blue room
   public void addStation(String stationName, double cost) {
-    assert stationName.equals("bakery") || stationName.equals("coffee") : "ERROR: station input should not exist";
+    assert stationName.equals("bakery") || stationName.equals("coffee") || stationName.equals("sandwich") : "ERROR: station input should not exist";
     availableStations.add(stationName);
     manager.changeMoney(cost * -1);
-    manager.addDailyExpenses(STATION_UTIL_COST);
+    manager.addDailyExpenses(STATION_UPKEEPS.get(stationName));
   }
 
   /**
@@ -198,7 +213,7 @@ public class GameManager {
     OrderFactory.setMuffinWeights();
     currTime = 0;
     leftToday = 0;
-    baselineInterval -= 1000;
+    baselineInterval -= 5000;
     return today;
   }
 
@@ -216,8 +231,12 @@ public class GameManager {
   }
 
   public double calculateCustomerInterval() {
-    double interval = baselineInterval + (leftToday * 100);
-    interval -= (2 * (employees.size()));
+    double interval = baselineInterval + (leftToday * 50);
+    interval -= (500 * (employees.size()));
+    interval -= (500 * (availableStations.size() - 1));
+    if (interval < 500) {
+      return 500;
+    }
     return interval;
   }
 
@@ -262,11 +281,14 @@ public class GameManager {
       line = reader.readLine();
       String[] employeeNames = line.split(" ");
       for (String eName : employeeNames) {
+        if (eName.equals("")) {
+          break;
+        }
         hireEmployee(eName, 0);
       }
 
       int dayNum = manager.load(reader);
-      baselineInterval = 11000 - (dayNum * 1000);
+      baselineInterval = 5500 - (dayNum * 500);
     } catch (IOException | NumberFormatException e) {
       e.printStackTrace();
     }
@@ -276,7 +298,7 @@ public class GameManager {
     availableStations.remove(station);
     manager.changeMoney(price);
     // subtract daily price
-    manager.addDailyExpenses(STATION_UTIL_COST * -1);
+    manager.addDailyExpenses(STATION_UPKEEPS.get(station));
     
   }
   
@@ -285,6 +307,76 @@ public class GameManager {
     employeeMap.remove(employeeName);
     // subtract wages
     manager.addDailyExpenses(EMPLOYEE_WAGE * -1);
+  }
+  
+  public void loadConfig(String filename) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+      int index = 0;
+      String line;
+      while ((line = reader.readLine()) != null) {
+        if (!line.equals("empty")) {
+          savedGames[index] = true;
+        } else {
+          savedGames[index] = false;
+        }
+        index++;
+      }
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+//    System.out.println(Arrays.toString(savedGames));
+  }
+  
+  public boolean[] getSavedGames() {
+    return savedGames;
+  }
+  
+  public void eraseGame(int number) {
+    savedGames[number] = false;
+    rewriteConfigFile();
+    String filename = "game" + String.valueOf(number) + ".brt";
+    clearFile(filename);
+  }
+  
+  private void rewriteConfigFile() {
+    try(BufferedWriter writer = new BufferedWriter(new FileWriter("gameConfig.brt"))) {
+      for (int i = 0; i < savedGames.length; i++) {
+        if (savedGames[i]) {
+          writer.write("full", 0, 4);
+          writer.newLine();
+        } else {
+          writer.write("empty", 0, 5);
+          writer.newLine();
+        }
+      }
+      writer.flush();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+  
+  private void clearFile(String filename) {
+    try(BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+      writer.flush();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+  
+  public void clear() {
+    manager = new MoneyManager(INITIAL_MONEY);
+    employees = new ArrayList<>();
+    availableStations = new ArrayList<>();
+    availableStations.add("sandwich");
+    customerMap = new HashMap<>();
+    employeeMap = new HashMap<>();
+    currTime = 0;
+    leftToday = 0;
+    baselineInterval = 5000;
+    savedGames = new boolean[3];
+    loadConfig("gameConfig.brt");
+    OrderFactory.setMuffinWeights();
   }
 
 }

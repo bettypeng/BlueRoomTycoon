@@ -100,10 +100,10 @@ Employee.prototype = {
             this.placeEmployee(SSX, SSY);
             this.station = "sandwich";
         }
-        else if(sprite.overlap(currThis.bakeryStation) && !bakeryStationFilled){
+        else if(sprite.overlap(currThis.bakeryStation) && !bakeryStationFilled && currThis.bakeryStation.visible){
             this.placeEmployee(BSX, BSY);
         }
-        else if(sprite.overlap(currThis.coffeeStation) && !coffeeStationFilled){
+        else if(sprite.overlap(currThis.coffeeStation) && !coffeeStationFilled && currThis.coffeeStation.visible){
             this.placeEmployee(CSX, CSY);
         }
         else if (sprite.overlap(currThis.employeeBreakStation)){

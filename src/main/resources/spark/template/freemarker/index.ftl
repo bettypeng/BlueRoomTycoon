@@ -10,6 +10,7 @@
 	<script src="js/Boot.js"></script>
 	<script src="js/Preloader.js"></script>
 	<script src="js/MainMenu.js"></script>
+	<script src="js/Load.js"></script>
 	<script src="js/About.js"></script>
 
 	<script src="js/Game.js"></script>
@@ -60,6 +61,7 @@ window.onload = function() {
 	game.state.add('Preloader', BlueRoom.Preloader);
 	game.state.add('MainMenu', BlueRoom.MainMenu);
 	game.state.add('About', BlueRoom.About);
+	game.state.add('Load', BlueRoom.Load);
 
 	// game.state.add('GameManagerView', BlueRoom.GameManagerView);
 	// game.state.add('GameSandwichView', BlueRoom.GameSandwichView);

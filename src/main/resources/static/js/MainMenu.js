@@ -32,7 +32,7 @@ BlueRoom.MainMenu.prototype = {
 		//this.music.stop();
 
 		//	start the actual game
-		this.state.start('Game');
+		this.state.start('Load');
 
 	},
 	

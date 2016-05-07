@@ -21,7 +21,7 @@ public class MoneyManager {
     dailyNetProfits = new ArrayList<>();
     gameData = new GameData();
     money = startMoney;
-    dailyExpenses = 50;
+    dailyExpenses = 30;
     currDay = new DayData(dailyExpenses);
     dayNum = 1;
   }

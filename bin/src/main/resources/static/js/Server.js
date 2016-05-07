@@ -272,8 +272,7 @@ function loadGame(filename) {
     filename = "game1";
     var postParameters = { file: filename };
     
-<<<<<<< HEAD
-    $.post("/save", postParameters, function(responseJSON) {
+    $.post("/load", postParameters, function(responseJSON) {
 		var responseObject = JSON.parse(responseJSON);
 		var stations = responseObject.stations;
 		for (var i = 0; i < stations.length; i++) {
@@ -287,9 +286,5 @@ function loadGame(filename) {
 		var balance = responseObject.money;
 		// check if this is actually a valid way to change the money
 		statusBar.money = balance;
-=======
-    $.post("/load", postParameters, function(responseJSON) {
-
->>>>>>> 895ba887bfc9253d4325cbd54321637348a62763
     });
 }
