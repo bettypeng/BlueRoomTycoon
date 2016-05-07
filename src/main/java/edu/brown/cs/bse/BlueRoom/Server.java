@@ -99,6 +99,8 @@ public class Server {
     Spark.post("/leave", new LeaveHandler());
     Spark.post("/save", new SaveHandler());
     Spark.post("/load", new LoadHandler());
+    Spark.post("/sell", new SellHandler());
+    Spark.post("/fire", new FireHandler());
   }
 
   /**
@@ -359,7 +361,7 @@ public class Server {
       String employeeName = qm.value("employee");
 
       // sends the knowledge of the new employee to the game manager
-      gameManager.hireEmployee(employeeName);
+      gameManager.hireEmployee(employeeName, 100);
 
       List<String> results = new ArrayList<>();
 
@@ -420,7 +422,8 @@ public class Server {
 
       String stationName = qm.value("name");
 
-      gameManager.addStation(stationName);
+      // I think the price should be sent back!
+      gameManager.addStation(stationName, 500);
 
       List<String> results = new ArrayList<>();
 
@@ -474,7 +477,8 @@ public class Server {
     public Object handle(Request req, Response res) {
       QueryParamsMap qm = req.queryMap();
       int numTrashed = Integer.parseInt(qm.value("numTrashed"));
-      double moneyLost = gameManager.trash(numTrashed);
+      String station = qm.value("type");
+      double moneyLost = gameManager.trash(numTrashed, station);
 
       Map<String, Object> variables = ImmutableMap.of("moneyLost", moneyLost);
       return GSON.toJson(variables);
@@ -529,6 +533,39 @@ public class Server {
           .put("employees", employees)
           .put("money", gameManager.getCurrentMoney())
           .build();
+      return GSON.toJson(variables);
+    }
+  }
+  
+  private class SellHandler implements Route {
+    
+    @Override
+    public Object handle(Request req, Response res) {
+      QueryParamsMap qm = req.queryMap();
+      String station = qm.value("station");
+      double price = Double.parseDouble(qm.value("price"));
+      
+      gameManager.sellStation(station, price);
+      
+      List<String> results = new ArrayList<>();
+      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+          .put("results", results).build();
+      return GSON.toJson(variables);
+    }
+    
+  }
+  
+  private class FireHandler implements Route {
+    @Override
+    public Object handle(Request req, Response res) {
+      QueryParamsMap qm = req.queryMap();
+      String name = qm.value("name");
+      
+      gameManager.fire(name);
+      
+      List<String> results = new ArrayList<>();
+      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+          .put("results", results).build();
       return GSON.toJson(variables);
     }
   }

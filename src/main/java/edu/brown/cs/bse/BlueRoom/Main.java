@@ -44,15 +44,6 @@ public class Main {
       System.out.println("run spark server");
       new Server(manager);
     } else {
-//      OrderFactory.setMuffinWeights();
-//    manager.addStation("bakery");
-//    manager.hireEmployee("alex");
-//    manager.hireEmployee("erik");
-//    manager.hireEmployee("rachel");
-//    manager.endDay();
-//    manager.endDay();
-//    manager.saveGame("outFile.txt");
-//    manager.load("outFile.txt");
 
       try (BufferedReader reader = new BufferedReader(
           new InputStreamReader(System.in, StandardCharsets.UTF_8))) {
@@ -87,8 +78,8 @@ public class Main {
             break;
 
           case "p":
-            manager.addStation("coffee");
-            manager.addStation("bakery");
+            manager.addStation("coffee", 500);
+            manager.addStation("bakery", 500);
             Customer customer = manager.newCustomer();
             System.out.println(customer.getStation() + " station");
             customer.setHappiness(Math.random());

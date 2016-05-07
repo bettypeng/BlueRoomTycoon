@@ -16,7 +16,9 @@ var coffeeStationFilled = false;
 var currThis = this;
 
 
-function Employee(){
+function Employee(name){
+    this.name = name;
+
     this.employeeSprite = currThis.game.add.group();
 
     var e = currThis.game.add.sprite(0, 0, 'employee');
@@ -133,17 +135,24 @@ Employee.prototype = {
         var currEmployee = this;
         if(currEmployee.employeeSprite.x == SSX && currEmployee.employeeSprite.y==SSY){
             console.log("SANDWICH STATION FILLED");
+            this.station = "sandwich";
             sandwichStationFilled = true;
+            console.log(this);
+            atSandwichStation = this;
             game.disableButton(currThis.sandwichButton);
         } 
         if(currEmployee.employeeSprite.x == BSX && currEmployee.employeeSprite.y==BSY){
             console.log("BAKERY STATION FILLED");
+            this.station = "bakery";
             bakeryStationFilled = true;
+            atBakeryStation = this;
             game.disableButton(currThis.bakeryButton);
         }
         if(currEmployee.employeeSprite.x == CSX && currEmployee.employeeSprite.y==CSY){
             console.log("COFFEE STATION FILLED");
+            this.station = "coffee";
             coffeeStationFilled = true;
+            atCoffeeStation = this;
             game.disableButton(currThis.coffeeButton);
         }
     },
@@ -152,17 +161,23 @@ Employee.prototype = {
         var currEmployee = this;
         if(currEmployee.employeeSprite.x == SSX && currEmployee.employeeSprite.y==SSY){
             console.log("SANDWICH STATION UNFILLED");
+            this.station = null;
             sandwichStationFilled = false;
+            atSandwichStation = null;
             game.enableButton(currThis.sandwichButton);
         } 
         if(currEmployee.employeeSprite.x == BSX && currEmployee.employeeSprite.y==BSY){
             console.log("BAKERY STATION UNFILLED");
+            this.station = null;
             bakeryStationFilled = false;
+            atBakeryStation = null;
             game.enableButton(currThis.bakeryButton);
         }
         if(currEmployee.employeeSprite.x == CSX && currEmployee.employeeSprite.y==CSY){
             console.log("COFFEE STATION UNFILLED");
+            this.station = null;
             coffeeStationFilled = false;
+            atCoffeeStation = null;
             game.enableButton(currThis.coffeeButton);
         }
     },
@@ -217,6 +232,25 @@ Employee.prototype = {
         
         // important - without this line, the context will never be updated on the GPU when using webGL
         this.workBar.dirty = true;
+    },
+
+    discard: function(){
+        this.name = null;
+
+        this.employeeSprite.children.forEach(function(item){
+            item.destroy();
+        });
+        this.employeeSprite.destroy();      
+
+        this.workHoursProgress = null;
+        this.workBar = null;
+        this.working = null;
+        this.recharging = null;
+        this.workHours = null;
+        this.numStationSwitches = null;
+
+        clearInterval(this.workTimer);
+        clearInterval(this.myTimer);
     }
 
 };
