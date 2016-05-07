@@ -2,6 +2,15 @@ var dayEndAlertElements = new Array();
 
 
 BlueRoom.Game.prototype.createDayEndAlert= function (dailyInfo) {
+	this.hideSandwichView();
+	this.hideCoffeeView();
+	this.hideBakeryView();
+
+	managerView = true;
+    sandwichView = false;
+    coffeeView = false;
+    bakeryView = false;
+ 
 	var alertBg = game.add.sprite(0, 0, 'alertBox');
 	dayEndAlertElements.push(alertBg);
 
