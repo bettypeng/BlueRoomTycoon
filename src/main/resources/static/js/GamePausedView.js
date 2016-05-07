@@ -38,7 +38,13 @@ BlueRoom.Game.prototype.showPauseScreen= function () {
 		if(bakeryView){
 			pausedInBakery = true;
 			bakeryView = false;
+			clearInterval(bakeTimer);
 		}
+
+		this.managerButton.visible = false;
+		this.sandwichButton.visible = false;
+		this.coffeeButton.visible = false;
+		this.bakeryButton.visible = false;
 
 		dayEndView = true;
 
@@ -63,11 +69,26 @@ BlueRoom.Game.prototype.hidePauseScreen= function(){
 		}
 		if(pausedInBakery){
 			bakeryView = true;
+			this.startBakeTimer();
 		}
 		if(pausedInCoffee){
 			coffeeView = true;
 		}
 	}
+
+	this.managerButton.visible = true;
+	this.sandwichButton.visible = true;
+	if(coffeeButtonOn){
+		this.coffeeButton.visible = true;
+	} else{
+		this.coffeeButton.visible = false;
+	}
+	if(bakeryButtonOn){
+		this.bakeryButton.visible = true;
+	} else{
+		this.bakeryButton.visible = false;
+	}
+
 	dayEndView = false;
 	pausedElements.forEach(function(item){
 		item.destroy();

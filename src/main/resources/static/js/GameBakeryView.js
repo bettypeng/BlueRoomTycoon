@@ -230,11 +230,15 @@ BlueRoom.Game.prototype.createOvenTimer = function(){
     ovenTimerSprite = this.game.add.sprite(730, 450, this.ovenTimer);
     bakeryViewElements.push(ovenTimerSprite);
     ovenTimerSprite.anchor.setTo(0.5, 1);
+    this.startBakeTimer();
+};
+
+BlueRoom.Game.prototype.startBakeTimer = function(){
     bakeTimer = setInterval(function(){
         currThis.ovenTimerTime-=0.1;
         currThis.ovenTimerUpdate();
     }, 10);
-};
+}
 
 BlueRoom.Game.prototype.ovenTimerUpdate= function() {
     // ensure you clear the context each time you update it or the bar will draw on top of itself
@@ -283,7 +287,7 @@ BlueRoom.Game.prototype.ovenTimerUpdate= function() {
         textTween.onComplete.add(function(){
             textAnimation.destroy();
             this.getMuffinsOut(true);
-            this.trashHandler("bakery", 1);
+            trashHandler("bakery", 1);
             // this.loseMoney(this.game.width/2, 500, "- $6.00", 6.00);
         }, this);
     }

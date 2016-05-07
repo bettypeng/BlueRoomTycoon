@@ -146,6 +146,11 @@ Customer.prototype = {
         }, 10);
 	},
 
+    stopBar : function() {
+        clearInterval(this.barTimer);
+        clearInterval(this.myTimer);
+    },
+
  	myupdate: function() {
         // ensure you clear the context each time you update it or the bar will draw on top of itself
         this.bar.context.clearRect(0, 0, this.bar.width, this.bar.height);
@@ -177,7 +182,7 @@ Customer.prototype = {
     leaveBlueRoom: function(){
         this.moving = true;
         if(!this.cashedOut){
-            if(this.ingredients!=null){
+            if(this.ingredients!=null || this.drinkType !=null || this.muffinType != null){
                 currThis.steal(this);
                 console.log("STEAL");
             }
