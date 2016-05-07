@@ -132,13 +132,13 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
  	if(upgradeList[currentlyDisplayedUpgrade] === "coffee"){
  		NUMBEROFSTATIONS++;
  		this.coffeeStation.visible = true;
-		activeButtons.add(myCoffeeButton);
+		coffeeButtonOn = true;
 		buy(upgradeList[currentlyDisplayedUpgrade]);
  	}
  	else if(upgradeList[currentlyDisplayedUpgrade] ==="bakery"){
  		NUMBEROFSTATIONS++;
  		this.bakeryStation.visible = true;
- 		activeButtons.add(this.bakeryButton);
+ 		bakeryButtonOn = true;
  		buy(upgradeList[currentlyDisplayedUpgrade]);
  	}
  	console.log("BUYING: " + upgradeList[currentlyDisplayedUpgrade]);
@@ -156,12 +156,16 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
  	if(upgrade === "coffee"){
  		NUMBEROFSTATIONS--;
  		this.coffeeStation.visible = false;
-		activeButtons.remove(myCoffeeButton);
+  		 this.coffeeButton.visible = false;
+
+		coffeeButtonOn = false;
  	}
  	else if(upgrade ==="bakery"){
  		NUMBEROFSTATIONS--;
  		this.bakeryStation.visible = false;
- 		activeButtons.remove(this.bakeryButton);
+  		 this.bakeryButton.visible = false;
+
+ 		bakeryButtonOn = false;
  	}
  	console.log("SELLING: " + upgrade);
 	upgradeList.push(upgrade);

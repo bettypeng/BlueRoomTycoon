@@ -27,11 +27,10 @@ var managerView = true;
 var sandwichView = false;
 var coffeeView = false;
 var bakeryView = false;
-
-var myCoffeeButton;
-var myBakeryButton;
-
 var dayEndView = false;
+
+var coffeeButtonOn;
+var BakeryButtonOn;
 
 var gameTimer;
 var gamegroup;
@@ -66,17 +65,13 @@ BlueRoom.Game.prototype = {
         this.managerButton = this.add.button(10, 10, 'managerButton', goToManagerView, this);
 		this.sandwichButton = this.add.button(10, 80, 'sandwichButton', goToSandwichView, this);
 		this.coffeeButton = this.add.button(10, 150, 'coffeeButton', goToCoffeeView, this);
-        myCoffeeButton = this.coffeeButton;
         this.bakeryButton = this.add.button(10, 220, 'bakeryButton', goToBakeryView, this);
-        myBakeryButton = this.bakeryButton;
         this.status_bar = this.add.sprite(0, 600, 'status_bar');
         this.pauseButton = this.add.button(1000, 630, 'pauseButton', this.showPauseScreen, this);
 
-
-        // activeButtons.push(this.coffeeButton);
-        // activeButtons.push(this.bakeryButton);
-
+        coffeeButtonOn = false;
         this.coffeeButton.visible = false;
+        bakeryButtonOn = false;
         this.bakeryButton.visible = false;
         
         gamegroup.add(this.status_bar);
@@ -327,20 +322,24 @@ BlueRoom.Game.prototype = {
         }
 
         if(dayEndView){
-            activeButtons.children.forEach(function(item){
-                item.visible = false;
-            });
-            // activeButtons.children.forEach(function(item){
-            //     item.visible = false;
-            // });
+            // this.managerButton.visible = true;
+            // this.sandwichButton.visible = true;
+            // if(coffeeButtonOn){
+            //     this.coffeeButton.visible = true;
+            // } else{
+            //     this.coffeeButton.visible = false;
+            // }
+            // if(bakeryButtonOn){
+            //     this.bakeryButton.visible = true;
+            // } else{
+            //     this.bakeryButton.visible = false;
+            // }
         }
         else{
-            activeButtons.children.forEach(function(item){
-                item.visible = true;
-            });
-            // activeButtons.children.forEach(function(item){
-            //     item.visible = true;
-            // });
+            // this.managerButton.visible = false;
+            // this.sandwichButton.visible = false;
+            // this.bakeryButton.visible = false;
+            // this.coffeeButton.visible = false;
         }
         if(!isBlueRoomOpen && numCustomer <=0){
             if(!dayEndView){
