@@ -51,6 +51,8 @@ BlueRoom.Game.prototype.createInventoryView= function () {
 
 	managerView = false;
 	sandwichView = false;
+	bakeryView = false;
+	coffeeView = false;
 	this.managerButton.visible = false;
 	this.sandwichButton.visible = false;
 };

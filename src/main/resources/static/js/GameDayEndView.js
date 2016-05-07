@@ -72,8 +72,7 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
     bakeryView = false;
     dayEndView = true;
 
-    	this.managerButton.visible = false;
-	this.sandwichButton.visible = false;
+    
 
 	game.loseMoney(500, 530, "- $"+(dailyInfo.expenses).toFixed(2), dailyInfo.expenses);
 };
@@ -99,29 +98,39 @@ BlueRoom.Game.prototype.enableDayEndButtons = function(){
 BlueRoom.Game.prototype.destroyDayEndView= function(){
 	this.managerButton.visible = true;
 	this.sandwichButton.visible = true;
+	if(coffeeButtonOn){
+		this.coffeeButton.visible = true;
+	} else{
+		this.coffeeButton.visible = false;
+	}
+	if(bakeryButtonOn){
+		this.bakeryButton.visible = true;
+	} else{
+		this.bakeryButton.visible = false;
+	}
 	dayEndViewElements.forEach(function(item){
 		item.destroy();
 	});
 	dayEndViewElements = new Array();
 
-		    managerView = true;
-		    sandwichView = false;
-            coffeeView = false;
-            bakeryView = false;
-            dayEndView = false;
-    		this.hideSandwichView();
-            this.hideCoffeeView();
-            this.hideBakeryView();
-            this.disableButton(this.managerButton);
-            if (!sandwichStationFilled ) {
-                this.enableButton(this.sandwichButton);
-            }
-            if (!coffeeStationFilled) {
-                this.enableButton(this.coffeeButton);
-            }
-            if (!bakeryStationFilled) {
-                this.enableButton(this.bakeryButton);
-            }
+    managerView = true;
+    sandwichView = false;
+    coffeeView = false;
+    bakeryView = false;
+    dayEndView = false;
+	this.hideSandwichView();
+    this.hideCoffeeView();
+    this.hideBakeryView();
+    this.disableButton(this.managerButton);
+    if (!sandwichStationFilled ) {
+        this.enableButton(this.sandwichButton);
+    }
+    if (!coffeeStationFilled) {
+        this.enableButton(this.coffeeButton);
+    }
+    if (!bakeryStationFilled) {
+        this.enableButton(this.bakeryButton);
+    }
 
 	this.resetGameDay();
 };
