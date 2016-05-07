@@ -19,8 +19,11 @@ public class GameManager {
 
   private final static int UUID_LEN = 8;
   private static final double INITIAL_MONEY = 1000;
-  private static final double TRASH_CONST = 0.3;
-  private static final int EMPLOYEE_COST = 100;
+  private static final double SANDWICH_TRASH_CONST = 0.3;
+  private static final double BAKERY_TRASH_CONST = 6;
+  private static final double COFFEE_TRASH_CONST = 1;
+  private static final double EMPLOYEE_WAGE = 50;
+  private static final double STATION_UTIL_COST = 10;
 
   private MoneyManager manager;
   private List<Employee> employees;
@@ -33,6 +36,7 @@ public class GameManager {
 
   private List<String> availableStations;
 
+  // initialize vars
   public GameManager() {
     manager = new MoneyManager(INITIAL_MONEY);
     employees = new ArrayList<>();
@@ -71,8 +75,20 @@ public class GameManager {
     return price;
   }
 
-  public double trash(int numIngredients) {
-    double loss = numIngredients * TRASH_CONST;
+  // when user throws out ingredients or burns muffins
+  public double trash(int numIngredients, String station) {
+    double loss;
+    switch(station) {
+    case "coffee":
+      loss = COFFEE_TRASH_CONST;
+      break;
+    case "bakery":
+      loss = BAKERY_TRASH_CONST;
+      break;
+    default:
+      loss = numIngredients * SANDWICH_TRASH_CONST;
+      break;
+    }
     manager.handleLoss(loss);
     return loss;
   }
@@ -82,8 +98,8 @@ public class GameManager {
     String beforeid = uid.toString();
     //making the format of the id the same as the other ids in the db
     String id = "/c/" + beforeid.substring(0, UUID_LEN);
-    //associate id with customer
-
+    
+    // generate a station & an order for this customer
     int rand = (int) (Math.random() * availableStations.size());
     String station = availableStations.get(rand);
     FoodItem order;
@@ -98,17 +114,20 @@ public class GameManager {
       order = OrderFactory.getSandwichOrder();
       break;
     }
+    
+    // create customer and associate it with ID in map
     Customer newCustomer = new Customer(id, order, station);
     customerMap.put(id, newCustomer);
     return newCustomer;
   }
 
   // this needs to take into account the money spent on employee!!
-  public Employee hireEmployee(String name) {
+  public Employee hireEmployee(String name, double cost) {
    Employee emp = new Employee(name);
    employees.add(emp);
    employeeMap.put(name, emp);
-   manager.changeMoney(EMPLOYEE_COST * -1);
+   manager.changeMoney(cost * -1);
+   manager.addDailyExpenses(EMPLOYEE_WAGE);
    return emp;
   }
 
@@ -116,11 +135,13 @@ public class GameManager {
   public DayData getDayData() {
     return manager.getTodayInfo();
   }
-
+  
+  // gets the list of available stations
   public List<String> getAvailableStations() {
     return availableStations;
   }
-
+  
+  // gets a list of names of all employees (not employee objects themselves)
   public List<String> getEmployeeNames() {
     List<String> result = new ArrayList<>();
     for (Employee e : employees) {
@@ -129,17 +150,17 @@ public class GameManager {
     return result;
   }
 
-  // gets data about total profits over time. could make this a list of DayData?
-//  public List<DayData> getTotalStats() {
-//    return manager.getTotalData();
-//  }
-
+  // gets financial data stored over the course of the game
   public GameData getGameData() {
     return manager.getTotalInfo();
   }
 
-  public void addStation(String stationName) {
+  // adds a station to the blue room
+  public void addStation(String stationName, double cost) {
+    assert stationName.equals("bakery") || stationName.equals("coffee") : "ERROR: station input should not exist";
     availableStations.add(stationName);
+    manager.changeMoney(cost * -1);
+    manager.addDailyExpenses(STATION_UTIL_COST);
   }
 
   /**
@@ -154,10 +175,6 @@ public class GameManager {
   public Employee getEmployee(String name) {
     return employeeMap.get(name);
   }
-
-//  public List<Employee> getEmployees() {
-//    return ImmutableList.copyOf(employees);
-//  }
 
   public double calculateEmployeeInterval(String name, double energy) {
     Employee emp = getEmployee(name);
@@ -181,7 +198,7 @@ public class GameManager {
     OrderFactory.setMuffinWeights();
     currTime = 0;
     leftToday = 0;
-    baselineInterval--;
+    baselineInterval -= 1000;
     return today;
   }
 
@@ -199,23 +216,30 @@ public class GameManager {
   }
 
   public double calculateCustomerInterval() {
-    // between 150 and 180 seconds is currently "4 pm rush"
-    return baselineInterval + (leftToday * 1);
+    double interval = baselineInterval + (leftToday * 100);
+    interval -= (2 * (employees.size()));
+    return interval;
   }
 
   public void saveGame(String filename) {
     try(BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+      
+      // save stations
       for (String station : availableStations) {
         writer.write(station, 0, station.length());
         writer.write(" ", 0, 1);
       }
       writer.newLine();
+      
+      // save employees
       for (Employee e : employees) {
         String name = e.getName();
         writer.write(name, 0, name.length());
         writer.write(" ", 0, 1);
       }
       writer.newLine();
+      
+      // save $$ info
       manager.save(writer);
       writer.flush();
     } catch (IOException e) {
@@ -230,7 +254,7 @@ public class GameManager {
       String[] stationNames = line.split(" ");
       availableStations.clear();
       for (String station : stationNames) {
-        addStation(station);
+        addStation(station, 0);
       }
 
       employees.clear();
@@ -238,14 +262,29 @@ public class GameManager {
       line = reader.readLine();
       String[] employeeNames = line.split(" ");
       for (String eName : employeeNames) {
-        hireEmployee(eName);
+        hireEmployee(eName, 0);
       }
 
       int dayNum = manager.load(reader);
-      baselineInterval = 11 - dayNum;
-    } catch (IOException e) {
+      baselineInterval = 11000 - (dayNum * 1000);
+    } catch (IOException | NumberFormatException e) {
       e.printStackTrace();
     }
+  }
+
+  public void sellStation(String station, double price) {
+    availableStations.remove(station);
+    manager.changeMoney(price);
+    // subtract daily price
+    manager.addDailyExpenses(STATION_UTIL_COST * -1);
+    
+  }
+  
+  public void fire(String employeeName) {
+    employees.remove(employeeMap.get(employeeName));
+    employeeMap.remove(employeeName);
+    // subtract wages
+    manager.addDailyExpenses(EMPLOYEE_WAGE * -1);
   }
 
 }

@@ -60,18 +60,25 @@ BlueRoom.Game.prototype.addToEmployeeInventory = function(employee){
 	inventoryEmployeeList.push(employee);
 };
 
-BlueRoom.Game.prototype.removeFromEmployeeInventory = function(employee){
-	//remove from list
+BlueRoom.Game.prototype.removeFromEmployeeInventory = function(){
+	var name = inventoryEmployeeList[inventoryEmployee];
+	this.firedEmployeeBackOnMarket(name);
+	inventoryEmployeeList.splice(inventoryEmployee, 1);
 	if(inventoryEmployeeList.length <1){
 		inventoryEmployeeElements.forEach(function(item){
 			item.destroy();
 		});
 	}
+	else{
+		this.fadeInventoryEmployeeForward();
+	}
+
+	this.createFireAlert(name);
 
 };
 
 BlueRoom.Game.prototype.setUpEmployeeInventory = function(){
-		console.log("setting up e inv");
+	console.log("setting up e inv");
 
 	var upEmployeeArrow = this.add.button(this.game.width/3, 170, 'inventoryUp', this.fadeInventoryEmployeeForward, this);
 	upEmployeeArrow.anchor.setTo(0.5, 0);
@@ -91,7 +98,7 @@ BlueRoom.Game.prototype.setUpEmployeeInventory = function(){
 	var employeePrice = this.game.add.text(this.game.width/3, 170 + 33 + 270, "Current employee wages: $" + EMPLOYEEWAGE + " / day", detailStyle);
 	employeePrice.anchor.setTo(0.5, 0);
 
-	var fireButton = this.add.button(this.game.width/3, 170 + 33 + 300, 'fireButton', this.hideInventoryView, this);
+	var fireButton = this.add.button(this.game.width/3, 170 + 33 + 300, 'fireButton', this.removeFromEmployeeInventory, this);
 	fireButton.anchor.setTo(0.5, 0);
 
 	inventoryEmployeeElements.push(upEmployeeArrow);
