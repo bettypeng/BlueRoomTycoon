@@ -17,6 +17,7 @@
 	<script src="js/GamePausedView.js"></script>
 
 	<script src="js/StatusBar.js"></script>
+	<script src="js/CustomerStatusBar.js"></script>
 	<script src="js/Customer.js"></script>
 	<script src="js/Employee.js"></script>
 	<script src="js/Server.js"></script>

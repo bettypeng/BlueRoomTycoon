@@ -462,7 +462,7 @@ BlueRoom.Game.prototype.onMuffinDragStop= function(sprite, pointer) {
             this.add.tween(bakerySpeechBubble).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
             this.add.tween(currBakeryOrderSprite).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
             var tw = this.add.tween(bakeryCustomerFace).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
-
+            currBakeryCustomerStatusBar.discard();
             currThis = this;
             tw.onComplete.add(function () {
                 currThis.noBakeryCustomer();
@@ -543,6 +543,8 @@ BlueRoom.Game.prototype.bakeryUpdate= function () {
 
     if (bakeryLine.length != 0 && currBakeryCustomer == null) {
         currBakeryCustomer = bakeryLine[0];
+        currBakeryCustomerStatusBar = new CustomerStatusBar(currBakeryCustomer, 250, 10);
+        bakeryViewElements.push(currBakeryCustomerStatusBar.barSprite);
         console.log(currBakeryCustomer);
 
         currBakeryOrderSprite.loadTexture(currBakeryCustomer.order.type);

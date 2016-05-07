@@ -121,6 +121,10 @@ BlueRoom.Game.prototype.createManager = function () {
 
     setTimeout(function(){
         getCustomer();
+        var custTimer = currThis.newCustAlert();
+        setTimeout(function() {
+            clearInterval(custTimer);
+        }, 1900);
     }, 500);
 
     setInterval(function() {
@@ -129,6 +133,10 @@ BlueRoom.Game.prototype.createManager = function () {
         // console.log(CUSTOMERINTERVAL);
         if(managerCounter % CUSTOMERINTERVAL == 0 && numSandwich<15 && numCoffee<11 && numBakery<11 && isBlueRoomOpen){
             getCustomer();
+            var custTimer = currThis.newCustAlert();
+            setTimeout(function() {
+                clearInterval(custTimer);
+            }, 1900);
         }
     }, 1);
 
@@ -159,6 +167,11 @@ BlueRoom.Game.prototype.startMovement= function(){
 
 BlueRoom.Game.prototype.abandonLine = function(customer){
         var myGame = this;
+
+        var leaveTimer = currThis.custLeavingAlert();
+        setTimeout(function() {
+            clearInterval(leaveTimer);
+        }, 1900);
 
         myGame.deleteCurrSandwich(customer);
         leaving = true;
@@ -291,6 +304,11 @@ BlueRoom.Game.prototype.cashCustomerOut= function(customer){
 };
 
 BlueRoom.Game.prototype.steal = function(customer){
+    var stealTimer = currThis.custStealingAlert();
+    setTimeout(function() {
+        clearInterval(stealTimer);
+    }, 1900);
+
     var c = customer;
     c.cust.tint = 0xff7777;
     if (c.employee != null) {
