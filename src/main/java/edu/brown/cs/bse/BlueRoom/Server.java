@@ -494,8 +494,10 @@ public class Server {
     @Override
     public Object handle(Request req, Response res) {
       QueryParamsMap qm = req.queryMap();
+      
+      int gameNum = Integer.parseInt(qm.value("number"));
       String filename = qm.value("file");
-      gameManager.saveGame(filename);
+      gameManager.saveGame(filename, gameNum);
 
       List<String> results = new ArrayList<>();
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
@@ -534,13 +536,12 @@ public class Server {
     @Override
     public Object handle(Request req, Response res) {
       QueryParamsMap qm = req.queryMap();
-      String station = qm.value("station");
+      String station = qm.value("name");
       
       gameManager.sellStation(station, GameManager.UPGRADE_COSTS.get(station) / 2);
       
-      List<String> results = new ArrayList<>();
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
-          .put("results", results).build();
+          .put("moneyGained", GameManager.UPGRADE_COSTS.get(station) / 2).build();
       return GSON.toJson(variables);
     }
     
@@ -553,6 +554,7 @@ public class Server {
       String name = qm.value("name");
       
       gameManager.fire(name);
+      
       
       List<String> results = new ArrayList<>();
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()

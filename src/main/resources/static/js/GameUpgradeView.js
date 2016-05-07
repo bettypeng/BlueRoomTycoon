@@ -171,6 +171,7 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
 	upgradeList.push(upgrade);
 	NUMBEROFUPGRADES++;
 	console.log(upgradeList);
+	sellHandler(upgrade);
  };
 
 
