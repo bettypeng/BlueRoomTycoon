@@ -2,7 +2,8 @@ var hireViewElements = new Array();
 var NUMBEROFHIRES = 3;
 var currentlyDisplayedHire = 0;
 var hireList = ["erik", "alex", "rachel"];
-var EMPLOYEEWAGE = 100;
+var HIRECOST = 100;
+var EMPLOYEEWAGE = 50;
 var hireMeButton;
 
 BlueRoom.Game.prototype.createHireView= function () {
@@ -21,7 +22,10 @@ BlueRoom.Game.prototype.createHireView= function () {
 	var currbalance = this.game.add.text(this.game.width/2, 140, 'Current Balance: $' + statusBar.money.toFixed(2), labelStyle);
 	currbalance.anchor.setTo(0.5, 0,5);
 
-	var wages = this.game.add.text(this.game.width/2, 480, "Wages: $" +EMPLOYEEWAGE + " / day", labelStyle);
+	var cost = this.game.add.text(this.game.width/3, 480, "Hire Cost: $" +HIRECOST, labelStyle);
+	cost.anchor.setTo(0.5, 0,5);
+
+	var wages = this.game.add.text(2* this.game.width/3, 480, "Daily Wages: $" +EMPLOYEEWAGE + " / day", labelStyle);
 	wages.anchor.setTo(0.5, 0,5);
 
 	hireMeButton = this.add.button(this.game.width/2, 510, 'hireMeButton', this.hireNewEmployee, this);
@@ -31,6 +35,7 @@ BlueRoom.Game.prototype.createHireView= function () {
 
 	hireViewElements.push(title);
 	hireViewElements.push(currbalance);
+	hireViewElements.push(cost);
 	hireViewElements.push(wages);
 	hireViewElements.push(hireMeButton);
 

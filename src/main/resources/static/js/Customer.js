@@ -137,10 +137,8 @@ Customer.prototype = {
             if(!currCust.moving && !gamePaused){
                 if(managerView){
                     currCust.happinessBarProgress-=0.1;
-                    console.log("-0.1: " + currCust.happinessBarProgress);
                 } else {
                     currCust.happinessBarProgress-=0.01;
-                    console.log("-0.01: "  + currCust.happinessBarProgress);
                 }
             }
       	}, CUSTOMERHAPPINESSINTERVAL);
