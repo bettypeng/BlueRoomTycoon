@@ -1,3 +1,20 @@
+<<<<<<< HEAD
+/gpfs/main/home/emagaver/course/cs032/BlueRoomTycoon/src/main/java/edu/brown/cs/bse/BlueRoom/DayData.java
+/gpfs/main/home/emagaver/course/cs032/BlueRoomTycoon/src/main/java/edu/brown/cs/bse/elements/Customer.java
+/gpfs/main/home/emagaver/course/cs032/BlueRoomTycoon/src/main/java/edu/brown/cs/bse/BlueRoom/GameManager.java
+/gpfs/main/home/emagaver/course/cs032/BlueRoomTycoon/src/main/java/edu/brown/cs/bse/elements/FoodItem.java
+/gpfs/main/home/emagaver/course/cs032/BlueRoomTycoon/src/main/java/edu/brown/cs/bse/BlueRoom/MoneyManager.java
+/gpfs/main/home/emagaver/course/cs032/BlueRoomTycoon/src/main/java/edu/brown/cs/bse/BlueRoom/Server.java
+/gpfs/main/home/emagaver/course/cs032/BlueRoomTycoon/src/main/java/edu/brown/cs/bse/elements/Muffin.java
+/gpfs/main/home/emagaver/course/cs032/BlueRoomTycoon/src/main/java/edu/brown/cs/bse/BlueRoom/Main.java
+/gpfs/main/home/emagaver/course/cs032/BlueRoomTycoon/src/main/java/edu/brown/cs/bse/elements/SandwichIngredient.java
+/gpfs/main/home/emagaver/course/cs032/BlueRoomTycoon/src/main/java/edu/brown/cs/bse/elements/Bread.java
+/gpfs/main/home/emagaver/course/cs032/BlueRoomTycoon/src/main/java/edu/brown/cs/bse/elements/Employee.java
+/gpfs/main/home/emagaver/course/cs032/BlueRoomTycoon/src/main/java/edu/brown/cs/bse/BlueRoom/GameData.java
+/gpfs/main/home/emagaver/course/cs032/BlueRoomTycoon/src/main/java/edu/brown/cs/bse/elements/Drink.java
+/gpfs/main/home/emagaver/course/cs032/BlueRoomTycoon/src/main/java/edu/brown/cs/bse/elements/Sandwich.java
+/gpfs/main/home/emagaver/course/cs032/BlueRoomTycoon/src/main/java/edu/brown/cs/bse/BlueRoom/OrderFactory.java
+=======
 /Users/bettypeng/Desktop/BlueRoomTycoon/src/main/java/edu/brown/cs/bse/elements/Muffin.java
 /Users/bettypeng/Desktop/BlueRoomTycoon/src/main/java/edu/brown/cs/bse/BlueRoom/GameManager.java
 /Users/bettypeng/Desktop/BlueRoomTycoon/src/main/java/edu/brown/cs/bse/BlueRoom/GameData.java
@@ -13,3 +30,4 @@
 /Users/bettypeng/Desktop/BlueRoomTycoon/src/main/java/edu/brown/cs/bse/elements/Bread.java
 /Users/bettypeng/Desktop/BlueRoomTycoon/src/main/java/edu/brown/cs/bse/BlueRoom/DayData.java
 /Users/bettypeng/Desktop/BlueRoomTycoon/src/main/java/edu/brown/cs/bse/BlueRoom/OrderFactory.java
+>>>>>>> fda8a827d695d0c61b2f703eb6dd0fc0b668546e

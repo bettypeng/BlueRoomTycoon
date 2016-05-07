@@ -41,13 +41,21 @@ var daytext;
 var ampmtext;
 var closedtext;
 
+var customerAlert;
+var leavingAlert;
+var stealingAlert;
+var customerAlertText;
+var leavingAlertText;
+var stealingAlertText;
+
 
 var dayCounter = 4;
 var twelveCounter = 0;
 
 
-var MANAGERTIMEINTERVAL = 1; //250 standard
-var STATIONTIMEINTERVAL = 1;
+var MANAGERTIMEINTERVAL = 50; //250 standard
+var STATIONTIMEINTERVAL = 50;
+
 
 var saveNumber;
 
@@ -70,6 +78,10 @@ BlueRoom.Game.prototype = {
         this.status_bar = this.add.sprite(0, 600, 'status_bar');
         this.pauseButton = this.add.button(1000, 630, 'pauseButton', this.showPauseScreen, this);
 
+        customerAlert = this.add.sprite(20, 630, 'radiobutton');
+        leavingAlert = this.add.sprite(20, 655, 'radiobutton');
+        stealingAlert = this.add.sprite(20, 680, 'radiobutton');
+
         coffeeButtonOn = false;
         this.coffeeButton.visible = false;
         bakeryButtonOn = false;
@@ -86,14 +98,19 @@ BlueRoom.Game.prototype = {
         var status = statusBar;
         var style = { font: "32px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left", backgroundColor: "#ffffff" };
 
-        moneytext = this.game.add.text(100, 650, '$' + (status.money.toFixed(2)), style);
-        daytext = this.game.add.text(500, 650,  status.day[dayCounter%7], style);
+        moneytext = this.game.add.text(330, 650, '$' + (status.money.toFixed(2)), style);
+        daytext = this.game.add.text(620, 650,  status.day[dayCounter%7], style);
         //timetext = this.game.add.text(800, 650,  status.hour + ':' + status.minute, style);
-        timetext = this.game.add.text(800, 650,  status.hour, style);
-        ampmtext = this.game.add.text(840, 650,  status.ampm[twelveCounter%2], style);
-        closedtext = this.game.add.text(800, 650,  "CLOSING TIME!", style);
+        timetext = this.game.add.text(820, 650,  status.hour, style);
+        ampmtext = this.game.add.text(860, 650,  status.ampm[twelveCounter%2], style);
+        closedtext = this.game.add.text(820, 650,  "CLOSING TIME!", style);
         this.closedSign(false);
 
+        var newstyle = { font: "16px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left", backgroundColor: "#ffffff" };
+
+        customerAlertText = this.game.add.text(40, 620, "NEW CUSTOMER", newstyle);
+        leavingAlertText = this.game.add.text(40, 645, "LEAVING", newstyle);
+        stealingAlertText = this.game.add.text(40, 670, "STEALING", newstyle);
 
 
         this.moneytextTween = this.add.tween(moneytext.scale).to({ x: 1.5, y: 1.5}, 200, Phaser.Easing.Linear.In).to({ x: 1, y: 1}, 200, Phaser.Easing.Linear.In);
@@ -104,10 +121,20 @@ BlueRoom.Game.prototype = {
         textgroup.add(ampmtext);
         textgroup.add(daytext);
         textgroup.add(closedtext);
+        textgroup.add(customerAlert);
+        textgroup.add(leavingAlert);
+        textgroup.add(stealingAlert);
+        textgroup.add(customerAlertText);
+        textgroup.add(leavingAlertText);
+        textgroup.add(stealingAlertText);
 
         textgroup.forEach(function(item) {
             item.anchor.set(0.5);
         });
+
+        customerAlertText.anchor.setTo(0, 0);
+        leavingAlertText.anchor.setTo(0, 0);
+        stealingAlertText.anchor.setTo(0, 0);
         
         this.setTimer(MANAGERTIMEINTERVAL);
         this.disableButton(this.managerButton);
@@ -211,6 +238,45 @@ BlueRoom.Game.prototype = {
             this.setTimer(STATIONTIMEINTERVAL);
     	};
     	
+    },
+
+    newCustAlert: function() {
+        var counter = 0;
+        customerTimer = setInterval(function(){
+            counter++;
+            if (counter%2==0) {
+                customerAlert.tint = 0x00FF00;
+            } else {
+                customerAlert.tint = 0xFFFFFF;
+            }
+        }, 90);
+        return customerTimer;
+    },
+
+    custLeavingAlert: function() {
+        var counter = 0;
+        leavingTimer = setInterval(function(){
+            counter++;
+            if (counter%2==0) {
+                leavingAlert.tint = 0xFFFF00;
+            } else {
+                leavingAlert.tint = 0xFFFFFF;
+            }
+        }, 90);
+        return leavingTimer;
+    },
+
+    custStealingAlert: function() {
+        var counter = 0;
+        stealingTimer = setInterval(function(){
+            counter++;
+            if (counter%2==0) {
+                stealingAlert.tint = 0xFF0000;
+            } else {
+                stealingAlert.tint = 0xFFFFFF;
+            }
+        }, 90);
+        return stealingTimer;
     },
     
     // addMoney: function(amt){
@@ -430,8 +496,25 @@ BlueRoom.Game.prototype = {
 
     },
 
-    load: function(station, employees, balance, dayNum) {
+    load: function(stations, employees, balance, dayNum, magRack) {
+        console.log(stations);
+        for (var i = 0; i < stations.length; i++) {
+            var station = stations[i];
+            // do something to add the station to the front end
 
+        }
+        console.log(employees);
+        for (var i = 0; i < employees.length; i++) {
+            // add each employee
+        }
+        console.log(balance);
+        // check if this is actually a valid way to change the money
+        statusBar.money = balance;
+        console.log(dayNum);
+        // do something with dayNum to make sure day of the week is correct
+        console.log(magRack);
+        // do something to tell game if magazine rack has been purchased
+        currThis.state.start('Game');
     }
 
 };

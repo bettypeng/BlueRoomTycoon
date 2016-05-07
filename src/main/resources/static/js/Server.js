@@ -51,12 +51,13 @@ function fireHandler(empName) {
 
 }
 
-function sellHandler(stationName, price) {
-    var postParameters = {name: stationName, price: price};
+function sellHandler(stationName) {
+    var postParameters = {name: stationName};
 
     $.post("/sell", postParameters, function(responseJSON) {
-
-        game.addMoney(500, 530, "+ $"+price.toFixed(2), price);
+        var responseObject = JSON.parse(responseJSON);
+        var moneyGained = responseObject.moneyGained;
+        game.addMoney(500, 530, "+ $"+moneyGained.toFixed(2), moneyGained);
     });
 }
 
@@ -280,7 +281,7 @@ function getEmployeeInterval(stationName, atStation, makingProduct, line, employ
 
 function saveGame() {
     var filename = "game" + saveNumber + ".brt";
-	var postParameters = { file: filename };
+	var postParameters = { file: filename, number: saveNumber };
 	
 	$.post("/save", postParameters, function(responseJSON) {});
     game.createGeneralAlert("Current game state successfully saved in game " + saveNumber + "!");
@@ -292,23 +293,12 @@ function loadGame(filename) {
     $.post("/load", postParameters, function(responseJSON) {
 		var responseObject = JSON.parse(responseJSON);
 		var stations = responseObject.stations;
-        console.log(stations);
-		for (var i = 0; i < stations.length; i++) {
-			var station = stations[i];
-			// do something to add the station to the front end
-
-		}
 		var employees = responseObject.employees;
-        console.log(employees);
-		for (var i = 0; i < employees.length; i++) {
-			// add each employee
-		}
 		var balance = responseObject.money;
-        console.log(balance);
-		// check if this is actually a valid way to change the money
-		statusBar.money = balance;
         var dayNum = responseObject.dayNum;
-        // do something with this so day of the week is correct
+        var magazineRack = responseObject.magazineRack;
+
+        BlueRoom.Game.prototype.load(stations, employees, balance, dayNum, magazineRack);
     });
 }
 

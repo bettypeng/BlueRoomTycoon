@@ -24,7 +24,7 @@ public class GameManager {
   private final static int UUID_LEN = 8;
   private static final double INITIAL_MONEY = 50;
   private static final double SANDWICH_TRASH_CONST = 0.3;
-  private static final double BAKERY_TRASH_CONST = 6;
+  private static final double BAKERY_TRASH_CONST = 0.5;
   private static final double COFFEE_TRASH_CONST = 1;
   private static final double EMPLOYEE_WAGE = 50;
   public static final Map<String, Double> UPGRADE_COSTS = new ImmutableMap.Builder<String, Double>()
@@ -48,6 +48,7 @@ public class GameManager {
   private int leftToday;
 
   private List<String> availableStations;
+  private boolean magazineRack;
 
   // initialize vars
   public GameManager() {
@@ -61,6 +62,7 @@ public class GameManager {
     leftToday = 0;
     baselineInterval = 5000;
     savedGames = new boolean[3];
+    magazineRack = false;
     loadConfig("gameConfig.brt");
     OrderFactory.setMuffinWeights();
   }
@@ -98,13 +100,14 @@ public class GameManager {
       loss = COFFEE_TRASH_CONST;
       break;
     case "bakery":
-      loss = BAKERY_TRASH_CONST;
+      loss = BAKERY_TRASH_CONST * numIngredients;
       break;
     default:
       loss = numIngredients * SANDWICH_TRASH_CONST;
       break;
     }
     manager.handleLoss(loss);
+    manager.handleTrash(numIngredients);
     return loss;
   }
 
@@ -177,6 +180,14 @@ public class GameManager {
     manager.changeMoney(cost * -1);
     manager.addDailyExpenses(STATION_UPKEEPS.get(stationName));
   }
+  
+  public void addMagazineRack() {
+	  magazineRack = true;
+  }
+  
+  public boolean hasMagazineRack() {
+	  return magazineRack;
+  }
 
   /**
    * Gets the customer cached in the map
@@ -213,7 +224,7 @@ public class GameManager {
     OrderFactory.setMuffinWeights();
     currTime = 0;
     leftToday = 0;
-    baselineInterval -= 5000;
+    baselineInterval -= 500;
     return today;
   }
 
@@ -240,7 +251,9 @@ public class GameManager {
     return interval;
   }
 
-  public void saveGame(String filename) {
+  public void saveGame(String filename, int gameNum) {
+	savedGames[gameNum] = true;
+	rewriteConfigFile();
     try(BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
       
       // save stations
@@ -248,6 +261,9 @@ public class GameManager {
         writer.write(station, 0, station.length());
         writer.write(" ", 0, 1);
       }
+      writer.newLine();
+      String rackBool = String.valueOf(magazineRack);
+      writer.write(rackBool, 0, rackBool.length());
       writer.newLine();
       
       // save employees
@@ -275,6 +291,7 @@ public class GameManager {
       for (String station : stationNames) {
         addStation(station, 0);
       }
+      magazineRack = Boolean.parseBoolean(reader.readLine());
 
       employees.clear();
       employeeMap.clear();
@@ -298,7 +315,7 @@ public class GameManager {
     availableStations.remove(station);
     manager.changeMoney(price);
     // subtract daily price
-    manager.addDailyExpenses(STATION_UPKEEPS.get(station));
+    manager.addDailyExpenses(STATION_UPKEEPS.get(station) * -1);
     
   }
   
@@ -375,6 +392,7 @@ public class GameManager {
     leftToday = 0;
     baselineInterval = 5000;
     savedGames = new boolean[3];
+    magazineRack = false;
     loadConfig("gameConfig.brt");
     OrderFactory.setMuffinWeights();
   }
