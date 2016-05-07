@@ -283,7 +283,8 @@ BlueRoom.Game.prototype.ovenTimerUpdate= function() {
         textTween.onComplete.add(function(){
             textAnimation.destroy();
             this.getMuffinsOut(true);
-            this.loseMoney(this.game.width/2, 500, "- $6.00", 6.00);
+            this.trashHandler("bakery", 1);
+            // this.loseMoney(this.game.width/2, 500, "- $6.00", 6.00);
         }, this);
     }
     

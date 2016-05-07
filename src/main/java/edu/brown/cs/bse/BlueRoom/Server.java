@@ -196,7 +196,6 @@ public class Server {
     @Override
     public Object handle(Request req, Response res) {
       QueryParamsMap qm = req.queryMap();
-      try {
 
       // parse customer
       String custID = qm.value("id");
@@ -233,10 +232,6 @@ public class Server {
           .put("moneyMade", moneyMade).build();
 
       return GSON.toJson(variables);
-      }catch(Exception e) {
-        e.printStackTrace();
-      }
-      return null;
     }
 
   }
@@ -351,7 +346,6 @@ public class Server {
     @Override
     public Object handle(final Request req, final Response res) {
       Map<String, Object> variables = null;
-      // try {
       QueryParamsMap qm = req.queryMap();
 
       // this can be if we ever want different employees to have different
@@ -365,10 +359,6 @@ public class Server {
 
       variables = new ImmutableMap.Builder<String, Object>()
           .put("results", results).build();
-
-      // } catch(Exception e) {
-      // e.printStackTrace();
-      // }
 
       return GSON.toJson(variables);
     }
@@ -384,7 +374,7 @@ public class Server {
     @Override
     public Object handle(final Request req, final Response res) {
       QueryParamsMap qm = req.queryMap();
-      
+
       Employee employee = gameManager.getEmployee(qm.value("employee"));
 
       Customer customer = gameManager.getCustomer(qm.value("customer"));
@@ -449,8 +439,6 @@ public class Server {
     public Object handle(final Request req, final Response res) {
       QueryParamsMap qm = req.queryMap();
 
-      try {
-
       String empName = qm.value("name");
       System.out.println(qm.value("energy"));
       Double energy = Double.parseDouble(qm.value("energy"));
@@ -461,10 +449,6 @@ public class Server {
           .put("employeeInt", employeeInt).build();
 
       return GSON.toJson(variables);
-      }catch(Exception e) {
-        e.printStackTrace();
-      }
-      return null;
     }
   }
 
@@ -512,18 +496,18 @@ public class Server {
       return GSON.toJson(variables);
     }
   }
-  
+
   private class LoadHandler implements Route {
-    
+
     @Override
     public Object handle(Request req, Response res) {
       QueryParamsMap qm = req.queryMap();
       String filename = qm.value("file");
       gameManager.load(filename);
-      
+
       List<String> stations = gameManager.getAvailableStations();
       List<String> employees = gameManager.getEmployeeNames();
-      
+
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("stations", stations)
           .put("employees", employees)

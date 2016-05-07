@@ -120,6 +120,8 @@ BlueRoom.Game.prototype.firedEmployeeBackOnMarket = function(name){
 	NUMBEROFHIRES++;
 	NUMBEROFEMPLOYEES--;
 
+	fire(name);
+
 	console.log(name);
 	console.log(employeeMap[name]);
 	var emp = employeeMap[name];

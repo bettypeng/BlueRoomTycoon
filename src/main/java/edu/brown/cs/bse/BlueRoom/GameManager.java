@@ -42,7 +42,7 @@ public class GameManager {
     availableStations.add("sandwich");
     currTime = 0;
     leftToday = 0;
-    baselineInterval = 10000;
+    baselineInterval = 5000;
     OrderFactory.setMuffinWeights();
   }
 
@@ -116,11 +116,11 @@ public class GameManager {
   public DayData getDayData() {
     return manager.getTodayInfo();
   }
-  
+
   public List<String> getAvailableStations() {
     return availableStations;
   }
-  
+
   public List<String> getEmployeeNames() {
     List<String> result = new ArrayList<>();
     for (Employee e : employees) {
