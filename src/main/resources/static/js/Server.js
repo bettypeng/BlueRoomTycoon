@@ -266,6 +266,7 @@ function saveGame() {
 	var postParameters = { file: filename };
 	
 	$.post("/save", postParameters, function(responseJSON) {});
+    game.createGeneralAlert("Current game state successfully saved!");
 }
 
 function loadGame(filename) {

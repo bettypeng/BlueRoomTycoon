@@ -28,6 +28,9 @@ var sandwichView = false;
 var coffeeView = false;
 var bakeryView = false;
 
+var myCoffeeButton;
+var myBakeryButton;
+
 var dayEndView = false;
 
 var gameTimer;
@@ -38,13 +41,13 @@ var timetext;
 var daytext;
 var ampmtext;
 var closedtext;
-var activeButtons = new Array();
+
 
 var dayCounter = 4;
 var twelveCounter = 0;
 
-var MANAGERTIMEINTERVAL = 100; //250 standard
-var STATIONTIMEINTERVAL = 100;
+var MANAGERTIMEINTERVAL = 1; //250 standard
+var STATIONTIMEINTERVAL = 1;
 
 
 var game;
@@ -63,18 +66,18 @@ BlueRoom.Game.prototype = {
         this.managerButton = this.add.button(10, 10, 'managerButton', goToManagerView, this);
 		this.sandwichButton = this.add.button(10, 80, 'sandwichButton', goToSandwichView, this);
 		this.coffeeButton = this.add.button(10, 150, 'coffeeButton', goToCoffeeView, this);
+        myCoffeeButton = this.coffeeButton;
         this.bakeryButton = this.add.button(10, 220, 'bakeryButton', goToBakeryView, this);
+        myBakeryButton = this.bakeryButton;
         this.status_bar = this.add.sprite(0, 600, 'status_bar');
         this.pauseButton = this.add.button(1000, 630, 'pauseButton', this.showPauseScreen, this);
 
-        activeButtons.push(this.managerButton);
-        activeButtons.push(this.sandwichButton);
 
-        activeButtons.push(this.coffeeButton);
-        activeButtons.push(this.bakeryButton);
+        // activeButtons.push(this.coffeeButton);
+        // activeButtons.push(this.bakeryButton);
 
-        //this.coffeeButton.visible = false;
-        //this.bakeryButton.visible = false;
+        this.coffeeButton.visible = false;
+        this.bakeryButton.visible = false;
         
         gamegroup.add(this.status_bar);
         gamegroup.add(this.managerButton);
@@ -324,14 +327,20 @@ BlueRoom.Game.prototype = {
         }
 
         if(dayEndView){
-            activeButtons.forEach(function(item){
+            activeButtons.children.forEach(function(item){
                 item.visible = false;
             });
+            // activeButtons.children.forEach(function(item){
+            //     item.visible = false;
+            // });
         }
         else{
-            activeButtons.forEach(function(item){
+            activeButtons.children.forEach(function(item){
                 item.visible = true;
             });
+            // activeButtons.children.forEach(function(item){
+            //     item.visible = true;
+            // });
         }
         if(!isBlueRoomOpen && numCustomer <=0){
             if(!dayEndView){

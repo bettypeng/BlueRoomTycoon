@@ -195,8 +195,8 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('i_erik', 'images/inventory/erik.png');
 		this.load.image('i_alex', 'images/inventory/alex.png');
 		this.load.image('i_rachel', 'images/inventory/rachel.png');
-		this.load.image('i_coffee station', 'images/inventory/coffee.png');
-		this.load.image('i_bakery station', 'images/inventory/bakery.png');
+		this.load.image('i_coffee', 'images/inventory/coffee.png');
+		this.load.image('i_bakery', 'images/inventory/bakery.png');
 		this.load.image('i_magazine rack', 'images/inventory/magazine.png');
 
 

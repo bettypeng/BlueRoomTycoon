@@ -26,8 +26,16 @@ var atCoffeeStation = null;
 
 var currThis = this;
 
+var activeButtons;
+
 
 BlueRoom.Game.prototype.createManager = function () {
+
+    activeButtons = this.add.group();
+    activeButtons.add(this.managerButton);
+    activeButtons.add(this.sandwichButton);
+    activeButtons.add(this.coffeeButton);
+    
     this.sandwichLinePos = {'x': new Array(), 'y':new Array()};
     this.bakeryLinePos = {'x': new Array(), 'y':new Array()};
     this.coffeeLinePos = {'x': new Array(), 'y':new Array()};
@@ -37,8 +45,8 @@ BlueRoom.Game.prototype.createManager = function () {
     this.sandwichStation = this.add.sprite(652, 146, 'sandwichStation');
     this.bakeryStation = this.add.sprite(400, 152, 'bakeryStation');
     this.coffeeStation = this.add.sprite(130, 155, 'coffeeStation');
-    // this.bakeryStation.visible = false;
-    // this.coffeeStation.visible = false;
+    this.bakeryStation.visible = false;
+    this.coffeeStation.visible = false;
 
     var smallstyle = { font: "10px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "center" };
     this.employeeBreakStation = this.add.sprite(10, 430, 'employeeBreakStation');
@@ -54,6 +62,7 @@ BlueRoom.Game.prototype.createManager = function () {
     leaving = false;
     customerGroup = this.add.group();
     employeeGroup = this.add.group();
+
 
     for(var i = 0; i < 16; i++){
         var curve = this.game.rnd.integerInRange(8, 12);

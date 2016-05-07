@@ -23,12 +23,12 @@ BlueRoom.Game.prototype.createPurchaseAlert= function (type, purchase, cost) {
 	this.disableDayEndButtons();
 }
 
-BlueRoom.Game.prototype.createFireAlert= function(name){
+BlueRoom.Game.prototype.createGeneralAlert= function(message){
 	var alertBg = game.add.sprite(0, 0, 'alertBox');
 	purchaseAlertElements.push(alertBg);
 
     var alertstyle = { font: "18px Roboto-Thin", fill: "#000000", wordWrap: true, wordWrapWidth: 400, align: "center" };
-    var alert = this.game.add.text(this.game.width/2, 230, "You have successfully fired " + name + ". Sorry, " + name + "!"  , alertstyle);
+    var alert = this.game.add.text(this.game.width/2, 230, message, alertstyle);
     alert.anchor.setTo(0.5, 0.5);
     purchaseAlertElements.push(alert);
 
@@ -54,6 +54,7 @@ BlueRoom.Game.prototype.closeFromPurchaseAlert= function(){
 	purchaseAlertElements.forEach(function(item){
 		item.destroy();
 	});
+	game.hideInventoryView();
 	game.hideUpgradeView();
 	game.hideHireView();
 	game.destroyDayEndView();

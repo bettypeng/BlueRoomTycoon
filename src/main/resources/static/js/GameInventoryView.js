@@ -73,7 +73,7 @@ BlueRoom.Game.prototype.removeFromEmployeeInventory = function(){
 		this.fadeInventoryEmployeeForward();
 	}
 
-	this.createFireAlert(name);
+	this.createGeneralAlert("You have successfully fired " + name + ". Sorry, " + name + "!");
 
 };
 
@@ -131,12 +131,25 @@ BlueRoom.Game.prototype.addToUpgradeInventory = function(upgrade){
 	inventoryUpgradeList.push(upgrade);
 };
 
-BlueRoom.Game.prototype.removeFromUpgradeInventory = function(upgrade){
-		if(inventoryUpgradeList.length <1){
+BlueRoom.Game.prototype.removeFromUpgradeInventory = function(){
+	var name = inventoryUpgradeList[inventoryUpgrade];
+	this.sellUpgrade(name);
+
+	inventoryUpgradeList.splice(inventoryUpgrade, 1);
+	if(inventoryUpgradeList.length <1){
 		inventoryUpgradeElements.forEach(function(item){
 			item.destroy();
 		});
 	}
+	else{
+		this.fadeInventoryUpgradeForward();
+	}
+
+	this.createGeneralAlert("You have just sold your " + name +  " station.");
+
+
+		
+	
 };
 
 BlueRoom.Game.prototype.setUpUpgradeInventory = function(){
@@ -158,7 +171,7 @@ BlueRoom.Game.prototype.setUpUpgradeInventory = function(){
 	sellingPrice = this.game.add.text(2*(this.game.width/3), 170 + 33 + 270, 'Selling price: $' + upgradeCostList[inventoryUpgradeList[inventoryUpgrade]], detailStyle);
 	sellingPrice.anchor.setTo(0.5, 0);
 
-	var sellButton = this.add.button(2*(this.game.width/3), 170 + 33 + 300, 'sellButton', this.hideInventoryView, this);
+	var sellButton = this.add.button(2*(this.game.width/3), 170 + 33 + 300, 'sellButton', this.removeFromUpgradeInventory, this);
 	sellButton.anchor.setTo(0.5, 0);
 
 	inventoryUpgradeElements.push(upUpgradeArrow);
