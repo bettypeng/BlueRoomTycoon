@@ -134,7 +134,7 @@ Customer.prototype = {
    	createBar : function(){
         var currCust = this;
     	this.barTimer = setInterval(function(){
-            if(!currCust.moving){
+            if(!currCust.moving && !gamePaused){
                 if(managerView){
                     currCust.happinessBarProgress-=0.1;
                     console.log("-0.1: " + currCust.happinessBarProgress);
