@@ -279,30 +279,52 @@ function getEmployeeInterval(stationName, atStation, makingProduct, line, employ
 }
 
 function saveGame() {
-    var filename = "game1";
+    var filename = "game" + saveNumber + ".brt";
 	var postParameters = { file: filename };
 	
 	$.post("/save", postParameters, function(responseJSON) {});
-    game.createGeneralAlert("Current game state successfully saved!");
+    game.createGeneralAlert("Current game state successfully saved in game " + saveNumber + "!");
 }
 
 function loadGame(filename) {
-    filename = "game1";
     var postParameters = { file: filename };
     
     $.post("/load", postParameters, function(responseJSON) {
 		var responseObject = JSON.parse(responseJSON);
 		var stations = responseObject.stations;
+        console.log(stations);
 		for (var i = 0; i < stations.length; i++) {
 			var station = stations[i];
 			// do something to add the station to the front end
+
 		}
 		var employees = responseObject.employees;
+        console.log(employees);
 		for (var i = 0; i < employees.length; i++) {
 			// add each employee
 		}
 		var balance = responseObject.money;
+        console.log(balance);
 		// check if this is actually a valid way to change the money
 		statusBar.money = balance;
+        var dayNum = responseObject.dayNum;
+        // do something with this so day of the week is correct
     });
 }
+
+function getSavedGames() {
+    $.post("/savedgames", function(responseJSON) {
+        var responseObject = JSON.parse(responseJSON);
+        BlueRoom.Load.prototype.finishCreate(responseObject.savedGames);
+    });
+}
+
+function eraseSavedGame(number) {
+    postParameters = { gameNumber: number };
+    $.post("/erasegame", postParameters, function(responseJSON) {});
+}
+
+function restartGame() {
+    $.post("/restart", function(resonseJSON) {});
+}
+

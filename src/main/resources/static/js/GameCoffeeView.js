@@ -32,6 +32,7 @@ var coffeeTransitioning = false;
 
 var currCoffeeCustomer = null;
 var currCoffeeOrderSprites = [];
+var currCoffeeCustomerStatusBar;
 
 var currThis = this;
 
@@ -343,6 +344,8 @@ BlueRoom.Game.prototype.changeCoffeeSpriteFace = function(x, y, imgName) {
 BlueRoom.Game.prototype.coffeeUpdate= function () {
     if (coffeeLine.length != 0 && currCoffeeCustomer == null) {
         currCoffeeCustomer = coffeeLine[0];
+        currCoffeeCustomerStatusBar = new CustomerStatusBar(currCoffeeCustomer, 250, 10);
+        coffeeViewElements.push(currCoffeeCustomerStatusBar.barSprite);
         console.log(currCoffeeCustomer);
 
         if (currCoffeeCustomer.order.size === "large") {
@@ -523,6 +526,7 @@ BlueRoom.Game.prototype.giveCoffeeToCustomer = function() {
 
     coffeeTransitioning = true;
     var tw = currThis.add.tween(coffeeCustomerFace).to( { x: 1000 }, 3000, null, true);
+    currCoffeeCustomerStatusBar.discard();
     if (currCoffeeOrderSprites.length != 0) {
         for (var i=0; i<4; i++) {
             currCoffeeOrderSprites[i].visible = false;

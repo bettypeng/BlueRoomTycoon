@@ -101,6 +101,9 @@ public class Server {
     Spark.post("/load", new LoadHandler());
     Spark.post("/sell", new SellHandler());
     Spark.post("/fire", new FireHandler());
+    Spark.post("/savedgames", new SavedGameHandler());
+    Spark.post("/erasegame",  new EraseGameHandler());
+    Spark.post("/restart", new RestartHandler());
   }
 
   /**
@@ -413,7 +416,7 @@ public class Server {
       String stationName = qm.value("name");
 
       // I think the price should be sent back!
-      gameManager.addStation(stationName, 500);
+      gameManager.addStation(stationName, GameManager.UPGRADE_COSTS.get(stationName));
 
       List<String> results = new ArrayList<>();
 
@@ -507,7 +510,11 @@ public class Server {
     public Object handle(Request req, Response res) {
       QueryParamsMap qm = req.queryMap();
       String filename = qm.value("file");
-      gameManager.load(filename);
+      try {
+        gameManager.load(filename);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
 
       List<String> stations = gameManager.getAvailableStations();
       List<String> employees = gameManager.getEmployeeNames();
@@ -516,6 +523,7 @@ public class Server {
           .put("stations", stations)
           .put("employees", employees)
           .put("money", gameManager.getCurrentMoney())
+          .put("dayNum", gameManager.getDayNum())
           .build();
       return GSON.toJson(variables);
     }
@@ -527,9 +535,8 @@ public class Server {
     public Object handle(Request req, Response res) {
       QueryParamsMap qm = req.queryMap();
       String station = qm.value("station");
-      double price = Double.parseDouble(qm.value("price"));
       
-      gameManager.sellStation(station, price);
+      gameManager.sellStation(station, GameManager.UPGRADE_COSTS.get(station) / 2);
       
       List<String> results = new ArrayList<>();
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
@@ -550,6 +557,45 @@ public class Server {
       List<String> results = new ArrayList<>();
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("results", results).build();
+      return GSON.toJson(variables);
+    }
+  }
+  
+  private class SavedGameHandler implements Route {
+    
+    @Override
+    public Object handle(Request req, Response res) {
+      gameManager.loadConfig("gameConfig.brt");
+      boolean[] savedGames = gameManager.getSavedGames();
+      Map<String, Object> variables = ImmutableMap.of("savedGames", savedGames);
+      return GSON.toJson(variables);
+    }
+  }
+  
+  private class EraseGameHandler implements Route {
+    
+    @Override
+    public Object handle(Request req, Response res) {
+      QueryParamsMap qm = req.queryMap();
+      int gameNumber = Integer.parseInt(qm.value("gameNumber"));
+      gameManager.eraseGame(gameNumber);
+      
+      List<String> results = new ArrayList<>();
+      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+          .put("results", results).build();
+      return GSON.toJson(variables);
+    }
+  }
+  
+  private class RestartHandler implements Route {
+    
+    @Override
+    public Object handle(Request req, Response res) {
+
+      gameManager.clear();
+      
+      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+          .put("results", "").build();
       return GSON.toJson(variables);
     }
   }
