@@ -173,7 +173,7 @@ BlueRoom.Game.prototype.abandonLine = function(customer){
             clearInterval(leaveTimer);
         }, 1900);
 
-        myGame.deleteCurrSandwich(customer);
+        // myGame.deleteCurrSandwich(customer);
         leaving = true;
         //var outer = this;
         var c = customer;

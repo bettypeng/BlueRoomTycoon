@@ -383,6 +383,40 @@ BlueRoom.Game.prototype.orderElems= function () {
             }
             return;
         }
+
+        if (currCustomer.happinessBarProgress < 0) {
+            currThis.changeSpriteFace(200, 0, "upset");
+            transitioning = true;
+
+            // console.log(currSandSprites);
+            nonSandwich = nonSandwich.concat(currSandSprites);
+            // console.log(nonSandwich);
+
+            currThis.add.tween(speechBubble).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
+            currThis.add.tween(currOrderElem).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
+            var t = currThis.add.tween(customerFace).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
+            // console.log(currOrderElem);
+            t.onComplete.add(function () {
+                // console.log(currOrderEl
+
+                currOrderElem.destroy();
+                currPlace = 0;
+                currSandwich = [];
+                currSandSprites = [];
+                currCustomerOrder = [];
+                currDelts = {};
+                incorrSandCount = 0;
+                currCustomer = null;
+                currOrderElem = null;
+                transitioning = false;
+                collidedElem = null;
+                customerFace.visible = false;
+                speechBubble.visible = false;
+                customerFace.alpha = 1;
+                speechBubble.alpha = 1;
+            });
+            return;
+        }
       
         if (collidedElem != null) {
             var item = collidedElem;
@@ -413,8 +447,12 @@ BlueRoom.Game.prototype.orderElems= function () {
                 currOrderElem.destroy();
                 speechBubble.visible = false;
                 transitioning = true;
-            
-                currThis.changeSpriteFace(200, 0, "leaving");
+
+                if (incorrSandCount != 0 && incorrSandCount >= currCustomerOrder.length/2) {
+                    currThis.changeSpriteFace(200, 0, "troll");
+                } else {
+                    currThis.changeSpriteFace(200, 0, "leaving");
+                }
                 var tw = currThis.add.tween(customerFace).to( { x: 1000 }, 3000, null, true);
                 currCustomerStatusBar.discard();
                 tw.onComplete.add(function () {

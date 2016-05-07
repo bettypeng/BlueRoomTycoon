@@ -103,6 +103,8 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('exclamation', 'images/exclamation.png');
 		this.load.image('noface', 'images/noface.png');
 		this.load.image('glasses', 'images/glasses.png');
+		this.load.image('troll', 'images/troll.jpg');
+		this.load.image('upset', 'images/disappointed.jpg');
 
 		//COFFEE STATION
 		this.load.image('coffeeBg', 'images/coffee/coffee_bg.png');
