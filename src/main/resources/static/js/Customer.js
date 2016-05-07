@@ -144,9 +144,9 @@ Customer.prototype = {
       	}, CUSTOMERHAPPINESSINTERVAL);
 
         this.myTimer = setInterval(function(){
-            if(managerView){
-                currCust.myupdate();
-            }
+            // if(managerView){
+            currCust.myupdate();
+            // }
         }, 10);
 	},
 

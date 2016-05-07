@@ -23,6 +23,8 @@ var bananaText;
 var berryText;
 var branText;
 
+var bakeryTransitioning = false;
+
 var currBakeryCustomer;
 var bakerySpeechBubble;
 var bakeryCustomerFace;
@@ -466,7 +468,7 @@ BlueRoom.Game.prototype.onMuffinDragStop= function(sprite, pointer) {
     }
     else{
 
-        if (currBakeryCustomer != null) {
+        if (currBakeryCustomer != null  && !bakeryTransitioning) {
 
             var posX = muffinList[sprite.key].x
             var posY = muffinList[sprite.key].y;
@@ -514,6 +516,7 @@ BlueRoom.Game.prototype.onMuffinDragStop= function(sprite, pointer) {
                 currBakeryOrderSprite.visible = false;
                 bakeryTransitioning = false;
                 currBakeryCustomer = null;
+                this.noBakeryCustomer();
             }, this);
         } else {
             this.add.tween(sprite).to( { x: dragPosition.x, y: dragPosition.y }, 500, "Back.easeOut", true);
@@ -538,11 +541,6 @@ BlueRoom.Game.prototype.hideBakeryView= function(){
         item.visible = false;
     });
     this.noBakeryCustomer();
-
-    if (currBakeryCustomer != null) {
-        currBakeryOrderSprite.visible = false;
-    }
-
 };
 
 BlueRoom.Game.prototype.checkMuffinNumber = function(name){
@@ -567,6 +565,7 @@ BlueRoom.Game.prototype.muffinUpdate = function(){
 BlueRoom.Game.prototype.noBakeryCustomer = function() {
     bakerySpeechBubble.visible = false;
     bakeryCustomerFace.visible = false;
+    currBakeryOrderSprite.visible = false;
 };
 
 BlueRoom.Game.prototype.changeBakerySpriteFace = function(x, y, imgName) {
@@ -577,6 +576,9 @@ BlueRoom.Game.prototype.changeBakerySpriteFace = function(x, y, imgName) {
 };
 
 BlueRoom.Game.prototype.bakeryUpdate= function () {
+    if (bakeryTransitioning) {
+        return;
+    }
 
     if (bakeryLine.length != 0 && currBakeryCustomer == null) {
         currBakeryCustomer = bakeryLine[0];
@@ -590,8 +592,25 @@ BlueRoom.Game.prototype.bakeryUpdate= function () {
         bakeryCustomerFace.visible = true;
         this.changeBakerySpriteFace(140, 5, "neutral");
         bakerySpeechBubble.visible = true;
-    } else if (bakeryLine.length == 0) {
-        this.noBakeryCustomer();
+    } else if (currBakeryCustomer != null) {
+        if (currBakeryCustomer.happinessBarProgress < 0) {
+            bakeryTransitioning = true;
+            currThis.changeBakerySpriteFace(110, 0, "upset");
+
+            currThis.add.tween(coffeeSpeechBubble).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
+            currThis.add.tween(currBakeryOrderSprite).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
+            var t = currThis.add.tween(bakeryCustomerFace).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
+            // console.log(currOrderElem);
+            t.onComplete.add(function () {
+
+                currThis.noBakeryCustomer();
+                bakeryCustomerFace.alpha = 1;
+                bakerySpeechBubble.alpha = 1;
+                currBakeryOrderSprite.alpha = 1;
+                currBakeryCustomer = null;
+                bakeryTransitioning = false;
+            });
+        }
     } 
 };
 

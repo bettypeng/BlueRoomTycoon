@@ -342,6 +342,9 @@ BlueRoom.Game.prototype.changeCoffeeSpriteFace = function(x, y, imgName) {
 };
 
 BlueRoom.Game.prototype.coffeeUpdate= function () {
+    if (coffeeTransitioning) {
+        return;
+    }
     if (coffeeLine.length != 0 && currCoffeeCustomer == null) {
         currCoffeeCustomer = coffeeLine[0];
         currCoffeeCustomerStatusBar = new CustomerStatusBar(currCoffeeCustomer, 250, 10);
@@ -379,8 +382,34 @@ BlueRoom.Game.prototype.coffeeUpdate= function () {
         coffeeCustomerFace.visible = true;
         this.changeCoffeeSpriteFace(200, 20, "neutral");
         coffeeSpeechBubble.visible = true;
-    } else if (coffeeLine.length == 0) {
-        this.noCoffeeCustomer();
+    } else if (currCoffeeCustomer != null){
+
+
+        if (currCoffeeCustomer.happinessBarProgress < 0) {
+            currThis.changeCoffeeSpriteFace(100, 20, "upset");
+            coffeeTransitioning = true;
+
+            // nonSandwich = nonSandwich.concat(currSandSprites);
+            // console.log(nonSandwich);
+            console.log(currCoffeeOrderSprites);
+            if (currCoffeeOrderSprites.length != 0) {
+                for (var i=0; i<4; i++) {
+                    currCoffeeOrderSprites[i].visible = false;
+                }
+            }
+
+            coffeeSpeechBubble.visible = false;
+            var t = currThis.add.tween(coffeeCustomerFace).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
+            // console.log(currOrderElem);
+            t.onComplete.add(function () {
+
+                currCoffeeOrderSprites = [];
+                currThis.noCoffeeCustomer();
+                coffeeCustomerFace.alpha = 1;
+                currCoffeeCustomer = null;
+                coffeeTransitioning = false;
+            });
+        }
     }
 };
 
@@ -556,6 +585,7 @@ BlueRoom.Game.prototype.giveCoffeeToCustomer = function() {
         currCoffeeOrderSprites = [];
         coffeeTransitioning = false;
         currCoffeeCustomer = null;
+        currThis.noCoffeeCustomer();
     }, this);
 
 };
