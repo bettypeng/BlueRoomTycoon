@@ -44,9 +44,11 @@ BlueRoom.Game.prototype.createCoffeeView= function () {
 
     coffeeCustomerFace = this.add.sprite(200, 20, "neutral");
     coffeeSpeechBubble = this.add.sprite(350, -30, "speechBubble");
-    // var coffeeGarbageCan = this.add.button(950, 495, 'trash', this.coffeeTrashButton, this);
+    
     coffeeExclamation = this.add.sprite(400, 40, 'exclamation');
     coffeeExclamation.visible = false;
+
+
 
     smallCup.push(this.add.sprite(400, 40, 'smCup'));
     smallCup.push(this.add.sprite(400, 40, 'smDrink'));
@@ -66,6 +68,9 @@ BlueRoom.Game.prototype.createCoffeeView= function () {
 	var coffeeBg = this.add.sprite(0, 0, 'coffeeBg');
     coffeeViewElements.push(bg);
     coffeeViewElements.push(coffeeBg);
+
+    var coffeeGarbageCan = this.add.button(950, 240, 'trash', this.coffeeTrashButton, this);
+    coffeeViewElements.push(coffeeGarbageCan);
 
     iceMachine = this.add.sprite(275, 250, 'iceMachine');
     var iceButton = this.add.button(340, 360, 'syrupButton', this.addIce, this);
@@ -173,6 +178,15 @@ BlueRoom.Game.prototype.newCup = function(cupSize){
 BlueRoom.Game.prototype.noCoffeeCustomer = function() {
     coffeeSpeechBubble.visible = false;
     coffeeCustomerFace.visible = false;
+};
+
+BlueRoom.Game.prototype.coffeeTrashButton = function() {
+    if (!coffeeTransitioning) {
+        trashHandler("coffee", 1);
+        currCup.group.destroy();
+        currThis.enableCups();
+        currCup= null;
+    }
 };
 
 BlueRoom.Game.prototype.disableCups = function(cupSize){

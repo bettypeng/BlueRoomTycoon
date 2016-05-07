@@ -35,6 +35,8 @@ function Customer(id, station, order){
     this.drinkFlavor = null;
     this.drinkSize = null;
 
+    this.muffinType = null;
+
     this.createBar();
 
     this.inLine = true;

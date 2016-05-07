@@ -31,15 +31,18 @@ public class Employee {
   
   public double fillOrder() {
     double rand = Math.random() * QUALITY_RANGE + (energy - (QUALITY_RANGE / 2));
+    if (rand > 1) {
+      return 1;
+    }
+    if (rand < 0) {
+      return 0;
+    }
     return rand;
   }
   
   public double calcInterval() {
-    int baseline = 1;
-    double interval = baseline / energy;
-    if (interval > 10) {
-      return 10;
-    }
+    int range = 7;
+    double interval = 3 + range * (1 - energy);
     return interval;
   }
   

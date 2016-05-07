@@ -26,7 +26,28 @@ public class Drink extends FoodItem {
     double quality = 1;
     Drink order = (Drink) ordered;
     double valueOfEach = quality / 4;
-    return 0;
+    if (!type.equals(order.type)) {
+      quality -= valueOfEach;
+      System.out.println(type + " does not match " + order.type);
+    }
+    if (!size.equals(order.size)) {
+      quality -= valueOfEach;
+      System.out.println(size + " does not match " + order.size);
+    }
+    if (iced != order.iced) {
+      quality -= valueOfEach;
+      System.out.println("icing does not match");
+    }
+    List<String> otherFlavor = order.flavoring;
+    if (!flavoring.equals(otherFlavor)) {
+      quality -= valueOfEach;
+      System.out.println(flavoring + " does not match " + order.flavoring);
+    }
+    System.out.println("quality: " + quality);
+    if (quality <= 0.25) {
+      return 0;
+    }
+    return quality;
   }
   
   @Override

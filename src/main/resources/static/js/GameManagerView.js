@@ -284,7 +284,7 @@ BlueRoom.Game.prototype.cashCustomerOut= function(customer){
         } else if (c.station == "coffee") {
             coffeePurchase(c.drinkType, c.iced, c.drinkSize, c.drinkFlavor, c.id, c.happinessBarProgress/30, true);
         } else {
-            bakeryPurchase(c.type, c.id, c.happinessBarProgress/30, true);
+            bakeryPurchase(c.muffinType, c.id, c.happinessBarProgress/30, true);
         }   
     }
     leaving = true;
@@ -309,14 +309,17 @@ BlueRoom.Game.prototype.steal = function(customer){
         } else if (c.station == "coffee") {
             coffeePurchase(c.drinkType, c.drinkIced, c.drinkSize, c.drinkFlavor, c.id, c.happinessBarProgress/30, false);
         } else {
-            bakeryPurchase(c.type, c.id, c.happinessBarProgress/30, true);
+            bakeryPurchase(c.muffinType, c.id, c.happinessBarProgress/30, false);
         } 
     }
     leaving = true;
     var tween = this.add.tween(customer.sprite).to( { x: 450, y: 700 }, 1000, null, true);
     tween.onComplete.add(onLeaveMoveComplete, this);
     function onLeaveMoveComplete(){
+        console.log("Steal decrement customer!");
         customer.sprite.visible = false;
+        clearInterval(customer.barTimer);
+        clearInterval(customer.myTimer);
         numCustomer--;
         leaving = false;
     }

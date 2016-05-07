@@ -425,8 +425,10 @@ BlueRoom.Game.prototype.orderElems= function () {
 
                     if (incorrSandCount != 0 && incorrSandCount >= currCustomerOrder.length/2) {
                         currThis.steal(currCustomer);
-                        clearInterval(currCustomer.barTimer);
-                        clearInterval(currCustomer.myTimer);
+                        curr= sandwichLine.shift();
+                        numSandwich--;
+                        // clearInterval(currCustomer.barTimer);
+                        // clearInterval(currCustomer.myTimer);
                     } else {
                         currThis.sandwichComplete();
                     }
@@ -442,6 +444,7 @@ BlueRoom.Game.prototype.orderElems= function () {
                     currOrderElem = null;
                     transitioning = false;
                     collidedElem = null;
+                    console.log(currCustomer);
                 }, this);
                 
                 //reset all variables

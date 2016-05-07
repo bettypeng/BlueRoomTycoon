@@ -44,6 +44,20 @@ function getCustomer(game) {
     
 } 
 
+function fireHandler(empName) {
+    var postParameters = {name: empName};
+
+    $.post("/fire", postParameters, function(responseJSON) {});
+
+}
+
+function sellHandler(stationName) {
+    var postParameters = {name: stationName};
+
+    $.post("/sell", postParameters, function(responseJSON) {});
+}
+
+
 //possibly only call this on string of lost customers
 function leaveHandler (station) {
     var postParameters = {station: station};
@@ -274,6 +288,18 @@ function loadGame(filename) {
     var postParameters = { file: filename };
     
     $.post("/load", postParameters, function(responseJSON) {
-
+		var responseObject = JSON.parse(responseJSON);
+		var stations = responseObject.stations;
+		for (var i = 0; i < stations.length; i++) {
+			var station = stations[i];
+			// do something to add the station to the front end
+		}
+		var employees = responseObject.employees;
+		for (var i = 0; i < employees.length; i++) {
+			// add each employee
+		}
+		var balance = responseObject.money;
+		// check if this is actually a valid way to change the money
+		statusBar.money = balance;
     });
 }

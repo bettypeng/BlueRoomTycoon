@@ -4,11 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 import joptsimple.OptionException;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import edu.brown.cs.bse.elements.Customer;
+import edu.brown.cs.bse.elements.Drink;
 import edu.brown.cs.bse.elements.Employee;
 import edu.brown.cs.bse.elements.Sandwich;
 
@@ -42,15 +44,15 @@ public class Main {
       System.out.println("run spark server");
       new Server(manager);
     } else {
-      OrderFactory.setMuffinWeights();
+//      OrderFactory.setMuffinWeights();
 //    manager.addStation("bakery");
 //    manager.hireEmployee("alex");
 //    manager.hireEmployee("erik");
 //    manager.hireEmployee("rachel");
-    manager.endDay();
-    manager.endDay();
-    manager.saveGame("outFile.txt");
-    manager.load("outFile.txt");
+//    manager.endDay();
+//    manager.endDay();
+//    manager.saveGame("outFile.txt");
+//    manager.load("outFile.txt");
 
       try (BufferedReader reader = new BufferedReader(
           new InputStreamReader(System.in, StandardCharsets.UTF_8))) {
@@ -85,10 +87,12 @@ public class Main {
             break;
 
           case "p":
-            Sandwich sand = OrderFactory.getSandwichOrder();
-            Customer customer = new Customer("randomid", sand, "sandwich");
+            manager.addStation("coffee");
+            manager.addStation("bakery");
+            Customer customer = manager.newCustomer();
+            System.out.println(customer.getStation() + " station");
             customer.setHappiness(Math.random());
-            System.out.println(manager.purchase(sand, customer));
+            System.out.println(manager.purchase(customer.getOrder(), customer));
             break;
             
           case "d":
@@ -108,14 +112,6 @@ public class Main {
             break;
 
           default:
-//            List<SandwichIngredient> testList = Arrays.asList(new SandwichIngredient("turkey"), new SandwichIngredient("cheese"));
-//            Sandwich original = new Sandwich(testList, new Bread("ciabatta"));
-//            Map<SandwichIngredient, Double> del = new HashMap<>();
-//            del.put(new SandwichIngredient("turkey"), 0.2);
-//            del.put(new SandwichIngredient("cheese"), 0.1);
-//            List<SandwichIngredient> list = Arrays.asList(new SandwichIngredient("turkey"), new SandwichIngredient("cheese"));
-//            Sandwich test = new Sandwich(list, del, new Bread("ciabatta"));
-//            System.out.println(test.compareToOrder(original));
             System.out.println("not a valid input, please try again");
             break;
           }

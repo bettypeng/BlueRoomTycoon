@@ -42,11 +42,12 @@ function Batter(textName, amt){
 BlueRoom.Game.prototype.createBakeryView= function () {
 	var bg = this.add.sprite(0, 0, 'whiteBg');
 
-    bakeryCustomerFace = this.add.sprite(200, 20, "neutral");
-    bakerySpeechBubble = this.add.sprite(350, -30, "speechBubble");
-    // currBakeryOrderSprite = this.add.sprite(300, 30, "pistachio");
+    bakeryCustomerFace = this.add.sprite(140, 5, "neutral");
+    bakerySpeechBubble = this.add.sprite(290, -35, "speechBubble");
+    currBakeryOrderSprite = this.add.sprite(340, 25, "pistachio");
     // var coffeeGarbageCan = this.add.button(950, 495, 'trash', this.coffeeTrashButton, this);
-    bakeryExclamation = this.add.sprite(400, 40, 'exclamation');
+    bakeryExclamation = this.add.sprite(300, 30, 'exclamation');
+    currBakeryOrderSprite.visible = false;
     bakeryExclamation.visible = false;
 
     this.noBakeryCustomer();
@@ -282,7 +283,8 @@ BlueRoom.Game.prototype.ovenTimerUpdate= function() {
         textTween.onComplete.add(function(){
             textAnimation.destroy();
             this.getMuffinsOut(true);
-            this.loseMoney(this.game.width/2, 500, "- $6.00", 6.00);
+            this.trashHandler("bakery", 1);
+            // this.loseMoney(this.game.width/2, 500, "- $6.00", 6.00);
         }, this);
     }
     
@@ -419,24 +421,62 @@ BlueRoom.Game.prototype.onMuffinDragStop= function(sprite, pointer) {
     if (!sprite.overlap(muffinDropZone))
     {
         this.add.tween(sprite).to( { x: dragPosition.x, y: dragPosition.y }, 500, "Back.easeOut", true);
+        
     }
     else{
-        var posX = muffinList[sprite.key].x
-        var posY = muffinList[sprite.key].y;
-        this.makeMovableMuffin(posX, posY, sprite.key);
-        sprite.x = 660;
-        sprite.y = 20;
-        sprite.inputEnabled = false;
-        var t = currThis.add.tween(sprite).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
-        batterMap[sprite.key + "Batter"].displayAmt--;
-        batterMap[sprite.key + "Batter"].amt--;
-        currThis.muffinUpdate();
-        t.onComplete.add(function () {
-            console.log(batterMap[sprite.key + "Batter"].displayAmt);
-            batterMap[sprite.key + "Batter"].textName.setText("COUNT: " + batterMap[sprite.key + "Batter"].displayAmt);
-            sprite.destroy();
-            //check if correct muffin, etc
-        });
+
+        if (currBakeryCustomer != null) {
+
+            var posX = muffinList[sprite.key].x
+            var posY = muffinList[sprite.key].y;
+            this.makeMovableMuffin(posX, posY, sprite.key);
+            sprite.x = 660;
+            sprite.y = 20;
+            sprite.inputEnabled = false;
+            var t = currThis.add.tween(sprite).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
+            batterMap[sprite.key + "Batter"].displayAmt--;
+            batterMap[sprite.key + "Batter"].amt--;
+            currThis.muffinUpdate();
+            t.onComplete.add(function () {
+                console.log(batterMap[sprite.key + "Batter"].displayAmt);
+                batterMap[sprite.key + "Batter"].textName.setText("COUNT: " + batterMap[sprite.key + "Batter"].displayAmt);
+                sprite.destroy();
+                //check if correct muffin, etc
+            });
+
+        
+            console.log("in here");
+            if (sprite.key === currBakeryCustomer.order.type) {
+                currThis.changeBakerySpriteFace(110, 0, "happy");
+            } else {
+                currThis.changeBakerySpriteFace(140, 5, "glasses");
+            }
+
+            currBakeryCustomer.muffinType = sprite.key;
+
+            
+            this.add.tween(bakerySpeechBubble).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
+            this.add.tween(currBakeryOrderSprite).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
+            var tw = this.add.tween(bakeryCustomerFace).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
+
+            currThis = this;
+            tw.onComplete.add(function () {
+                currThis.noBakeryCustomer();
+
+                currThis.toCashier("bakery");
+
+                currBakeryOrderSprite.alpha = 1;
+                bakerySpeechBubble.alpha = 1;
+                bakeryCustomerFace.alpha = 1;
+
+                //get next customer
+                currBakeryOrderSprite.visible = false;
+                bakeryTransitioning = false;
+                currBakeryCustomer = null;
+            }, this);
+        } else {
+            this.add.tween(sprite).to( { x: dragPosition.x, y: dragPosition.y }, 500, "Back.easeOut", true);
+        }
     }
 
 };
@@ -458,8 +498,8 @@ BlueRoom.Game.prototype.hideBakeryView= function(){
     });
     this.noBakeryCustomer();
 
-    if (currBakeryOrderSprite != null) {
-        currBakeryOrderSprite.visible = true;
+    if (currBakeryCustomer != null) {
+        currBakeryOrderSprite.visible = false;
     }
 
 };
@@ -501,10 +541,11 @@ BlueRoom.Game.prototype.bakeryUpdate= function () {
         currBakeryCustomer = bakeryLine[0];
         console.log(currBakeryCustomer);
 
-        // currBakeryOrderSprite = this.add.sprite(400, 40, currBakeryCustomer.order.type);
+        currBakeryOrderSprite.loadTexture(currBakeryCustomer.order.type);
+        currBakeryOrderSprite.visible = true;
         
         bakeryCustomerFace.visible = true;
-        this.changeBakerySpriteFace(200, 20, "neutral");
+        this.changeBakerySpriteFace(140, 5, "neutral");
         bakerySpeechBubble.visible = true;
     } else if (bakeryLine.length == 0) {
         this.noBakeryCustomer();
