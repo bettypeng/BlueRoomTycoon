@@ -51,8 +51,8 @@ function fireHandler(empName) {
 
 }
 
-function sellHandler(stationName) {
-    var postParameters = {name: stationName};
+function sellHandler(stationName, price) {
+    var postParameters = {name: stationName, price: price};
 
     $.post("/sell", postParameters, function(responseJSON) {});
 }
