@@ -494,7 +494,7 @@ BlueRoom.Game.prototype = {
 
     },
 
-    load: function(stations, employees, balance, dayNum) {
+    load: function(stations, employees, balance, dayNum, magRack) {
         console.log(stations);
         for (var i = 0; i < stations.length; i++) {
             var station = stations[i];
@@ -510,6 +510,8 @@ BlueRoom.Game.prototype = {
         statusBar.money = balance;
         console.log(dayNum);
         // do something with dayNum to make sure day of the week is correct
+        console.log(magRack);
+        // do something to tell game if magazine rack has been purchased
         currThis.state.start('Game');
     }
 

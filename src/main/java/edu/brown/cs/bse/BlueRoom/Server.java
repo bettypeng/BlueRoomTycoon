@@ -414,9 +414,12 @@ public class Server {
       QueryParamsMap qm = req.queryMap();
 
       String stationName = qm.value("name");
-
+      if (stationName.equals("magazineRack")) {
+    	gameManager.addMagazineRack();
+      } else {
       // I think the price should be sent back!
-      gameManager.addStation(stationName, GameManager.UPGRADE_COSTS.get(stationName));
+    	gameManager.addStation(stationName, GameManager.UPGRADE_COSTS.get(stationName));
+      }
 
       List<String> results = new ArrayList<>();
 
@@ -526,6 +529,7 @@ public class Server {
           .put("employees", employees)
           .put("money", gameManager.getCurrentMoney())
           .put("dayNum", gameManager.getDayNum())
+          .put("magazineRack", gameManager.hasMagazineRack())
           .build();
       return GSON.toJson(variables);
     }

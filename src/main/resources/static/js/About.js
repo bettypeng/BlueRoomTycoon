@@ -9,6 +9,24 @@ BlueRoom.About = function (game) {
 };
 
 var abouttext;
+var nextText = [];
+nextText.push("HOW TO PLAY: \n To start, you have two views of the Blue Room: Manager and Sandwich. The "+
+            "icons in the top left corner allow you to switch between these views. Your job is to serve all the "+
+            "customers by making them their sandwiches and check them out at the cash register. \n Manager View:\n "+
+            "Once a customer receives their sandwich they will wander around the room. You must check them "+
+            "out by dragging them toward the dollar sign representing the cash register. The money you received will increment your "+
+            "account balance in the lower left. \nSandwich View:\n When a customer is at the sandwich station his/her "+
+            "order will appear in the speech bubble bit by bit as you construct the sandwich. Just click and drag the "+
+            "correct ingredients over to the cutting board illuminated on the right hand side. The more centered "+
+            "and correct your ingredients, the more money you make, so try to drop the ingredients right in the center." +
+            "\n If you make a sandwich poorly enough, a customer will steal it. The longer a customer watis, the less money you will " +
+            "make, so time is of the essence!");
+nextText.push("PURCHASING UPGRADES AND HIRING EMPLOYEES: \n" + 
+    "blah blah blah");
+nextText.push("COFFEE VIEW: \n" +
+    "blah blah blah");
+nextText.push("BAKERY VIEW: \n" + 
+    "blah blah blah");
 
 BlueRoom.About.prototype = {
 
@@ -45,15 +63,15 @@ BlueRoom.About.prototype = {
 	},
 	
 	changeText: function () {
-	    abouttext.setText("HOW TO PLAY: \n You have two views of the Blue Room: Manager and Sandwich. The "+
+	    abouttext.setText("HOW TO PLAY: \n To start, you have two views of the Blue Room: Manager and Sandwich. The "+
 	    	"icons in the top left corner allow you to switch between these views. Your job is to serve all the "+
 	    	"customers by making them their sandwiches and check them out at the cash register. \n Manager View:\n "+
-	    	"Once a customer receives their sandwich they will move over to the cash register. You must check them "+
-	    	"out by clicking on the dollar sign above the cash register. The money you recieved will increment your "+
+	    	"Once a customer receives their sandwich they will wander around the room. You must check them "+
+	    	"out by dragging them toward the dollar sign representing the cash register. The money you received will increment your "+
 	    	"account balance in the lower left. \nSandwich View:\n When a customer is at the sandwich station his/her "+
 	    	"order will appear in the speech bubble bit by bit as you construct the sandwich. Just click and drag the "+
-	    	"correct ingredients over to the cutting board illuminated on the right thand side. The better you make "+
-	    	"your sandwich, the more money you make, so try to drop the ingredients right in the center.");
+	    	"correct ingredients over to the cutting board illuminated on the right hand side. The more centered "+
+	    	"and correct your ingredients, the more money you make, so try to drop the ingredients right in the center.");
 		this.nextB.visible = false;
 	}
 

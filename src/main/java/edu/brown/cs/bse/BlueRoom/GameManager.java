@@ -48,6 +48,7 @@ public class GameManager {
   private int leftToday;
 
   private List<String> availableStations;
+  private boolean magazineRack;
 
   // initialize vars
   public GameManager() {
@@ -61,6 +62,7 @@ public class GameManager {
     leftToday = 0;
     baselineInterval = 5000;
     savedGames = new boolean[3];
+    magazineRack = false;
     loadConfig("gameConfig.brt");
     OrderFactory.setMuffinWeights();
   }
@@ -178,6 +180,14 @@ public class GameManager {
     manager.changeMoney(cost * -1);
     manager.addDailyExpenses(STATION_UPKEEPS.get(stationName));
   }
+  
+  public void addMagazineRack() {
+	  magazineRack = true;
+  }
+  
+  public boolean hasMagazineRack() {
+	  return magazineRack;
+  }
 
   /**
    * Gets the customer cached in the map
@@ -214,7 +224,7 @@ public class GameManager {
     OrderFactory.setMuffinWeights();
     currTime = 0;
     leftToday = 0;
-    baselineInterval -= 5000;
+    baselineInterval -= 500;
     return today;
   }
 
@@ -252,6 +262,9 @@ public class GameManager {
         writer.write(" ", 0, 1);
       }
       writer.newLine();
+      String rackBool = String.valueOf(magazineRack);
+      writer.write(rackBool, 0, rackBool.length());
+      writer.newLine();
       
       // save employees
       for (Employee e : employees) {
@@ -278,6 +291,7 @@ public class GameManager {
       for (String station : stationNames) {
         addStation(station, 0);
       }
+      magazineRack = Boolean.parseBoolean(reader.readLine());
 
       employees.clear();
       employeeMap.clear();
@@ -378,6 +392,7 @@ public class GameManager {
     leftToday = 0;
     baselineInterval = 5000;
     savedGames = new boolean[3];
+    magazineRack = false;
     loadConfig("gameConfig.brt");
     OrderFactory.setMuffinWeights();
   }

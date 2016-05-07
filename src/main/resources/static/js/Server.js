@@ -296,8 +296,9 @@ function loadGame(filename) {
 		var employees = responseObject.employees;
 		var balance = responseObject.money;
         var dayNum = responseObject.dayNum;
+        var magazineRack = responseObject.magazineRack;
 
-        BlueRoom.Game.prototype.load(stations, employees, balance, dayNum);
+        BlueRoom.Game.prototype.load(stations, employees, balance, dayNum, magazineRack);
     });
 }
 
