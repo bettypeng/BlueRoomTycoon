@@ -43,15 +43,17 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('bakeryButton', 'images/bakery_view_button.png');
 		
 		//STATUS BAR
-		this.load.image('status_bar', 'images/status_bar.png');
+		this.load.image('status_bar', 'images/status.png');
 
 		 
 		// BACKGROUNDS
 		this.load.image('whiteBg', 'images/white.png');
-		this.load.image('managerBg', 'images/manager_view.png');
-		this.load.image('sandwichStation', 'images/sandwich_station.png');
-		this.load.image('coffeeStation', 'images/coffee_station.png');
-		this.load.image('bakeryStation', 'images/bakery_station.png');
+		this.load.image('stationBg', 'images/blue_bg.png');
+
+		this.load.image('managerBg', 'images/managerview_bg.png');
+		this.load.image('sandwichStation', 'images/sandwich_counter.png');
+		this.load.image('coffeeStation', 'images/coffee_counter.png');
+		this.load.image('bakeryStation', 'images/bakery_counter.png');
 
 		this.load.image('sandwichBg', 'images/sandwich_bg.png');
 		this.load.image('sandwichBg2', 'images/sandwich_bg_2.png');
@@ -99,7 +101,7 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('sad', 'images/saddness.png');
 		this.load.image('leaving', 'images/leaving.png');
 		this.load.image('pointer', 'images/sandwich/down_pointer.png');
-		this.load.image('trash', 'images/trash.png');
+		this.load.image('trash', 'images/trash_can.png');
 		this.load.image('exclamation', 'images/exclamation.png');
 		this.load.image('noface', 'images/noface.png');
 		this.load.image('glasses', 'images/glasses.png');
@@ -107,14 +109,14 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('upset', 'images/disappointed.jpg');
 
 		//COFFEE STATION
-		this.load.image('coffeeBg', 'images/coffee/coffee_bg.png');
-		this.load.image('iceMachine', 'images/coffee/ice_machine.png');
-		this.load.image('syrupDispenser', 'images/coffee/syrup_dispenser.png');
-		this.load.image('syrupButton', 'images/coffee/syrup_button.png');
+		this.load.image('coffeeBg', 'images/coffee/coffeeview_bg.png');
+		this.load.image('iceMachine', 'images/coffee/yellow_ice_machine.png');
+		this.load.image('syrupDispenser', 'images/coffee/orange_syrup_dispenser.png');
+		this.load.image('syrupButton', 'images/coffee/syrupButton.png');
 
-		this.load.image('drinkDropZone', 'images/coffee/drink_dropzone.png');
-		this.load.image('drinkDispenser', 'images/coffee/drink_dispenser.png');
-		this.load.image('drinkButton', 'images/coffee/drink_button.png');
+		this.load.image('drinkDropZone', 'images/coffee/drink_drop_zone.png');
+		this.load.image('drinkDispenser', 'images/coffee/drink_dispenser_cartoon.png');
+		this.load.image('drinkButton', 'images/coffee/drinkButton.png');
 
 		//SMALL
 		this.load.image('smCup', 'images/coffee/sm_cup.png');
@@ -135,9 +137,9 @@ BlueRoom.Preloader.prototype = {
 
 
 		//BAKERY STATION
-		this.load.image('bakeryBg', 'images/bakery/bakery_bg.png');
+		this.load.image('bakeryBg', 'images/bakery/bakery_background.png');
 		this.load.image('muffinDropZone', 'images/bakery/muffin_drop_zone.png');
-		this.load.image('muffinPlate', 'images/bakery/plate.png');
+		this.load.image('muffinPlate', 'images/bakery/purple_plate.png');
 		this.load.image('pistachio', 'images/bakery/pistachio_muffin.png');
 		this.load.image('doubleChoc', 'images/bakery/double_chocolate_muffin.png');
 		this.load.image('chocChip', 'images/bakery/chocolate_chip_muffin.png');
@@ -155,7 +157,7 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('batterDropZone', 'images/bakery/batter_drop_zone.png')
 		this.load.image('batterMenu', 'images/bakery/batter_menu.png');
 		this.load.image('muffinTin', 'images/bakery/baking_tin.png');
-		this.load.image('oven', 'images/bakery/baked_oven.png');
+		this.load.image('oven', 'images/bakery/baking_oven.png');
 		this.load.image('ovenClosed', 'images/bakery/closed_oven.png');
 		this.load.image('openOven', 'images/bakery/white_open_oven_button.png');
 

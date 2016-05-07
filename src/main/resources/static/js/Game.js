@@ -82,10 +82,10 @@ BlueRoom.Game.prototype = {
         checkoutAlert = this.add.sprite(20, 685, 'radiobutton');
 
 
-        coffeeButtonOn = false;
-        this.coffeeButton.visible = false;
-        bakeryButtonOn = false;
-        this.bakeryButton.visible = false;
+        // coffeeButtonOn = false;
+        // this.coffeeButton.visible = false;
+        // bakeryButtonOn = false;
+        // this.bakeryButton.visible = false;
         
         gamegroup.add(this.status_bar);
         gamegroup.add(this.managerButton);
@@ -96,7 +96,7 @@ BlueRoom.Game.prototype = {
 
         
         var status = statusBar;
-        var style = { font: "32px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left", backgroundColor: "#ffffff" };
+        var style = { font: "32px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left"};
 
         moneytext = this.game.add.text(330, 650, '$' + (status.money.toFixed(2)), style);
         daytext = this.game.add.text(620, 650,  status.day[dayCounter%7], style);
@@ -106,7 +106,7 @@ BlueRoom.Game.prototype = {
         closedtext = this.game.add.text(820, 650,  "CLOSING TIME!", style);
         this.closedSign(false);
 
-        var newstyle = { font: "12px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left", backgroundColor: "#ffffff" };
+        var newstyle = { font: "12px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left"};
 
         var customerAlertText = this.game.add.text(40, 615, "NEW CUSTOMER", newstyle);
         var leavingAlertText = this.game.add.text(40, 635, "LEAVING", newstyle);

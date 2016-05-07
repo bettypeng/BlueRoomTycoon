@@ -34,11 +34,11 @@ BlueRoom.Game.prototype.createManager = function () {
 
     // BlueRoom.Game.prototype.create.call(this);
     this.add.sprite(0, 0, 'managerBg');
-    this.sandwichStation = this.add.sprite(652, 146, 'sandwichStation');
-    this.bakeryStation = this.add.sprite(400, 152, 'bakeryStation');
-    this.coffeeStation = this.add.sprite(130, 155, 'coffeeStation');
-    this.bakeryStation.visible = false;
-    this.coffeeStation.visible = false;
+    this.sandwichStation = this.add.sprite(652, 140, 'sandwichStation');
+    this.bakeryStation = this.add.sprite(400, 140, 'bakeryStation');
+    this.coffeeStation = this.add.sprite(130, 140, 'coffeeStation');
+    //this.bakeryStation.visible = false;
+    //this.coffeeStation.visible = false;
 
     var smallstyle = { font: "10px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "center" };
     this.employeeBreakStation = this.add.sprite(10, 430, 'employeeBreakStation');

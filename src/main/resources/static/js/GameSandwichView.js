@@ -64,9 +64,9 @@ function Topping( x, y, key) {
 BlueRoom.Game.prototype.createSandwichView= function () {
     var myGame = this;
 
-    var bg = this.add.sprite(0, 0, 'whiteBg');
+    var bg = this.add.sprite(0, 0, 'stationBg');
     sandwichViewElements.push(bg);
-    platform = this.add.sprite(0, 450, 'whiteBg');
+    platform = this.add.sprite(0, 450, 'stationBg');
 
     // happy = this.add.sprite(170, 0, "happy");
     // sad = this.add.sprite(190, 20, "sad");
@@ -76,7 +76,6 @@ BlueRoom.Game.prototype.createSandwichView= function () {
     // sideEye = this.add.sprite(200, 0, "leaving");
     customerFace = this.add.sprite(200, 20, "neutral");
     speechBubble = this.add.sprite(350, -30, "speechBubble");
-    var garbageCan = this.add.button(950, 495, 'trash', this.trashButton, this);
     exclamation = this.add.sprite(400, 40, 'exclamation');
 
     // happy.visible = false;
@@ -89,10 +88,12 @@ BlueRoom.Game.prototype.createSandwichView= function () {
     exclamation.visible = false;
     customerFace.visible = false;
 
-    sandwichViewElements.push(garbageCan);
 
     //BlueRoom.Game.prototype.create.call(this);
-    var swbg = this.add.sprite(0, 0, 'sandwichBg2');
+    var swbg = this.add.sprite(0, 0, 'coffeeBg');
+        var garbageCan = this.add.button(950, 495, 'trash', this.trashButton, this);
+    sandwichViewElements.push(garbageCan);
+
     sandwichViewElements.push(swbg);
 
 

@@ -41,7 +41,7 @@ var md;
 var lg;
 
 BlueRoom.Game.prototype.createCoffeeView= function () {
-	var bg = this.add.sprite(0, 0, 'whiteBg');
+	var bg = this.add.sprite(0, 0, 'stationBg');
 
     coffeeCustomerFace = this.add.sprite(200, 20, "neutral");
     coffeeSpeechBubble = this.add.sprite(350, -30, "speechBubble");
@@ -74,7 +74,7 @@ BlueRoom.Game.prototype.createCoffeeView= function () {
     coffeeViewElements.push(coffeeGarbageCan);
 
     iceMachine = this.add.sprite(275, 250, 'iceMachine');
-    var iceButton = this.add.button(340, 360, 'syrupButton', this.addIce, this);
+    var iceButton = this.add.button(340, 360, 'drinkButton', this.addIce, this);
 
     
     drinkDispenser = this.game.add.group();
@@ -117,7 +117,7 @@ BlueRoom.Game.prototype.createCoffeeView= function () {
     syrupDispenser.add(peppermint);
     syrupDispenser.add(kahlua);
     syrupDispenser.x = 745;
-    syrupDispenser.y = 200;
+    syrupDispenser.y = 170;
 
     drinkDropZone = this.add.sprite(920, 355, 'drinkDropZone');
 
