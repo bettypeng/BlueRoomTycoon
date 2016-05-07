@@ -48,6 +48,7 @@ var twelveCounter = 0;
 var MANAGERTIMEINTERVAL = 1; //250 standard
 var STATIONTIMEINTERVAL = 1;
 
+var saveNumber;
 
 var game;
 
@@ -56,7 +57,6 @@ BlueRoom.Game.prototype = {
     create: function () {
         game = this;
         var mygame = this;
-
         //this.add.sprite(0, 0, 'whiteBg');
         gamegroup = this.game.add.group();
         textgroup = this.game.add.group();
@@ -426,6 +426,10 @@ BlueRoom.Game.prototype = {
 
         //  Then let's go back to the main menu.
         this.state.start('MainMenu');
+
+    },
+
+    load: function(station, employees, balance, dayNum) {
 
     }
 

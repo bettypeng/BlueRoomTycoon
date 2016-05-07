@@ -26,6 +26,11 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('playButton', 'images/start_game.png');
 		this.load.image('aboutButton', 'images/about_game.png');
 		
+		// LOAD SCREEN
+		this.load.image('loadBox', 'images/loadrectangle.png');
+		this.load.image('loadBanner', 'images/load_banner.png');
+		this.load.image('eraseButton', 'images/erase-game.png');
+		
 		// ABOUT
 		this.load.image('nextButton', 'images/next.png');
 		this.load.image('smallStart', 'images/small_start.png');
