@@ -26,8 +26,16 @@ var atCoffeeStation = null;
 
 var currThis = this;
 
+var activeButtons;
+
 
 BlueRoom.Game.prototype.createManager = function () {
+
+    activeButtons = this.add.group();
+    activeButtons.add(this.managerButton);
+    activeButtons.add(this.sandwichButton);
+    activeButtons.add(this.coffeeButton);
+    
     this.sandwichLinePos = {'x': new Array(), 'y':new Array()};
     this.bakeryLinePos = {'x': new Array(), 'y':new Array()};
     this.coffeeLinePos = {'x': new Array(), 'y':new Array()};
@@ -37,8 +45,8 @@ BlueRoom.Game.prototype.createManager = function () {
     this.sandwichStation = this.add.sprite(652, 146, 'sandwichStation');
     this.bakeryStation = this.add.sprite(400, 152, 'bakeryStation');
     this.coffeeStation = this.add.sprite(130, 155, 'coffeeStation');
-    // this.bakeryStation.visible = false;
-    // this.coffeeStation.visible = false;
+    this.bakeryStation.visible = false;
+    this.coffeeStation.visible = false;
 
     var smallstyle = { font: "10px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "center" };
     this.employeeBreakStation = this.add.sprite(10, 430, 'employeeBreakStation');
@@ -54,6 +62,7 @@ BlueRoom.Game.prototype.createManager = function () {
     leaving = false;
     customerGroup = this.add.group();
     employeeGroup = this.add.group();
+
 
     for(var i = 0; i < 16; i++){
         var curve = this.game.rnd.integerInRange(8, 12);
@@ -275,7 +284,7 @@ BlueRoom.Game.prototype.cashCustomerOut= function(customer){
         } else if (c.station == "coffee") {
             coffeePurchase(c.drinkType, c.iced, c.drinkSize, c.drinkFlavor, c.id, c.happinessBarProgress/30, true);
         } else {
-            bakeryPurchase(c.type, c.id, c.happinessBarProgress/30, true);
+            bakeryPurchase(c.muffinType, c.id, c.happinessBarProgress/30, true);
         }   
     }
     leaving = true;
@@ -300,14 +309,17 @@ BlueRoom.Game.prototype.steal = function(customer){
         } else if (c.station == "coffee") {
             coffeePurchase(c.drinkType, c.drinkIced, c.drinkSize, c.drinkFlavor, c.id, c.happinessBarProgress/30, false);
         } else {
-            bakeryPurchase(c.type, c.id, c.happinessBarProgress/30, false);
+            bakeryPurchase(c.muffinType, c.id, c.happinessBarProgress/30, false);
         } 
     }
     leaving = true;
     var tween = this.add.tween(customer.sprite).to( { x: 450, y: 700 }, 1000, null, true);
     tween.onComplete.add(onLeaveMoveComplete, this);
     function onLeaveMoveComplete(){
+        console.log("Steal decrement customer!");
         customer.sprite.visible = false;
+        clearInterval(customer.barTimer);
+        clearInterval(customer.myTimer);
         numCustomer--;
         leaving = false;
     }

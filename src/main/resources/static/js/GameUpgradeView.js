@@ -129,16 +129,16 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
  };
 
  BlueRoom.Game.prototype.buyUpgrade = function() {
- 	if(upgradeList[currentlyDisplayedUpgrade] == "coffee"){
+ 	if(upgradeList[currentlyDisplayedUpgrade] === "coffee"){
  		NUMBEROFSTATIONS++;
  		this.coffeeStation.visible = true;
-		activeButtons.push(this.coffeeButton);
+		activeButtons.add(myCoffeeButton);
 		buy(upgradeList[currentlyDisplayedUpgrade]);
  	}
- 	else if(upgradeList[currentlyDisplayedUpgrade] =="bakery"){
+ 	else if(upgradeList[currentlyDisplayedUpgrade] ==="bakery"){
  		NUMBEROFSTATIONS++;
  		this.bakeryStation.visible = true;
- 		activeButtons.push(this.bakeryButton);
+ 		activeButtons.add(this.bakeryButton);
  		buy(upgradeList[currentlyDisplayedUpgrade]);
  	}
  	console.log("BUYING: " + upgradeList[currentlyDisplayedUpgrade]);
@@ -148,6 +148,24 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
 	NUMBEROFUPGRADES--;
 	this.fadeUpgradeForward();
 	this.updateCurrUpgrade();
+	console.log(upgradeList);
+ };
+
+
+ BlueRoom.Game.prototype.sellUpgrade = function(upgrade){
+ 	if(upgrade === "coffee"){
+ 		NUMBEROFSTATIONS--;
+ 		this.coffeeStation.visible = false;
+		activeButtons.remove(myCoffeeButton);
+ 	}
+ 	else if(upgrade ==="bakery"){
+ 		NUMBEROFSTATIONS--;
+ 		this.bakeryStation.visible = false;
+ 		activeButtons.remove(this.bakeryButton);
+ 	}
+ 	console.log("SELLING: " + upgrade);
+	upgradeList.push(upgrade);
+	NUMBEROFUPGRADES++;
 	console.log(upgradeList);
  };
 

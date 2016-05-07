@@ -44,6 +44,20 @@ function getCustomer(game) {
     
 } 
 
+function fireHandler(empName) {
+    var postParameters = {name: empName};
+
+    $.post("/fire", postParameters, function(responseJSON) {});
+
+}
+
+function sellHandler(stationName) {
+    var postParameters = {name: stationName};
+
+    $.post("/sell", postParameters, function(responseJSON) {});
+}
+
+
 //possibly only call this on string of lost customers
 function leaveHandler (station) {
     var postParameters = {station: station};
@@ -266,6 +280,7 @@ function saveGame() {
 	var postParameters = { file: filename };
 	
 	$.post("/save", postParameters, function(responseJSON) {});
+    game.createGeneralAlert("Current game state successfully saved!");
 }
 
 function loadGame(filename) {

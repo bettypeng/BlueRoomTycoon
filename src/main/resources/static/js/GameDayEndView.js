@@ -66,6 +66,15 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 	dayEndViewElements.push(close);
 	dayEndViewElements.push(save);
 
+	managerView = false;
+    sandwichView = false;
+    coffeeView = false;
+    bakeryView = false;
+    dayEndView = true;
+
+    	this.managerButton.visible = false;
+	this.sandwichButton.visible = false;
+
 	game.loseMoney(500, 530, "- $"+(dailyInfo.expenses).toFixed(2), dailyInfo.expenses);
 };
 

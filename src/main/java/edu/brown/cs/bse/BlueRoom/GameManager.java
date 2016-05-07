@@ -46,7 +46,7 @@ public class GameManager {
     availableStations.add("sandwich");
     currTime = 0;
     leftToday = 0;
-    baselineInterval = 10000;
+    baselineInterval = 5000;
     OrderFactory.setMuffinWeights();
   }
 
