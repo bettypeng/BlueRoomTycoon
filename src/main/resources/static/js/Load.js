@@ -9,14 +9,18 @@ var savedGames;
 BlueRoom.Load.prototype = {
 	create: function() {
 	
-		this.add.sprite(0, 0, 'whiteBg');
-		this.add.button(80, 180, 'loadBox', this.loadGameZero, this);
-		this.add.button(380, 180, 'loadBox', this.loadGameOne, this);
-		this.add.button(680, 180, 'loadBox', this.loadGameTwo, this);
-		this.add.sprite(335, 10, 'loadBanner');
+		this.add.sprite(0, 0, 'titlepage');
+		var a = this.add.button(this.game.width/4, 370, 'loadBox', this.loadGameZero, this);
+		var b = this.add.button(this.game.width/2, 370, 'loadBox', this.loadGameOne, this);
+		var c = this.add.button(3*this.game.width/4, 370, 'loadBox', this.loadGameTwo, this);
+
+		a.anchor.setTo(0.5, 0);
+		b.anchor.setTo(0.5, 0);
+		c.anchor.setTo(0.5, 0);
+		// this.add.sprite(335, 10, 'loadBanner');
 		
-		var style = { font: "18px Comic Sans MS", fill: "#000000", align: "center", backgroundColor: "#ffffff" };
-		this.game.add.text(385, 160, "Select a slot below to begin playing!", style);
+		var style = { font: "18px Roboto-Light", fill: "#000000", align: "center"};
+		this.game.add.text(385, 300, "Select a slot below to begin playing!", style);
 		currThis = this;
 		getSavedGames();
 	
@@ -28,36 +32,59 @@ BlueRoom.Load.prototype = {
 	
 	finishCreate: function(savedGamesLocal) {
 		savedGames = savedGamesLocal;
-		var style = { font: "18px Comic Sans MS", fill: "#000000", wordWrap: true, wordWrapWidth: 220, align: "center", backgroundColor: "#ffffff" };
+		var mainstyle = { font: "25px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 220, align: "center"};
+
+		var style = { font: "16px Roboto-Thin", fill: "#000000", wordWrap: true, wordWrapWidth: 140, align: "center" };
 		var newGameText = "NEW GAME";
 		var instructionText = "CLICK HERE TO START A NEW GAME FILE";
 		var savedText = "CLICK HERE TO LOAD GAME";
 		
 		if (savedGames[0]) {
-			currThis.add.text(202, 310, "GAME 0", style);
-			currThis.add.text(138, 410, savedText, style);
-			currThis.add.button(37, 560, 'eraseButton', currThis.eraseGameZero, this);
+			var a = currThis.add.text(currThis.game.width/4, 425, "GAME 0", mainstyle);
+			var b = currThis.add.text(currThis.game.width/4, 525, savedText, style);
+			var c = currThis.add.button(currThis.game.width/4, 640, 'eraseButton', currThis.eraseGameZero, this);
+
+			a.anchor.setTo(0.5, 0);
+			b.anchor.setTo(0.5, 0);
+			c.anchor.setTo(0.5, 0);
 		} else {
-			currThis.add.text(185, 310, newGameText, style);
-			currThis.add.text(132, 410, instructionText, style);
+			var a = currThis.add.text(currThis.game.width/4, 425, newGameText, mainstyle);
+			var b = currThis.add.text(currThis.game.width/4, 525, instructionText, style);
+
+			a.anchor.setTo(0.5, 0);
+			b.anchor.setTo(0.5, 0);
 		}
 		
 		if (savedGames[1]) {
-			currThis.add.text(502, 310, "GAME 1", style);
-			currThis.add.text(438, 410, savedText, style);
-			currThis.add.button(337, 560, 'eraseButton', currThis.eraseGameOne, this);
+			var a = currThis.add.text(currThis.game.width/2, 425, "GAME 1", mainstyle);
+			var b = currThis.add.text(currThis.game.width/2, 525, savedText, style);
+			var c = currThis.add.button(currThis.game.width/2, 640, 'eraseButton', currThis.eraseGameOne, this);
+
+			a.anchor.setTo(0.5, 0);
+			b.anchor.setTo(0.5, 0);
+			c.anchor.setTo(0.5, 0);
 		} else {
-			currThis.add.text(485, 310, newGameText, style);
-			currThis.add.text(432, 410, instructionText, style);
+			var a = currThis.add.text(currThis.game.width/2, 425, newGameText, mainstyle);
+			var b = currThis.add.text(currThis.game.width/2, 525, instructionText, style);
+
+			a.anchor.setTo(0.5, 0);
+			b.anchor.setTo(0.5, 0);
 		}
 		
 		if (savedGames[2]) {
-			currThis.add.text(802, 310, "GAME 2", style);
-			currThis.add.text(738, 410, savedText, style);
-			currThis.add.button(637, 560, 'eraseButton', currThis.eraseGameTwo, this);
+			var a = currThis.add.text(3* currThis.game.width/4, 425, "GAME 2", mainstyle);
+			var b = currThis.add.text(3* currThis.game.width/4, 525, savedText, style);
+			var c = currThis.add.button(3* currThis.game.width/4, 640, 'eraseButton', currThis.eraseGameTwo, this);
+
+			a.anchor.setTo(0.5, 0);
+			b.anchor.setTo(0.5, 0);
+			c.anchor.setTo(0.5, 0);
 		} else {
-			currThis.add.text(785, 310, newGameText, style);
-			currThis.add.text(732, 410, instructionText, style);
+			var a = currThis.add.text(3* currThis.game.width/4, 425, newGameText, mainstyle);
+			var b = currThis.add.text(3* currThis.game.width/4, 525, instructionText, style);
+
+			a.anchor.setTo(0.5, 0);
+			b.anchor.setTo(0.5, 0);
 		}
 	},
 	

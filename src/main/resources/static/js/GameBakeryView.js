@@ -43,7 +43,7 @@ function Batter(textName, amt){
 }
 
 BlueRoom.Game.prototype.createBakeryView= function () {
-	var bg = this.add.sprite(0, 0, 'whiteBg');
+	var bg = this.add.sprite(0, 0, 'stationBg');
 
     bakeryCustomerFace = this.add.sprite(140, 5, "neutral");
     bakerySpeechBubble = this.add.sprite(290, -35, "speechBubble");
@@ -75,13 +75,13 @@ BlueRoom.Game.prototype.createBakeryView= function () {
     bakeryViewElements.push(p5);
     bakeryViewElements.push(p6);
 
-    var style = { font: "18px Roboto-Thin", fill: "#000000", wordWrap: true, wordWrapWidth: 400, align: "center" };
-     pistText = this.game.add.text(100, 263, "COUNT: 0"  , style);
-     dchocText = this.game.add.text(260, 263, "COUNT: 0"  , style);
-     chocChipText = this.game.add.text(420, 263, "COUNT: 0"  , style);
+    var style = { font: "18px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 400, align: "center" };
+    pistText = this.game.add.text(100, 263, "COUNT: 0"  , style);
+    dchocText = this.game.add.text(260, 263, "COUNT: 0"  , style);
+    chocChipText = this.game.add.text(420, 263, "COUNT: 0"  , style);
     bananaText = this.game.add.text(580, 263, "COUNT: 0"  , style);
-     berryText = this.game.add.text(740, 263, "COUNT: 0"  , style);
-     branText = this.game.add.text(900, 263, "COUNT: 0"  , style);
+    berryText = this.game.add.text(740, 263, "COUNT: 0"  , style);
+    branText = this.game.add.text(900, 263, "COUNT: 0"  , style);
 
     bakeryViewElements.push(pistText);
     bakeryViewElements.push(dchocText);
@@ -242,14 +242,14 @@ BlueRoom.Game.prototype.createOvenTimer = function(){
     bmd.ctx.rect(0, 0, width, height);
     bmd.ctx.fillStyle = '#cccccc';
     bmd.ctx.fill();
-    timerBg = game.add.sprite(730, 450, bmd);
+    timerBg = game.add.sprite(745, 450, bmd);
     timerBg.anchor.setTo(0.5, 1);
     bakeryViewElements.push(timerBg);
 
 
     this.ovenTimerTime = height;
     this.ovenTimer = this.add.bitmapData(width, height);
-    ovenTimerSprite = this.game.add.sprite(730, 450, this.ovenTimer);
+    ovenTimerSprite = this.game.add.sprite(745, 450, this.ovenTimer);
     bakeryViewElements.push(ovenTimerSprite);
     ovenTimerSprite.anchor.setTo(0.5, 1);
     this.startBakeTimer();
@@ -330,10 +330,10 @@ BlueRoom.Game.prototype.bakeMuffins = function(){
         currThis.add.tween(item).to( { x: item.x, y: item.y-140 }, 1000, Phaser.Easing.Exponential.In, true);
     });
     t.onComplete.add(function(){
-        ovenClosed = currThis.add.sprite(currThis.game.width/2, 310, 'ovenClosed');
+        ovenClosed = currThis.add.sprite(currThis.game.width/2, 326, 'ovenClosed');
         bakeryViewElements.push(ovenClosed);
         ovenClosed.anchor.setTo(0.5, 0);
-        openOven = currThis.add.button(currThis.game.width/2, 334, 'openOven', currThis.endBakeMuffins, this);
+        openOven = currThis.add.button(currThis.game.width/2, 354, 'openOven', currThis.endBakeMuffins, this);
         bakeryViewElements.push(openOven);
         openOven.anchor.setTo(0.5, 0.5);
         currThis.createOvenTimer();
@@ -423,7 +423,7 @@ BlueRoom.Game.prototype.getMuffinsOut= function(burnt){
 
 BlueRoom.Game.prototype.setUpMuffin = function(x, y, img){
     var staticMuffin = this.add.sprite(x, y, img);
-    staticMuffin.alpha = 0.3;
+    staticMuffin.alpha = 0;
     var m = new MuffinEl(x, y, img);
     muffinList[img] = m;
     bakeryViewElements.push(staticMuffin);
@@ -549,7 +549,7 @@ BlueRoom.Game.prototype.checkMuffinNumber = function(name){
         movableMuffinMap[name].alpha = 1;
     } else{
         movableMuffinMap[name].inputEnabled = false;
-        movableMuffinMap[name].alpha = 0.3;
+        movableMuffinMap[name].alpha = 0;
     }
 };
 

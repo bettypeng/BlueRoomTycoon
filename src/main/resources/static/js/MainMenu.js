@@ -15,8 +15,10 @@ BlueRoom.MainMenu.prototype = {
 		this.add.sprite(0, 0, 'whiteBg');
 		this.add.sprite(0, 0, 'titlepage');
 
-		this.playButton = this.add.button(365, 250, 'playButton', this.startGame, this);
-		this.aboutButton = this.add.button(365, 370, 'aboutButton', this.aboutScreen, this);
+		this.playButton = this.add.button(this.game.width/2, 375, 'playButton', this.startGame, this);
+		this.aboutButton = this.add.button(this.game.width/2, 475, 'aboutButton', this.aboutScreen, this);
+		this.playButton.anchor.setTo(0.5, 0.5);
+		this.aboutButton.anchor.setTo(0.5, 0.5);
 
 	},
 

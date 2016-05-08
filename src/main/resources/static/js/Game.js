@@ -70,11 +70,11 @@ BlueRoom.Game.prototype = {
 
         this.add.sprite(0, 0, 'whiteBg');
         this.managerButton = this.add.button(10, 10, 'managerButton', goToManagerView, this);
-		this.sandwichButton = this.add.button(10, 80, 'sandwichButton', goToSandwichView, this);
-		this.coffeeButton = this.add.button(10, 150, 'coffeeButton', goToCoffeeView, this);
-        this.bakeryButton = this.add.button(10, 220, 'bakeryButton', goToBakeryView, this);
+		this.sandwichButton = this.add.button(10, 85, 'sandwichButton', goToSandwichView, this);
+		this.coffeeButton = this.add.button(10, 160, 'coffeeButton', goToCoffeeView, this);
+        this.bakeryButton = this.add.button(10, 235, 'bakeryButton', goToBakeryView, this);
         this.status_bar = this.add.sprite(0, 600, 'status_bar');
-        this.pauseButton = this.add.button(1000, 630, 'pauseButton', this.showPauseScreen, this);
+        this.pauseButton = this.add.button(980, 615, 'pauseButton', this.showPauseScreen, this);
 
         customerAlert = this.add.sprite(20, 625, 'radiobutton');
         leavingAlert = this.add.sprite(20, 645, 'radiobutton');
@@ -96,7 +96,7 @@ BlueRoom.Game.prototype = {
 
         
         var status = statusBar;
-        var style = { font: "32px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left", backgroundColor: "#ffffff" };
+        var style = { font: "32px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left"};
 
         moneytext = this.game.add.text(330, 650, '$' + (status.money.toFixed(2)), style);
         daytext = this.game.add.text(620, 650,  status.day[dayCounter%7], style);
@@ -106,7 +106,7 @@ BlueRoom.Game.prototype = {
         closedtext = this.game.add.text(820, 650,  "CLOSING TIME!", style);
         this.closedSign(false);
 
-        var newstyle = { font: "12px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left", backgroundColor: "#ffffff" };
+        var newstyle = { font: "12px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left"};
 
         var customerAlertText = this.game.add.text(40, 615, "NEW CUSTOMER", newstyle);
         var leavingAlertText = this.game.add.text(40, 635, "LEAVING", newstyle);

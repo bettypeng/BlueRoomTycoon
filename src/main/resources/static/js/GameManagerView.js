@@ -34,17 +34,16 @@ BlueRoom.Game.prototype.createManager = function () {
 
     // BlueRoom.Game.prototype.create.call(this);
     this.add.sprite(0, 0, 'managerBg');
-    this.sandwichStation = this.add.sprite(652, 146, 'sandwichStation');
-    this.bakeryStation = this.add.sprite(400, 152, 'bakeryStation');
-    this.coffeeStation = this.add.sprite(130, 155, 'coffeeStation');
-    this.bakeryStation.visible = false;
-    this.coffeeStation.visible = false;
+    this.sandwichStation = this.add.sprite(652, 140, 'sandwichStation');
+    this.bakeryStation = this.add.sprite(400, 140, 'bakeryStation');
+    this.coffeeStation = this.add.sprite(130, 140, 'coffeeStation');
+    // this.bakeryStation.visible = false;
+    // this.coffeeStation.visible = false;
 
     var smallstyle = { font: "10px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "center" };
-    this.employeeBreakStation = this.add.sprite(10, 430, 'employeeBreakStation');
-    this.game.add.text(35, 435, "EMPLOYEE\nBREAK\nSTATION", smallstyle);
-    this.cashier = this.add.sprite(300, 500, 'dollar');
-    this.game.add.text(305, 565, "DRAG HERE TO\nCASH OUT!", smallstyle);
+    this.employeeBreakStation = this.add.sprite(10, 450, 'employeeBreakStation');
+    this.cashier = this.add.sprite(300, 400, 'dollar');
+    // this.game.add.text(305, 565, "DRAG HERE TO\nCASH OUT!", smallstyle);
     
     var style = { font: "30px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "center" };
     numSandwich = 0;

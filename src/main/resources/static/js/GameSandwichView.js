@@ -64,9 +64,9 @@ function Topping( x, y, key) {
 BlueRoom.Game.prototype.createSandwichView= function () {
     var myGame = this;
 
-    var bg = this.add.sprite(0, 0, 'whiteBg');
+    var bg = this.add.sprite(0, 0, 'stationBg');
     sandwichViewElements.push(bg);
-    platform = this.add.sprite(0, 450, 'whiteBg');
+    platform = this.add.sprite(0, 470, 'stationBg');
 
     // happy = this.add.sprite(170, 0, "happy");
     // sad = this.add.sprite(190, 20, "sad");
@@ -76,7 +76,6 @@ BlueRoom.Game.prototype.createSandwichView= function () {
     // sideEye = this.add.sprite(200, 0, "leaving");
     customerFace = this.add.sprite(200, 20, "neutral");
     speechBubble = this.add.sprite(350, -30, "speechBubble");
-    var garbageCan = this.add.button(950, 495, 'trash', this.trashButton, this);
     exclamation = this.add.sprite(400, 40, 'exclamation');
 
     // happy.visible = false;
@@ -89,10 +88,12 @@ BlueRoom.Game.prototype.createSandwichView= function () {
     exclamation.visible = false;
     customerFace.visible = false;
 
-    sandwichViewElements.push(garbageCan);
 
     //BlueRoom.Game.prototype.create.call(this);
-    var swbg = this.add.sprite(0, 0, 'sandwichBg2');
+    var swbg = this.add.sprite(0, 0, 'sandwichBg');
+        var garbageCan = this.add.button(950, 495, 'trash', this.trashButton, this);
+    sandwichViewElements.push(garbageCan);
+
     sandwichViewElements.push(swbg);
 
 
@@ -101,7 +102,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
     platform.body.moves = false;
     sandwichViewElements.push(platform);
 
-    dropZone = this.add.sprite(930,  235, 'dropzone');
+    dropZone = this.add.sprite(940,  235, 'dropzone');
     dropZone.anchor.setTo(0.5, 0.5);
 
     sandwichViewElements.push(dropZone);
@@ -114,17 +115,33 @@ BlueRoom.Game.prototype.createSandwichView= function () {
 
     staticElements = this.add.group();
     movableElements =  this.add.physicsGroup();
-    
-    this.newTopping(200, 320, 'top_bun', 'top_bun');
-    this.newTopping(180, 400, 'bottom_bun', 'bottom_bun');
-    this.newTopping(325, 420, 'roast_beef', 'roast_beef');
-    this.newTopping(350, 310, 'turkey', 'turkey');
-    this.newTopping(475, 315, 'ham', 'ham');
-    this.newTopping(465, 420, 'cheese', 'cheese');
-    this.newTopping(600, 320, 'lettuce', 'lettuce');
-    this.newTopping(600, 425, 'tomato', 'tomato');
-    this.newTopping(740, 425, 'cucumber', 'cucumber');
-    this.newTopping(720, 325, 'onion', 'onion');
+
+    this.newTopping(300, 260, 'turkey_pile', 'turkey');
+    this.newTopping(260, 370, 'roast_beef_pile', 'roast_beef');
+    this.newTopping(220, 500, 'ham_pile', 'ham');
+
+    this.newTopping(417, 260, 'mozzarella_pile', 'mozzarella');
+    this.newTopping(405, 383, 'yellow_cheese_pile', 'yellow_cheese');
+    this.newTopping(400, 500, 'swiss_cheese_pile', 'swiss_cheese');
+
+    this.newTopping(523, 260, 'spring_mix_pile', 'spring_mix');
+    this.newTopping(545, 375, 'lettuce_pile', 'lettuce');
+    this.newTopping(565, 500, 'spinach_pile', 'spinach');
+
+    this.newTopping(650, 260, 'onion_pile', 'onion');
+    this.newTopping(680, 380, 'pickle_pile', 'pickle');
+    this.newTopping(730, 500, 'tomato_pile', 'tomato');
+
+
+    this.newTopping(150, 240, 'top_ciabatta', 'top_ciabatta');
+    this.newTopping(140, 275, 'bottom_ciabatta', 'bottom_ciabatta');
+
+    this.newTopping(100, 315, 'top_french', 'top_french');
+    this.newTopping(90, 350, 'bottom_french', 'bottom_french');
+
+    this.newTopping(70, 390, 'top_wheat', 'top_wheat');
+    this.newTopping(70, 415, 'bottom_wheat', 'bottom_wheat');
+ 
 
     dragPosition = new Phaser.Point(0, 0);
     
@@ -222,17 +239,22 @@ BlueRoom.Game.prototype.hideSandwichView= function(){
 BlueRoom.Game.prototype.newTopping=function(x, y, staticImg, movableImg){
     var rb = staticElements.create(x, y, staticImg);
     var movableRb = movableElements.create(x, y, movableImg);
+    elementMap[rb.key] = new Topping(x, y, movableImg);
+    elementMap[movableRb.key] = new Topping(x, y, movableImg);
+    movableRb.loadTexture(staticImg);
     sandwichViewElements.push(rb);
     sandwichViewElements.push(movableRb);
     movableElems.push(movableRb);
     rb.anchor.setTo(0.5, 0.5);
     movableRb.anchor.setTo(0.5, 0.5);
-    elementMap[movableRb.key] = new Topping(x, y, staticImg);
+   
     this.newToppingHelper(rb, movableRb, movableImg);
 };
 
 BlueRoom.Game.prototype.renewTopping= function(x, y, key){
+    var change = movableElementMap[key];
     var movable = movableElements.create(x, y, key);
+    movable.loadTexture(change);
     sandwichViewElements.push(movable);
     movableElems.push(movable);
     movable.anchor.setTo(0.5, 0.5);
@@ -245,7 +267,7 @@ BlueRoom.Game.prototype.renewTopping= function(x, y, key){
 BlueRoom.Game.prototype.newToppingHelper= function(staticEl, draggableEl, transformImg){
     staticElementMap[staticEl.key] = transformImg;
     movableElementMap[transformImg] = staticEl.key;
-    elementMap[transformImg] = new Topping(staticEl.x, staticEl.y, staticEl.key);
+    //elementMap[transformImg] = new Topping(staticEl.x, staticEl.y, staticEl.key);
     this.setUpInteractions(staticEl);
     this.setUpInteractions(draggableEl);
     staticEl.inputEnabled = true;
@@ -264,19 +286,22 @@ BlueRoom.Game.prototype.setUpInteractions =function(sprite){
     
 BlueRoom.Game.prototype.onOver= function(sprite, pointer) {
 
-    sprite.tint = 0xcccccc;
+    //sprite.tint = 0xcccccc;
 
 },
 
 BlueRoom.Game.prototype.onOut= function(sprite, pointer) {
 
-    sprite.tint = 0xffffff;
+    //sprite.tint = 0xffffff;
 
 },
 
 BlueRoom.Game.prototype.onDragStart = function(sprite, pointer) {
-    var dragOut = staticElementMap[sprite.key];
-    sprite.loadTexture(dragOut, 0);
+    //var change = dragOut.substring(0, dragOut.length-5);
+    if(sprite.key.indexOf("_pile")!=-1){
+        sprite.loadTexture(elementMap[sprite.key].key);
+        sprite.resetFrame();
+    }
     dragPosition.set(sprite.x, sprite.y);
     mypointer.alpha = 1;
 },
@@ -287,12 +312,18 @@ BlueRoom.Game.prototype.onDragStop= function(sprite, pointer) {
     sprite.body.moves = true;
     mypointer.alpha = 0;
 
-    if (!sprite.overlap(dropZone) || sprite.overlap(platform))
+    if(sprite.x===dragPosition.x && sprite.y===dragPosition.y){
+        var change = movableElementMap[sprite.key];
+        sprite.loadTexture(change);    
+    }
+    else if (!sprite.overlap(dropZone) )
+        //|| sprite.overlap(platform))
     {
-        this.add.tween(sprite).to( { x: dragPosition.x, y: dragPosition.y }, 500, "Back.easeOut", true);
-         window.setTimeout(function(){
-             sprite.loadTexture(movableElementMap[sprite.key]);
-            }, 600);
+        var t = this.add.tween(sprite).to( { x: dragPosition.x, y: dragPosition.y }, 500, "Back.easeOut", true);
+        setTimeout(function(){
+            var change = movableElementMap[sprite.key];
+            sprite.loadTexture(change);
+        }, 490);
     }
     else{
         if ((currCustomer != null) && (currCustomerOrder[0] == currOrderElem.key)) {
@@ -300,6 +331,10 @@ BlueRoom.Game.prototype.onDragStop= function(sprite, pointer) {
         }
         sprite.body.gravity.y = 1000;
         sprite.input.draggable = false;
+        console.log("sprite key: " + sprite.key);
+                console.log(elementMap);
+
+        console.log(elementMap[sprite.key]);
         var curr = elementMap[sprite.key];
         this.renewTopping(curr.x, curr.y, curr.key);
     }
