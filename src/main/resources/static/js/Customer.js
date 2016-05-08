@@ -6,7 +6,26 @@ function Customer(id, station, order){
     this.id = id;
     this.sprite = currThis.game.add.group();
 
-    var cust = currThis.game.add.sprite(0, 5, 'customer');
+    var shirtColor = currThis.game.rnd.integerInRange(0, 4);
+    var cust;
+    switch(shirtColor){
+        case 0:
+            cust = currThis.game.add.sprite(0, 5, 'orange');
+            break;
+        case 1:
+            cust = currThis.game.add.sprite(0, 5, 'green');
+            break;
+        case 2:
+            cust = currThis.game.add.sprite(0, 5, 'purple');
+            break;
+        case 3:
+            cust = currThis.game.add.sprite(0, 5, 'red');
+            break;
+        default:
+            cust = currThis.game.add.sprite(0, 5, 'red');
+            break;
+    }
+
     this.cust = cust;
     cust.anchor.setTo(0.5, 0.5);
     this.sprite.add(cust);

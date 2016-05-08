@@ -72,7 +72,11 @@ BlueRoom.Preloader.prototype = {
 		// MANAGER VIEW
 		this.load.image('employee', 'images/employee.png');
 		this.load.image('employeeHalf', 'images/employee_behind_counter.png');
-		this.load.image('customer', 'images/customer.png');
+		this.load.image('red', 'images/sprites/red_sprite.png');
+		this.load.image('orange', 'images/sprites/orange_sprite.png');
+		this.load.image('purple', 'images/sprites/purple_sprite.png');
+		this.load.image('green', 'images/sprites/green_sprite.png');
+
 		this.load.image('employeeBreakStation', 'images/employeebreak.png');
 
 		this.load.image('radiobutton', 'images/alertbutton.png');
@@ -127,17 +131,17 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('tomato', 'images/sandwich/toppings/tomato.png');
 		
 		this.load.image('speechBubble', 'images/sandwich/speech_bubble.png');
-		this.load.image('happy', 'images/happy.png');
-		this.load.image('neutral', 'images/neutral.png');
-		this.load.image('sad', 'images/saddness.png');
-		this.load.image('leaving', 'images/leaving.png');
+		this.load.image('happy', 'images/sprites/happy_face.png');
+		this.load.image('neutral', 'images/sprites/neutral_face.png');
+		this.load.image('sad', 'images/sprites/sad_face.png');
+		this.load.image('leaving', 'images/sprites/neutral_face.png');
 		this.load.image('pointer', 'images/sandwich/down_pointer.png');
 		this.load.image('trash', 'images/trash_can.png');
 		this.load.image('exclamation', 'images/exclamation.png');
-		this.load.image('noface', 'images/noface.png');
-		this.load.image('glasses', 'images/glasses.png');
-		this.load.image('troll', 'images/troll.jpg');
-		this.load.image('upset', 'images/disappointed.jpg');
+		this.load.image('noface', 'images/sprites/no_face.png');
+		this.load.image('glasses', 'images/sprites/worst_face.png');
+		this.load.image('troll', 'images/sprites/worst_face.png');
+		this.load.image('upset', 'images/sprites/no_face.jpg');
 
 		//COFFEE STATION
 		this.load.image('coffeeBg', 'images/coffee/coffeeview_bg.png');
