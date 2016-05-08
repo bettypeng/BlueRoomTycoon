@@ -51,9 +51,9 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('stationBg', 'images/blue_bg.png');
 
 		this.load.image('managerBg', 'images/manager_view_bg.png');
-		this.load.image('sandwichStation', 'images/sandwich_counter.png');
-		this.load.image('coffeeStation', 'images/coffee_counter.png');
-		this.load.image('bakeryStation', 'images/bakery_counter.png');
+		this.load.image('sandwichStation', 'images/sandwich_station_counter.png');
+		this.load.image('coffeeStation', 'images/coffee_station_counter.png');
+		this.load.image('bakeryStation', 'images/bakery_station_counter.png');
 
 		//this.load.image('sandwichBg', 'images/sandwich_bg.png');
 		this.load.image('sandwichBg', 'images/sandwich/sandwich_bg.png');
@@ -62,8 +62,8 @@ BlueRoom.Preloader.prototype = {
 
 		//PAUSE SCREEN
 		this.load.image('pauseButton', 'images/white_pause_button.png');
-		this.load.image('pauseScreen', 'images/pause_test_screen.png');
-		this.load.image('resumeGameButton', 'images/resume_game_button.png');
+		this.load.image('pauseScreen', 'images/pause_screen.png');
+		this.load.image('resumeGameButton', 'images/resume_button.png');
 		this.load.image('restartGameButton', 'images/restart_game_button.png');
 		this.load.image('quitGameButton', 'images/quit_game_button.png');
 
