@@ -61,7 +61,9 @@ var game;
 
 BlueRoom.Game.prototype = {
 
-    create: function () {
+    init: function (gameFile) {
+        console.log("CREATING STATE");
+        
         game = this;
         var mygame = this;
         //this.add.sprite(0, 0, 'whiteBg');
@@ -156,6 +158,9 @@ BlueRoom.Game.prototype = {
                 updateCustomerInterval();
             }
         }, 1000);
+
+        //LOAD THE GAME
+        loadGame(gameFile);
 
        
         //this.showSandwichView();
@@ -257,7 +262,7 @@ BlueRoom.Game.prototype = {
             color = 0x0099cc;
         }
         
-        timer = setInterval(function(){
+        var statusTimer = setInterval(function(){
             counter++;
             if (counter%2==0) {
                 alerttype.tint = color;
@@ -267,7 +272,7 @@ BlueRoom.Game.prototype = {
         }, 90);
 
         setTimeout(function() {
-            clearInterval(timer);
+            clearInterval(statusTimer);
         }, 1900);
 
         alerttype.tint = 0xFFFFFF;
@@ -531,15 +536,18 @@ BlueRoom.Game.prototype = {
     },
 
     load: function(stations, employees, balance, dayNum, magRack) {
+        // currLoadThis.state.start('Game');
         console.log(stations);
         for (var i = 0; i < stations.length; i++) {
             var station = stations[i];
             // do something to add the station to the front end
-
+            // console.log(this);
+            this.loadUpgrades(stations[i]);
         }
         console.log(employees);
         for (var i = 0; i < employees.length; i++) {
             // add each employee
+            this.loadEmployees(employees[i]);
         }
         console.log(balance);
         // check if this is actually a valid way to change the money
@@ -547,8 +555,11 @@ BlueRoom.Game.prototype = {
         console.log(dayNum);
         // do something with dayNum to make sure day of the week is correct
         console.log(magRack);
+        if (magRack) {
+            this.loadMagRack();
+        }
         // do something to tell game if magazine rack has been purchased
-        currThis.state.start('Game');
+        //currThis.state.start('Game');
     }
 
 };

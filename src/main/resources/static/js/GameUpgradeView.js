@@ -15,6 +15,7 @@ var upkeepcosttext;
 var buyUpgradeButton;
 
 
+
 BlueRoom.Game.prototype.createUpgradeView= function () {
 	this.disableDayEndButtons();
 

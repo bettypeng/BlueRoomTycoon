@@ -25,8 +25,11 @@ var atBakeryStation = null;
 var atCoffeeStation = null;
 
 var currThis = this;
+var myGameThis;
 
 BlueRoom.Game.prototype.createManager = function () {
+    console.log("CREATING MANAGER VIEW");
+    myGameThis = this;
     
     this.sandwichLinePos = {'x': new Array(), 'y':new Array()};
     this.bakeryLinePos = {'x': new Array(), 'y':new Array()};
@@ -118,10 +121,10 @@ BlueRoom.Game.prototype.createManager = function () {
     this.timerStopped = true;
     this.timer = null;
 
-    setTimeout(function(){
-        getCustomer();
-        currThis.statusAlert(customerAlert);
-    }, 500);
+    // setTimeout(function(){
+    //     getCustomer();
+    //     currThis.statusAlert(customerAlert);
+    // }, 500);
 
     setInterval(function() {
         managerCounter += 1;
@@ -434,4 +437,85 @@ BlueRoom.Game.prototype.newCustomerReturned = function(customer){
         
     }
 };
+
+BlueRoom.Game.prototype.loadUpgrades = function(upgradeName) {
+
+    if (upgradeName == "coffee") {
+        NUMBEROFSTATIONS++;
+        currThis.coffeeStation.visible = true;
+        currThis.coffeeButton.visible = true;
+        coffeeButtonOn = true;
+        this.addToUpgradeInventory("coffee");
+        upgradeList.splice(0, 1);
+        NUMBEROFUPGRADES--;
+    } else if (upgradeName == "bakery") {
+        NUMBEROFSTATIONS++;
+        currThis.bakeryStation.visible = true;
+        currThis.bakeryButton.visible = true;
+        bakeryButtonOn= true;
+        this.addToUpgradeInventory("bakery");
+        if (upgradeList.length == 2) {
+            upgradeList.splice(0, 1);
+        } else {
+            upgradeList.splice(1,1);
+        }
+        NUMBEROFUPGRADES--;
+    }
+
+ };
+
+ BlueRoom.Game.prototype.loadEmployees = function(employeeName) {
+
+    NUMBEROFHIRES--;
+    NUMBEROFEMPLOYEES++;
+
+    var emp = new Employee(employeeName);
+    employeeGroup.add(emp.employeeSprite);
+    employeeMap[employeeName] = emp;
+    this.addToEmployeeInventory(employeeName);
+
+    if (employeeName == "erik") {
+        hireList.splice(0, 1);
+    } else if (employeeName == "rachel") {
+        hireList.splice(hireList.length-1, 1);
+    } else {
+        if (hireList.length == 3) {
+            hireList.splice(1, 1);
+        } else if (hireList.length == 2) {
+            if (hireList[0] == "alex") {
+                hireList.splice(0, 1);
+            } else {
+                hireList.splice(1, 1);
+            }
+        } else {
+            hireList.splice(0,1);
+        }
+    }    
+
+ };
+
+ BlueRoom.Game.prototype.loadMagRack = function() {
+
+    if(upgradeList[currentlyDisplayedUpgrade] === "coffee"){
+        NUMBEROFSTATIONS++;
+        this.coffeeStation.visible = true;
+        coffeeButtonOn = true;
+        buy(upgradeList[currentlyDisplayedUpgrade]);
+    }
+    else if(upgradeList[currentlyDisplayedUpgrade] ==="bakery"){
+        NUMBEROFSTATIONS++;
+        this.bakeryStation.visible = true;
+        bakeryButtonOn = true;
+        buy(upgradeList[currentlyDisplayedUpgrade]);
+    }
+    console.log("BUYING: " + upgradeList[currentlyDisplayedUpgrade]);
+    this.addToUpgradeInventory(upgradeList[currentlyDisplayedUpgrade]);
+    this.createPurchaseAlert("bought a new", upgradeList[currentlyDisplayedUpgrade]+" station", upgradeCostList[upgradeList[currentlyDisplayedUpgrade]]);
+    upgradeList.splice(currentlyDisplayedUpgrade, 1);
+    NUMBEROFUPGRADES--;
+    this.fadeUpgradeForward();
+    this.updateCurrUpgrade();
+    console.log(upgradeList);
+
+ };
 
