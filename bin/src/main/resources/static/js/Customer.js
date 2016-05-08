@@ -35,10 +35,11 @@ function Customer(id, station, order){
     this.drinkFlavor = null;
     this.drinkSize = null;
 
+    this.muffinType = null;
+
     this.createBar();
 
     this.inLine = true;
-
 }
 
 
@@ -132,17 +133,26 @@ Customer.prototype = {
    	createBar : function(){
         var currCust = this;
     	this.barTimer = setInterval(function(){
-            if(managerView && !currCust.moving){
-          		currCust.happinessBarProgress-=0.1;
+            if(!currCust.moving && !gamePaused){
+                if(managerView){
+                    currCust.happinessBarProgress-=0.1;
+                } else {
+                    currCust.happinessBarProgress-=0.01;
+                }
             }
       	}, CUSTOMERHAPPINESSINTERVAL);
 
         this.myTimer = setInterval(function(){
-            if(managerView){
-                currCust.myupdate();
-            }
+            // if(managerView){
+            currCust.myupdate();
+            // }
         }, 10);
 	},
+
+    stopBar : function() {
+        clearInterval(this.barTimer);
+        clearInterval(this.myTimer);
+    },
 
  	myupdate: function() {
         // ensure you clear the context each time you update it or the bar will draw on top of itself
@@ -175,7 +185,7 @@ Customer.prototype = {
     leaveBlueRoom: function(){
         this.moving = true;
         if(!this.cashedOut){
-            if(this.ingredients!=null){
+            if(this.ingredients!=null || this.drinkType !=null || this.muffinType != null){
                 currThis.steal(this);
                 console.log("STEAL");
             }

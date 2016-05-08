@@ -278,9 +278,9 @@ BlueRoom.Game.prototype.cashCustomerOut= function(customer){
         employeePurchase(c.employee, c.id, c.happinessBarProgress/30, true);
     } else {
         if (c.station == "sandwich") {
-            sandwichPurchase(c.ingredients, c.ingMap, "wheat", c.id, c.happinessBarProgress/30, true);
+            sandwichPurchase(c.ingredients, c.ingMap, c.id, c.happinessBarProgress/30, true);
         } else if (c.station == "coffee") {
-            coffeePurchase(c.drinkType, c.iced, c.drinkSize, c.drinkFlavor, c.id, c.happinessBarProgress/30, true);
+            coffeePurchase(c.drinkType, c.drinkIced, c.drinkSize, c.drinkFlavor, c.id, c.happinessBarProgress/30, true);
         } else {
             bakeryPurchase(c.muffinType, c.id, c.happinessBarProgress/30, true);
         }   
@@ -305,7 +305,7 @@ BlueRoom.Game.prototype.steal = function(customer){
         employeePurchase(c.employee, c.id, c.happinessBarProgress/30, false);
     } else {
         if (c.station == "sandwich") {
-            sandwichPurchase(c.ingredients, c.ingMap, "wheat", c.id, c.happinessBarProgress/30, false);
+            sandwichPurchase(c.ingredients, c.ingMap, c.id, c.happinessBarProgress/30, false);
         } else if (c.station == "coffee") {
             coffeePurchase(c.drinkType, c.drinkIced, c.drinkSize, c.drinkFlavor, c.id, c.happinessBarProgress/30, false);
         } else {

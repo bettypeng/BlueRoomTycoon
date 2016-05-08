@@ -21,16 +21,17 @@ public class OrderFactory {
 
   // SANDWICH ORDERS
 
-  private static final String[] MEAT_NAMES = { "turkey", "roast_beef", "ham",
-      /*"chicken salad", "salami", "prosciutto"*/ };
+  private static final String[] MEAT_NAMES = { "turkey", "roast_beef", "ham"};
 
-  private static final String[] VEGGIE_NAMES = { "lettuce", "tomato", "onion", "cucumber", /*"spinach",
-      "spring mix", "none" */};
+  private static final String[] VEGGIE_NAMES = { "lettuce", "tomato", "onion", "pickle", "spinach",
+      "spring_mix"};
 
-  private static final String[] SAUCE_NAMES = { "mayo", "chipotle mayo",
-      "mustard", "hummus", "goat cheese", "balsamic", "honey mustard" };
+//  private static final String[] SAUCE_NAMES = { "mayo", "chipotle mayo",
+//      "mustard", "hummus", "goat cheese", "balsamic", "honey mustard" };
 
-  private static final String[] BREAD_NAMES = { "wheat", /*"ciabatta", "french", "sliced"*/ };
+  private static final String[] BREAD_NAMES = { "wheat", "ciabatta", "french"};
+  
+  private static final String[] CHEESE_NAMES = { "yellow_cheese", "swiss_cheese", "mozzarella" };
 
   /**
    * Generates a sandwich order, complete with meats, cheese, veggies, (sauces),
@@ -39,10 +40,9 @@ public class OrderFactory {
    */
   public static Sandwich getSandwichOrder() {
     List<SandwichIngredient> ingreds = new ArrayList<>();
-    //ingreds.addAll(getSauces());
 
     ingreds.addAll(getMeats());
-    ingreds.addAll(getCheese());
+    ingreds.addAll(getCheeses());
     ingreds.addAll(getVeggies());
 
     Bread bread = getBread();
@@ -80,19 +80,12 @@ public class OrderFactory {
   /*
    * Generates a list of either 0, 1, or 2 SandwichIngredient cheeses.
    */
-  private static List<SandwichIngredient> getCheese() {
+  private static List<SandwichIngredient> getCheeses() {
     List<SandwichIngredient> cheeses = new ArrayList<>();
-    int rand = (int) (Math.random() * 3);
-    switch (rand) {
-    case 0:
-      cheeses.add(new SandwichIngredient("cheese"));
-      break;
-    case 1:
-      cheeses.add(new SandwichIngredient("cheese"));
-      cheeses.add(new SandwichIngredient("cheese"));
-      break;
-    default:
-      break;
+    int numCheeses = (int) (Math.random() * 3);
+    for (int i = 0; i < numCheeses; i++) {
+      int rand = (int) (Math.random() * CHEESE_NAMES.length);
+      cheeses.add(new SandwichIngredient(CHEESE_NAMES[rand]));
     }
     return cheeses;
   }
@@ -132,31 +125,31 @@ public class OrderFactory {
     return veggies;
   }
 
-  /*
-   * Generates up to 2 sauces for the sandwich.
-   */
-  private static List<SandwichIngredient> getSauces() {
-    int numSauce;
-    int rand = (int) (Math.random() * 10);
-    switch (rand) {
-    case 0: case 1:
-      numSauce = 2;
-      break;
-    case 2: case 3:
-      numSauce = 0;
-      break;
-    default:
-      numSauce = 1;
-      break;
-    }
-    List<SandwichIngredient> sauces = new ArrayList<>();
-    for (int i = 0; i < numSauce; i++) {
-      rand = (int) (Math.random() * SAUCE_NAMES.length);
-      String sauceType = SAUCE_NAMES[rand];
-      sauces.add(new SandwichIngredient(sauceType));
-    }
-    return sauces;
-  }
+//  /*
+//   * Generates up to 2 sauces for the sandwich.
+//   */
+//  private static List<SandwichIngredient> getSauces() {
+//    int numSauce;
+//    int rand = (int) (Math.random() * 10);
+//    switch (rand) {
+//    case 0: case 1:
+//      numSauce = 2;
+//      break;
+//    case 2: case 3:
+//      numSauce = 0;
+//      break;
+//    default:
+//      numSauce = 1;
+//      break;
+//    }
+//    List<SandwichIngredient> sauces = new ArrayList<>();
+//    for (int i = 0; i < numSauce; i++) {
+//      rand = (int) (Math.random() * SAUCE_NAMES.length);
+//      String sauceType = SAUCE_NAMES[rand];
+//      sauces.add(new SandwichIngredient(sauceType));
+//    }
+//    return sauces;
+//  }
 
   // DRINK ORDERS
   private static final String[] DRINK_TYPES = {"latte", "cappuccino", "coffee", "tea", "hot_chocolate"};
