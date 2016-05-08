@@ -186,7 +186,7 @@ BlueRoom.Game.prototype.abandonLine = function(customer){
         c.inLine = false;
         var currCustomer = c.sprite;
         //left= currCustomer;
-        
+
         var tween = this.add.tween(currCustomer).to( { x: 450, y: 700 }, 2000, null, true);
         
         tween.onComplete.add(onLeaveMoveComplete, this);
@@ -343,56 +343,49 @@ BlueRoom.Game.prototype.managerUpdate= function () {
 
     if (sandwichStationFilled && !empMakingSandwich && sandwichLine.length != 0) {
         empMakingSandwich = true;
-        sandwichLine[0].stopBar();
-        getEmployeeInterval("sandwich", atSandwichStation, empMakingSandwich, sandwichLine, atSandwichStation);
+        getEmployeeInterval("sandwich", atSandwichStation, sandwichLine[0]);
     }
     if (coffeeStationFilled && !empMakingCoffee && coffeeLine.length != 0) {
         empMakingCoffee = true;
-        coffeeLine[0].stopBar();
-        getEmployeeInterval("coffee", atCoffeeStation, empMakingCoffee, coffeeLine, atCoffeeStation);
+        getEmployeeInterval("coffee", atCoffeeStation, coffeeLine[0]);
     }
     if (bakeryStationFilled && !empMakingMuffin && bakeryLine.length != 0) {
         empMakingMuffin = true;
-        bakeryLine[0].stopBar();
-        getEmployeeInterval("bakery", atBakeryStation, empMakingMuffin, bakeryLine, atBakeryStation);
+        getEmployeeInterval("bakery", atBakeryStation, bakeryLine[0]);
     }
     
 };
 
-BlueRoom.Game.prototype.employeeMakeProduct= function (stationName, atStation, makingProduct, line, employee, interval) {
+BlueRoom.Game.prototype.employeeMakeProduct= function (stationName, employee, first, interval) {
     // makingProduct = true;
     var currThis = this;
 
-    window.setTimeout(function(){
+    setTimeout(function(){
         console.log("making product");
 
         // if (atStation != employee) {
+        var frontCust;
         if (stationName == "sandwich") {
-            if (atSandwichStation != employee) {
-                line[0].createBar();
+            if (atSandwichStation != employee || first != sandwichLine[0]) {
                 empMakingSandwich = false;
                 return;
             }
+            frontCust = sandwichLine[0];
         } else if (stationName == "coffee") {
-            if (atCoffeeStation != employee) {
-                line[0].createBar();
+            if (atCoffeeStation != employee || first != coffeeLine[0]) {
                 empMakingCoffee = false;
                 return;
-            }          
+            } 
+            frontCust = coffeeLine[0];         
         } else {
-            if (atBakeryStation != employee) {
-                console.log("not that same");
-                line[0].createBar();
+            if (atBakeryStation != employee || first != bakeryLine[0]) {
                 empMakingMuffin = false;
                 return;
-            }           
+            } 
+            frontCust = bakeryLine[0];          
         }
-        // return;
-        // }
-        console.log("THIS IS THE THING");
-        var frontCust = line[0];
+
         frontCust.employee = employee.name;
-        frontCust.createBar();
 
         currThis.toCashier(stationName);
 

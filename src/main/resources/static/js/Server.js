@@ -256,7 +256,7 @@ function updateCustomerInterval() {
     });
 }
 
-function getEmployeeInterval(stationName, atStation, makingProduct, line, employee) {
+function getEmployeeInterval(stationName, employee, front) {
     var employeeName = employee.name;
     var employeeEnergy = employee.workHoursProgress/30;
 
@@ -273,7 +273,7 @@ function getEmployeeInterval(stationName, atStation, makingProduct, line, employ
         var employeeInt = responseObject.employeeInt;
         console.log("EMPLOYEE INTERVAL: "+employeeInt);
         
-        BlueRoom.Game.prototype.employeeMakeProduct(stationName, atStation, makingProduct, line, employee, employeeInt);
+        BlueRoom.Game.prototype.employeeMakeProduct(stationName, employee, front, employeeInt);
     });
 
 

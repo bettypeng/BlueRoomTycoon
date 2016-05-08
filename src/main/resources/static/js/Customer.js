@@ -40,7 +40,6 @@ function Customer(id, station, order){
     this.createBar();
 
     this.inLine = true;
-
 }
 
 
