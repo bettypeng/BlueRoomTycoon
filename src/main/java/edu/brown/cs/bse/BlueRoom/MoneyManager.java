@@ -21,7 +21,7 @@ public class MoneyManager {
     dailyNetProfits = new ArrayList<>();
     gameData = new GameData();
     money = startMoney;
-    dailyExpenses = 30;
+    dailyExpenses = 15;
     currDay = new DayData(dailyExpenses);
     dayNum = 1;
   }
@@ -63,10 +63,15 @@ public class MoneyManager {
   public void endDay() {
     dailyNetProfits.add(currDay.getTotalRevenue() - (currDay.getExpenses() + currDay.getLosses()));
     gameData.addDayData(currDay);
-    currDay = new DayData(dailyExpenses);
+//    currDay = new DayData(dailyExpenses);
     money -= dailyExpenses;
     System.out.println(dailyExpenses);
     dayNum++;
+  }
+  
+  public void startDay() {
+    System.out.println("starting day with expenses: " + dailyExpenses);
+    currDay = new DayData(dailyExpenses);
   }
   
   public void handleAbandon(String station) {

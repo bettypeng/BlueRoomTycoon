@@ -104,6 +104,7 @@ public class Server {
     Spark.post("/savedgames", new SavedGameHandler());
     Spark.post("/erasegame",  new EraseGameHandler());
     Spark.post("/restart", new RestartHandler());
+    Spark.post("/startday", new StartDayHandler());
   }
 
   /**
@@ -575,7 +576,7 @@ public class Server {
     
     @Override
     public Object handle(Request req, Response res) {
-      gameManager.loadConfig("gameConfig.brt");
+      gameManager.loadConfig(".gameConfig");
       boolean[] savedGames = gameManager.getSavedGames();
       Map<String, Object> variables = ImmutableMap.of("savedGames", savedGames);
       return GSON.toJson(variables);
@@ -603,6 +604,18 @@ public class Server {
     public Object handle(Request req, Response res) {
 
       gameManager.clear();
+      
+      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+          .put("results", "").build();
+      return GSON.toJson(variables);
+    }
+  }
+  
+  private class StartDayHandler implements Route {
+    
+    @Override
+    public Object handle(Request Req, Response res) {
+      gameManager.startDay();
       
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
           .put("results", "").build();

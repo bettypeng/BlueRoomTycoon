@@ -124,14 +124,14 @@ BlueRoom.Game.prototype.createManager = function () {
     }, 500);
 
     setInterval(function() {
-        managerCounter++;
+        managerCounter += 1;
         // console.log(managerCounter);
         // console.log(CUSTOMERINTERVAL);
         if(managerCounter % CUSTOMERINTERVAL == 0 && numSandwich<15 && numCoffee<11 && numBakery<11 && isBlueRoomOpen){
             getCustomer();
             currThis.statusAlert(customerAlert);
         }
-    }, 1);
+    }, 10);
 
     this.startMovement();        
 };
