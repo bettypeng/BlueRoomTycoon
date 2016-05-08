@@ -3,7 +3,7 @@ BlueRoom.Load = function(game) {
 	
 };
 
-var currThis;
+var currLoadThis;
 var savedGames;
 
 BlueRoom.Load.prototype = {
@@ -21,7 +21,7 @@ BlueRoom.Load.prototype = {
 		
 		var style = { font: "18px Roboto-Light", fill: "#000000", align: "center"};
 		this.game.add.text(385, 300, "Select a slot below to begin playing!", style);
-		currThis = this;
+		currLoadThis = this;
 		getSavedGames();
 	
 	},
@@ -40,48 +40,48 @@ BlueRoom.Load.prototype = {
 		var savedText = "CLICK HERE TO LOAD GAME";
 		
 		if (savedGames[0]) {
-			var a = currThis.add.text(currThis.game.width/4, 425, "GAME 0", mainstyle);
-			var b = currThis.add.text(currThis.game.width/4, 525, savedText, style);
-			var c = currThis.add.button(currThis.game.width/4, 640, 'eraseButton', currThis.eraseGameZero, this);
+			var a = currLoadThis.add.text(currLoadThis.game.width/4, 425, "GAME 0", mainstyle);
+			var b = currLoadThis.add.text(currLoadThis.game.width/4, 525, savedText, style);
+			var c = currLoadThis.add.button(currLoadThis.game.width/4, 640, 'eraseButton', currLoadThis.eraseGameZero, this);
 
 			a.anchor.setTo(0.5, 0);
 			b.anchor.setTo(0.5, 0);
 			c.anchor.setTo(0.5, 0);
 		} else {
-			var a = currThis.add.text(currThis.game.width/4, 425, newGameText, mainstyle);
-			var b = currThis.add.text(currThis.game.width/4, 525, instructionText, style);
+			var a = currLoadThis.add.text(currLoadThis.game.width/4, 425, newGameText, mainstyle);
+			var b = currLoadThis.add.text(currLoadThis.game.width/4, 525, instructionText, style);
 
 			a.anchor.setTo(0.5, 0);
 			b.anchor.setTo(0.5, 0);
 		}
 		
 		if (savedGames[1]) {
-			var a = currThis.add.text(currThis.game.width/2, 425, "GAME 1", mainstyle);
-			var b = currThis.add.text(currThis.game.width/2, 525, savedText, style);
-			var c = currThis.add.button(currThis.game.width/2, 640, 'eraseButton', currThis.eraseGameOne, this);
+			var a = currLoadThis.add.text(currLoadThis.game.width/2, 425, "GAME 1", mainstyle);
+			var b = currLoadThis.add.text(currLoadThis.game.width/2, 525, savedText, style);
+			var c = currLoadThis.add.button(currLoadThis.game.width/2, 640, 'eraseButton', currLoadThis.eraseGameOne, this);
 
 			a.anchor.setTo(0.5, 0);
 			b.anchor.setTo(0.5, 0);
 			c.anchor.setTo(0.5, 0);
 		} else {
-			var a = currThis.add.text(currThis.game.width/2, 425, newGameText, mainstyle);
-			var b = currThis.add.text(currThis.game.width/2, 525, instructionText, style);
+			var a = currLoadThis.add.text(currLoadThis.game.width/2, 425, newGameText, mainstyle);
+			var b = currLoadThis.add.text(currLoadThis.game.width/2, 525, instructionText, style);
 
 			a.anchor.setTo(0.5, 0);
 			b.anchor.setTo(0.5, 0);
 		}
 		
 		if (savedGames[2]) {
-			var a = currThis.add.text(3* currThis.game.width/4, 425, "GAME 2", mainstyle);
-			var b = currThis.add.text(3* currThis.game.width/4, 525, savedText, style);
-			var c = currThis.add.button(3* currThis.game.width/4, 640, 'eraseButton', currThis.eraseGameTwo, this);
+			var a = currLoadThis.add.text(3* currLoadThis.game.width/4, 425, "GAME 2", mainstyle);
+			var b = currLoadThis.add.text(3* currLoadThis.game.width/4, 525, savedText, style);
+			var c = currLoadThis.add.button(3* currLoadThis.game.width/4, 640, 'eraseButton', currLoadThis.eraseGameTwo, this);
 
 			a.anchor.setTo(0.5, 0);
 			b.anchor.setTo(0.5, 0);
 			c.anchor.setTo(0.5, 0);
 		} else {
-			var a = currThis.add.text(3* currThis.game.width/4, 425, newGameText, mainstyle);
-			var b = currThis.add.text(3* currThis.game.width/4, 525, instructionText, style);
+			var a = currLoadThis.add.text(3* currLoadThis.game.width/4, 425, newGameText, mainstyle);
+			var b = currLoadThis.add.text(3* currLoadThis.game.width/4, 525, instructionText, style);
 
 			a.anchor.setTo(0.5, 0);
 			b.anchor.setTo(0.5, 0);
@@ -89,15 +89,15 @@ BlueRoom.Load.prototype = {
 	},
 	
 	eraseGameZero: function() {
-		currThis.eraseGame(0);
+		currLoadThis.eraseGame(0);
 	},
 	
 	eraseGameOne: function() {
-		currThis.eraseGame(1);
+		currLoadThis.eraseGame(1);
 	},
 	
 	eraseGameTwo: function() {
-		currThis.eraseGame(2);
+		currLoadThis.eraseGame(2);
 	},
 	
 	eraseGame: function(number) {
@@ -106,22 +106,23 @@ BlueRoom.Load.prototype = {
 	},
 	
 	loadGameZero: function() {
-		currThis.loadGame(0);
+		currLoadThis.loadGameNumber(0);
 	},
 	
 	loadGameOne: function() {
-		currThis.loadGame(1);
+		currLoadThis.loadGameNumber(1);
 	},
 	
 	loadGameTwo: function() {
-		currThis.loadGame(2);
+		currLoadThis.loadGameNumber(2);
 	},
 	
-	loadGame: function(gameNumber) {
+	loadGameNumber: function(gameNumber) {
 		var gameFile = "game" + gameNumber + ".brt";
 		saveNumber = gameNumber;
 		if (savedGames[gameNumber]) {
-			loadGame(gameFile);
+			this.state.start('Game', true, false, gameFile);
+			
 		} else {
 			restartGame();
 			this.state.start('Game');

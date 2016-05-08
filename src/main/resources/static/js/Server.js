@@ -288,7 +288,9 @@ function saveGame() {
 }
 
 function loadGame(filename) {
+    console.log("LOADING");
     var postParameters = { file: filename };
+    // var currGame = game;
     
     $.post("/load", postParameters, function(responseJSON) {
 		var responseObject = JSON.parse(responseJSON);
