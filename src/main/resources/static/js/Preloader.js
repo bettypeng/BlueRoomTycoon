@@ -55,8 +55,8 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('coffeeStation', 'images/coffee_counter.png');
 		this.load.image('bakeryStation', 'images/bakery_counter.png');
 
-		this.load.image('sandwichBg', 'images/sandwich_bg.png');
-		this.load.image('sandwichBg2', 'images/sandwich_bg_2.png');
+		//this.load.image('sandwichBg', 'images/sandwich_bg.png');
+		this.load.image('sandwichBg', 'images/sandwich/sandwich_bg.png');
 
 		this.load.image('alertBox', 'images/alert.png');
 
@@ -82,18 +82,49 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('dollarSignDark', 'images/dollar_sign_dark.png');
 		
 		//SANDWICH LINE
-		this.load.image('dropzone', 'images/sandwich/dropzone.png');
+		this.load.image('dropzone', 'images/sandwich/dropzonewhiter.png');
+
+		this.load.image('roast_beef_pile', 'images/sandwich/roast_beef_pile.png');
+		this.load.image('turkey_pile', 'images/sandwich/turkey_pile.png');
+		this.load.image('ham_pile', 'images/sandwich/ham_pile.png');
+		this.load.image('mozzarella_pile', 'images/sandwich/mozzarella_pile.png');
+		this.load.image('yellow_cheese_pile', 'images/sandwich/yellow_cheese_pile.png');
+		this.load.image('swiss_cheese_pile', 'images/sandwich/swiss_cheese_pile.png');
+		this.load.image('spring_mix_pile', 'images/sandwich/spring_mix_pile.png');
+		this.load.image('lettuce_pile', 'images/sandwich/lettuce_pile.png');
+		this.load.image('spinach_pile', 'images/sandwich/spinach_pile.png');
+		this.load.image('onion_pile', 'images/sandwich/onion_pile.png');
+		this.load.image('pickle_pile', 'images/sandwich/pickle_pile.png');
+		this.load.image('tomato_pile', 'images/sandwich/tomato_pile.png');
 
 		this.load.image('top_bun', 'images/sandwich/top_bun.png');
 		this.load.image('bottom_bun', 'images/sandwich/bottom_bun.png');
-		this.load.image('roast_beef', 'images/sandwich/roast_beef.png');
-		this.load.image('turkey', 'images/sandwich/turkey.png');
-		this.load.image('ham', 'images/sandwich/ham.png');
-		this.load.image('cheese', 'images/sandwich/cheese.png');
-		this.load.image('cucumber', 'images/sandwich/cucumber.png');
-		this.load.image('lettuce', 'images/sandwich/lettuce.png');
-		this.load.image('onion', 'images/sandwich/onion.png');
-		this.load.image('tomato', 'images/sandwich/tomato.png');
+
+		this.load.image('top_ciabatta', 'images/sandwich/top_ciabatta.png');
+		this.load.image('bottom_ciabatta', 'images/sandwich/bottom_ciabatta.png');
+
+		this.load.image('top_french', 'images/sandwich/top_french.png');
+		this.load.image('bottom_french', 'images/sandwich/bottom_french.png');
+
+		this.load.image('top_wheat', 'images/sandwich/top_wheat.png');
+		this.load.image('bottom_wheat', 'images/sandwich/bottom_wheat.png');
+
+		this.load.image('roast_beef', 'images/sandwich/toppings/roast_beef.png');
+		this.load.image('turkey', 'images/sandwich/toppings/turkey.png');
+		this.load.image('ham', 'images/sandwich/toppings/ham.png');
+
+		this.load.image('yellow_cheese', 'images/sandwich/toppings/yellow_cheese.png');
+		this.load.image('swiss_cheese', 'images/sandwich/toppings/swiss_cheese.png');
+		this.load.image('mozzarella', 'images/sandwich/toppings/mozzarella.png');
+
+		this.load.image('lettuce', 'images/sandwich/toppings/lettuce.png');
+		this.load.image('spinach', 'images/sandwich/toppings/spinach.png');
+		this.load.image('spring_mix', 'images/sandwich/toppings/spring_mix.png');
+
+
+		this.load.image('onion', 'images/sandwich/toppings/onion.png');
+		this.load.image('pickle', 'images/sandwich/toppings/pickle.png');
+		this.load.image('tomato', 'images/sandwich/toppings/tomato.png');
 		
 		this.load.image('speechBubble', 'images/sandwich/speech_bubble.png');
 		this.load.image('happy', 'images/happy.png');

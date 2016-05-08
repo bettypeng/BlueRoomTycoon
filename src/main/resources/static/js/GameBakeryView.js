@@ -547,13 +547,9 @@ BlueRoom.Game.prototype.checkMuffinNumber = function(name){
     if(batterMap[ name + "Batter"].displayAmt >0){
         movableMuffinMap[name].inputEnabled = true;
         movableMuffinMap[name].alpha = 1;
-                movableMuffinMap[name].tint = 0xFFFFFF;
-
     } else{
         movableMuffinMap[name].inputEnabled = false;
-                movableMuffinMap[name].alpha = 0.9;
-
-        movableMuffinMap[name].tint = 0x000000;
+        movableMuffinMap[name].alpha = 0.3;
     }
 };
 
