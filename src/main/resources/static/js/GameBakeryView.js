@@ -75,7 +75,7 @@ BlueRoom.Game.prototype.createBakeryView= function () {
     bakeryViewElements.push(p5);
     bakeryViewElements.push(p6);
 
-    var style = { font: "18px Roboto-Thin", fill: "#000000", wordWrap: true, wordWrapWidth: 400, align: "center" };
+    var style = { font: "18px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 400, align: "center" };
     pistText = this.game.add.text(100, 263, "COUNT: 0"  , style);
     dchocText = this.game.add.text(260, 263, "COUNT: 0"  , style);
     chocChipText = this.game.add.text(420, 263, "COUNT: 0"  , style);

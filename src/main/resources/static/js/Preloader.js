@@ -37,10 +37,10 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('banner', 'images/about_banner.png');
 		
 		// BUTTONS
-		this.load.image('managerButton', 'images/game_manager_button.png');
-		this.load.image('sandwichButton', 'images/sandwich_view_button.png');
-		this.load.image('coffeeButton', 'images/coffee_view_button.png');
-		this.load.image('bakeryButton', 'images/bakery_view_button.png');
+		this.load.image('managerButton', 'images/main_buttons/game_manager_button.png');
+		this.load.image('sandwichButton', 'images/main_buttons/sandwich_view_button.png');
+		this.load.image('coffeeButton', 'images/main_buttons/coffee_view_button.png');
+		this.load.image('bakeryButton', 'images/main_buttons/bakery_view_button.png');
 		
 		//STATUS BAR
 		this.load.image('status_bar', 'images/status.png');
@@ -50,7 +50,7 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('whiteBg', 'images/white.png');
 		this.load.image('stationBg', 'images/blue_bg.png');
 
-		this.load.image('managerBg', 'images/managerview_bg.png');
+		this.load.image('managerBg', 'images/manager_view_bg.png');
 		this.load.image('sandwichStation', 'images/sandwich_counter.png');
 		this.load.image('coffeeStation', 'images/coffee_counter.png');
 		this.load.image('bakeryStation', 'images/bakery_counter.png');
@@ -73,11 +73,11 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('employee', 'images/employee.png');
 		this.load.image('employeeHalf', 'images/employee_behind_counter.png');
 		this.load.image('customer', 'images/customer.png');
-		this.load.image('employeeBreakStation', 'images/employee_break_station.png');
+		this.load.image('employeeBreakStation', 'images/employeebreak.png');
 
 		this.load.image('radiobutton', 'images/alertbutton.png');
 
-		this.load.image('dollar', 'images/dollar.png');
+		this.load.image('dollar', 'images/checkout.png');
 		this.load.image('dollarSign', 'images/dollar_sign.png');
 		this.load.image('dollarSignDark', 'images/dollar_sign_dark.png');
 		
@@ -168,7 +168,7 @@ BlueRoom.Preloader.prototype = {
 
 
 		//BAKERY STATION
-		this.load.image('bakeryBg', 'images/bakery/bakery_background.png');
+		this.load.image('bakeryBg', 'images/bakery/bakery_bg.png');
 		this.load.image('muffinDropZone', 'images/bakery/muffin_drop_zone.png');
 		this.load.image('muffinPlate', 'images/bakery/purple_plate.png');
 		this.load.image('pistachio', 'images/bakery/pistachio_muffin.png');

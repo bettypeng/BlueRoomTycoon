@@ -41,10 +41,9 @@ BlueRoom.Game.prototype.createManager = function () {
     //this.coffeeStation.visible = false;
 
     var smallstyle = { font: "10px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "center" };
-    this.employeeBreakStation = this.add.sprite(10, 430, 'employeeBreakStation');
-    this.game.add.text(35, 435, "EMPLOYEE\nBREAK\nSTATION", smallstyle);
-    this.cashier = this.add.sprite(300, 500, 'dollar');
-    this.game.add.text(305, 565, "DRAG HERE TO\nCASH OUT!", smallstyle);
+    this.employeeBreakStation = this.add.sprite(10, 450, 'employeeBreakStation');
+    this.cashier = this.add.sprite(300, 400, 'dollar');
+    // this.game.add.text(305, 565, "DRAG HERE TO\nCASH OUT!", smallstyle);
     
     var style = { font: "30px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "center" };
     numSandwich = 0;

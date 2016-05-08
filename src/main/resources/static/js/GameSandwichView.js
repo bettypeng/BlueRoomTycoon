@@ -66,7 +66,7 @@ BlueRoom.Game.prototype.createSandwichView= function () {
 
     var bg = this.add.sprite(0, 0, 'stationBg');
     sandwichViewElements.push(bg);
-    platform = this.add.sprite(0, 450, 'stationBg');
+    platform = this.add.sprite(0, 470, 'stationBg');
 
     // happy = this.add.sprite(170, 0, "happy");
     // sad = this.add.sprite(190, 20, "sad");
@@ -134,13 +134,13 @@ BlueRoom.Game.prototype.createSandwichView= function () {
 
 
     this.newTopping(150, 240, 'top_ciabatta', 'top_ciabatta');
-    this.newTopping(140, 280, 'bottom_ciabatta', 'bottom_ciabatta');
+    this.newTopping(140, 275, 'bottom_ciabatta', 'bottom_ciabatta');
 
-    this.newTopping(100, 320, 'top_french', 'top_french');
-    this.newTopping(90, 360, 'bottom_french', 'bottom_french');
+    this.newTopping(100, 315, 'top_french', 'top_french');
+    this.newTopping(90, 350, 'bottom_french', 'bottom_french');
 
-    this.newTopping(70, 400, 'top_wheat', 'top_wheat');
-    this.newTopping(50, 430, 'bottom_wheat', 'bottom_wheat');
+    this.newTopping(70, 390, 'top_wheat', 'top_wheat');
+    this.newTopping(70, 415, 'bottom_wheat', 'bottom_wheat');
  
 
     dragPosition = new Phaser.Point(0, 0);
