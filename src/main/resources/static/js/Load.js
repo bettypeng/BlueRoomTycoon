@@ -42,7 +42,7 @@ BlueRoom.Load.prototype = {
 		if (savedGames[0]) {
 			var a = currThis.add.text(currThis.game.width/4, 425, "GAME 0", mainstyle);
 			var b = currThis.add.text(currThis.game.width/4, 525, savedText, style);
-			var c = currThis.add.button(currThis.game.width/4, 560, 'eraseButton', currThis.eraseGameZero, this);
+			var c = currThis.add.button(currThis.game.width/4, 640, 'eraseButton', currThis.eraseGameZero, this);
 
 			a.anchor.setTo(0.5, 0);
 			b.anchor.setTo(0.5, 0);
@@ -58,7 +58,7 @@ BlueRoom.Load.prototype = {
 		if (savedGames[1]) {
 			var a = currThis.add.text(currThis.game.width/2, 425, "GAME 1", mainstyle);
 			var b = currThis.add.text(currThis.game.width/2, 525, savedText, style);
-			var c = currThis.add.button(currThis.game.width/2, 560, 'eraseButton', currThis.eraseGameOne, this);
+			var c = currThis.add.button(currThis.game.width/2, 640, 'eraseButton', currThis.eraseGameOne, this);
 
 			a.anchor.setTo(0.5, 0);
 			b.anchor.setTo(0.5, 0);
@@ -74,7 +74,7 @@ BlueRoom.Load.prototype = {
 		if (savedGames[2]) {
 			var a = currThis.add.text(3* currThis.game.width/4, 425, "GAME 2", mainstyle);
 			var b = currThis.add.text(3* currThis.game.width/4, 525, savedText, style);
-			var c = currThis.add.button(3* currThis.game.width/4, 560, 'eraseButton', currThis.eraseGameTwo, this);
+			var c = currThis.add.button(3* currThis.game.width/4, 640, 'eraseButton', currThis.eraseGameTwo, this);
 
 			a.anchor.setTo(0.5, 0);
 			b.anchor.setTo(0.5, 0);

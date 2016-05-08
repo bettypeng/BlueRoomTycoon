@@ -74,7 +74,7 @@ BlueRoom.Game.prototype = {
 		this.coffeeButton = this.add.button(10, 160, 'coffeeButton', goToCoffeeView, this);
         this.bakeryButton = this.add.button(10, 235, 'bakeryButton', goToBakeryView, this);
         this.status_bar = this.add.sprite(0, 600, 'status_bar');
-        this.pauseButton = this.add.button(1000, 630, 'pauseButton', this.showPauseScreen, this);
+        this.pauseButton = this.add.button(980, 615, 'pauseButton', this.showPauseScreen, this);
 
         customerAlert = this.add.sprite(20, 625, 'radiobutton');
         leavingAlert = this.add.sprite(20, 645, 'radiobutton');
@@ -82,10 +82,10 @@ BlueRoom.Game.prototype = {
         checkoutAlert = this.add.sprite(20, 685, 'radiobutton');
 
 
-        // coffeeButtonOn = false;
-        // this.coffeeButton.visible = false;
-        // bakeryButtonOn = false;
-        // this.bakeryButton.visible = false;
+        coffeeButtonOn = false;
+        this.coffeeButton.visible = false;
+        bakeryButtonOn = false;
+        this.bakeryButton.visible = false;
         
         gamegroup.add(this.status_bar);
         gamegroup.add(this.managerButton);

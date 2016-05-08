@@ -29,7 +29,7 @@ BlueRoom.Preloader.prototype = {
 		// LOAD SCREEN
 		this.load.image('loadBox', 'images/saveslot_muffin.png');
 		this.load.image('loadBanner', 'images/load_banner.png');
-		this.load.image('eraseButton', 'images/erase-game.png');
+		this.load.image('eraseButton', 'images/erase_saved_game.png');
 		
 		// ABOUT
 		this.load.image('nextButton', 'images/next.png');
@@ -61,7 +61,7 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('alertBox', 'images/alert.png');
 
 		//PAUSE SCREEN
-		this.load.image('pauseButton', 'images/pause_game_button.png');
+		this.load.image('pauseButton', 'images/white_pause_button.png');
 		this.load.image('pauseScreen', 'images/pause_test_screen.png');
 		this.load.image('resumeGameButton', 'images/resume_game_button.png');
 		this.load.image('restartGameButton', 'images/restart_game_button.png');
