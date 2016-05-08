@@ -555,11 +555,14 @@ BlueRoom.Game.prototype.sandwichUpdate= function () {
         currCustomer = sandwichLine[0];
         currCustomerStatusBar = new CustomerStatusBar(currCustomer, 250, 10);
         sandwichViewElements.push(currCustomerStatusBar.barSprite);
-        currCustomerOrder.push('bottom_bun');
+        //currCustomerOrder.push('bottom_bun');
+        console.log(currCustomer.order);
+        currCustomerOrder.push('bottom_' + currCustomer.order.bread.type);
         for (var i=0; i<currCustomer.order.ingreds.length; i++) {
             currCustomerOrder.push(currCustomer.order.ingreds[i].type);
         }
-        currCustomerOrder.push('top_bun');
+        //currCustomerOrder.push('top_bun');
+        currCustomerOrder.push('top_' + currCustomer.order.bread.type);
         this.showNeutral();
         speechBubble.visible = true;
     }

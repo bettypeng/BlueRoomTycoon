@@ -32,6 +32,7 @@ var coffeeTransitioning = false;
 
 var currCoffeeCustomer = null;
 var currCoffeeOrderSprites = [];
+var currCoffeeCustomerStatusBar;
 
 var currThis = this;
 
@@ -40,7 +41,7 @@ var md;
 var lg;
 
 BlueRoom.Game.prototype.createCoffeeView= function () {
-	var bg = this.add.sprite(0, 0, 'whiteBg');
+	var bg = this.add.sprite(0, 0, 'stationBg');
 
     coffeeCustomerFace = this.add.sprite(200, 20, "neutral");
     coffeeSpeechBubble = this.add.sprite(350, -30, "speechBubble");
@@ -73,7 +74,7 @@ BlueRoom.Game.prototype.createCoffeeView= function () {
     coffeeViewElements.push(coffeeGarbageCan);
 
     iceMachine = this.add.sprite(275, 250, 'iceMachine');
-    var iceButton = this.add.button(340, 360, 'syrupButton', this.addIce, this);
+    var iceButton = this.add.button(340, 360, 'drinkButton', this.addIce, this);
 
     
     drinkDispenser = this.game.add.group();
@@ -116,7 +117,7 @@ BlueRoom.Game.prototype.createCoffeeView= function () {
     syrupDispenser.add(peppermint);
     syrupDispenser.add(kahlua);
     syrupDispenser.x = 745;
-    syrupDispenser.y = 200;
+    syrupDispenser.y = 170;
 
     drinkDropZone = this.add.sprite(920, 355, 'drinkDropZone');
 
@@ -341,8 +342,13 @@ BlueRoom.Game.prototype.changeCoffeeSpriteFace = function(x, y, imgName) {
 };
 
 BlueRoom.Game.prototype.coffeeUpdate= function () {
+    if (coffeeTransitioning) {
+        return;
+    }
     if (coffeeLine.length != 0 && currCoffeeCustomer == null) {
         currCoffeeCustomer = coffeeLine[0];
+        currCoffeeCustomerStatusBar = new CustomerStatusBar(currCoffeeCustomer, 250, 10);
+        coffeeViewElements.push(currCoffeeCustomerStatusBar.barSprite);
         console.log(currCoffeeCustomer);
 
         if (currCoffeeCustomer.order.size === "large") {
@@ -376,8 +382,34 @@ BlueRoom.Game.prototype.coffeeUpdate= function () {
         coffeeCustomerFace.visible = true;
         this.changeCoffeeSpriteFace(200, 20, "neutral");
         coffeeSpeechBubble.visible = true;
-    } else if (coffeeLine.length == 0) {
-        this.noCoffeeCustomer();
+    } else if (currCoffeeCustomer != null){
+
+
+        if (currCoffeeCustomer.happinessBarProgress < 0) {
+            currThis.changeCoffeeSpriteFace(100, 20, "upset");
+            coffeeTransitioning = true;
+
+            // nonSandwich = nonSandwich.concat(currSandSprites);
+            // console.log(nonSandwich);
+            console.log(currCoffeeOrderSprites);
+            if (currCoffeeOrderSprites.length != 0) {
+                for (var i=0; i<4; i++) {
+                    currCoffeeOrderSprites[i].visible = false;
+                }
+            }
+
+            coffeeSpeechBubble.visible = false;
+            var t = currThis.add.tween(coffeeCustomerFace).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
+            // console.log(currOrderElem);
+            t.onComplete.add(function () {
+
+                currCoffeeOrderSprites = [];
+                currThis.noCoffeeCustomer();
+                coffeeCustomerFace.alpha = 1;
+                currCoffeeCustomer = null;
+                coffeeTransitioning = false;
+            });
+        }
     }
 };
 
@@ -523,6 +555,7 @@ BlueRoom.Game.prototype.giveCoffeeToCustomer = function() {
 
     coffeeTransitioning = true;
     var tw = currThis.add.tween(coffeeCustomerFace).to( { x: 1000 }, 3000, null, true);
+    currCoffeeCustomerStatusBar.discard();
     if (currCoffeeOrderSprites.length != 0) {
         for (var i=0; i<4; i++) {
             currCoffeeOrderSprites[i].visible = false;
@@ -552,6 +585,7 @@ BlueRoom.Game.prototype.giveCoffeeToCustomer = function() {
         currCoffeeOrderSprites = [];
         coffeeTransitioning = false;
         currCoffeeCustomer = null;
+        currThis.noCoffeeCustomer();
     }, this);
 
 };

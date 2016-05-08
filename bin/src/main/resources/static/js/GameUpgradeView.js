@@ -3,10 +3,15 @@ var currentlyDisplayedUpgrade = 0;
 var NUMBEROFUPGRADES = 3;
 var upgradeList = ["coffee", "bakery", "magazine rack"];
 var upgradeCostList = [];
-upgradeCostList["coffee"] = 500;
-upgradeCostList["bakery"] = 1000;
+var upgradeUpkeepList = [];
+upgradeCostList["coffee"] = 200;
+upgradeCostList["bakery"] = 400;
 upgradeCostList["magazine rack"] = 50;
-var costtext;
+upgradeUpkeepList["coffee"] = 10;
+upgradeUpkeepList["bakery"] = 15;
+upgradeUpkeepList["magazine rack"] = 2;
+var basecosttext;
+var upkeepcosttext;
 var buyUpgradeButton;
 
 
@@ -30,10 +35,15 @@ BlueRoom.Game.prototype.createUpgradeView= function () {
 	currbalance.anchor.setTo(0.5, 0,5);
 
 
-	costtext = this.game.add.text(this.game.width/2, 480, 'Cost: $' + upgradeCostList[upgradeList[0]], labelStyle);
-	costtext.anchor.setTo(0.5, 0,5);
+	basecosttext = this.game.add.text(this.game.width/3, 480, 'Base Cost: $' + upgradeCostList[upgradeList[0]], labelStyle);
+	basecosttext.anchor.setTo(0.5, 0,5);
+
+	upkeepcosttext = this.game.add.text(2* this.game.width/3, 480, 'Daily Upkeep Cost: $' + upgradeUpkeepList[upgradeList[0]], labelStyle);
+	upkeepcosttext.anchor.setTo(0.5, 0,5);
+
 	if(NUMBEROFUPGRADES<=0){
-		costtext.setText('');
+		basecosttext.setText('');
+		upkeepcosttext.setText('');
 	}
 
 
@@ -43,7 +53,8 @@ BlueRoom.Game.prototype.createUpgradeView= function () {
 
 	upgradeViewElements.push(title);
 	upgradeViewElements.push(currbalance);
-	upgradeViewElements.push(costtext);
+	upgradeViewElements.push(basecosttext);
+	upgradeViewElements.push(upkeepcosttext);
 	upgradeViewElements.push(buyUpgradeButton);
 
 	var upgradeboxX = this.game.width/2;
@@ -99,11 +110,13 @@ BlueRoom.Game.prototype.updateCurrUpgrade = function(){
 	console.log("upgrade");
 	this.checkBuyUpgradeButton(buyUpgradeButton);
 	if(NUMBEROFUPGRADES>0){
-		costtext.setText('Cost: $' + upgradeCostList[upgradeList[currentlyDisplayedUpgrade]]);
-	} else{
-		costtext.setText('');
-	}
+		basecosttext.setText('Base Cost: $' + upgradeCostList[upgradeList[currentlyDisplayedUpgrade]]);
+		upkeepcosttext.setText('Daily Upkeep Cost: $' + upgradeUpkeepList[upgradeList[currentlyDisplayedUpgrade]]);
 
+	} else{
+		basecosttext.setText('');
+		upkeepcosttext.setText('');
+	}
 };
 
 
@@ -129,16 +142,16 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
  };
 
  BlueRoom.Game.prototype.buyUpgrade = function() {
- 	if(upgradeList[currentlyDisplayedUpgrade] == "coffee"){
+ 	if(upgradeList[currentlyDisplayedUpgrade] === "coffee"){
  		NUMBEROFSTATIONS++;
  		this.coffeeStation.visible = true;
-		activeButtons.push(this.coffeeButton);
+		coffeeButtonOn = true;
 		buy(upgradeList[currentlyDisplayedUpgrade]);
  	}
- 	else if(upgradeList[currentlyDisplayedUpgrade] =="bakery"){
+ 	else if(upgradeList[currentlyDisplayedUpgrade] ==="bakery"){
  		NUMBEROFSTATIONS++;
  		this.bakeryStation.visible = true;
- 		activeButtons.push(this.bakeryButton);
+ 		bakeryButtonOn = true;
  		buy(upgradeList[currentlyDisplayedUpgrade]);
  	}
  	console.log("BUYING: " + upgradeList[currentlyDisplayedUpgrade]);
@@ -149,6 +162,29 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
 	this.fadeUpgradeForward();
 	this.updateCurrUpgrade();
 	console.log(upgradeList);
+ };
+
+
+ BlueRoom.Game.prototype.sellUpgrade = function(upgrade){
+ 	if(upgrade === "coffee"){
+ 		NUMBEROFSTATIONS--;
+ 		this.coffeeStation.visible = false;
+  		 this.coffeeButton.visible = false;
+
+		coffeeButtonOn = false;
+ 	}
+ 	else if(upgrade ==="bakery"){
+ 		NUMBEROFSTATIONS--;
+ 		this.bakeryStation.visible = false;
+  		 this.bakeryButton.visible = false;
+
+ 		bakeryButtonOn = false;
+ 	}
+ 	console.log("SELLING: " + upgrade);
+	upgradeList.push(upgrade);
+	NUMBEROFUPGRADES++;
+	console.log(upgradeList);
+	sellHandler(upgrade);
  };
 
 

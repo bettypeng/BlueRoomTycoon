@@ -1,6 +1,5 @@
 function Cup(cupSize, cup, drink, syrup, ice, x, y) {
     this.group = currThis.game.add.group();
-    this.immovableCup = currThis.game.add.sprite(0,0,cup);
     this.startX = x;
     this.startY = y;
     this.cupSize = cupSize;

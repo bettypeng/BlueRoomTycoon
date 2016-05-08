@@ -146,7 +146,6 @@ public class Server {
 
       boolean paid = Boolean.parseBoolean(qm.value("paid"));
 
-      // how far from well cooked it is (bakery good)
       Map<String, Double> ingMap = GSON.fromJson(qm.value("map"), Map.class);
 
       List<SandwichIngredient> sWichIng = new ArrayList<>();
@@ -155,23 +154,28 @@ public class Server {
       for (Entry<String, Double> e : ingMap.entrySet()) {
         int index = Integer.parseInt(e.getKey());
         Double val = e.getValue();
-        if (lingredients.get(index).equals("top_bun")
-            || lingredients.get(index).equals("bottom_bun")) {
+        if (lingredients.get(index).startsWith("top_")
+            || lingredients.get(index).startsWith("bottom_")) {
           continue;
         }
         SandwichIngredient ing = new SandwichIngredient(
             lingredients.get(index));
         sWichMap.put(ing, val);
       }
+      String bottomBread = lingredients.remove(0);
+      System.out.println(bottomBread);
+      if (bottomBread.startsWith("bottom_")) {
+        bottomBread = bottomBread.substring(7);
+      }
+      lingredients.remove(lingredients.size() - 1);
       for (String s : lingredients) {
-        if (s.equals("top_bun") || s.equals("bottom_bun")) {
-          continue;
-        }
+//        if (s.equals("top_bun") || s.equals("bottom_bun")) {
+//          continue;
+//        }
         sWichIng.add(new SandwichIngredient(s));
       }
-      String bread = qm.value("bread");
 
-      Bread b = new Bread(bread);
+      Bread b = new Bread(bottomBread);
       // get the bread out of this and do something with it
       Sandwich purchase = new Sandwich(sWichIng, sWichMap, b);
       System.out.println("parsed purchase: " + purchase);

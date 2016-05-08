@@ -44,6 +44,24 @@ function getCustomer(game) {
     
 } 
 
+function fireHandler(empName) {
+    var postParameters = {name: empName};
+
+    $.post("/fire", postParameters, function(responseJSON) {});
+
+}
+
+function sellHandler(stationName) {
+    var postParameters = {name: stationName};
+
+    $.post("/sell", postParameters, function(responseJSON) {
+        var responseObject = JSON.parse(responseJSON);
+        var moneyGained = responseObject.moneyGained;
+        game.addMoney(500, 530, "+ $"+moneyGained.toFixed(2), moneyGained);
+    });
+}
+
+
 //possibly only call this on string of lost customers
 function leaveHandler (station) {
     var postParameters = {station: station};
@@ -238,7 +256,7 @@ function updateCustomerInterval() {
     });
 }
 
-function getEmployeeInterval(stationName, atStation, makingProduct, line, employee) {
+function getEmployeeInterval(stationName, employee, front) {
     var employeeName = employee.name;
     var employeeEnergy = employee.workHoursProgress/30;
 
@@ -255,36 +273,48 @@ function getEmployeeInterval(stationName, atStation, makingProduct, line, employ
         var employeeInt = responseObject.employeeInt;
         console.log("EMPLOYEE INTERVAL: "+employeeInt);
         
-        BlueRoom.Game.prototype.employeeMakeProduct(stationName, atStation, makingProduct, line, employee, employeeInt);
+        BlueRoom.Game.prototype.employeeMakeProduct(stationName, employee, front, employeeInt);
     });
 
 
 }
 
 function saveGame() {
-    var filename = "game1";
-	var postParameters = { file: filename };
+    var filename = "game" + saveNumber + ".brt";
+	var postParameters = { file: filename, number: saveNumber };
 	
 	$.post("/save", postParameters, function(responseJSON) {});
+    game.createGeneralAlert("Current game state successfully saved in game " + saveNumber + "!");
 }
 
 function loadGame(filename) {
-    filename = "game1";
     var postParameters = { file: filename };
     
     $.post("/load", postParameters, function(responseJSON) {
 		var responseObject = JSON.parse(responseJSON);
 		var stations = responseObject.stations;
-		for (var i = 0; i < stations.length; i++) {
-			var station = stations[i];
-			// do something to add the station to the front end
-		}
 		var employees = responseObject.employees;
-		for (var i = 0; i < employees.length; i++) {
-			// add each employee
-		}
 		var balance = responseObject.money;
-		// check if this is actually a valid way to change the money
-		statusBar.money = balance;
+        var dayNum = responseObject.dayNum;
+        var magazineRack = responseObject.magazineRack;
+
+        BlueRoom.Game.prototype.load(stations, employees, balance, dayNum, magazineRack);
     });
 }
+
+function getSavedGames() {
+    $.post("/savedgames", function(responseJSON) {
+        var responseObject = JSON.parse(responseJSON);
+        BlueRoom.Load.prototype.finishCreate(responseObject.savedGames);
+    });
+}
+
+function eraseSavedGame(number) {
+    postParameters = { gameNumber: number };
+    $.post("/erasegame", postParameters, function(responseJSON) {});
+}
+
+function restartGame() {
+    $.post("/restart", function(resonseJSON) {});
+}
+

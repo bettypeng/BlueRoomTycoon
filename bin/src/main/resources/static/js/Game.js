@@ -27,8 +27,10 @@ var managerView = true;
 var sandwichView = false;
 var coffeeView = false;
 var bakeryView = false;
-
 var dayEndView = false;
+
+var coffeeButtonOn;
+var BakeryButtonOn;
 
 var gameTimer;
 var gamegroup;
@@ -38,14 +40,22 @@ var timetext;
 var daytext;
 var ampmtext;
 var closedtext;
-var activeButtons = new Array();
+
+var customerAlert;
+var leavingAlert;
+var stealingAlert;
+var checkoutAlert;
+
 
 var dayCounter = 4;
 var twelveCounter = 0;
 
-var MANAGERTIMEINTERVAL = 100; //250 standard
-var STATIONTIMEINTERVAL = 100;
 
+var MANAGERTIMEINTERVAL = 50; //250 standard
+var STATIONTIMEINTERVAL = 50;
+
+
+var saveNumber;
 
 var game;
 
@@ -54,27 +64,28 @@ BlueRoom.Game.prototype = {
     create: function () {
         game = this;
         var mygame = this;
-
         //this.add.sprite(0, 0, 'whiteBg');
         gamegroup = this.game.add.group();
         textgroup = this.game.add.group();
 
         this.add.sprite(0, 0, 'whiteBg');
         this.managerButton = this.add.button(10, 10, 'managerButton', goToManagerView, this);
-		this.sandwichButton = this.add.button(10, 80, 'sandwichButton', goToSandwichView, this);
-		this.coffeeButton = this.add.button(10, 150, 'coffeeButton', goToCoffeeView, this);
-        this.bakeryButton = this.add.button(10, 220, 'bakeryButton', goToBakeryView, this);
+		this.sandwichButton = this.add.button(10, 85, 'sandwichButton', goToSandwichView, this);
+		this.coffeeButton = this.add.button(10, 160, 'coffeeButton', goToCoffeeView, this);
+        this.bakeryButton = this.add.button(10, 235, 'bakeryButton', goToBakeryView, this);
         this.status_bar = this.add.sprite(0, 600, 'status_bar');
-        this.pauseButton = this.add.button(1000, 630, 'pauseButton', this.showPauseScreen, this);
+        this.pauseButton = this.add.button(980, 615, 'pauseButton', this.showPauseScreen, this);
 
-        activeButtons.push(this.managerButton);
-        activeButtons.push(this.sandwichButton);
+        customerAlert = this.add.sprite(20, 625, 'radiobutton');
+        leavingAlert = this.add.sprite(20, 645, 'radiobutton');
+        stealingAlert = this.add.sprite(20, 665, 'radiobutton');
+        checkoutAlert = this.add.sprite(20, 685, 'radiobutton');
 
-        activeButtons.push(this.coffeeButton);
-        activeButtons.push(this.bakeryButton);
 
-        //this.coffeeButton.visible = false;
-        //this.bakeryButton.visible = false;
+        coffeeButtonOn = false;
+        this.coffeeButton.visible = false;
+        bakeryButtonOn = false;
+        this.bakeryButton.visible = false;
         
         gamegroup.add(this.status_bar);
         gamegroup.add(this.managerButton);
@@ -85,16 +96,22 @@ BlueRoom.Game.prototype = {
 
         
         var status = statusBar;
-        var style = { font: "32px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left", backgroundColor: "#ffffff" };
+        var style = { font: "32px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left"};
 
-        moneytext = this.game.add.text(100, 650, '$' + (status.money.toFixed(2)), style);
-        daytext = this.game.add.text(500, 650,  status.day[dayCounter%7], style);
+        moneytext = this.game.add.text(330, 650, '$' + (status.money.toFixed(2)), style);
+        daytext = this.game.add.text(620, 650,  status.day[dayCounter%7], style);
         //timetext = this.game.add.text(800, 650,  status.hour + ':' + status.minute, style);
-        timetext = this.game.add.text(800, 650,  status.hour, style);
-        ampmtext = this.game.add.text(840, 650,  status.ampm[twelveCounter%2], style);
-        closedtext = this.game.add.text(800, 650,  "CLOSING TIME!", style);
+        timetext = this.game.add.text(820, 650,  status.hour, style);
+        ampmtext = this.game.add.text(860, 650,  status.ampm[twelveCounter%2], style);
+        closedtext = this.game.add.text(820, 650,  "CLOSING TIME!", style);
         this.closedSign(false);
 
+        var newstyle = { font: "12px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left"};
+
+        var customerAlertText = this.game.add.text(40, 615, "NEW CUSTOMER", newstyle);
+        var leavingAlertText = this.game.add.text(40, 635, "LEAVING", newstyle);
+        var stealingAlertText = this.game.add.text(40, 655, "STEALING", newstyle);
+        var checkoutAlertText = this.game.add.text(40, 675, "CHECKOUT", newstyle);
 
 
         this.moneytextTween = this.add.tween(moneytext.scale).to({ x: 1.5, y: 1.5}, 200, Phaser.Easing.Linear.In).to({ x: 1, y: 1}, 200, Phaser.Easing.Linear.In);
@@ -105,10 +122,23 @@ BlueRoom.Game.prototype = {
         textgroup.add(ampmtext);
         textgroup.add(daytext);
         textgroup.add(closedtext);
+        textgroup.add(customerAlert);
+        textgroup.add(leavingAlert);
+        textgroup.add(stealingAlert);
+        textgroup.add(checkoutAlert);
+        textgroup.add(customerAlertText);
+        textgroup.add(leavingAlertText);
+        textgroup.add(stealingAlertText);
+        textgroup.add(checkoutAlertText);
 
         textgroup.forEach(function(item) {
             item.anchor.set(0.5);
         });
+
+        customerAlertText.anchor.setTo(0, 0);
+        leavingAlertText.anchor.setTo(0, 0);
+        stealingAlertText.anchor.setTo(0, 0);
+        checkoutAlertText.anchor.setTo(0,0);
         
         this.setTimer(MANAGERTIMEINTERVAL);
         this.disableButton(this.managerButton);
@@ -213,6 +243,75 @@ BlueRoom.Game.prototype = {
     	};
     	
     },
+
+    statusAlert: function(alerttype) {
+        var counter = 0;
+        var color;
+        if(alerttype==customerAlert){
+            color = 0x00FF00;
+        } else if (alerttype==leavingAlert){
+            color = 0xffff00;
+        } else if (alerttype ==stealingAlert){
+            color = 0xff0000;
+        } else if(alerttype ==checkoutAlert){
+            color = 0x0099cc;
+        }
+        
+        timer = setInterval(function(){
+            counter++;
+            if (counter%2==0) {
+                alerttype.tint = color;
+            } else {
+                alerttype.tint = 0xFFFFFF;
+            }
+        }, 90);
+
+        setTimeout(function() {
+            clearInterval(timer);
+        }, 1900);
+
+        alerttype.tint = 0xFFFFFF;
+
+    },
+
+    // custLeavingAlert: function() {
+    //     var counter = 0;
+    //     leavingTimer = setInterval(function(){
+    //         counter++;
+    //         if (counter%2==0) {
+    //             leavingAlert.tint = 0xFFFF00;
+    //         } else {
+    //             leavingAlert.tint = 0xFFFFFF;
+    //         }
+    //     }, 90);
+    //     return leavingTimer;
+    // },
+
+    // custStealingAlert: function() {
+    //     var counter = 0;
+    //     stealingTimer = setInterval(function(){
+    //         counter++;
+    //         if (counter%2==0) {
+    //             stealingAlert.tint = 0xFF0000;
+    //         } else {
+    //             stealingAlert.tint = 0xFFFFFF;
+    //         }
+    //     }, 90);
+    //     return stealingTimer;
+    // },
+
+    // checkoutAlert: function(){
+    //     var counter = 0;
+    //     checkoutTimer = setInterval(function(){
+    //         counter++;
+    //         if (counter%2==0) {
+    //             checkoutAlert.tint = 0x0099cc;
+    //         } else {
+    //             checkoutAlert.tint = 0xFFFFFF;
+    //         }
+    //     }, 90);
+    //     return checkoutTimer;
+    // },
     
     // addMoney: function(amt){
     //     statusBar.money += Number(amt);
@@ -324,14 +423,24 @@ BlueRoom.Game.prototype = {
         }
 
         if(dayEndView){
-            activeButtons.forEach(function(item){
-                item.visible = false;
-            });
+            // this.managerButton.visible = true;
+            // this.sandwichButton.visible = true;
+            // if(coffeeButtonOn){
+            //     this.coffeeButton.visible = true;
+            // } else{
+            //     this.coffeeButton.visible = false;
+            // }
+            // if(bakeryButtonOn){
+            //     this.bakeryButton.visible = true;
+            // } else{
+            //     this.bakeryButton.visible = false;
+            // }
         }
         else{
-            activeButtons.forEach(function(item){
-                item.visible = true;
-            });
+            // this.managerButton.visible = false;
+            // this.sandwichButton.visible = false;
+            // this.bakeryButton.visible = false;
+            // this.coffeeButton.visible = false;
         }
         if(!isBlueRoomOpen && numCustomer <=0){
             if(!dayEndView){
@@ -419,6 +528,27 @@ BlueRoom.Game.prototype = {
         //  Then let's go back to the main menu.
         this.state.start('MainMenu');
 
+    },
+
+    load: function(stations, employees, balance, dayNum, magRack) {
+        console.log(stations);
+        for (var i = 0; i < stations.length; i++) {
+            var station = stations[i];
+            // do something to add the station to the front end
+
+        }
+        console.log(employees);
+        for (var i = 0; i < employees.length; i++) {
+            // add each employee
+        }
+        console.log(balance);
+        // check if this is actually a valid way to change the money
+        statusBar.money = balance;
+        console.log(dayNum);
+        // do something with dayNum to make sure day of the week is correct
+        console.log(magRack);
+        // do something to tell game if magazine rack has been purchased
+        currThis.state.start('Game');
     }
 
 };

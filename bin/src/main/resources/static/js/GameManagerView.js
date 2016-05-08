@@ -26,25 +26,24 @@ var atCoffeeStation = null;
 
 var currThis = this;
 
-
 BlueRoom.Game.prototype.createManager = function () {
+    
     this.sandwichLinePos = {'x': new Array(), 'y':new Array()};
     this.bakeryLinePos = {'x': new Array(), 'y':new Array()};
     this.coffeeLinePos = {'x': new Array(), 'y':new Array()};
 
     // BlueRoom.Game.prototype.create.call(this);
     this.add.sprite(0, 0, 'managerBg');
-    this.sandwichStation = this.add.sprite(652, 146, 'sandwichStation');
-    this.bakeryStation = this.add.sprite(400, 152, 'bakeryStation');
-    this.coffeeStation = this.add.sprite(130, 155, 'coffeeStation');
+    this.sandwichStation = this.add.sprite(652, 140, 'sandwichStation');
+    this.bakeryStation = this.add.sprite(400, 140, 'bakeryStation');
+    this.coffeeStation = this.add.sprite(130, 140, 'coffeeStation');
     // this.bakeryStation.visible = false;
     // this.coffeeStation.visible = false;
 
     var smallstyle = { font: "10px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "center" };
-    this.employeeBreakStation = this.add.sprite(10, 430, 'employeeBreakStation');
-    this.game.add.text(35, 435, "EMPLOYEE\nBREAK\nSTATION", smallstyle);
-    this.cashier = this.add.sprite(300, 500, 'dollar');
-    this.game.add.text(305, 565, "DRAG HERE TO\nCASH OUT!", smallstyle);
+    this.employeeBreakStation = this.add.sprite(10, 450, 'employeeBreakStation');
+    this.cashier = this.add.sprite(300, 400, 'dollar');
+    // this.game.add.text(305, 565, "DRAG HERE TO\nCASH OUT!", smallstyle);
     
     var style = { font: "30px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "center" };
     numSandwich = 0;
@@ -54,6 +53,7 @@ BlueRoom.Game.prototype.createManager = function () {
     leaving = false;
     customerGroup = this.add.group();
     employeeGroup = this.add.group();
+
 
     for(var i = 0; i < 16; i++){
         var curve = this.game.rnd.integerInRange(8, 12);
@@ -120,6 +120,7 @@ BlueRoom.Game.prototype.createManager = function () {
 
     setTimeout(function(){
         getCustomer();
+        currThis.statusAlert(customerAlert);
     }, 500);
 
     setInterval(function() {
@@ -128,6 +129,7 @@ BlueRoom.Game.prototype.createManager = function () {
         // console.log(CUSTOMERINTERVAL);
         if(managerCounter % CUSTOMERINTERVAL == 0 && numSandwich<15 && numCoffee<11 && numBakery<11 && isBlueRoomOpen){
             getCustomer();
+            currThis.statusAlert(customerAlert);
         }
     }, 1);
 
@@ -159,7 +161,9 @@ BlueRoom.Game.prototype.startMovement= function(){
 BlueRoom.Game.prototype.abandonLine = function(customer){
         var myGame = this;
 
-        myGame.deleteCurrSandwich(customer);
+        this.statusAlert(leavingAlert);
+
+        // myGame.deleteCurrSandwich(customer);
         leaving = true;
         //var outer = this;
         var c = customer;
@@ -181,7 +185,7 @@ BlueRoom.Game.prototype.abandonLine = function(customer){
         c.inLine = false;
         var currCustomer = c.sprite;
         //left= currCustomer;
-        
+
         var tween = this.add.tween(currCustomer).to( { x: 450, y: 700 }, 2000, null, true);
         
         tween.onComplete.add(onLeaveMoveComplete, this);
@@ -202,6 +206,7 @@ BlueRoom.Game.prototype.abandonLine = function(customer){
 
     BlueRoom.Game.prototype.toCashier= function(station){
         var curr;
+
         if (station == "sandwich") {
             if(sandwichLine.length>0){
                 curr= sandwichLine.shift();
@@ -245,6 +250,8 @@ BlueRoom.Game.prototype.abandonLine = function(customer){
             //this.moveLineUp(sandwichLine, this.sandwichLinePos, 5000);
             curr.flashDollar();
             curr.setUpInteractions();
+            currThis.statusAlert(checkoutAlert);
+
         }
            // cashierLine.push(currCustomer);
     };
@@ -275,7 +282,7 @@ BlueRoom.Game.prototype.cashCustomerOut= function(customer){
         } else if (c.station == "coffee") {
             coffeePurchase(c.drinkType, c.iced, c.drinkSize, c.drinkFlavor, c.id, c.happinessBarProgress/30, true);
         } else {
-            bakeryPurchase(c.type, c.id, c.happinessBarProgress/30, true);
+            bakeryPurchase(c.muffinType, c.id, c.happinessBarProgress/30, true);
         }   
     }
     leaving = true;
@@ -290,6 +297,8 @@ BlueRoom.Game.prototype.cashCustomerOut= function(customer){
 };
 
 BlueRoom.Game.prototype.steal = function(customer){
+    this.statusAlert(stealingAlert);
+
     var c = customer;
     c.cust.tint = 0xff7777;
     if (c.employee != null) {
@@ -300,14 +309,17 @@ BlueRoom.Game.prototype.steal = function(customer){
         } else if (c.station == "coffee") {
             coffeePurchase(c.drinkType, c.drinkIced, c.drinkSize, c.drinkFlavor, c.id, c.happinessBarProgress/30, false);
         } else {
-            bakeryPurchase(c.type, c.id, c.happinessBarProgress/30, false);
+            bakeryPurchase(c.muffinType, c.id, c.happinessBarProgress/30, false);
         } 
     }
     leaving = true;
     var tween = this.add.tween(customer.sprite).to( { x: 450, y: 700 }, 1000, null, true);
     tween.onComplete.add(onLeaveMoveComplete, this);
     function onLeaveMoveComplete(){
+        console.log("Steal decrement customer!");
         customer.sprite.visible = false;
+        clearInterval(customer.barTimer);
+        clearInterval(customer.myTimer);
         numCustomer--;
         leaving = false;
     }
@@ -330,37 +342,48 @@ BlueRoom.Game.prototype.managerUpdate= function () {
 
     if (sandwichStationFilled && !empMakingSandwich && sandwichLine.length != 0) {
         empMakingSandwich = true;
-        getEmployeeInterval("sandwich", atSandwichStation, empMakingSandwich, sandwichLine, atSandwichStation);
+        getEmployeeInterval("sandwich", atSandwichStation, sandwichLine[0]);
     }
     if (coffeeStationFilled && !empMakingCoffee && coffeeLine.length != 0) {
         empMakingCoffee = true;
-        getEmployeeInterval("coffee", atCoffeeStation, empMakingCoffee, coffeeLine, atCoffeeStation);
+        getEmployeeInterval("coffee", atCoffeeStation, coffeeLine[0]);
     }
     if (bakeryStationFilled && !empMakingMuffin && bakeryLine.length != 0) {
         empMakingMuffin = true;
-        getEmployeeInterval("bakery", atBakeryStation, empMakingMuffin, bakeryLine, atBakeryStation);
+        getEmployeeInterval("bakery", atBakeryStation, bakeryLine[0]);
     }
     
 };
 
-BlueRoom.Game.prototype.employeeMakeProduct= function (stationName, atStation, makingProduct, line, employee, interval) {
+BlueRoom.Game.prototype.employeeMakeProduct= function (stationName, employee, first, interval) {
     // makingProduct = true;
     var currThis = this;
 
-    window.setTimeout(function(){
+    setTimeout(function(){
+        console.log("making product");
 
-        if (atStation != employee) {
-            if (stationName == "sandwich") {
+        // if (atStation != employee) {
+        var frontCust;
+        if (stationName == "sandwich") {
+            if (atSandwichStation != employee || first != sandwichLine[0]) {
                 empMakingSandwich = false;
-            } else if (stationName == "coffee") {
-                empMakingCoffee = false;
-            } else {
-                empMakingMuffin = false;
+                return;
             }
-            return;
+            frontCust = sandwichLine[0];
+        } else if (stationName == "coffee") {
+            if (atCoffeeStation != employee || first != coffeeLine[0]) {
+                empMakingCoffee = false;
+                return;
+            } 
+            frontCust = coffeeLine[0];         
+        } else {
+            if (atBakeryStation != employee || first != bakeryLine[0]) {
+                empMakingMuffin = false;
+                return;
+            } 
+            frontCust = bakeryLine[0];          
         }
-        console.log(line);
-        var frontCust = line[0];
+
         frontCust.employee = employee.name;
 
         currThis.toCashier(stationName);
