@@ -423,7 +423,7 @@ BlueRoom.Game.prototype.getMuffinsOut= function(burnt){
 
 BlueRoom.Game.prototype.setUpMuffin = function(x, y, img){
     var staticMuffin = this.add.sprite(x, y, img);
-    staticMuffin.alpha = 0.3;
+    staticMuffin.alpha = 0;
     var m = new MuffinEl(x, y, img);
     muffinList[img] = m;
     bakeryViewElements.push(staticMuffin);
@@ -549,7 +549,7 @@ BlueRoom.Game.prototype.checkMuffinNumber = function(name){
         movableMuffinMap[name].alpha = 1;
     } else{
         movableMuffinMap[name].inputEnabled = false;
-        movableMuffinMap[name].alpha = 0.3;
+        movableMuffinMap[name].alpha = 0;
     }
 };
 
