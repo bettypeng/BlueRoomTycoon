@@ -280,53 +280,6 @@ BlueRoom.Game.prototype = {
 
     },
 
-    // custLeavingAlert: function() {
-    //     var counter = 0;
-    //     leavingTimer = setInterval(function(){
-    //         counter++;
-    //         if (counter%2==0) {
-    //             leavingAlert.tint = 0xFFFF00;
-    //         } else {
-    //             leavingAlert.tint = 0xFFFFFF;
-    //         }
-    //     }, 90);
-    //     return leavingTimer;
-    // },
-
-    // custStealingAlert: function() {
-    //     var counter = 0;
-    //     stealingTimer = setInterval(function(){
-    //         counter++;
-    //         if (counter%2==0) {
-    //             stealingAlert.tint = 0xFF0000;
-    //         } else {
-    //             stealingAlert.tint = 0xFFFFFF;
-    //         }
-    //     }, 90);
-    //     return stealingTimer;
-    // },
-
-    // checkoutAlert: function(){
-    //     var counter = 0;
-    //     checkoutTimer = setInterval(function(){
-    //         counter++;
-    //         if (counter%2==0) {
-    //             checkoutAlert.tint = 0x0099cc;
-    //         } else {
-    //             checkoutAlert.tint = 0xFFFFFF;
-    //         }
-    //     }, 90);
-    //     return checkoutTimer;
-    // },
-    
-    // addMoney: function(amt){
-    //     statusBar.money += Number(amt);
-    // },
-
-    // loseMoney: function(amt){
-    //     statusBar.money -= amt;
-    // },
-
     closedSign: function(bool){
         if(!bool){
             closedtext.visible = false;
