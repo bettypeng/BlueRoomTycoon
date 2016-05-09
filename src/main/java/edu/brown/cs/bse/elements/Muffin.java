@@ -6,7 +6,7 @@ public class Muffin extends FoodItem {
 
   public Muffin(String type) {
     this.type = type;
-    setPrice(3);
+    setPrice(4);
     setMaxTip(1);
   }
 

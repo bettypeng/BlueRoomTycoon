@@ -19,8 +19,8 @@ public class Sandwich extends FoodItem {
     for (SandwichIngredient i : ingredients) {
       deltas.put(i, 0.0);
     }
-    setPrice(4);
-    setMaxTip(6);
+    setPrice(6.75);
+    setMaxTip(8.25);
   }
 
   public Sandwich(List<SandwichIngredient> ingredients,
@@ -28,8 +28,8 @@ public class Sandwich extends FoodItem {
     this.ingreds = ingredients;
     this.bread = bread;
     this.deltas = deltas;
-    setPrice(4);
-    setMaxTip(6);
+    setPrice(6.75);
+    setMaxTip(8.25);
   }
 
   @Override
@@ -69,7 +69,7 @@ public class Sandwich extends FoodItem {
     System.out.println(quality);
 
     // if quality is below a certain threshold, return 0
-    if (quality < .5){
+    if (quality < .5) {
       return 0;
     }
     return quality;

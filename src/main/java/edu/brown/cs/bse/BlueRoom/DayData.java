@@ -15,7 +15,7 @@ public class DayData {
   private double thefts;
   private double expenses;
   private int itemsTrashed;
-  
+
   public DayData(double expenses) {
     this.expenses = expenses;
     customersLost = 0;
@@ -24,7 +24,7 @@ public class DayData {
   }
 
   public void newPurchase(String station, double price) {
-    switch(station) {
+    switch (station) {
     case "sandwich":
       sandwichCount++;
       sandwichRevenue += price;
@@ -43,23 +43,23 @@ public class DayData {
     totalPurchases++;
     totalRevenue += price;
   }
-  
+
   public void newLoss(double amt) {
     totalLosses += amt;
   }
-  
+
   public void customerLost() {
     customersLost++;
   }
-  
+
   public void customerTheft() {
     thefts++;
   }
-  
+
   public void trash(int num) {
-	itemsTrashed += num;
+    itemsTrashed += num;
   }
-  
+
   public double getTotalRevenue() {
     return totalRevenue;
   }
@@ -67,18 +67,19 @@ public class DayData {
   public int getTotalPurchases() {
     return totalPurchases;
   }
-  
+
   public double getLosses() {
     return totalLosses;
   }
-  
+
   public double getExpenses() {
     return expenses;
   }
 
   @Override
   public String toString() {
-    return String.format("Today's Revenue: %.2f, number of purchases: %d", totalRevenue, totalPurchases);
+    return String.format("Today's Revenue: %.2f, number of purchases: %d",
+        totalRevenue, totalPurchases);
   }
 
 }

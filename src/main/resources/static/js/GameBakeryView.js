@@ -259,7 +259,7 @@ BlueRoom.Game.prototype.startBakeTimer = function(){
     bakeTimer = setInterval(function(){
         currThis.ovenTimerTime-=0.1;
         currThis.ovenTimerUpdate();
-    }, 10);
+    }, 5);
 }
 
 BlueRoom.Game.prototype.ovenTimerUpdate= function() {

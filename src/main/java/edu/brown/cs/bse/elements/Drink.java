@@ -3,12 +3,12 @@ package edu.brown.cs.bse.elements;
 import java.util.List;
 
 public class Drink extends FoodItem {
-  
+
   private String size;
   private List<String> flavoring;
   private String type;
   private boolean iced;
-  
+
   public Drink(String type, String size, List<String> flavors, boolean iced) {
     this.size = size;
     this.type = type;
@@ -17,7 +17,7 @@ public class Drink extends FoodItem {
     setPrice(2);
     setMaxTip(3);
   }
-  
+
   @Override
   public double compareToOrder(FoodItem ordered) {
     if (!(ordered instanceof Drink)) {
@@ -49,7 +49,7 @@ public class Drink extends FoodItem {
     }
     return quality;
   }
-  
+
   @Override
   public String toString() {
     String drink = size + ' ';
