@@ -15,6 +15,7 @@ var upkeepcosttext;
 var buyUpgradeButton;
 
 
+
 BlueRoom.Game.prototype.createUpgradeView= function () {
 	this.disableDayEndButtons();
 
@@ -153,6 +154,11 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
  		this.bakeryStation.visible = true;
  		bakeryButtonOn = true;
  		buy(upgradeList[currentlyDisplayedUpgrade]);
+ 	}
+ 	else if (upgradeList[currentlyDisplayedUpgrade] === "magazine rack") {
+ 		buy("magazineRack");
+ 		CUSTOMERHAPPINESSINTERVAL += 40;
+ 		//this.magazineRack.visible = true;
  	}
  	console.log("BUYING: " + upgradeList[currentlyDisplayedUpgrade]);
  	this.addToUpgradeInventory(upgradeList[currentlyDisplayedUpgrade]);

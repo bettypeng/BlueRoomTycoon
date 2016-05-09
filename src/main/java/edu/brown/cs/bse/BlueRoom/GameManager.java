@@ -26,7 +26,7 @@ public class GameManager {
   private static final double SANDWICH_TRASH_CONST = 0.3;
   private static final double BAKERY_TRASH_CONST = 0.5;
   private static final double COFFEE_TRASH_CONST = 1;
-  private static final double EMPLOYEE_WAGE = 50;
+  private static final double EMPLOYEE_WAGE = 30;
   public static final Map<String, Double> UPGRADE_COSTS = new ImmutableMap.Builder<String, Double>()
       .put("bakery", 400.0)
       .put("coffee", 200.0)
@@ -60,10 +60,10 @@ public class GameManager {
     availableStations.add("sandwich");
     currTime = 0;
     leftToday = 0;
-    baselineInterval = 5000;
+    baselineInterval = 1000;
     savedGames = new boolean[3];
     magazineRack = false;
-    loadConfig("gameConfig.brt");
+    loadConfig(".gameConfig");
     OrderFactory.setMuffinWeights();
   }
 
@@ -224,8 +224,12 @@ public class GameManager {
     OrderFactory.setMuffinWeights();
     currTime = 0;
     leftToday = 0;
-    baselineInterval -= 500;
+    baselineInterval -= 100;
     return today;
+  }
+  
+  public void startDay() {
+    manager.startDay();
   }
 
   public void leave(String station) {
@@ -242,11 +246,15 @@ public class GameManager {
   }
 
   public double calculateCustomerInterval() {
-    double interval = baselineInterval + (leftToday * 50);
-    interval -= (500 * (employees.size()));
-    interval -= (500 * (availableStations.size() - 1));
-    if (interval < 500) {
-      return 500;
+    double interval = baselineInterval + (leftToday * 10);
+    interval -= (200 * (employees.size()));
+    if (availableStations.size() == 2) {
+      interval /= 2;
+    } else if (availableStations.size() == 3) {
+      interval /= 2.5;
+    }
+    if (interval < 50) {
+      return 50;
     }
     return interval;
   }
@@ -305,10 +313,11 @@ public class GameManager {
       }
 
       int dayNum = manager.load(reader);
-      baselineInterval = 5500 - (dayNum * 500);
+      baselineInterval = 1100 - (dayNum * 100);
     } catch (IOException | NumberFormatException e) {
       e.printStackTrace();
     }
+    startDay();
   }
 
   public void sellStation(String station, double price) {
@@ -357,7 +366,7 @@ public class GameManager {
   }
   
   private void rewriteConfigFile() {
-    try(BufferedWriter writer = new BufferedWriter(new FileWriter("gameConfig.brt"))) {
+    try(BufferedWriter writer = new BufferedWriter(new FileWriter(".gameConfig"))) {
       for (int i = 0; i < savedGames.length; i++) {
         if (savedGames[i]) {
           writer.write("full", 0, 4);
@@ -390,10 +399,10 @@ public class GameManager {
     employeeMap = new HashMap<>();
     currTime = 0;
     leftToday = 0;
-    baselineInterval = 5000;
+    baselineInterval = 1000;
     savedGames = new boolean[3];
     magazineRack = false;
-    loadConfig("gameConfig.brt");
+    loadConfig(".gameConfig");
     OrderFactory.setMuffinWeights();
   }
 

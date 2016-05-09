@@ -28,7 +28,7 @@ BlueRoom.Game.prototype.createDayEndAlert= function (dailyInfo) {
     var customersServed = this.game.add.text(280, 250, "Customers served: "+dailyInfo.totalPurchases, labelstyle);
     var customersLost = this.game.add.text(280, 280, "Customers lost: "+dailyInfo.customersLost, labelstyle);
     var numThefts = this.game.add.text(280, 310, "Thefts: "+dailyInfo.thefts, labelstyle);
-    var itemsTrashed = this.game.add.text(280, 340, "Items trashed: ", labelstyle);
+    var itemsTrashed = this.game.add.text(280, 340, "Items trashed: "+dailyInfo.itemsTrashed, labelstyle);
 
 
     var sandwichesMade = this.game.add.text(550, 250, "Sandwiches made: "+dailyInfo.sandwichCount, labelstyle);

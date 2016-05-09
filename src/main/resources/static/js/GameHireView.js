@@ -86,7 +86,7 @@ BlueRoom.Game.prototype.createHireView= function () {
 BlueRoom.Game.prototype.checkHireButton = function(currButton){
 	console.log("checking button");
 
-	if(Number(statusBar.money) <= Number(EMPLOYEEWAGE) || NUMBEROFSTATIONS<=NUMBEROFEMPLOYEES || hireList.length <= 0){
+	if(Number(statusBar.money) <= Number(HIRECOST) || NUMBEROFSTATIONS<=NUMBEROFEMPLOYEES || hireList.length <= 0){
 		this.disableButton(currButton);
 	}
 	else{
