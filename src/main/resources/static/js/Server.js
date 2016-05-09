@@ -320,3 +320,7 @@ function restartGame() {
     $.post("/restart", function(resonseJSON) {});
 }
 
+function startDay() {
+    $.post("/startday", function(){});
+}
+
