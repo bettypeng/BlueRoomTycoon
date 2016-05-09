@@ -18,12 +18,12 @@ BlueRoom.Game.prototype.createDayEndAlert= function (dailyInfo) {
 	var alertBg = game.add.sprite(0, 0, 'alertBox');
 	dayEndAlertElements.push(alertBg);
 
-    var alertstyle = { font: "25px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 400, align: "center" };
-    var alert = this.game.add.text(this.game.width/2, 180, "Blue Room is closed!"  , alertstyle);
+    var alertstyle = { font: "40px Roboto-Bold-Condensed", fill: "#FFFFFF", wordWrap: true, wordWrapWidth: 600, align: "center" };
+    var alert = this.game.add.text(this.game.width/2, 180, "THE BLUE ROOM IS CLOSED!"  , alertstyle);
     alert.anchor.setTo(0.5, 0.5);
 
     var subtitle = { font: "23px Roboto-Thin", fill: "#000000", wordWrap: true, wordWrapWidth: 400, align: "center" };
-    var today = this.game.add.text(this.game.width/2, 220, "Today's tally: ", subtitle);
+    var today = this.game.add.text(this.game.width/2, 227, "TODAY'S TALLY: ", subtitle);
     today.anchor.setTo(0.5, 0.5)
 
     var labelstyle = { font: "18px Roboto-Thin", fill: "#000000", wordWrap: true, wordWrapWidth: 400, align: "center" };
@@ -39,7 +39,7 @@ BlueRoom.Game.prototype.createDayEndAlert= function (dailyInfo) {
     var bakedGoodsWasted = this.game.add.text(550, 340, "Other shitty items sold: " + dailyInfo.alcCount, labelstyle);
 
 
-	var cont = this.add.button(this.game.width/2, 400, 'continueButton', endDayScreen, this);
+	var cont = this.add.button(this.game.width/2, 420, 'continueButton', endDayScreen, this);
 	cont.anchor.setTo(0.5, 0.5);
 
 	dayEndAlertElements.push(alert);

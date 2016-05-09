@@ -32,7 +32,9 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('eraseButton', 'images/erase_saved_game.png');
 		
 		// ABOUT
-		this.load.image('nextButton', 'images/next.png');
+		this.load.image('nextHowToButton', 'images/how_to_next.png');
+		this.load.image('backHowToButton', 'images/how_to_back.png');
+
 		this.load.image('smallStart', 'images/small_start.png');
 		this.load.image('banner', 'images/about_banner.png');
 		
@@ -71,8 +73,12 @@ BlueRoom.Preloader.prototype = {
 
 
 		// MANAGER VIEW
-		this.load.image('employee', 'images/employee_sprite.png');
-		this.load.image('employeeHalf', 'images/employee_at_station.png');
+		this.load.image('erik_employee', 'images/employee_sprite.png');
+		this.load.image('erik_employeeHalf', 'images/employee_at_counter.png');
+		this.load.image('alex_employee', 'images/employee_sprite_2.png');
+		this.load.image('alex_employeeHalf', 'images/employee_at_counter_2.png');
+		this.load.image('rachel_employee', 'images/employee_sprite_3.png');
+		this.load.image('rachel_employeeHalf', 'images/employee_at_counter_3.png');
 		this.load.image('red', 'images/sprites/red_sprite.png');
 		this.load.image('orange', 'images/sprites/orange_sprite.png');
 		this.load.image('purple', 'images/sprites/purple_sprite.png');
@@ -203,14 +209,18 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('dayEndBg', 'images/blue_bg.png');
 		this.load.image('exitButton', 'images/exit_button.png');
 		this.load.image('backButton', 'images/back_button.png');
+		this.load.image('summaryBox', 'images/financial_summary_box.png');
+
 		this.load.image('viewInventoryButton', 'images/white_view_inventory_button.png');
 		this.load.image('upgradeButton', 'images/white_buy_upgrades_button.png');
 		this.load.image('hireButton', 'images/white_hire_employees_button.png');
-		this.load.image('exitViewButton', 'images/start_new_day.png');
+		this.load.image('exitViewButton', 'images/white_start_new_day.png');
 		this.load.image('continueButton', 'images/continue_play_button.png');
-		this.load.image('continueShopping', 'images/continue_shopping.png');
-		this.load.image('exitViewSmallButton', 'images/start_new_day_small.png');
-		this.load.image('saveButton', 'images/save_game.png');
+		this.load.image('continueShopping', 'images/smaller_keep_shopping.png');
+		this.load.image('exitViewSmallButton', 'images/small_start_new_day.png');
+		this.load.image('saveButton', 'images/white_save_game_button.png');
+		this.load.image('quitButton', 'images/white_quit_game_button.png');
+
 
 		// HIRE PAGE
 		this.load.image('next', 'images/next_btn.png');

@@ -8,45 +8,58 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 	// var exit = this.add.button(50, 50, 'exitButton', this.destroyDayEndView, this);
 
 
-    var titleStyle = { font: "60px Roboto", fill: "#000000", align: "center"};
-	var title = this.game.add.text(this.game.width/2, 50, 'Financial Summary', titleStyle);
+    var titleStyle = { font: "70px Roboto-Light", fill: "#000000", align: "center"};
+	var title = this.game.add.text(this.game.width/2, 87, 'DAY #: FINANCIAL SUMMARY', titleStyle);
 	title.anchor.setTo(0.5, 0,5);
-	var labelStyle = { font: "30px Roboto-Light", fill: "#000000", align: "center"};
-	var today = this.game.add.text(this.game.width/3, 150, 'TODAY', labelStyle);
-	today.anchor.setTo(0.5, 0,5);
+
+	var dailySumm = game.add.sprite(50, 200, 'summaryBox');
+	var totalSumm = game.add.sprite(400, 200, 'summaryBox');
+	dayEndViewElements.push(dailySumm);
+	dayEndViewElements.push(totalSumm);
+
+
+	var labelStyle = { font: "42px Roboto", fill: "#000000", align: "center"};
+	var today = this.game.add.text(100, 230, 'TODAY', labelStyle);
 
 	var detailStyle = { font: "20px Roboto-Thin", fill: "#000000", align: "center"};
 	// var tips = this.game.add.text(200, 210, 'Tips: $'+dailyInfo.totalTips.toFixed(2), detailStyle);
 	// var revenue = this.game.add.text(200, 250, 'Revenue: $'+(dailyInfo.totalProfit - dailyInfo.totalTips).toFixed(2), detailStyle);
-	var revenue = this.game.add.text(280, 210, 'Revenue: $'+(dailyInfo.totalRevenue).toFixed(2), detailStyle);
-	var losses = this.game.add.text(280, 250, 'Thefts & Losses: $'+(dailyInfo.totalLosses).toFixed(2), detailStyle);
-	var expenses = this.game.add.text(280, 290, 'Utilities & Wages: $'+(dailyInfo.expenses).toFixed(2), detailStyle);
-	var profit = this.game.add.text(280, 330, 'Today\'s Net: $'+(dailyInfo.totalRevenue-(dailyInfo.totalLosses+dailyInfo.expenses)).toFixed(2), detailStyle);
+	var revenue = this.game.add.text(100, 300, 'Revenue: $'+(dailyInfo.totalRevenue).toFixed(2), detailStyle);
+	var losses = this.game.add.text(100, 350, 'Thefts & Losses: $'+(dailyInfo.totalLosses).toFixed(2), detailStyle);
+	var expenses = this.game.add.text(100, 400, 'Utilities & Wages: $'+(dailyInfo.expenses).toFixed(2), detailStyle);
+	var profit = this.game.add.text(100, 450, 'Today\'s Net: $'+(dailyInfo.totalRevenue-(dailyInfo.totalLosses+dailyInfo.expenses)).toFixed(2), detailStyle);
 
-	var total = this.game.add.text(2*(this.game.width/3), 150, 'TOTAL', labelStyle);
-	total.anchor.setTo(0.5, 0,5);
+	var total = this.game.add.text(445, 230, 'TOTAL', labelStyle);
 	// var ttips = this.game.add.text(720, 210, 'Tips: $'+ totalInfo.totalTips.toFixed(2), detailStyle);
 	// var trevenue = this.game.add.text(720, 250, 'Revenue: $'+(totalInfo.totalProfit - totalInfo.totalTips).toFixed(2), detailStyle);
-	var trevenue = this.game.add.text(620, 210, 'Revenue: $'+(totalInfo.totalRevenue).toFixed(2), detailStyle);
-	var tlosses = this.game.add.text(620, 250, 'Thefts & Losses: $'+(totalInfo.totalLosses).toFixed(2), detailStyle);
-	var texpenses = this.game.add.text(620, 290, 'Utilities & Wages: $'+(totalInfo.totalExpenses).toFixed(2), detailStyle);
-	var tprofit = this.game.add.text(620, 330, 'Total Net: $'+(totalInfo.totalProfit).toFixed(2), detailStyle);
+	var trevenue = this.game.add.text(445, 300, 'Revenue: $'+(totalInfo.totalRevenue).toFixed(2), detailStyle);
+	var tlosses = this.game.add.text(445, 350, 'Thefts & Losses: $'+(totalInfo.totalLosses).toFixed(2), detailStyle);
+	var texpenses = this.game.add.text(445, 400, 'Utilities & Wages: $'+(totalInfo.totalExpenses).toFixed(2), detailStyle);
+	var tprofit = this.game.add.text(445, 450, 'Total Net: $'+(totalInfo.totalProfit).toFixed(2), detailStyle);
 
-	var viewInventory = this.add.button(150, 420, 'viewInventoryButton', this.createInventoryView, this);
+	var viewInventory = this.add.button(900, 200, 'viewInventoryButton', this.createInventoryView, this);
 	viewInventory.anchor.setTo(0.5, 0);
-	var hire = this.add.button(380, 420, 'hireButton', this.createHireView, this);
+	var hire = this.add.button(900, 290, 'hireButton', this.createHireView, this);
 	hire.anchor.setTo(0.5, 0);
-	var upgrade = this.add.button(600, 420, 'upgradeButton', this.createUpgradeView, this);
+	var upgrade = this.add.button(900, 380, 'upgradeButton', this.createUpgradeView, this);
 	upgrade.anchor.setTo(0.5, 0);
-	var close = this.add.button(890, 370, 'exitViewButton', this.destroyDayEndView, this);
+	var close = this.add.button(900, 460, 'exitViewButton', this.destroyDayEndView, this);
 	close.anchor.setTo(0.5, 0);
-	var save = this.add.button(870, 30, 'saveButton', saveGame, this)
+	var save = this.add.button(850, 20, 'saveButton', saveGame, this);
+	save.tint = 0xcccccc;
+	var quitBtn = this.add.button(20, 20, 'quitButton', this.quitGame, this);
+	quitBtn.tint = 0xcccccc;
+
+	viewInventory.tint = 0xf2f2f2;
+	hire.tint = 0xf2f2f2;
+	upgrade.tint = 0xf2f2f2;
 
 	dayEndButtons.push(viewInventory);
 	dayEndButtons.push(hire);
 	dayEndButtons.push(upgrade);
 	dayEndButtons.push(close);
 	dayEndButtons.push(save);
+	dayEndButtons.push(quitBtn);
 
 
 	dayEndViewElements.push(title);
@@ -65,6 +78,8 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 	dayEndViewElements.push(hire);
 	dayEndViewElements.push(close);
 	dayEndViewElements.push(save);
+	dayEndViewElements.push(quitBtn);
+
 
 	managerView = false;
     sandwichView = false;
