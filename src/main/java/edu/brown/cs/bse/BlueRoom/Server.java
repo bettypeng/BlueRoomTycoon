@@ -655,7 +655,7 @@ public class Server {
       gameManager.startDay();
 
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
-          .put("results", "").build();
+          .put("expenses", gameManager.getCurrExpenses()).build();
       return GSON.toJson(variables);
     }
   }

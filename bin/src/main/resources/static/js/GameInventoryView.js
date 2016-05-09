@@ -16,23 +16,23 @@ BlueRoom.Game.prototype.createInventoryView= function () {
 	var backButton = this.add.button(50, 60, 'backButton', this.hideInventoryView, this);
 	inventoryViewElements.push(backButton);
 
-	var titleStyle = {font: "60px Roboto", fill: "#000000", align: "center"};
-	var title = this.game.add.text(this.game.width/2, 50, 'Your Inventory', titleStyle);
+    var titleStyle = { font: "70px Roboto", fill: "#ffffff", align: "center"};
+	var title = this.game.add.text(this.game.width/2, 50, 'YOUR INVENTORY', titleStyle);
 	title.anchor.setTo(0.5, 0);
 
-	var labelStyle = {font: "22px Roboto-Light", fill: "#000000", align: "center"};
+	var labelStyle = {font: "25px Roboto", fill: "#000000", align: "center"};
 	var detailStyle = {font: "15px Roboto-Thin", fill: "#000000", align: "center"};
 
-	var employees = this.game.add.text(this.game.width/3, 130, 'EMPLOYEES', labelStyle);
+	var employees = this.game.add.text(this.game.width/3, 150, 'EMPLOYEES', labelStyle);
 	employees.anchor.setTo(0.5, 0);
 
-	var upgrades = this.game.add.text(2*(this.game.width/3), 130, 'UPGRADES', labelStyle);
+	var upgrades = this.game.add.text(2*(this.game.width/3), 150, 'UPGRADES', labelStyle);
 	upgrades.anchor.setTo(0.5, 0);
 
-	var noEmployees = this.game.add.text(this.game.width/3, 170 + 100, "No employees!", detailStyle);
+	var noEmployees = this.game.add.text(this.game.width/3, 170 + 120, "No employees!", detailStyle);
 	noEmployees.anchor.setTo(0.5, 0);
 
-	var noUpgrades = this.game.add.text(2*(this.game.width/3), 170 + 100, "No upgrades!", detailStyle);
+	var noUpgrades = this.game.add.text(2*(this.game.width/3), 170 + 120, "No upgrades!", detailStyle);
 	noUpgrades.anchor.setTo(0.5, 0);
 
 	inventoryViewElements.push(title);
@@ -82,25 +82,25 @@ BlueRoom.Game.prototype.removeFromEmployeeInventory = function(){
 BlueRoom.Game.prototype.setUpEmployeeInventory = function(){
 	console.log("setting up e inv");
 
-	var upEmployeeArrow = this.add.button(this.game.width/3, 170, 'inventoryUp', this.fadeInventoryEmployeeForward, this);
+	var upEmployeeArrow = this.add.button(this.game.width/3, 190, 'inventoryUp', this.fadeInventoryEmployeeForward, this);
 	upEmployeeArrow.anchor.setTo(0.5, 0);
 
-	this.invE1 = this.add.sprite(this.game.width/3, 170 + 33, "i_" + inventoryEmployeeList[0]);
+	this.invE1 = this.add.sprite(this.game.width/3, 190 + 33, "i_" + inventoryEmployeeList[0]);
     this.invE1.anchor.setTo(0.5, 0);
     inventoryEmployee = 0;
 
-    this.invE2 = this.add.sprite(this.game.width/3, 170 + 33, "i_" + inventoryEmployeeList[0]);
+    this.invE2 = this.add.sprite(this.game.width/3, 190 + 33, "i_" + inventoryEmployeeList[0]);
     this.invE2.anchor.setTo(0.5, 0);
     this.invE2.alpha = 0;
 
-	var downEmployeeArrow = this.add.button(this.game.width/3, 170 + 33+ 225, 'inventoryDown', this.fadeInventoryEmployeeBackward, this);
+	var downEmployeeArrow = this.add.button(this.game.width/3, 190 + 33+ 225, 'inventoryDown', this.fadeInventoryEmployeeBackward, this);
 	downEmployeeArrow.anchor.setTo(0.5, 0);
 
 	var detailStyle = {font: "15px Roboto-Thin", fill: "#000000", align: "center"};
-	var employeePrice = this.game.add.text(this.game.width/3, 170 + 33 + 270, "Current employee wages: $" + EMPLOYEEWAGE + " / day", detailStyle);
+	var employeePrice = this.game.add.text(this.game.width/3, 190 + 33 + 270, "Current employee wages: $" + EMPLOYEEWAGE + " / day", detailStyle);
 	employeePrice.anchor.setTo(0.5, 0);
 
-	var fireButton = this.add.button(this.game.width/3, 170 + 33 + 300, 'fireButton', this.removeFromEmployeeInventory, this);
+	var fireButton = this.add.button(this.game.width/3, 190 + 33 + 300, 'fireButton', this.removeFromEmployeeInventory, this);
 	fireButton.anchor.setTo(0.5, 0);
 
 	inventoryEmployeeElements.push(upEmployeeArrow);
@@ -155,25 +155,25 @@ BlueRoom.Game.prototype.removeFromUpgradeInventory = function(){
 };
 
 BlueRoom.Game.prototype.setUpUpgradeInventory = function(){
-	var upUpgradeArrow = this.add.button(2*(this.game.width/3), 170, 'inventoryUp', this.fadeInventoryUpgradeForward, this);
+	var upUpgradeArrow = this.add.button(2*(this.game.width/3), 190, 'inventoryUp', this.fadeInventoryUpgradeForward, this);
 	upUpgradeArrow.anchor.setTo(0.5, 0);
 
-	this.invU1 = this.add.sprite(2*(this.game.width/3), 170+33, "i_" + inventoryUpgradeList[0]);
+	this.invU1 = this.add.sprite(2*(this.game.width/3), 190+33, "i_" + inventoryUpgradeList[0]);
     this.invU1.anchor.setTo(0.5, 0);
     inventoryUpgrade = 0;
 
-    this.invU2 = this.add.sprite(2*(this.game.width/3), 170+33, "i_" + inventoryUpgradeList[0]);
+    this.invU2 = this.add.sprite(2*(this.game.width/3), 190+33, "i_" + inventoryUpgradeList[0]);
     this.invU2.anchor.setTo(0.5, 0);
     this.invU2.alpha = 0;
 
-	var downUpgradeArrow = this.add.button(2*(this.game.width/3), 170 + 33+ 225, 'inventoryDown', this.fadeInventoryUpgradeBackward, this);
+	var downUpgradeArrow = this.add.button(2*(this.game.width/3), 190 + 33+ 225, 'inventoryDown', this.fadeInventoryUpgradeBackward, this);
 	downUpgradeArrow.anchor.setTo(0.5, 0);
 
 	var detailStyle = {font: "15px Roboto-Thin", fill: "#000000", align: "center"};
-	sellingPrice = this.game.add.text(2*(this.game.width/3), 170 + 33 + 270, 'Selling price: $' + upgradeCostList[inventoryUpgradeList[inventoryUpgrade]], detailStyle);
+	sellingPrice = this.game.add.text(2*(this.game.width/3), 190 + 33 + 270, 'Selling price: $' + upgradeCostList[inventoryUpgradeList[inventoryUpgrade]], detailStyle);
 	sellingPrice.anchor.setTo(0.5, 0);
 
-	var sellButton = this.add.button(2*(this.game.width/3), 170 + 33 + 300, 'sellButton', this.removeFromUpgradeInventory, this);
+	var sellButton = this.add.button(2*(this.game.width/3), 190 + 33 + 300, 'sellButton', this.removeFromUpgradeInventory, this);
 	sellButton.anchor.setTo(0.5, 0);
 
 	inventoryUpgradeElements.push(upUpgradeArrow);

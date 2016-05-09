@@ -280,53 +280,6 @@ BlueRoom.Game.prototype = {
 
     },
 
-    // custLeavingAlert: function() {
-    //     var counter = 0;
-    //     leavingTimer = setInterval(function(){
-    //         counter++;
-    //         if (counter%2==0) {
-    //             leavingAlert.tint = 0xFFFF00;
-    //         } else {
-    //             leavingAlert.tint = 0xFFFFFF;
-    //         }
-    //     }, 90);
-    //     return leavingTimer;
-    // },
-
-    // custStealingAlert: function() {
-    //     var counter = 0;
-    //     stealingTimer = setInterval(function(){
-    //         counter++;
-    //         if (counter%2==0) {
-    //             stealingAlert.tint = 0xFF0000;
-    //         } else {
-    //             stealingAlert.tint = 0xFFFFFF;
-    //         }
-    //     }, 90);
-    //     return stealingTimer;
-    // },
-
-    // checkoutAlert: function(){
-    //     var counter = 0;
-    //     checkoutTimer = setInterval(function(){
-    //         counter++;
-    //         if (counter%2==0) {
-    //             checkoutAlert.tint = 0x0099cc;
-    //         } else {
-    //             checkoutAlert.tint = 0xFFFFFF;
-    //         }
-    //     }, 90);
-    //     return checkoutTimer;
-    // },
-    
-    // addMoney: function(amt){
-    //     statusBar.money += Number(amt);
-    // },
-
-    // loseMoney: function(amt){
-    //     statusBar.money -= amt;
-    // },
-
     closedSign: function(bool){
         if(!bool){
             closedtext.visible = false;
@@ -454,6 +407,7 @@ BlueRoom.Game.prototype = {
                 // this.createDayEndView();
                 //endDay();
                 // this.createDayEndAlert();
+                this.disableButton(this.pauseButton);
                 endDayStats();
             }
         }
@@ -507,6 +461,7 @@ BlueRoom.Game.prototype = {
 
     resetGameDay: function(){
         dayCounter +=1;
+        this.enableButton(this.pauseButton);
         isBlueRoomOpen = true;
         //if(statusBar.day[dayCounter%7]=='Monday' || statusBar.day[dayCounter%7]=='Tuesday' || statusBar.day[dayCounter%7]=='Wednesday' || statusBar.day[dayCounter%7]=='Thursday' || statusBar.day[dayCounter%7]=='Friday'){
         if(statusBar.day[dayCounter%7]=="Saturday" || statusBar.day[dayCounter%7]=="Sunday"){
@@ -520,6 +475,8 @@ BlueRoom.Game.prototype = {
             twelveCounter = 0;
         } 
         this.setTimer(MANAGERTIMEINTERVAL);
+        managerCounter = 0;
+        getCustomer();
     },
 
     restartGame: function(){
@@ -538,13 +495,13 @@ BlueRoom.Game.prototype = {
 
     load: function(stations, employees, balance, dayNum, magRack) {
         // currLoadThis.state.start('Game');
-        console.log(stations);
-        for (var i = 0; i < stations.length; i++) {
-            var station = stations[i];
+        // console.log(stations);
+        // for (var i = 0; i < stations.length; i++) {
+            // var station = stations[i];
             // do something to add the station to the front end
             // console.log(this);
-            this.loadUpgrades(stations[i]);
-        }
+            this.loadUpgrades(stations);
+        // }
         console.log(employees);
         for (var i = 0; i < employees.length; i++) {
             // add each employee

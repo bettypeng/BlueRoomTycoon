@@ -13,4 +13,13 @@
     src: url(/roboto/Roboto-Regular.ttf);
 }
 
+@font-face {
+    font-family: Roboto-Bold-Condensed;
+    src: url(/roboto/Roboto-Condensed.ttf);
+}
+
+@font-face {
+    font-family: Roboto-Medium;
+    src: url(/roboto/Roboto-Medium.ttf);
+}
 .fontPreload{    position:absolute;    left:-100px;}
