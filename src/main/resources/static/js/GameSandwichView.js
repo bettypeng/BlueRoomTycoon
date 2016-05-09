@@ -422,6 +422,7 @@ BlueRoom.Game.prototype.orderElems= function () {
         if (currCustomer.happinessBarProgress < 0) {
             currThis.changeSpriteFace(150, 40, "upset");
             transitioning = true;
+            currCustomer.moving = true;
 
             // console.log(currSandSprites);
             nonSandwich = nonSandwich.concat(currSandSprites);
@@ -434,6 +435,7 @@ BlueRoom.Game.prototype.orderElems= function () {
             t.onComplete.add(function () {
                 // console.log(currOrderEl
 
+                currCustomer.moving = false;
                 currOrderElem.destroy();
                 currPlace = 0;
                 currSandwich = [];
@@ -482,13 +484,14 @@ BlueRoom.Game.prototype.orderElems= function () {
                 currOrderElem.destroy();
                 speechBubble.visible = false;
                 transitioning = true;
+                currCustomer.moving = true;
 
                 if (incorrSandCount != 0 && incorrSandCount >= currCustomerOrder.length/2) {
                     currThis.changeSpriteFace(150, 40, "troll");
                 } else {
                     currThis.changeSpriteFace(150, 40, "leaving");
                 }
-                var tw = currThis.add.tween(customerFace).to( { x: 1000 }, 3000, null, true);
+                var tw = currThis.add.tween(customerFace).to( { x: 1000 }, 2000, null, true);
                 currCustomerStatusBar.discard();
                 tw.onComplete.add(function () {
                     for (var i=0; i<currSandSprites.length; i++) {
@@ -511,6 +514,7 @@ BlueRoom.Game.prototype.orderElems= function () {
                     }
 
                     //get next customer
+                    currCustomer.moving = false;
                     currPlace = 0;
                     currSandwich = [];
                     currSandSprites = [];
