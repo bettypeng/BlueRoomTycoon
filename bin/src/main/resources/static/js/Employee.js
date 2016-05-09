@@ -1,13 +1,13 @@
 var EMPLOYEEINTERVAL = 300;
 //sandwich station coords
 var SSX = 750;
-var SSY = 107;
+var SSY = 100;
 //bakery station coords
-var BSX = 500;
-var BSY = 107;
+var BSX = 472;
+var BSY = 100;
 //coffee station coords
-var CSX = 250;
-var CSY = 108;
+var CSX = 215;
+var CSY = 100;
 
 var sandwichStationFilled = false;
 var bakeryStationFilled = false;
@@ -16,12 +16,25 @@ var coffeeStationFilled = false;
 var currThis = this;
 
 
+
+
 function Employee(name){
     this.name = name;
 
     this.employeeSprite = currThis.game.add.group();
 
-    var e = currThis.game.add.sprite(0, 0, 'employee');
+    if(name==="erik"){
+        this.fullBody = "erik_employee";
+        this.halfBody = "erik_employeeHalf";
+    } else if(name ==="alex"){
+        this.fullBody = "alex_employee";
+        this.halfBody = "alex_employeeHalf";
+    } else{
+        this.fullBody = "rachel_employee";
+        this.halfBody = "rachel_employeeHalf";
+    }
+
+    var e = currThis.game.add.sprite(0, 0, this.fullBody);
     this.e = e;
     e.anchor.setTo(0.5, 0.5);
     this.employeeSprite.add(e);
@@ -69,7 +82,7 @@ Employee.prototype = {
     },
     
     onDragStart : function(sprite, pointer) {
-        this.e.loadTexture('employee');
+        this.e.loadTexture(this.fullBody);
         this.e.moves = false;
         dragPosition.set(sprite.x, sprite.y);
         this.workHoursSprite.visible = false;
@@ -83,6 +96,8 @@ Employee.prototype = {
     },
     
     onDragStop: function(sprite, pointer) {
+        sprite.tint = 0xffffff;
+
         // var currThis = this;
         // setTimeout(function(){
         //     this.moving = false;
@@ -126,7 +141,7 @@ Employee.prototype = {
         }
         this.employeeSprite.x = x;
         this.employeeSprite.y = y; 
-        this.e.loadTexture('employeeHalf');
+        this.e.loadTexture(this.halfBody);
         this.working = true;
         this.recharging = false;
     },
@@ -187,12 +202,12 @@ Employee.prototype = {
         var myEmployee = this;
         this.workTimer = setInterval(function(){
             if(myEmployee.working && !dayEndView){
-                console.log("decrementing worker satisfaction");
+                // console.log("decrementing worker satisfaction");
                 if(currEmployee.workHoursProgress>0){
                     currEmployee.workHoursProgress-=0.1;
                 }
             } else if(myEmployee.recharging && !dayEndView){
-                console.log("incrementing worker satisfaction");
+                // console.log("incrementing worker satisfaction");
                 if(currEmployee.workHoursProgress<30){
                     currEmployee.workHoursProgress+=0.1;
                 }
