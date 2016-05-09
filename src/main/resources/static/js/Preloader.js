@@ -59,7 +59,7 @@ BlueRoom.Preloader.prototype = {
 		//this.load.image('sandwichBg', 'images/sandwich_bg.png');
 		this.load.image('sandwichBg', 'images/sandwich/sandwich_bg.png');
 
-		this.load.image('alertBox', 'images/alert.png');
+		this.load.image('alertBox', 'images/blue_alert.png');
 
 		//PAUSE SCREEN
 		this.load.image('pauseButton', 'images/white_pause_button.png');
@@ -200,14 +200,14 @@ BlueRoom.Preloader.prototype = {
 
 
 		//END OF DAY VIEW
-		this.load.image('dayEndBg', 'images/day_end_bg.png');
+		this.load.image('dayEndBg', 'images/blue_bg.png');
 		this.load.image('exitButton', 'images/exit_button.png');
 		this.load.image('backButton', 'images/back_button.png');
 		this.load.image('viewInventoryButton', 'images/view_inventory_button.png');
 		this.load.image('upgradeButton', 'images/upgrade_button.png');
 		this.load.image('hireButton', 'images/hire_button.png');
 		this.load.image('exitViewButton', 'images/start_new_day.png');
-		this.load.image('continueButton', 'images/continue_button.png');
+		this.load.image('continueButton', 'images/continue_play_button.png');
 		this.load.image('continueShopping', 'images/continue_shopping.png');
 		this.load.image('exitViewSmallButton', 'images/start_new_day_small.png');
 		this.load.image('saveButton', 'images/save_game.png');
@@ -215,7 +215,7 @@ BlueRoom.Preloader.prototype = {
 		// HIRE PAGE
 		this.load.image('next', 'images/next_btn.png');
 		this.load.image('prev', 'images/prev_btn.png');
-		this.load.image('hireMeButton', 'images/hire/hire_me_button.png');
+		this.load.image('hireMeButton', 'images/hire_me_button.png');
 		// this.load.image('philPage', 'images/hire/phil.png');
 		this.load.image('erik', 'images/hire/hire_erik.png');
 		this.load.image('alex', 'images/hire/hire_alex.png');
@@ -229,7 +229,7 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('fiveStar', 'images/hire/five_star.png');
 
 		//UPGRADE PAGE
-		this.load.image('buyButton', 'images/upgrades/buy_button.png');
+		this.load.image('buyButton', 'images/buy_now_button.png');
 		this.load.image('coffee', 'images/upgrades/coffee_bar.png');
 		this.load.image('bakery', 'images/upgrades/bakery.png');
 		this.load.image('magazine rack', 'images/upgrades/magazine_rack.png');
@@ -237,8 +237,8 @@ BlueRoom.Preloader.prototype = {
 		//INVENTORY
 		this.load.image('inventoryUp', 'images/inventory/up_arrow.png');
 		this.load.image('inventoryDown', 'images/inventory/down_arrow.png');
-		this.load.image('sellButton', 'images/inventory/sell_button.png');
-		this.load.image('fireButton', 'images/inventory/fire_button.png');
+		this.load.image('sellButton', 'images/inventory/white_sell_button.png');
+		this.load.image('fireButton', 'images/inventory/white_fire_button.png');
 		this.load.image('i_erik', 'images/inventory/erik.png');
 		this.load.image('i_alex', 'images/inventory/alex.png');
 		this.load.image('i_rachel', 'images/inventory/rachel.png');
