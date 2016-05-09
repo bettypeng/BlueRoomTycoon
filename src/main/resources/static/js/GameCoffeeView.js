@@ -182,7 +182,11 @@ BlueRoom.Game.prototype.noCoffeeCustomer = function() {
 };
 
 BlueRoom.Game.prototype.coffeeTrashButton = function() {
-    if (!coffeeTransitioning) {
+    if (coffeeTransitioning) {
+        return;
+    }
+
+    if (currCup != null) {
         trashHandler("coffee", 1);
         currCup.group.destroy();
         currThis.enableCups();
@@ -592,4 +596,8 @@ BlueRoom.Game.prototype.giveCoffeeToCustomer = function() {
         currThis.noCoffeeCustomer();
     }, this);
 
+};
+
+BlueRoom.Game.prototype.coffeeEndOfDay = function(){
+    this.coffeeTrashButton();
 };

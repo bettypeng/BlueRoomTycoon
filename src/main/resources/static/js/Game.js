@@ -454,6 +454,7 @@ BlueRoom.Game.prototype = {
                 // this.createDayEndView();
                 //endDay();
                 // this.createDayEndAlert();
+                this.disableButton(this.pauseButton);
                 endDayStats();
             }
         }
@@ -507,6 +508,7 @@ BlueRoom.Game.prototype = {
 
     resetGameDay: function(){
         dayCounter +=1;
+        this.enableButton(this.pauseButton);
         isBlueRoomOpen = true;
         //if(statusBar.day[dayCounter%7]=='Monday' || statusBar.day[dayCounter%7]=='Tuesday' || statusBar.day[dayCounter%7]=='Wednesday' || statusBar.day[dayCounter%7]=='Thursday' || statusBar.day[dayCounter%7]=='Friday'){
         if(statusBar.day[dayCounter%7]=="Saturday" || statusBar.day[dayCounter%7]=="Sunday"){
