@@ -520,6 +520,8 @@ BlueRoom.Game.prototype = {
             twelveCounter = 0;
         } 
         this.setTimer(MANAGERTIMEINTERVAL);
+        managerCounter = 0;
+        getCustomer();
     },
 
     restartGame: function(){
