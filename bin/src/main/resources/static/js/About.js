@@ -59,7 +59,7 @@ BlueRoom.About.prototype = {
 	},
 
 	startGame: function () {
-        this.state.start('Game');
+        this.state.start('Load');
 	},
 	
 	changeText: function () {

@@ -14,6 +14,7 @@ import edu.brown.cs.bse.elements.SandwichIngredient;
 /**
  * Handles semi-random order generation that happens whenever a new customer
  * enters the blue room.
+ * 
  * @author emagaver
  *
  */
@@ -21,21 +22,23 @@ public class OrderFactory {
 
   // SANDWICH ORDERS
 
-  private static final String[] MEAT_NAMES = { "turkey", "roast_beef", "ham"};
+  private static final String[] MEAT_NAMES = { "turkey", "roast_beef", "ham" };
 
-  private static final String[] VEGGIE_NAMES = { "lettuce", "tomato", "onion", "pickle", "spinach",
-      "spring_mix"};
+  private static final String[] VEGGIE_NAMES = { "lettuce", "tomato", "onion",
+      "pickle", "spinach", "spring_mix" };
 
-//  private static final String[] SAUCE_NAMES = { "mayo", "chipotle mayo",
-//      "mustard", "hummus", "goat cheese", "balsamic", "honey mustard" };
+  // private static final String[] SAUCE_NAMES = { "mayo", "chipotle mayo",
+  // "mustard", "hummus", "goat cheese", "balsamic", "honey mustard" };
 
-  private static final String[] BREAD_NAMES = { "wheat", "ciabatta", "french"};
-  
-  private static final String[] CHEESE_NAMES = { "yellow_cheese", "swiss_cheese", "mozzarella" };
+  private static final String[] BREAD_NAMES = { "wheat", "ciabatta", "french" };
+
+  private static final String[] CHEESE_NAMES = { "yellow_cheese",
+      "swiss_cheese", "mozzarella" };
 
   /**
    * Generates a sandwich order, complete with meats, cheese, veggies, (sauces),
    * and bread.
+   * 
    * @return The generated Sandwich
    */
   public static Sandwich getSandwichOrder() {
@@ -59,10 +62,12 @@ public class OrderFactory {
     case 0:
       numMeats = 3;
       break;
-    case 1: case 2:
+    case 1:
+    case 2:
       numMeats = 2;
       break;
-    case 3: case 4:
+    case 3:
+    case 4:
       numMeats = 0;
     default:
       numMeats = 1;
@@ -108,10 +113,12 @@ public class OrderFactory {
     case 0:
       numVeg = 3;
       break;
-    case 1: case 2:
+    case 1:
+    case 2:
       numVeg = 1;
       break;
-    case 3: case 4:
+    case 3:
+    case 4:
       numVeg = 0;
     default:
       numVeg = 2;
@@ -125,41 +132,43 @@ public class OrderFactory {
     return veggies;
   }
 
-//  /*
-//   * Generates up to 2 sauces for the sandwich.
-//   */
-//  private static List<SandwichIngredient> getSauces() {
-//    int numSauce;
-//    int rand = (int) (Math.random() * 10);
-//    switch (rand) {
-//    case 0: case 1:
-//      numSauce = 2;
-//      break;
-//    case 2: case 3:
-//      numSauce = 0;
-//      break;
-//    default:
-//      numSauce = 1;
-//      break;
-//    }
-//    List<SandwichIngredient> sauces = new ArrayList<>();
-//    for (int i = 0; i < numSauce; i++) {
-//      rand = (int) (Math.random() * SAUCE_NAMES.length);
-//      String sauceType = SAUCE_NAMES[rand];
-//      sauces.add(new SandwichIngredient(sauceType));
-//    }
-//    return sauces;
-//  }
+  // /*
+  // * Generates up to 2 sauces for the sandwich.
+  // */
+  // private static List<SandwichIngredient> getSauces() {
+  // int numSauce;
+  // int rand = (int) (Math.random() * 10);
+  // switch (rand) {
+  // case 0: case 1:
+  // numSauce = 2;
+  // break;
+  // case 2: case 3:
+  // numSauce = 0;
+  // break;
+  // default:
+  // numSauce = 1;
+  // break;
+  // }
+  // List<SandwichIngredient> sauces = new ArrayList<>();
+  // for (int i = 0; i < numSauce; i++) {
+  // rand = (int) (Math.random() * SAUCE_NAMES.length);
+  // String sauceType = SAUCE_NAMES[rand];
+  // sauces.add(new SandwichIngredient(sauceType));
+  // }
+  // return sauces;
+  // }
 
   // DRINK ORDERS
-  private static final String[] DRINK_TYPES = {"latte", "cappuccino", "coffee", "tea", "hot_chocolate"};
+  private static final String[] DRINK_TYPES = { "latte", "cappuccino", "coffee",
+      "tea", "hot_chocolate" };
 
-  private static final String[] FLAVORS = {"vanilla", "caramel", "hazelnut", "peppermint", "kahlua" };
+  private static final String[] FLAVORS = { "vanilla", "caramel", "hazelnut",
+      "peppermint", "kahlua" };
 
   private static final int NUM_SIZES = 3;
 
   public static Drink getDrinkOrder() {
-    //return new Drink("latte", "small", Arrays.asList("vanilla"), true);
+    // return new Drink("latte", "small", Arrays.asList("vanilla"), true);
     String type = getType();
     String size = getSize();
     List<String> flavor = getFlavoring();
@@ -168,14 +177,14 @@ public class OrderFactory {
   }
 
   private static String getType() {
-    int rand = (int)(Math.random() * DRINK_TYPES.length);
+    int rand = (int) (Math.random() * DRINK_TYPES.length);
     return DRINK_TYPES[rand];
   }
 
   private static String getSize() {
-    int rand = (int)(Math.random() * NUM_SIZES);
+    int rand = (int) (Math.random() * NUM_SIZES);
     String size;
-    switch(rand) {
+    switch (rand) {
     case 0:
       size = "small";
       break;
@@ -189,9 +198,9 @@ public class OrderFactory {
   }
 
   private static List<String> getFlavoring() {
-    int rand = (int)(Math.random() * 3);
+    int rand = (int) (Math.random() * 3);
     boolean flavor = false;
-    switch(rand) {
+    switch (rand) {
     case 0:
       flavor = true;
       break;
@@ -199,7 +208,7 @@ public class OrderFactory {
       break;
     }
     if (flavor) {
-      rand = (int)(Math.random() * FLAVORS.length);
+      rand = (int) (Math.random() * FLAVORS.length);
       return Arrays.asList(FLAVORS[rand]);
     } else {
       return Collections.emptyList();
@@ -207,20 +216,21 @@ public class OrderFactory {
   }
 
   private static boolean getIced() {
-     int rand = (int)(Math.random() * 2);
-     if (rand == 0) {
-       return true;
-     } else {
-       return false;
-     }
+    int rand = (int) (Math.random() * 2);
+    if (rand == 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   // MUFFIN ORDERS
 
-  private static final String[] MUFFIN_TYPES = {"pistachio", "doubleChoc", "chocChip", "bananaNut", "tripleBerry", "bran"};
-  private static final int[] WEIGHTS = {3, 2, 2, 1, 1, 1};
+  private static final String[] MUFFIN_TYPES = { "pistachio", "doubleChoc",
+      "chocChip", "bananaNut", "tripleBerry", "bran" };
+  private static final int[] WEIGHTS = { 3, 2, 2, 1, 1, 1 };
 
-  private static int[] TODAY_WEIGHTS = {3, 2, 2, 1, 1, 1};
+  private static int[] TODAY_WEIGHTS = { 3, 2, 2, 1, 1, 1 };
 
   public static void setMuffinWeights() {
     List<Integer> remainingIndex = new ArrayList<>();
@@ -228,12 +238,12 @@ public class OrderFactory {
       remainingIndex.add(i);
     }
     for (int i = 0; i < WEIGHTS.length; i++) {
-      int rand = (int)(Math.random() * remainingIndex.size());
+      int rand = (int) (Math.random() * remainingIndex.size());
       int index = remainingIndex.get(rand);
       TODAY_WEIGHTS[index] = WEIGHTS[i];
       remainingIndex.remove(rand);
     }
-    //System.out.println(Arrays.toString(TODAY_WEIGHTS));
+    // System.out.println(Arrays.toString(TODAY_WEIGHTS));
   }
 
   public static Muffin getMuffinOrder() {
@@ -242,7 +252,7 @@ public class OrderFactory {
     List<String> leastMuff = new ArrayList<>();
 
     for (int i = 0; i < TODAY_WEIGHTS.length; i++) {
-      switch(TODAY_WEIGHTS[i]) {
+      switch (TODAY_WEIGHTS[i]) {
       case 3:
         popularMuff = MUFFIN_TYPES[i];
         break;
@@ -253,16 +263,20 @@ public class OrderFactory {
         leastMuff.add(MUFFIN_TYPES[i]);
       }
     }
-    int rand = (int)(Math.random() * 10);
+    int rand = (int) (Math.random() * 10);
     String type;
-    switch(rand) {
-    case 0: case 1: case 2:
+    switch (rand) {
+    case 0:
+    case 1:
+    case 2:
       type = popularMuff;
       break;
-    case 3: case 4:
+    case 3:
+    case 4:
       type = mediumMuff.get(0);
       break;
-    case 5: case 6:
+    case 5:
+    case 6:
       type = mediumMuff.get(1);
       break;
     case 7:

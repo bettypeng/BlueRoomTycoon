@@ -156,9 +156,11 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
  		buy(upgradeList[currentlyDisplayedUpgrade]);
  	}
  	else if (upgradeList[currentlyDisplayedUpgrade] === "magazine rack") {
+ 		NUMBEROFSTATIONS++;
+ 		console.log("BUYING MAGAZINE RACK");
  		buy("magazineRack");
  		CUSTOMERHAPPINESSINTERVAL += 40;
- 		//this.magazineRack.visible = true;
+ 		this.magazineRack.visible = true;
  	}
  	console.log("BUYING: " + upgradeList[currentlyDisplayedUpgrade]);
  	this.addToUpgradeInventory(upgradeList[currentlyDisplayedUpgrade]);

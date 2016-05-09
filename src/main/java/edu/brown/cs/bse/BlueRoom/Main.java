@@ -9,9 +9,7 @@ import joptsimple.OptionException;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import edu.brown.cs.bse.elements.Customer;
-import edu.brown.cs.bse.elements.Drink;
 import edu.brown.cs.bse.elements.Employee;
-import edu.brown.cs.bse.elements.Sandwich;
 
 public class Main {
 
@@ -51,16 +49,17 @@ public class Main {
           if (line.equals("")) {
             break;
           }
-          switch(line) {
+          switch (line) {
 
           case "c":
             System.out.println(manager.newCustomer());
             break;
 
           case "o":
-            System.out.println("Type 'sandwich', 'drink', or 'bakery' to choose your order type");
+            System.out.println(
+                "Type 'sandwich', 'drink', or 'bakery' to choose your order type");
             line = reader.readLine();
-            switch(line) {
+            switch (line) {
             case "sandwich":
               System.out.println(OrderFactory.getSandwichOrder());
               break;
@@ -84,17 +83,19 @@ public class Main {
             customer.setHappiness(Math.random());
             System.out.println(manager.purchase(customer.getOrder(), customer));
             break;
-            
+
           case "d":
             System.out.println(manager.getDayData());
             break;
-            
+
           case "m":
-            System.out.println(String.format("%.2f", manager.getCurrentMoney()));
+            System.out
+                .println(String.format("%.2f", manager.getCurrentMoney()));
             break;
-           
+
           case "e":
-            Customer newCust = new Customer("c1", OrderFactory.getSandwichOrder(), "sandwich");
+            Customer newCust = new Customer("c1",
+                OrderFactory.getSandwichOrder(), "sandwich");
             newCust.setHappiness(Math.random());
             Employee emp = new Employee("alex");
             double quality = emp.fillOrder();
@@ -108,7 +109,8 @@ public class Main {
 
         }
       } catch (IOException e) {
-        e.printStackTrace();
+        System.out.println("ERROR: Problem reading from command line, Main.java line 114");
+        return;
       }
     }
   }

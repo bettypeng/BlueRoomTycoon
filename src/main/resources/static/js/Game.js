@@ -51,7 +51,7 @@ var dayCounter = 5;
 var twelveCounter = 0;
 
 
-var MANAGERTIMEINTERVAL = 50; //250 standard
+var MANAGERTIMEINTERVAL = 100; //250 standard
 var STATIONTIMEINTERVAL = 50;
 
 

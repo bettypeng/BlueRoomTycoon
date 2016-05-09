@@ -2,12 +2,10 @@ package edu.brown.cs.bse.BlueRoom;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +13,9 @@ import java.util.UUID;
 
 import com.google.common.collect.ImmutableMap;
 
+import edu.brown.cs.bse.elements.ChipsALaCarte;
 import edu.brown.cs.bse.elements.Customer;
+import edu.brown.cs.bse.elements.DrinkALaCarte;
 import edu.brown.cs.bse.elements.Employee;
 import edu.brown.cs.bse.elements.FoodItem;
 
@@ -26,16 +26,14 @@ public class GameManager {
   private static final double SANDWICH_TRASH_CONST = 0.3;
   private static final double BAKERY_TRASH_CONST = 0.5;
   private static final double COFFEE_TRASH_CONST = 1;
-  private static final double EMPLOYEE_WAGE = 30;
+  private static final double EMPLOYEE_WAGE = 20;
+  
   public static final Map<String, Double> UPGRADE_COSTS = new ImmutableMap.Builder<String, Double>()
-      .put("bakery", 400.0)
-      .put("coffee", 200.0)
-      .build();
+      .put("bakery", 400.0).put("coffee", 200.0).put("drink_alc", 75.0)
+      .put("chips_alc", 50.0).put("magazineRack", 100.0).build();
   private static final Map<String, Double> STATION_UPKEEPS = new ImmutableMap.Builder<String, Double>()
-      .put("bakery", 15.0)
-      .put("coffee", 10.0)
-      .put("sandwich", 0.0)
-      .build();
+      .put("bakery", 15.0).put("coffee", 10.0).put("sandwich", 0.0)
+      .put("drink_alc", 5.0).put("chips_alc", 5.0).put("magazineRack", 2.0).build();
 
   private MoneyManager manager;
   private List<Employee> employees;
@@ -44,7 +42,7 @@ public class GameManager {
   private boolean[] savedGames;
 
   private int baselineInterval;
-  private int currTime;
+  // private int currTime;
   private int leftToday;
 
   private List<String> availableStations;
@@ -58,7 +56,7 @@ public class GameManager {
     customerMap = new HashMap<>();
     employeeMap = new HashMap<>();
     availableStations.add("sandwich");
-    currTime = 0;
+    // currTime = 0;
     leftToday = 0;
     baselineInterval = 1000;
     savedGames = new boolean[3];
@@ -70,7 +68,8 @@ public class GameManager {
   // for when user makes sandwich
   public double purchase(FoodItem purchase, Customer cust) {
     double price = purchase.getPrice();
-    price += (purchase.compareToOrder(cust.getOrder()) * cust.getHappiness() * purchase.getMaxTip());
+    price += (purchase.compareToOrder(cust.getOrder()) * cust.getHappiness()
+        * purchase.getMaxTip());
     manager.handlePurchase(price, cust.getStation());
     return price;
   }
@@ -95,7 +94,7 @@ public class GameManager {
   // when user throws out ingredients or burns muffins
   public double trash(int numIngredients, String station) {
     double loss;
-    switch(station) {
+    switch (station) {
     case "coffee":
       loss = COFFEE_TRASH_CONST;
       break;
@@ -114,9 +113,9 @@ public class GameManager {
   public Customer newCustomer() {
     UUID uid = UUID.randomUUID();
     String beforeid = uid.toString();
-    //making the format of the id the same as the other ids in the db
+    // making the format of the id the same as the other ids in the db
     String id = "/c/" + beforeid.substring(0, UUID_LEN);
-    
+
     // generate a station & an order for this customer
     int rand = (int) (Math.random() * availableStations.size());
     String station = availableStations.get(rand);
@@ -128,11 +127,17 @@ public class GameManager {
     case "coffee":
       order = OrderFactory.getDrinkOrder();
       break;
+    case "drink_alc":
+      order = new DrinkALaCarte();
+      break;
+    case "chips_alc":
+      order = new ChipsALaCarte();
+      break;
     default:
       order = OrderFactory.getSandwichOrder();
       break;
     }
-    
+
     // create customer and associate it with ID in map
     Customer newCustomer = new Customer(id, order, station);
     customerMap.put(id, newCustomer);
@@ -141,24 +146,24 @@ public class GameManager {
 
   // this needs to take into account the money spent on employee!!
   public Employee hireEmployee(String name, double cost) {
-   Employee emp = new Employee(name);
-   employees.add(emp);
-   employeeMap.put(name, emp);
-   manager.changeMoney(cost * -1);
-   manager.addDailyExpenses(EMPLOYEE_WAGE);
-   return emp;
+    Employee emp = new Employee(name);
+    employees.add(emp);
+    employeeMap.put(name, emp);
+    manager.changeMoney(cost * -1);
+    manager.addDailyExpenses(EMPLOYEE_WAGE);
+    return emp;
   }
 
   // gets the data about today's profits and whatever else
   public DayData getDayData() {
     return manager.getTodayInfo();
   }
-  
+
   // gets the list of available stations
   public List<String> getAvailableStations() {
     return availableStations;
   }
-  
+
   // gets a list of names of all employees (not employee objects themselves)
   public List<String> getEmployeeNames() {
     List<String> result = new ArrayList<>();
@@ -175,24 +180,26 @@ public class GameManager {
 
   // adds a station to the blue room
   public void addStation(String stationName, double cost) {
-    assert stationName.equals("bakery") || stationName.equals("coffee") || stationName.equals("sandwich") : "ERROR: station input should not exist";
     availableStations.add(stationName);
     manager.changeMoney(cost * -1);
     manager.addDailyExpenses(STATION_UPKEEPS.get(stationName));
   }
-  
-  public void addMagazineRack() {
-	  magazineRack = true;
+
+  public void addMagazineRack(double cost) {
+    magazineRack = true;
+    manager.addDailyExpenses(STATION_UPKEEPS.get("magazineRack"));
+    manager.changeMoney(cost * -1);
   }
-  
+
   public boolean hasMagazineRack() {
-	  return magazineRack;
+    return magazineRack;
   }
 
   /**
    * Gets the customer cached in the map
+   * 
    * @param id
-   * @return
+   *          The id of the cutomer to get
    */
   public Customer getCustomer(String id) {
     return customerMap.get(id);
@@ -205,10 +212,7 @@ public class GameManager {
   public double calculateEmployeeInterval(String name, double energy) {
     Employee emp = getEmployee(name);
     emp.setEnergy(energy);
-    System.out.println(energy);
     double interval = emp.calcInterval();
-    System.out.println(interval);
-
     return interval;
   }
 
@@ -222,12 +226,12 @@ public class GameManager {
     manager.endDay();
     customerMap.clear();
     OrderFactory.setMuffinWeights();
-    currTime = 0;
+    // currTime = 0;
     leftToday = 0;
     baselineInterval -= 100;
     return today;
   }
-  
+
   public void startDay() {
     manager.startDay();
   }
@@ -241,17 +245,17 @@ public class GameManager {
     return manager.getDayNum();
   }
 
-  public void incrCurrTime() {
-    currTime++;
-  }
+  // public void incrCurrTime() {
+  // currTime++;
+  // }
 
   public double calculateCustomerInterval() {
     double interval = baselineInterval + (leftToday * 10);
-    interval -= (200 * (employees.size()));
+    interval -= (100 * (employees.size()));
     if (availableStations.size() == 2) {
-      interval /= 2;
+      interval /= 1.5;
     } else if (availableStations.size() == 3) {
-      interval /= 2.5;
+      interval /= 2;
     }
     if (interval < 50) {
       return 50;
@@ -260,10 +264,10 @@ public class GameManager {
   }
 
   public void saveGame(String filename, int gameNum) {
-	savedGames[gameNum] = true;
-	rewriteConfigFile();
-    try(BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-      
+    savedGames[gameNum] = true;
+    rewriteConfigFile();
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+
       // save stations
       for (String station : availableStations) {
         writer.write(station, 0, station.length());
@@ -273,7 +277,7 @@ public class GameManager {
       String rackBool = String.valueOf(magazineRack);
       writer.write(rackBool, 0, rackBool.length());
       writer.newLine();
-      
+
       // save employees
       for (Employee e : employees) {
         String name = e.getName();
@@ -281,12 +285,14 @@ public class GameManager {
         writer.write(" ", 0, 1);
       }
       writer.newLine();
-      
+
       // save $$ info
       manager.save(writer);
       writer.flush();
     } catch (IOException e) {
-      e.printStackTrace();
+      System.out.println("ERROR: problem saving game in file " + filename
+          + ", GameManager.java line 291");
+      System.exit(1);
     }
   }
 
@@ -299,7 +305,13 @@ public class GameManager {
       for (String station : stationNames) {
         addStation(station, 0);
       }
-      magazineRack = Boolean.parseBoolean(reader.readLine());
+      
+      boolean rack = Boolean.parseBoolean(reader.readLine());
+      if (rack) {
+        addMagazineRack(0);
+      } else {
+        magazineRack = false;
+      }
 
       employees.clear();
       employeeMap.clear();
@@ -314,27 +326,37 @@ public class GameManager {
 
       int dayNum = manager.load(reader);
       baselineInterval = 1100 - (dayNum * 100);
-    } catch (IOException | NumberFormatException e) {
-      e.printStackTrace();
+      System.out.println(baselineInterval);
+    } catch (IOException e) {
+      System.out.println("ERROR: Problem writing to file " + file
+          + ", GameManager.java line 324");
+      System.exit(1);
+    } catch (NumberFormatException e1) {
+      System.out.println("ERROR: Improperly formatted save file " + file
+          + ", GameManager.java line 328");
+      System.exit(1);
     }
     startDay();
   }
 
   public void sellStation(String station, double price) {
     availableStations.remove(station);
+    if (station.equals("magazineRack")) {
+      magazineRack = false;
+    }
     manager.changeMoney(price);
     // subtract daily price
     manager.addDailyExpenses(STATION_UPKEEPS.get(station) * -1);
-    
+
   }
-  
+
   public void fire(String employeeName) {
     employees.remove(employeeMap.get(employeeName));
     employeeMap.remove(employeeName);
     // subtract wages
     manager.addDailyExpenses(EMPLOYEE_WAGE * -1);
   }
-  
+
   public void loadConfig(String filename) {
     try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
       int index = 0;
@@ -348,25 +370,26 @@ public class GameManager {
         index++;
       }
     } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      System.out.println("ERROR: Problem loading file" + filename
+          + ", GameManager.java line 363");
+      System.exit(1);
     }
-//    System.out.println(Arrays.toString(savedGames));
   }
-  
+
   public boolean[] getSavedGames() {
     return savedGames;
   }
-  
+
   public void eraseGame(int number) {
     savedGames[number] = false;
     rewriteConfigFile();
     String filename = "game" + String.valueOf(number) + ".brt";
     clearFile(filename);
   }
-  
+
   private void rewriteConfigFile() {
-    try(BufferedWriter writer = new BufferedWriter(new FileWriter(".gameConfig"))) {
+    try (BufferedWriter writer = new BufferedWriter(
+        new FileWriter(".gameConfig"))) {
       for (int i = 0; i < savedGames.length; i++) {
         if (savedGames[i]) {
           writer.write("full", 0, 4);
@@ -378,18 +401,22 @@ public class GameManager {
       }
       writer.flush();
     } catch (IOException e) {
-      e.printStackTrace();
+      System.out.println(
+          "ERROR: Could not write to file .gameConfig, GameManager.java line 394");
+      System.exit(1);
     }
   }
-  
+
   private void clearFile(String filename) {
-    try(BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
       writer.flush();
     } catch (IOException e) {
-      e.printStackTrace();
+      System.out.println("ERROR: could not write to file " + filename
+          + ", GameManager.java line 404");
+      System.exit(1);
     }
   }
-  
+
   public void clear() {
     manager = new MoneyManager(INITIAL_MONEY);
     employees = new ArrayList<>();
@@ -397,7 +424,7 @@ public class GameManager {
     availableStations.add("sandwich");
     customerMap = new HashMap<>();
     employeeMap = new HashMap<>();
-    currTime = 0;
+    // currTime = 0;
     leftToday = 0;
     baselineInterval = 1000;
     savedGames = new boolean[3];

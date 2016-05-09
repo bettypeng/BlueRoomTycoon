@@ -47,21 +47,22 @@ var stealingAlert;
 var checkoutAlert;
 
 
-var dayCounter = 4;
+var dayCounter = 5;
 var twelveCounter = 0;
 
 
-var MANAGERTIMEINTERVAL = 50; //250 standard
+var MANAGERTIMEINTERVAL = 100; //250 standard
 var STATIONTIMEINTERVAL = 50;
 
 
 var saveNumber;
+var loadTheFile = false;
 
 var game;
 
 BlueRoom.Game.prototype = {
 
-    create: function () {
+    init: function (gameFile) {        
         game = this;
         var mygame = this;
         //this.add.sprite(0, 0, 'whiteBg');
@@ -156,6 +157,11 @@ BlueRoom.Game.prototype = {
                 updateCustomerInterval();
             }
         }, 1000);
+
+        //LOAD THE GAME
+        if (loadTheFile) {
+            loadGame(gameFile);
+        }
 
        
         //this.showSandwichView();
@@ -257,7 +263,7 @@ BlueRoom.Game.prototype = {
             color = 0x0099cc;
         }
         
-        timer = setInterval(function(){
+        var statusTimer = setInterval(function(){
             counter++;
             if (counter%2==0) {
                 alerttype.tint = color;
@@ -267,7 +273,7 @@ BlueRoom.Game.prototype = {
         }, 90);
 
         setTimeout(function() {
-            clearInterval(timer);
+            clearInterval(statusTimer);
         }, 1900);
 
         alerttype.tint = 0xFFFFFF;
@@ -531,24 +537,31 @@ BlueRoom.Game.prototype = {
     },
 
     load: function(stations, employees, balance, dayNum, magRack) {
+        // currLoadThis.state.start('Game');
         console.log(stations);
         for (var i = 0; i < stations.length; i++) {
             var station = stations[i];
             // do something to add the station to the front end
-
+            // console.log(this);
+            this.loadUpgrades(stations[i]);
         }
         console.log(employees);
         for (var i = 0; i < employees.length; i++) {
             // add each employee
+            this.loadEmployees(employees[i]);
         }
         console.log(balance);
         // check if this is actually a valid way to change the money
         statusBar.money = balance;
         console.log(dayNum);
+        dayCounter = dayNum;
         // do something with dayNum to make sure day of the week is correct
         console.log(magRack);
+        if (magRack) {
+            this.loadMagRack();
+        }
         // do something to tell game if magazine rack has been purchased
-        currThis.state.start('Game');
+        //currThis.state.start('Game');
     }
 
 };

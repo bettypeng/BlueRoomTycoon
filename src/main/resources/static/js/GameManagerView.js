@@ -129,8 +129,8 @@ BlueRoom.Game.prototype.createManager = function () {
 
     setInterval(function() {
         managerCounter += 1;
-        // console.log(managerCounter);
-        // console.log(CUSTOMERINTERVAL);
+        console.log(managerCounter);
+        console.log(CUSTOMERINTERVAL);
         if(managerCounter % CUSTOMERINTERVAL == 0 && numSandwich<15 && numCoffee<11 && numBakery<11 && isBlueRoomOpen && !gamePaused){
             getCustomer();
             currThis.statusAlert(customerAlert);
@@ -497,26 +497,13 @@ BlueRoom.Game.prototype.loadUpgrades = function(upgradeName) {
 
  BlueRoom.Game.prototype.loadMagRack = function() {
 
-    // if(upgradeList[currentlyDisplayedUpgrade] === "coffee"){
-    //     NUMBEROFSTATIONS++;
-    //     this.coffeeStation.visible = true;
-    //     coffeeButtonOn = true;
-    //     buy(upgradeList[currentlyDisplayedUpgrade]);
-    // }
-    // else if(upgradeList[currentlyDisplayedUpgrade] ==="bakery"){
-    //     NUMBEROFSTATIONS++;
-    //     this.bakeryStation.visible = true;
-    //     bakeryButtonOn = true;
-    //     buy(upgradeList[currentlyDisplayedUpgrade]);
-    // }
+    CUSTOMERHAPPINESSINTERVAL += 40;
+    currThis.magazineRack.visible = true;
+
     // console.log("BUYING: " + upgradeList[currentlyDisplayedUpgrade]);
-    // this.addToUpgradeInventory(upgradeList[currentlyDisplayedUpgrade]);
-    // this.createPurchaseAlert("bought a new", upgradeList[currentlyDisplayedUpgrade]+" station", upgradeCostList[upgradeList[currentlyDisplayedUpgrade]]);
-    // upgradeList.splice(currentlyDisplayedUpgrade, 1);
-    // NUMBEROFUPGRADES--;
-    // this.fadeUpgradeForward();
-    // this.updateCurrUpgrade();
-    // console.log(upgradeList);
+    currThis.addToUpgradeInventory("magazine rack");
+    upgradeList.splice(upgradeList.length - 1, 1);
+    NUMBEROFUPGRADES--;
 
  };
 

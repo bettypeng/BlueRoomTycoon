@@ -132,5 +132,6 @@ BlueRoom.Game.prototype.destroyDayEndView= function(){
         this.enableButton(this.bakeryButton);
     }
 
+	startDay();
 	this.resetGameDay();
 };

@@ -26,9 +26,9 @@ public class MoneyManager {
     dayNum = 1;
   }
 
-//  public List<DayData> getTotalData() {
-//    return dataOverTime;
-//  }
+  // public List<DayData> getTotalData() {
+  // return dataOverTime;
+  // }
 
   public GameData getTotalInfo() {
     return gameData;
@@ -51,47 +51,47 @@ public class MoneyManager {
   public double getMoney() {
     return money;
   }
-  
+
   public int getDayNum() {
     return dayNum;
   }
-  
+
   public void changeMoney(double delta) {
     money += delta;
   }
 
   public void endDay() {
-    dailyNetProfits.add(currDay.getTotalRevenue() - (currDay.getExpenses() + currDay.getLosses()));
+    dailyNetProfits.add(currDay.getTotalRevenue()
+        - (currDay.getExpenses() + currDay.getLosses()));
     gameData.addDayData(currDay);
-//    currDay = new DayData(dailyExpenses);
+    // currDay = new DayData(dailyExpenses);
     money -= dailyExpenses;
     System.out.println(dailyExpenses);
     dayNum++;
   }
-  
+
   public void startDay() {
-    System.out.println("starting day with expenses: " + dailyExpenses);
     currDay = new DayData(dailyExpenses);
   }
-  
+
   public void handleAbandon(String station) {
     currDay.customerLost();
-    //switch on the station to decrement money by baseline price for item at 
-    //that station
+    // switch on the station to decrement money by baseline price for item at
+    // that station
   }
-  
+
   public void handleTheft() {
     currDay.customerTheft();
   }
-  
+
   public void handleTrash(int numTrashed) {
-	currDay.trash(numTrashed);
+    currDay.trash(numTrashed);
   }
-  
+
   public void addDailyExpenses(double amt) {
     dailyExpenses += amt;
   }
-  
+
   public void save(BufferedWriter writer) throws IOException {
     String mon = String.valueOf(money);
     writer.write(mon, 0, mon.length());
@@ -106,8 +106,9 @@ public class MoneyManager {
       writer.newLine();
     }
   }
-  
-  public int load(BufferedReader reader) throws IOException, NumberFormatException {
+
+  public int load(BufferedReader reader)
+      throws IOException, NumberFormatException {
     money = Double.parseDouble(reader.readLine());
     gameData.load(reader);
     dayNum = Integer.parseInt(reader.readLine());

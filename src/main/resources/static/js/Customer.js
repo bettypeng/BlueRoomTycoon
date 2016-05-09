@@ -160,7 +160,6 @@ Customer.prototype = {
                 }
             }
       	}, CUSTOMERHAPPINESSINTERVAL);
-        console.log(CUSTOMERHAPPINESSINTERVAL);
 
         this.myTimer = setInterval(function(){
             // if(managerView){
