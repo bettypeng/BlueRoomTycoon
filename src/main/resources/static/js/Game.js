@@ -47,7 +47,7 @@ var stealingAlert;
 var checkoutAlert;
 
 
-var dayCounter = 4;
+var dayCounter = 5;
 var twelveCounter = 0;
 
 
@@ -62,9 +62,7 @@ var game;
 
 BlueRoom.Game.prototype = {
 
-    init: function (gameFile) {
-        console.log("CREATING STATE");
-        
+    init: function (gameFile) {        
         game = this;
         var mygame = this;
         //this.add.sprite(0, 0, 'whiteBg');
@@ -556,6 +554,7 @@ BlueRoom.Game.prototype = {
         // check if this is actually a valid way to change the money
         statusBar.money = balance;
         console.log(dayNum);
+        dayCounter = dayNum;
         // do something with dayNum to make sure day of the week is correct
         console.log(magRack);
         if (magRack) {

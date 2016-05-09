@@ -28,7 +28,6 @@ var currThis = this;
 var myGameThis;
 
 BlueRoom.Game.prototype.createManager = function () {
-    console.log("CREATING MANAGER VIEW");
     myGameThis = this;
     
     this.sandwichLinePos = {'x': new Array(), 'y':new Array()};

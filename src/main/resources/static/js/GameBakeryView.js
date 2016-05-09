@@ -4,6 +4,7 @@ var muffinDropZone;
 var muffinTin;
 var muffinTinGroup;
 var batterMap = {};
+// var tempBatterMap = {};
 var batterCount = 0;
 var bakedBatter = new Array();
 var ovenClosed;
@@ -150,6 +151,7 @@ BlueRoom.Game.prototype.setUpBatterDropZone = function(x, y, img){
 BlueRoom.Game.prototype.setUpMuffinBatter = function(x, y, img, textName){
     var b = new Batter(textName, 0);
     batterMap[img] = b;
+    // tempBatterMap[img] = b;
     var staticMuffinBatter = this.add.sprite(x, y, img);
     var m = new MuffinEl(x, y, img);
     muffinList[img] = m;
@@ -205,6 +207,7 @@ BlueRoom.Game.prototype.onMuffinBatterDragStop= function(sprite, pointer) {
         var posY = muffinList[sprite.key].y;
         this.makeMovableMuffinBatter(posX, posY, sprite.key);
         var t = currThis.add.tween(sprite).to( { x: batterX, y: batterY }, 200, Phaser.Easing.Exponential.In, true);
+        // tempBatterMap[sprite.key].amt++;
         batterMap[sprite.key].amt++;
         console.log(batterMap[sprite.key].amt);
         batterCount++;
@@ -384,14 +387,12 @@ BlueRoom.Game.prototype.getMuffinsOut= function(burnt){
         bakedBatter.forEach(function(item){
             item.tint = 0x000000;
             // if(currThis.muffinView){
+                batterMap[item.key].amt--;
                 currThis.add.tween(item).to( { x: item.x, y: item.y+300 }, 1000, Phaser.Easing.Exponential.In, true);
                 var t = currThis.add.tween(item).to( { alpha: 0 }, 1000, Phaser.Easing.Exponential.In, true);
                 t.onComplete.add(function(){
                     item.destroy();
                 });
-            // } else{
-            //     item.destroy();
-            // }
         });
     }
     else{
@@ -400,6 +401,7 @@ BlueRoom.Game.prototype.getMuffinsOut= function(burnt){
             var t = currThis.add.tween(item).to( { alpha: 0 }, 1000, Phaser.Easing.Exponential.In, true);
             //if(batterMap[item.key].amt >0){
             batterMap[item.key].displayAmt = batterMap[item.key].amt;
+            // batterMap[item.key].displayAmt = tempBatterMap[item.key].amt;
             batterMap[item.key].textName.setText("COUNT: " + batterMap[item.key].displayAmt);
             currThis.muffinUpdate();
             //}
