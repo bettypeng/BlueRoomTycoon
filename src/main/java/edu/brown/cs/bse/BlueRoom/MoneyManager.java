@@ -19,7 +19,7 @@ public class MoneyManager {
 
   public MoneyManager(double startMoney) {
     dailyNetProfits = new ArrayList<>();
-    gameData = new GameData();
+    gameData = new GameData(startMoney);
     money = startMoney;
     dailyExpenses = 15;
     currDay = new DayData(dailyExpenses);

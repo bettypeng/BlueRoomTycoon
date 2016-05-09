@@ -55,6 +55,8 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('coffeeStation', 'images/coffee_station_counter.png');
 		this.load.image('bakeryStation', 'images/bakery_station_counter.png');
 		this.load.image('magazineRack', 'images/magazine_placeholder2.GIF');
+		this.load.image('chip_stand', 'images/chip_rack.jpg');
+		this.load.image('drink_stand', 'images/drink_fridge.jpg');
 
 		//this.load.image('sandwichBg', 'images/sandwich_bg.png');
 		this.load.image('sandwichBg', 'images/sandwich/sandwich_bg.png');
@@ -247,6 +249,8 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('i_coffee', 'images/inventory/coffee.png');
 		this.load.image('i_bakery', 'images/inventory/bakery.png');
 		this.load.image('i_magazine rack', 'images/inventory/magazine.png');
+		this.load.image('i_chips_alc', 'images/inventory/magazine.png');
+		this.load.image('i_drink_alc', 'images/inventory/magazine.png');
 
 
 

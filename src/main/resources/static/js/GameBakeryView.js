@@ -48,7 +48,7 @@ BlueRoom.Game.prototype.createBakeryView= function () {
 
     bakeryCustomerFace = this.add.sprite(140, 5, "neutral");
     bakerySpeechBubble = this.add.sprite(290, -35, "speechBubble");
-    currBakeryOrderSprite = this.add.sprite(340, 25, "pistachio");
+    currBakeryOrderSprite = this.add.sprite(340, 10, "pistachio");
     // var coffeeGarbageCan = this.add.button(950, 495, 'trash', this.coffeeTrashButton, this);
     bakeryExclamation = this.add.sprite(300, 30, 'exclamation');
     currBakeryOrderSprite.visible = false;

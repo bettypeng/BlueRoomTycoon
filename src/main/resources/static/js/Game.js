@@ -542,13 +542,13 @@ BlueRoom.Game.prototype = {
 
     load: function(stations, employees, balance, dayNum, magRack) {
         // currLoadThis.state.start('Game');
-        console.log(stations);
-        for (var i = 0; i < stations.length; i++) {
-            var station = stations[i];
+        // console.log(stations);
+        // for (var i = 0; i < stations.length; i++) {
+            // var station = stations[i];
             // do something to add the station to the front end
             // console.log(this);
-            this.loadUpgrades(stations[i]);
-        }
+            this.loadUpgrades(stations);
+        // }
         console.log(employees);
         for (var i = 0; i < employees.length; i++) {
             // add each employee

@@ -51,20 +51,20 @@ BlueRoom.Game.prototype.createCoffeeView= function () {
 
 
 
-    smallCup.push(this.add.sprite(400, 40, 'smCup'));
-    smallCup.push(this.add.sprite(400, 40, 'smDrink'));
-    smallCup.push(this.add.sprite(400, 40, 'smSyrup'));
-    smallCup.push(this.add.sprite(400, 40, 'smIce'));
+    smallCup.push(this.add.sprite(410, 40, 'smCup'));
+    smallCup.push(this.add.sprite(410, 40, 'smDrink'));
+    smallCup.push(this.add.sprite(410, 40, 'smSyrup'));
+    smallCup.push(this.add.sprite(410, 40, 'smIce'));
 
-    mediumCup.push(this.add.sprite(400, 40, 'mdCup'));
-    mediumCup.push(this.add.sprite(400, 40, 'mdDrink'));
-    mediumCup.push(this.add.sprite(400, 40, 'mdSyrup'));
-    mediumCup.push(this.add.sprite(400, 40, 'mdIce'));
+    mediumCup.push(this.add.sprite(407, 25, 'mdCup'));
+    mediumCup.push(this.add.sprite(407, 25, 'mdDrink'));
+    mediumCup.push(this.add.sprite(407, 25, 'mdSyrup'));
+    mediumCup.push(this.add.sprite(407, 25, 'mdIce'));
 
-    largeCup.push(this.add.sprite(400, 40, 'lgCup'));
-    largeCup.push(this.add.sprite(400, 40, 'lgDrink'));
-    largeCup.push(this.add.sprite(400, 40, 'lgSyrup'));
-    largeCup.push(this.add.sprite(400, 40, 'lgIce'));
+    largeCup.push(this.add.sprite(402, 20, 'lgCup'));
+    largeCup.push(this.add.sprite(402, 20, 'lgDrink'));
+    largeCup.push(this.add.sprite(402, 20, 'lgSyrup'));
+    largeCup.push(this.add.sprite(402, 20, 'lgIce'));
 
 	var coffeeBg = this.add.sprite(0, 0, 'coffeeBg');
     coffeeViewElements.push(bg);

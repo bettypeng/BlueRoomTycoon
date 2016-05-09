@@ -39,10 +39,14 @@ BlueRoom.Game.prototype.createManager = function () {
     this.sandwichStation = this.add.sprite(652, 140, 'sandwichStation');
     this.bakeryStation = this.add.sprite(400, 140, 'bakeryStation');
     this.coffeeStation = this.add.sprite(130, 140, 'coffeeStation');
-    this.magazineRack = this.add.sprite(900, 200, 'magazineRack');
+    this.magazineRack = this.add.sprite(15, 270, 'magazineRack');
+    this.chipStand = this.add.sprite(970, 200, 'chip_stand');
+    this.drinkStand = this.add.sprite(900, 130, 'drink_stand');
     this.bakeryStation.visible = false;
     this.coffeeStation.visible = false;
     this.magazineRack.visible = false;
+    this.chipStand.visible = false;
+    this.drinkStand.visible = false;
 
     var smallstyle = { font: "10px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "center" };
     this.employeeBreakStation = this.add.sprite(10, 450, 'employeeBreakStation');
@@ -129,8 +133,8 @@ BlueRoom.Game.prototype.createManager = function () {
 
     setInterval(function() {
         managerCounter += 1;
-        console.log(managerCounter);
-        console.log(CUSTOMERINTERVAL);
+        // console.log(managerCounter);
+        // console.log(CUSTOMERINTERVAL);
         if(managerCounter % CUSTOMERINTERVAL == 0 && numSandwich<15 && numCoffee<11 && numBakery<11 && isBlueRoomOpen && !gamePaused){
             getCustomer();
             currThis.statusAlert(customerAlert);
@@ -439,29 +443,61 @@ BlueRoom.Game.prototype.newCustomerReturned = function(customer){
     }
 };
 
-BlueRoom.Game.prototype.loadUpgrades = function(upgradeName) {
+BlueRoom.Game.prototype.loadUpgrades = function(upgrades) { 
 
-    if (upgradeName == "coffee") {
-        NUMBEROFSTATIONS++;
-        currThis.coffeeStation.visible = true;
-        currThis.coffeeButton.visible = true;
-        coffeeButtonOn = true;
-        this.addToUpgradeInventory("coffee");
-        upgradeList.splice(0, 1);
-        NUMBEROFUPGRADES--;
-    } else if (upgradeName == "bakery") {
-        NUMBEROFSTATIONS++;
-        currThis.bakeryStation.visible = true;
-        currThis.bakeryButton.visible = true;
-        bakeryButtonOn= true;
-        this.addToUpgradeInventory("bakery");
-        if (upgradeList.length == 2) {
-            upgradeList.splice(0, 1);
-        } else {
-            upgradeList.splice(1,1);
+    for (var i=0; i<NUMBEROFUPGRADES; i++) {
+        for (var j=0; j<upgrades.length; j++) {
+            if (upgrades[j] == upgradeList[i]) {
+                upgradeList.splice(i, 1);
+                i--;
+                NUMBEROFUPGRADES--;
+                break;
+
+            }
         }
-        NUMBEROFUPGRADES--;
     }
+
+    for (var i=0; i<upgrades.length; i++) {
+        if (upgrades[i] == "coffee") {
+            currThis.coffeeStation.visible = true;
+            currThis.coffeeButton.visible = true;
+            coffeeButtonOn = true;
+            this.addToUpgradeInventory("coffee");
+        } else if (upgrades[i] == "bakery") {
+            currThis.bakeryStation.visible = true;
+            currThis.bakeryButton.visible = true;
+            bakeryButtonOn= true;
+            this.addToUpgradeInventory("bakery");
+        } else if (upgrades[i] == "drink_alc") {
+            currThis.drinkStand.visible = true;
+            this.addToUpgradeInventory("drink_alc");
+        } else if (upgrades[i] == "chips_alc") {
+            currThis.chipStand.visible = true;
+            this.addToUpgradeInventory("chips_alc");
+        }
+    }
+
+    // if (upgradeName == "coffee") {
+    //     NUMBEROFSTATIONS++;
+    //     currThis.coffeeStation.visible = true;
+    //     currThis.coffeeButton.visible = true;
+    //     coffeeButtonOn = true;
+    //     this.addToUpgradeInventory("coffee");
+    //     upgradeList.splice(0, 1);
+    //     NUMBEROFUPGRADES--;
+    // } else if (upgradeName == "bakery") {
+    //     NUMBEROFSTATIONS++;
+    //     currThis.bakeryStation.visible = true;
+    //     currThis.bakeryButton.visible = true;
+    //     bakeryButtonOn= true;
+    //     this.addToUpgradeInventory("bakery");
+    //     if (upgradeList.length == 2) {
+    //         upgradeList.splice(0, 1);
+    //     } else {
+    //         upgradeList.splice(1,1);
+    //     }
+    //     NUMBEROFUPGRADES--;
+    // }
 
  };
 

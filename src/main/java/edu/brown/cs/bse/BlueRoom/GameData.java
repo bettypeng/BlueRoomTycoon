@@ -11,6 +11,10 @@ public class GameData {
   private double totalExpenses;
   private double totalLosses;
 
+  public GameData(double startMoney) {
+    totalProfit = startMoney;
+  }
+
   public double getTotalProfit() {
     return totalProfit;
   }
@@ -25,7 +29,7 @@ public class GameData {
     totalExpenses += d.getExpenses();
     totalProfit += (d.getTotalRevenue() - (d.getLosses() + d.getExpenses()));
   }
-  
+
   public void save(BufferedWriter writer) throws IOException {
     double[] nums = { totalRevenue, totalExpenses, totalLosses, totalProfit };
     for (double d : nums) {
@@ -34,7 +38,7 @@ public class GameData {
       writer.newLine();
     }
   }
-  
+
   public void load(BufferedReader reader) throws IOException {
     totalRevenue = Double.valueOf(reader.readLine());
     totalExpenses = Double.valueOf(reader.readLine());

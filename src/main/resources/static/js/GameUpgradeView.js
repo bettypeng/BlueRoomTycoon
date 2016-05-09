@@ -1,15 +1,19 @@
 var upgradeViewElements = new Array();
 var currentlyDisplayedUpgrade = 0;
-var NUMBEROFUPGRADES = 3;
-var upgradeList = ["coffee", "bakery", "magazine rack", "drink_alc", "chips_alc"];
+var NUMBEROFUPGRADES = 5;
+var upgradeList = ["coffee", "bakery", "drink_alc", "chips_alc", "magazine rack"];
 var upgradeCostList = [];
 var upgradeUpkeepList = [];
 upgradeCostList["coffee"] = 200;
 upgradeCostList["bakery"] = 400;
-upgradeCostList["magazine rack"] = 50;
+upgradeCostList["magazine rack"] = 100;
+upgradeCostList["drink_alc"] = 75;
+upgradeCostList["chips_alc"] = 50;
 upgradeUpkeepList["coffee"] = 10;
 upgradeUpkeepList["bakery"] = 15;
 upgradeUpkeepList["magazine rack"] = 2;
+upgradeUpkeepList["drink_alc"] = 5;
+upgradeUpkeepList["chips_alc"] = 5;
 var basecosttext;
 var upkeepcosttext;
 var buyUpgradeButton;
@@ -143,6 +147,7 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
  };
 
  BlueRoom.Game.prototype.buyUpgrade = function() {
+ 	console.log(upgradeList[currentlyDisplayedUpgrade]);
  	if(upgradeList[currentlyDisplayedUpgrade] === "coffee"){
  		NUMBEROFSTATIONS++;
  		this.coffeeStation.visible = true;
@@ -156,11 +161,16 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
  		buy(upgradeList[currentlyDisplayedUpgrade]);
  	}
  	else if (upgradeList[currentlyDisplayedUpgrade] === "magazine rack") {
- 		NUMBEROFSTATIONS++;
  		console.log("BUYING MAGAZINE RACK");
- 		buy("magazineRack");
+ 		buy(upgradeList[currentlyDisplayedUpgrade]);
  		CUSTOMERHAPPINESSINTERVAL += 40;
  		this.magazineRack.visible = true;
+ 	} else if (upgradeList[currentlyDisplayedUpgrade] == "drink_alc") {
+ 		this.drinkStand.visible = true;
+ 		buy(upgradeList[currentlyDisplayedUpgrade]);
+ 	} else if (upgradeList[currentlyDisplayedUpgrade] == "chips_alc") {
+ 		this.chipStand.visible = true;
+ 		buy(upgradeList[currentlyDisplayedUpgrade]);
  	}
  	console.log("BUYING: " + upgradeList[currentlyDisplayedUpgrade]);
  	this.addToUpgradeInventory(upgradeList[currentlyDisplayedUpgrade]);
@@ -187,6 +197,12 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
   		 this.bakeryButton.visible = false;
 
  		bakeryButtonOn = false;
+ 	} else if (upgrade == "magazineRack") {
+ 		this.magazineRack.visible = false;
+ 	} else if (upgrade == "drink_alc") {
+ 		this.drinkStand.visible = false;
+ 	} else if (upgrade == "chips_alc") {
+ 		this.chipStand.visible = false;
  	}
  	console.log("SELLING: " + upgrade);
 	upgradeList.push(upgrade);
