@@ -32,10 +32,12 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('eraseButton', 'images/erase_saved_game.png');
 		
 		// ABOUT
+				this.load.image('howToBg', 'images/howToBg.png');
+
 		this.load.image('nextHowToButton', 'images/how_to_next.png');
 		this.load.image('backHowToButton', 'images/how_to_back.png');
 
-		this.load.image('smallStart', 'images/small_start.png');
+		this.load.image('startHowToButton', 'images/how_to_start.png');
 		this.load.image('banner', 'images/about_banner.png');
 		
 		// BUTTONS
@@ -199,7 +201,7 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('branBatter', 'images/bakery/bran_batter.png');
 
 		this.load.image('batterDropZone', 'images/bakery/batter_drop_zone.png')
-		this.load.image('batterMenu', 'images/bakery/batter_menu.png');
+		this.load.image('batterMenu', 'images/batter_menu.png');
 		this.load.image('muffinTin', 'images/bakery/baking_tin.png');
 		this.load.image('oven', 'images/bakery/baking_oven.png');
 		this.load.image('ovenClosed', 'images/bakery/closed_oven.png');

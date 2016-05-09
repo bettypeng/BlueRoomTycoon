@@ -2,55 +2,66 @@
 
 
 BlueRoom.About = function (game) {
-
+    this.backB = null;
     this.nextB = null;
     this.play = null;
 
 };
 
+var slideCounter = 0;
 var abouttext;
 var nextText = [];
-nextText.push("HOW TO PLAY: \n To start, you have two views of the Blue Room: Manager and Sandwich. The "+
+nextText.push("Congratulations! You have just purchased Brown's most beloved eatery, "+
+            "the Blue Room. You begin with nothing but a sandwich station, a cash register, and $50 in your pocket. "+
+            "\n \nFor now, you are the lone manager and worker of the Blue Room. All of Brown is depending on you to keep their "+
+            "favorite eatery afloat!");
+nextText.push("You will begin with two views of the Blue Room: Manager and Sandwich. With time, you can buy the Coffee Station and the "+
+            "bakery. The "+
             "icons in the top left corner allow you to switch between these views. Your job is to serve all the "+
-            "customers by making them their sandwiches and check them out at the cash register. \n Manager View:\n "+
-            "Once a customer receives their sandwich they will wander around the room. You must check them "+
-            "out by dragging them toward the dollar sign representing the cash register. The money you received will increment your "+
-            "account balance in the lower left. \nSandwich View:\n When a customer is at the sandwich station his/her "+
-            "order will appear in the speech bubble bit by bit as you construct the sandwich. Just click and drag the "+
+            "customers by creating their orders and checking them out at the cash register. ");
+nextText.push("You can check customers "+
+            "out by dragging them into the cash register. The money you received will increment your "+
+            "account balance in the lower left.");
+nextText.push("You should keep track of customers using the Customer Tracker in the status bar. Keep an eye out for new customers that " +
+            "will arrive in the Blue Room by the NEW alert. If customers are unsatisfied with their order, they will try and steal from " +
+            "the blue room, so watch out for a THEFT. When customers have been waiting in lines for too long, they will DITCH. Make sure "+
+            "you cash out all the customers that are waiting to PAY for their orders.");
+nextText.push("When a customer is at the sandwich station, his/her "+
+            "order will appear in the speech bubble as you construct your sandwich. Just click and drag the "+
             "correct ingredients over to the cutting board illuminated on the right hand side. The more centered "+
             "and correct your ingredients, the more money you make, so try to drop the ingredients right in the center." +
-            "\n If you make a sandwich poorly enough, a customer will steal it. The longer a customer watis, the less money you will " +
+            "\n\n If you make a sandwich poorly enough, a customer will steal it. The longer a customer waits, the less money you will " +
             "make, so time is of the essence!");
-nextText.push("PURCHASING UPGRADES AND HIRING EMPLOYEES: \n" + 
-    "blah blah blah");
-nextText.push("COFFEE VIEW: \n" +
-    "blah blah blah");
-nextText.push("BAKERY VIEW: \n" + 
-    "blah blah blah");
+nextText.push("In the coffee station, you can click and drag the right cup to the ice machine, the drink dispenser, and the "+
+            "syrup dispenser to create the customer's drink.");
+nextText.push("In the bakery, you will need to bake muffins every day to prepare for your customer's orders. Choose your batters wisely, "+
+            "don't burn any muffins, and keep in mind that any baked goods left at the end of the day will need to be thrown out!");
+nextText.push("At the end of the day, you can view your financial summary. With the profits that you gain, you can hire employees that "+
+            "will help at each station, and buy upgrades to the Blue Room. With these upgrades and hires, your daily expenses will rise. "+
+            "You will need to play smart and make sure that you can afford the upkeep costs of all additions. You can fire employees "+
+            "and sell your upgrades when you view your inventory.");
+nextText.push("If you go bankrupt, you will lose the Blue Room...and the game! Good luck!")
+
 
 BlueRoom.About.prototype = {
 
 	create: function () {
 
-        this.add.sprite(0, 0, 'whiteBg');
-        this.add.sprite(355, 0, 'banner');
-        this.play = this.add.button(880, 500, 'smallStart', this.startGame, this);
-        this.nextB = this.add.button(870, 410, 'nextHowToButton', this.changeText, this);
-        var style = { font: "17px Comic Sans MS", fill: "#000000", wordWrap: true, wordWrapWidth: 1000, align: "left", backgroundColor: "#ffffff" };
+        this.add.sprite(0, 0, 'howToBg');
+         var titleStyle = { font: "70px Roboto-Bold-Condensed", fill: "#ffffff", align: "center"};
+        var title = this.game.add.text(this.game.width/2, 50, 'THE BLUE ROOM IS YOURS.', titleStyle);
+        title.anchor.setTo(0.5, 0);
+        
+        var style = { font: "25px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 800, align: "left" };
 
-        abouttext = this.game.add.text(50, 90, "Congratulations! You have just purchased Brown's beloved eatery, "+
-        	"the Blue Room. You begin with just a sandwich station and cash register at "+
-        	"the moment, but don't worry, business will soon be booming. With time you will be able to hire employees "+
-        	"to help you out, but for now you are the lone manager and worker of your eatery. All of Brown is depending on you to keep their "+
-        	"favorite eatery afloat. Good luck!", style);
+        abouttext = this.game.add.text(this.game.width/2, 200, nextText[slideCounter], style);
+        abouttext.anchor.setTo(0.5, 0);
 
-        // Blue Room Tycoon is a business strategy game centered around Brown University’s iconic Blue Room eatery. 
-        //In the game, you start off with an empty Blue Room with a sandwich station, a cash register, and no employees. 
-        //It’s your job to serve all of the customers by making them their sandwiches and checking them out at the cash
-        // register! The icons in the top left corner allow you to switch between the sandwich-making view, where you 
-        //serve customers by following their sandwich orders, and the home/manager view, where you can view your 
-        //establishment and its lines, and you can check customers out at the cash register by clicking the register.", 
-        //style);
+        this.play = this.add.button(this.game.width/2, 600, 'startHowToButton', this.startGame, this);
+        this.play.anchor.setTo(0.5, 0);
+        this.backB = this.add.button(50, 600, 'backHowToButton', this.backText, this);
+        this.backB.visible = false;
+        this.nextB = this.add.button(820, 600, 'nextHowToButton', this.changeText, this);
 	},
 
 	update: function () {
@@ -62,17 +73,34 @@ BlueRoom.About.prototype = {
         this.state.start('Load');
 	},
 	
+    backText: function(){
+        slideCounter--;
+        abouttext.setText(nextText[slideCounter]);
+        if(slideCounter<=0){
+            this.backB.visible = false;
+        }else{
+            this.backB.visible = true;
+        }
+        if(slideCounter>=nextText.length-1){
+            this.nextB.visible = false;
+        }else{
+            this.nextB.visible = true;
+        }
+    },
+
 	changeText: function () {
-	    abouttext.setText("HOW TO PLAY: \n To start, you have two views of the Blue Room: Manager and Sandwich. The "+
-	    	"icons in the top left corner allow you to switch between these views. Your job is to serve all the "+
-	    	"customers by making them their sandwiches and check them out at the cash register. \n Manager View:\n "+
-	    	"Once a customer receives their sandwich they will wander around the room. You must check them "+
-	    	"out by dragging them toward the dollar sign representing the cash register. The money you received will increment your "+
-	    	"account balance in the lower left. \nSandwich View:\n When a customer is at the sandwich station his/her "+
-	    	"order will appear in the speech bubble bit by bit as you construct the sandwich. Just click and drag the "+
-	    	"correct ingredients over to the cutting board illuminated on the right hand side. The more centered "+
-	    	"and correct your ingredients, the more money you make, so try to drop the ingredients right in the center.");
-		this.nextB.visible = false;
+        slideCounter++;
+		abouttext.setText(nextText[slideCounter]);
+        if(slideCounter<=0){
+            this.backB.visible = false;
+        }else{
+            this.backB.visible = true;
+        }
+        if(slideCounter>=nextText.length-1){
+            this.nextB.visible = false;
+        }else{
+            this.nextB.visible = true;
+        }
 	}
 
 };
