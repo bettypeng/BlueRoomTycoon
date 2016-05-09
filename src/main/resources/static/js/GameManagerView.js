@@ -9,6 +9,7 @@ var bakeryLine = new Array();
 var coffeeLine = new Array();
 var cashierLine = new Array();
 var managerCounter = 0;
+var managerIncr = 1;
 var NUMBEROFSTATIONS = 1;
 var NUMBEROFEMPLOYEES = 0;
 var CUSTOMERINTERVAL = 500; //500 standard
@@ -140,9 +141,10 @@ BlueRoom.Game.prototype.createManager = function () {
     }, 500);
 
     setInterval(function() {
-        managerCounter += 1;
-        // console.log(managerCounter);
-        // console.log(CUSTOMERINTERVAL);
+        managerCounter += managerIncr;
+        console.log(managerCounter);
+        //console.log(managerIncr);
+        console.log(CUSTOMERINTERVAL);
         if(managerCounter % CUSTOMERINTERVAL == 0 && numSandwich<15 && numCoffee<11 && numBakery<11 && isBlueRoomOpen && !gamePaused){
             getCustomer();
             currThis.statusAlert(customerAlert);

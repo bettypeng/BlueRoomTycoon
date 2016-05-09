@@ -9,7 +9,8 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 
 
     var titleStyle = { font: "70px Roboto-Light", fill: "#000000", align: "center"};
-	var title = this.game.add.text(this.game.width/2, 87, 'DAY #: FINANCIAL SUMMARY', titleStyle);
+    var day = dayCounter - 4;
+	var title = this.game.add.text(this.game.width/2, 87, 'DAY ' + day + ': FINANCIAL SUMMARY', titleStyle);
 	title.anchor.setTo(0.5, 0,5);
 
 	var dailySumm = game.add.sprite(50, 200, 'summaryBox');

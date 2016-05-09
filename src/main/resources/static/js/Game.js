@@ -358,6 +358,7 @@ BlueRoom.Game.prototype = {
 
         this.game.world.bringToTop(textgroup);
         if(managerView){
+            managerIncr = 1;
             this.managerUpdate();
             this.hideSandwichView();
             employeeGroup.children.forEach(function(item){
@@ -370,15 +371,27 @@ BlueRoom.Game.prototype = {
         }
 
         if(sandwichView){
-            this.sandwichUpdate(); 
+            this.sandwichUpdate();
+            managerIncr = 4;
+            if (managerCounter % 4 != 0) { 
+                managerCounter += (4 - (managerCounter % 4));
+            }
         }
 
         if(coffeeView) {
             this.coffeeUpdate();
+            managerIncr = 2;
+            if (managerCounter % 2 != 0) { 
+                managerCounter += 1;
+            }
         }
 
         if(bakeryView){
             this.bakeryUpdate();
+            managerIncr = 2;
+            if (managerCounter % 2 != 0) { 
+                managerCounter += 1;
+            }
         }
 
         if(dayEndView){
@@ -511,7 +524,7 @@ BlueRoom.Game.prototype = {
         // check if this is actually a valid way to change the money
         statusBar.money = balance;
         console.log(dayNum);
-        dayCounter = dayNum;
+        dayCounter = dayNum + 4;
         // do something with dayNum to make sure day of the week is correct
         console.log(magRack);
         if (magRack) {
