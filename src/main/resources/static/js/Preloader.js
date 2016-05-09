@@ -88,7 +88,15 @@ BlueRoom.Preloader.prototype = {
 
 		this.load.image('employeeBreakStation', 'images/employeebreak.png');
 
-		this.load.image('radiobutton', 'images/alertbutton.png');
+		// this.load.image('radiobutton', 'images/alertbutton.png');
+		this.load.image('new_alert', 'images/new_alert.png');
+		this.load.image('ditch_alert', 'images/ditch_alert.png');
+		this.load.image('theft_alert', 'images/theft_alert.png');
+		this.load.image('pay_alert', 'images/pay_alert.png');
+		this.load.image('customer_tracker', 'images/customer_tracker.png');
+
+		this.load.image('sound', 'images/sound_button.png');
+		this.load.image('mute', 'images/mute_button.png');
 
 		this.load.image('dollar', 'images/checkout.png');
 		this.load.image('dollarSign', 'images/dollar_sign.png');

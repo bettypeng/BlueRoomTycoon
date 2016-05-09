@@ -22,11 +22,11 @@ BlueRoom.Game.prototype.createDayEndAlert= function (dailyInfo) {
     var alert = this.game.add.text(this.game.width/2, 180, "THE BLUE ROOM IS CLOSED!"  , alertstyle);
     alert.anchor.setTo(0.5, 0.5);
 
-    var subtitle = { font: "23px Roboto-Thin", fill: "#000000", wordWrap: true, wordWrapWidth: 400, align: "center" };
+    var subtitle = { font: "23px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 400, align: "center" };
     var today = this.game.add.text(this.game.width/2, 227, "TODAY'S TALLY: ", subtitle);
     today.anchor.setTo(0.5, 0.5)
 
-    var labelstyle = { font: "18px Roboto-Thin", fill: "#000000", wordWrap: true, wordWrapWidth: 400, align: "center" };
+    var labelstyle = { font: "18px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 400, align: "center" };
     var customersServed = this.game.add.text(280, 250, "Customers served: "+dailyInfo.totalPurchases, labelstyle);
     var customersLost = this.game.add.text(280, 280, "Customers lost: "+dailyInfo.customersLost, labelstyle);
     var numThefts = this.game.add.text(280, 310, "Thefts: "+dailyInfo.thefts, labelstyle);
