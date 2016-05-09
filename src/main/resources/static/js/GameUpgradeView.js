@@ -29,8 +29,8 @@ BlueRoom.Game.prototype.createUpgradeView= function () {
 	var backButton = this.add.button(50, 60, 'backButton', this.hideUpgradeView, this);
 	upgradeViewElements.push(backButton);
 
-	var titleStyle = { font: "60px Roboto", fill: "#000000", align: "center"};
-	var title = this.game.add.text(this.game.width/2, 50, 'Blue Room Expansions', titleStyle);
+    var titleStyle = { font: "70px Roboto", fill: "#ffffff", align: "center"};
+	var title = this.game.add.text(this.game.width/2, 50, 'BUY UPGRADES', titleStyle);
 	title.anchor.setTo(0.5, 0,5);
 
 	upgradeViewElements.push(title);

@@ -50,7 +50,7 @@ BlueRoom.Game.prototype.createManager = function () {
 
     var smallstyle = { font: "10px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "center" };
     this.employeeBreakStation = this.add.sprite(10, 450, 'employeeBreakStation');
-    this.cashier = this.add.sprite(300, 400, 'dollar');
+    this.cashier = this.add.sprite(270, 420, 'dollar');
     // this.game.add.text(305, 565, "DRAG HERE TO\nCASH OUT!", smallstyle);
     
     var style = { font: "30px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "center" };
@@ -76,6 +76,9 @@ BlueRoom.Game.prototype.createManager = function () {
         var dist = this.game.rnd.integerInRange(-5,5);
         var x = this.game.rnd.integerInRange(470, 540);
         var y = 200 + (i*25) + dist;
+        if(i ==0){
+            x = 540;
+        }
         this.bakeryLinePos['x'].push(x);
         this.bakeryLinePos['y'].push(y);
     }
@@ -85,6 +88,9 @@ BlueRoom.Game.prototype.createManager = function () {
         var dist = this.game.rnd.integerInRange(-5,5);
         var x = this.game.rnd.integerInRange(240-(i*curve), 290-(i*curve));
         var y = 200 + (i*25) + dist;
+        if(i ==0){
+            x = 290;
+        }
         this.coffeeLinePos['x'].push(x);
         this.coffeeLinePos['y'].push(y);
     }

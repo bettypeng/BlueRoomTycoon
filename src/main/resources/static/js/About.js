@@ -35,7 +35,7 @@ BlueRoom.About.prototype = {
         this.add.sprite(0, 0, 'whiteBg');
         this.add.sprite(355, 0, 'banner');
         this.play = this.add.button(880, 500, 'smallStart', this.startGame, this);
-        this.nextB = this.add.button(870, 410, 'nextButton', this.changeText, this);
+        this.nextB = this.add.button(870, 410, 'nextHowToButton', this.changeText, this);
         var style = { font: "17px Comic Sans MS", fill: "#000000", wordWrap: true, wordWrapWidth: 1000, align: "left", backgroundColor: "#ffffff" };
 
         abouttext = this.game.add.text(50, 90, "Congratulations! You have just purchased Brown's beloved eatery, "+
