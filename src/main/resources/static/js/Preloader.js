@@ -142,7 +142,7 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('noface', 'images/sprites/no_face.png');
 		this.load.image('glasses', 'images/sprites/worst_face.png');
 		this.load.image('troll', 'images/sprites/worst_face.png');
-		this.load.image('upset', 'images/sprites/no_face.jpg');
+		this.load.image('upset', 'images/sprites/no_face.png');
 
 		//COFFEE STATION
 		this.load.image('coffeeBg', 'images/coffee/coffeeview_bg.png');
