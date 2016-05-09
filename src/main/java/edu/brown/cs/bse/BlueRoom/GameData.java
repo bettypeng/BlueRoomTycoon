@@ -11,10 +11,6 @@ public class GameData {
   private double totalExpenses;
   private double totalLosses;
 
-  public GameData(double startMoney) {
-    totalProfit = startMoney;
-  }
-
   public double getTotalProfit() {
     return totalProfit;
   }
