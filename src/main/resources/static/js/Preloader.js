@@ -208,7 +208,7 @@ BlueRoom.Preloader.prototype = {
 		//END OF DAY VIEW
 		this.load.image('dayEndBg', 'images/blue_bg.png');
 		this.load.image('exitButton', 'images/exit_button.png');
-		this.load.image('backButton', 'images/back_button.png');
+		this.load.image('backButton', 'images/white_back_button.png');
 		this.load.image('summaryBox', 'images/financial_summary_box.png');
 
 		this.load.image('viewInventoryButton', 'images/white_view_inventory_button.png');
