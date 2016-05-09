@@ -41,7 +41,7 @@ BlueRoom.Game.prototype.createManager = function () {
     this.sandwichStation = this.add.sprite(635, 140, 'sandwichStation');
     this.bakeryStation = this.add.sprite(395, 140, 'bakeryStation');
     this.coffeeStation = this.add.sprite(130, 140, 'coffeeStation');
-    this.magazineRack = this.add.sprite(60, 270, 'magazineRack');
+    this.magazineRack = this.add.sprite(30, 310, 'magazineRack');
     
 
     this.bakeryStation.visible = false;
