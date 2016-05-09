@@ -466,14 +466,14 @@ BlueRoom.Game.prototype.orderElems= function () {
 
             if (item.key != currCustomerOrder[currPlace]) {
                 incorrSandCount++;
-                if (Math.abs(item.x-firstX) > 60) {
+                if (Math.abs(item.x-firstX) > 40) {
                     currThis.showGlasses();
                 } else {
                     currThis.showSad();
                 }
-            } else if (Math.abs(item.x-firstX) < 10) {
+            } else if (Math.abs(item.x-firstX) < 20) {
                 currThis.showHappy();
-            } else if (Math.abs(item.x-firstX) > 50) {
+            } else if (Math.abs(item.x-firstX) > 40) {
                 currThis.showNo();
             }
             currSandwich.push(item.key);
@@ -604,6 +604,19 @@ BlueRoom.Game.prototype.sandwichUpdate= function () {
             } 
         }
     }
+};
+
+BlueRoom.Game.prototype.sandwichEndOfDay = function(){
+    var totalTrash = 0;
+    if (nonSandwich.length != 0) {
+        totalTrash += nonSandwich.length;
+        for (var i=0; i<nonSandwich.length; i++) {
+            movableElements.remove(nonSandwich[i]);
+        }
+        nonSandwich = [];
+        trashHandler("sandwich", totalTrash);
+    }
+      
 };
 
 

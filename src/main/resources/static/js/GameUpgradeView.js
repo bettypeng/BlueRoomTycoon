@@ -1,7 +1,7 @@
 var upgradeViewElements = new Array();
 var currentlyDisplayedUpgrade = 0;
 var NUMBEROFUPGRADES = 3;
-var upgradeList = ["coffee", "bakery", "magazine rack"];
+var upgradeList = ["coffee", "bakery", "magazine rack", "drink_alc", "chips_alc"];
 var upgradeCostList = [];
 var upgradeUpkeepList = [];
 upgradeCostList["coffee"] = 200;

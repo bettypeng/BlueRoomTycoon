@@ -12,6 +12,8 @@ BlueRoom.Game.prototype.createDayEndAlert= function (dailyInfo) {
     bakeryView = false;
 
     this.muffinEndOfDay();
+    // this.sandwichEndOfDay();
+    // this.coffeeEndOfDay();
  
 	var alertBg = game.add.sprite(0, 0, 'alertBox');
 	dayEndAlertElements.push(alertBg);
@@ -28,13 +30,13 @@ BlueRoom.Game.prototype.createDayEndAlert= function (dailyInfo) {
     var customersServed = this.game.add.text(280, 250, "Customers served: "+dailyInfo.totalPurchases, labelstyle);
     var customersLost = this.game.add.text(280, 280, "Customers lost: "+dailyInfo.customersLost, labelstyle);
     var numThefts = this.game.add.text(280, 310, "Thefts: "+dailyInfo.thefts, labelstyle);
-    var itemsTrashed = this.game.add.text(280, 340, "Items trashed: ", labelstyle);
+    var itemsTrashed = this.game.add.text(280, 340, "Baked goods wasted: " + muffinsTrashed, labelstyle);
 
 
     var sandwichesMade = this.game.add.text(550, 250, "Sandwiches made: "+dailyInfo.sandwichCount, labelstyle);
     var drinksServed = this.game.add.text(550, 280, "Drinks served: "+dailyInfo.coffeeCount, labelstyle);
     var bakedGoodsSold = this.game.add.text(550, 310, "Baked goods sold: "+dailyInfo.bakeryCount, labelstyle);
-    var bakedGoodsWasted = this.game.add.text(550, 340, "Baked goods wasted: " + muffinsTrashed, labelstyle);
+    var bakedGoodsWasted = this.game.add.text(550, 340, "Other shitty items sold: " + dailyInfo.alcCount, labelstyle);
 
 
 	var cont = this.add.button(this.game.width/2, 400, 'continueButton', endDayScreen, this);

@@ -131,7 +131,7 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('pickle', 'images/sandwich/toppings/pickle.png');
 		this.load.image('tomato', 'images/sandwich/toppings/tomato.png');
 		
-		this.load.image('speechBubble', 'images/sandwich/speech_bubble.png');
+		this.load.image('speechBubble', 'images/speech_bubble.png');
 		this.load.image('happy', 'images/sprites/happy_face.png');
 		this.load.image('neutral', 'images/sprites/neutral_face.png');
 		this.load.image('sad', 'images/sprites/sad_face.png');
@@ -233,6 +233,8 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('coffee', 'images/upgrades/coffee_bar.png');
 		this.load.image('bakery', 'images/upgrades/bakery.png');
 		this.load.image('magazine rack', 'images/upgrades/magazine_rack.png');
+		this.load.image('drink_alc', 'images/upgrades/magazine_rack.png');
+		this.load.image('chips_alc', 'images/upgrades/magazine_rack.png');
 
 		//INVENTORY
 		this.load.image('inventoryUp', 'images/inventory/up_arrow.png');

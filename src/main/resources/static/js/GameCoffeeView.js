@@ -182,7 +182,11 @@ BlueRoom.Game.prototype.noCoffeeCustomer = function() {
 };
 
 BlueRoom.Game.prototype.coffeeTrashButton = function() {
-    if (!coffeeTransitioning) {
+    if (coffeeTransitioning) {
+        return;
+    }
+
+    if (currCup != null) {
         trashHandler("coffee", 1);
         currCup.group.destroy();
         currThis.enableCups();
@@ -354,7 +358,6 @@ BlueRoom.Game.prototype.coffeeUpdate= function () {
         currCoffeeCustomer = coffeeLine[0];
         currCoffeeCustomerStatusBar = new CustomerStatusBar(currCoffeeCustomer, 250, 10);
         coffeeViewElements.push(currCoffeeCustomerStatusBar.barSprite);
-        console.log(currCoffeeCustomer);
 
         if (currCoffeeCustomer.order.size === "large") {
             currCoffeeOrderSprites = largeCup;
@@ -364,7 +367,6 @@ BlueRoom.Game.prototype.coffeeUpdate= function () {
             currCoffeeOrderSprites = smallCup;
         }
         currCoffeeOrderSprites[0].visible = true;
-        console.log(currCoffeeOrderSprites);
 
         if (currCoffeeCustomer.order.flavoring.length != 0) {
             var flavorTint = this.getFlavorTint(currCoffeeCustomer.order.flavoring[0]);
@@ -395,9 +397,6 @@ BlueRoom.Game.prototype.coffeeUpdate= function () {
             coffeeTransitioning = true;
             currCoffeeCustomer.moving = true;
 
-            // nonSandwich = nonSandwich.concat(currSandSprites);
-            // console.log(nonSandwich);
-            console.log(currCoffeeOrderSprites);
             if (currCoffeeOrderSprites.length != 0) {
                 for (var i=0; i<4; i++) {
                     currCoffeeOrderSprites[i].visible = false;
@@ -406,7 +405,7 @@ BlueRoom.Game.prototype.coffeeUpdate= function () {
 
             coffeeSpeechBubble.visible = false;
             var t = currThis.add.tween(coffeeCustomerFace).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
-            // console.log(currOrderElem);
+
             t.onComplete.add(function () {
                 currCoffeeCustomer.moving = false;
 
@@ -597,4 +596,8 @@ BlueRoom.Game.prototype.giveCoffeeToCustomer = function() {
         currThis.noCoffeeCustomer();
     }, this);
 
+};
+
+BlueRoom.Game.prototype.coffeeEndOfDay = function(){
+    this.coffeeTrashButton();
 };
