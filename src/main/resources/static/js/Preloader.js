@@ -130,7 +130,7 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('pickle', 'images/sandwich/toppings/pickle.png');
 		this.load.image('tomato', 'images/sandwich/toppings/tomato.png');
 		
-		this.load.image('speechBubble', 'images/sandwich/speech_bubble.png');
+		this.load.image('speechBubble', 'images/speech_bubble.png');
 		this.load.image('happy', 'images/sprites/happy_face.png');
 		this.load.image('neutral', 'images/sprites/neutral_face.png');
 		this.load.image('sad', 'images/sprites/sad_face.png');
@@ -141,7 +141,7 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('noface', 'images/sprites/no_face.png');
 		this.load.image('glasses', 'images/sprites/worst_face.png');
 		this.load.image('troll', 'images/sprites/worst_face.png');
-		this.load.image('upset', 'images/sprites/no_face.jpg');
+		this.load.image('upset', 'images/sprites/no_face.png');
 
 		//COFFEE STATION
 		this.load.image('coffeeBg', 'images/coffee/coffeeview_bg.png');
