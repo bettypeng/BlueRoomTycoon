@@ -117,7 +117,6 @@ Customer.prototype = {
         //     this.add.tween(this.sprite).to( { x: dragPosition.x, y: dragPosition.y }, 500, "Back.easeOut", true);
         // }
         if(sprite.overlap(currThis.cashier)){
-            console.log("HELLO");
             sprite.input.draggable = false;
             //this.renewTopping(curr.x, curr.y, curr.key);
             currThis.cashCustomerOut(this);

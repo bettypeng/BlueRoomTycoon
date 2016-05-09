@@ -51,20 +51,20 @@ BlueRoom.Game.prototype.createCoffeeView= function () {
 
 
 
-    smallCup.push(this.add.sprite(400, 40, 'smCup'));
-    smallCup.push(this.add.sprite(400, 40, 'smDrink'));
-    smallCup.push(this.add.sprite(400, 40, 'smSyrup'));
-    smallCup.push(this.add.sprite(400, 40, 'smIce'));
+    smallCup.push(this.add.sprite(410, 40, 'smCup'));
+    smallCup.push(this.add.sprite(410, 40, 'smDrink'));
+    smallCup.push(this.add.sprite(410, 40, 'smSyrup'));
+    smallCup.push(this.add.sprite(410, 40, 'smIce'));
 
-    mediumCup.push(this.add.sprite(400, 40, 'mdCup'));
-    mediumCup.push(this.add.sprite(400, 40, 'mdDrink'));
-    mediumCup.push(this.add.sprite(400, 40, 'mdSyrup'));
-    mediumCup.push(this.add.sprite(400, 40, 'mdIce'));
+    mediumCup.push(this.add.sprite(407, 25, 'mdCup'));
+    mediumCup.push(this.add.sprite(407, 25, 'mdDrink'));
+    mediumCup.push(this.add.sprite(407, 25, 'mdSyrup'));
+    mediumCup.push(this.add.sprite(407, 25, 'mdIce'));
 
-    largeCup.push(this.add.sprite(400, 40, 'lgCup'));
-    largeCup.push(this.add.sprite(400, 40, 'lgDrink'));
-    largeCup.push(this.add.sprite(400, 40, 'lgSyrup'));
-    largeCup.push(this.add.sprite(400, 40, 'lgIce'));
+    largeCup.push(this.add.sprite(402, 20, 'lgCup'));
+    largeCup.push(this.add.sprite(402, 20, 'lgDrink'));
+    largeCup.push(this.add.sprite(402, 20, 'lgSyrup'));
+    largeCup.push(this.add.sprite(402, 20, 'lgIce'));
 
 	var coffeeBg = this.add.sprite(0, 0, 'coffeeBg');
     coffeeViewElements.push(bg);
@@ -182,7 +182,11 @@ BlueRoom.Game.prototype.noCoffeeCustomer = function() {
 };
 
 BlueRoom.Game.prototype.coffeeTrashButton = function() {
-    if (!coffeeTransitioning) {
+    if (coffeeTransitioning) {
+        return;
+    }
+
+    if (currCup != null) {
         trashHandler("coffee", 1);
         currCup.group.destroy();
         currThis.enableCups();
@@ -354,7 +358,6 @@ BlueRoom.Game.prototype.coffeeUpdate= function () {
         currCoffeeCustomer = coffeeLine[0];
         currCoffeeCustomerStatusBar = new CustomerStatusBar(currCoffeeCustomer, 250, 10);
         coffeeViewElements.push(currCoffeeCustomerStatusBar.barSprite);
-        console.log(currCoffeeCustomer);
 
         if (currCoffeeCustomer.order.size === "large") {
             currCoffeeOrderSprites = largeCup;
@@ -364,7 +367,6 @@ BlueRoom.Game.prototype.coffeeUpdate= function () {
             currCoffeeOrderSprites = smallCup;
         }
         currCoffeeOrderSprites[0].visible = true;
-        console.log(currCoffeeOrderSprites);
 
         if (currCoffeeCustomer.order.flavoring.length != 0) {
             var flavorTint = this.getFlavorTint(currCoffeeCustomer.order.flavoring[0]);
@@ -395,9 +397,6 @@ BlueRoom.Game.prototype.coffeeUpdate= function () {
             coffeeTransitioning = true;
             currCoffeeCustomer.moving = true;
 
-            // nonSandwich = nonSandwich.concat(currSandSprites);
-            // console.log(nonSandwich);
-            console.log(currCoffeeOrderSprites);
             if (currCoffeeOrderSprites.length != 0) {
                 for (var i=0; i<4; i++) {
                     currCoffeeOrderSprites[i].visible = false;
@@ -406,7 +405,7 @@ BlueRoom.Game.prototype.coffeeUpdate= function () {
 
             coffeeSpeechBubble.visible = false;
             var t = currThis.add.tween(coffeeCustomerFace).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
-            // console.log(currOrderElem);
+
             t.onComplete.add(function () {
                 currCoffeeCustomer.moving = false;
 
@@ -597,4 +596,8 @@ BlueRoom.Game.prototype.giveCoffeeToCustomer = function() {
         currThis.noCoffeeCustomer();
     }, this);
 
+};
+
+BlueRoom.Game.prototype.coffeeEndOfDay = function(){
+    this.coffeeTrashButton();
 };

@@ -32,10 +32,12 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('eraseButton', 'images/erase_saved_game.png');
 		
 		// ABOUT
+				this.load.image('howToBg', 'images/howToBg.png');
+
 		this.load.image('nextHowToButton', 'images/how_to_next.png');
 		this.load.image('backHowToButton', 'images/how_to_back.png');
 
-		this.load.image('smallStart', 'images/small_start.png');
+		this.load.image('startHowToButton', 'images/how_to_start.png');
 		this.load.image('banner', 'images/about_banner.png');
 		
 		// BUTTONS
@@ -56,9 +58,9 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('sandwichStation', 'images/sandwich_station_counter.png');
 		this.load.image('coffeeStation', 'images/coffee_station_counter.png');
 		this.load.image('bakeryStation', 'images/bakery_station_counter.png');
-		this.load.image('magazineRack', 'images/magazine_placeholder2.GIF');
-		this.load.image('chip_stand', 'images/chip_rack.jpg');
-		this.load.image('drink_stand', 'images/drink_fridge.jpg');
+		this.load.image('magazineRack', 'images/magazine_rack_short.png');
+		this.load.image('chip_stand', 'images/bright_chips_stand.png');
+		this.load.image('drink_stand', 'images/drink_fridge.png');
 
 		//this.load.image('sandwichBg', 'images/sandwich_bg.png');
 		this.load.image('sandwichBg', 'images/sandwich/sandwich_bg.png');
@@ -207,7 +209,7 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('branBatter', 'images/bakery/bran_batter.png');
 
 		this.load.image('batterDropZone', 'images/bakery/batter_drop_zone.png')
-		this.load.image('batterMenu', 'images/bakery/batter_menu.png');
+		this.load.image('batterMenu', 'images/batter_menu.png');
 		this.load.image('muffinTin', 'images/bakery/baking_tin.png');
 		this.load.image('oven', 'images/bakery/baking_oven.png');
 		this.load.image('ovenClosed', 'images/bakery/closed_oven.png');

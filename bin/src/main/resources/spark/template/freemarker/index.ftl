@@ -42,6 +42,8 @@
 <div class="fontPreload" style="font-family: Roboto;">.</div>
 <div class="fontPreload" style="font-family: Roboto-Thin;">.</div>
 <div class="fontPreload" style="font-family: Roboto-Light;">.</div>
+<div class="fontPreload" style="font-family: Roboto-Bold-Condensed;">.</div>
+<div class="fontPreload" style="font-family: Roboto-Medium;">.</div>
 
 <div id="gameContainer"></div>
 

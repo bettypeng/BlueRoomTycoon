@@ -91,6 +91,10 @@ public class MoneyManager {
   public void addDailyExpenses(double amt) {
     dailyExpenses += amt;
   }
+  
+  public double getDailyExpenses() {
+    return dailyExpenses;
+  }
 
   public void save(BufferedWriter writer) throws IOException {
     String mon = String.valueOf(money);

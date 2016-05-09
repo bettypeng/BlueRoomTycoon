@@ -1,5 +1,5 @@
 function StatusBar(){
-    this.money = 5000;
+    this.money = 50;
     // this.moneyBuffer = 0;
     this.day = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     this.hour = 7;

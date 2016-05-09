@@ -433,4 +433,8 @@ public class GameManager {
     OrderFactory.setMuffinWeights();
   }
 
+  public double getCurrExpenses() {
+    return manager.getDailyExpenses();
+  }
+
 }
