@@ -155,6 +155,11 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
  		bakeryButtonOn = true;
  		buy(upgradeList[currentlyDisplayedUpgrade]);
  	}
+ 	else if (upgradeList[currentlyDisplayedUpgrade] === "magazine rack") {
+ 		buy("magazineRack");
+ 		CUSTOMERHAPPINESSINTERVAL += 40;
+ 		//this.magazineRack.visible = true;
+ 	}
  	console.log("BUYING: " + upgradeList[currentlyDisplayedUpgrade]);
  	this.addToUpgradeInventory(upgradeList[currentlyDisplayedUpgrade]);
  	this.createPurchaseAlert("bought a new", upgradeList[currentlyDisplayedUpgrade]+" station", upgradeCostList[upgradeList[currentlyDisplayedUpgrade]]);

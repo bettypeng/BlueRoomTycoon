@@ -420,10 +420,10 @@ public class Server {
 
       String stationName = qm.value("name");
       if (stationName.equals("magazineRack")) {
-    	gameManager.addMagazineRack();
+        gameManager.addMagazineRack();
       } else {
       // I think the price should be sent back!
-    	gameManager.addStation(stationName, GameManager.UPGRADE_COSTS.get(stationName));
+        gameManager.addStation(stationName, GameManager.UPGRADE_COSTS.get(stationName));
       }
 
       List<String> results = new ArrayList<>();

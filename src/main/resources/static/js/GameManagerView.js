@@ -40,8 +40,10 @@ BlueRoom.Game.prototype.createManager = function () {
     this.sandwichStation = this.add.sprite(652, 140, 'sandwichStation');
     this.bakeryStation = this.add.sprite(400, 140, 'bakeryStation');
     this.coffeeStation = this.add.sprite(130, 140, 'coffeeStation');
+    this.magazineRack = this.add.sprite(900, 200, 'magazineRack');
     this.bakeryStation.visible = false;
     this.coffeeStation.visible = false;
+    this.magazineRack.visible = false;
 
     var smallstyle = { font: "10px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 100, align: "center" };
     this.employeeBreakStation = this.add.sprite(10, 450, 'employeeBreakStation');
@@ -121,16 +123,16 @@ BlueRoom.Game.prototype.createManager = function () {
     this.timerStopped = true;
     this.timer = null;
 
-    // setTimeout(function(){
-    //     getCustomer();
-    //     currThis.statusAlert(customerAlert);
-    // }, 500);
+    setTimeout(function(){
+        getCustomer();
+        currThis.statusAlert(customerAlert);
+    }, 500);
 
     setInterval(function() {
         managerCounter += 1;
         // console.log(managerCounter);
         // console.log(CUSTOMERINTERVAL);
-        if(managerCounter % CUSTOMERINTERVAL == 0 && numSandwich<15 && numCoffee<11 && numBakery<11 && isBlueRoomOpen){
+        if(managerCounter % CUSTOMERINTERVAL == 0 && numSandwich<15 && numCoffee<11 && numBakery<11 && isBlueRoomOpen && !gamePaused){
             getCustomer();
             currThis.statusAlert(customerAlert);
         }

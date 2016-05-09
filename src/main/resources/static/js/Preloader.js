@@ -54,6 +54,7 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('sandwichStation', 'images/sandwich_station_counter.png');
 		this.load.image('coffeeStation', 'images/coffee_station_counter.png');
 		this.load.image('bakeryStation', 'images/bakery_station_counter.png');
+		this.load.image('magazineRack', 'images/magazine_placeholder2.GIF');
 
 		//this.load.image('sandwichBg', 'images/sandwich_bg.png');
 		this.load.image('sandwichBg', 'images/sandwich/sandwich_bg.png');
