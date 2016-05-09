@@ -187,12 +187,12 @@ Employee.prototype = {
         var myEmployee = this;
         this.workTimer = setInterval(function(){
             if(myEmployee.working && !dayEndView){
-                console.log("decrementing worker satisfaction");
+                // console.log("decrementing worker satisfaction");
                 if(currEmployee.workHoursProgress>0){
                     currEmployee.workHoursProgress-=0.1;
                 }
             } else if(myEmployee.recharging && !dayEndView){
-                console.log("incrementing worker satisfaction");
+                // console.log("incrementing worker satisfaction");
                 if(currEmployee.workHoursProgress<30){
                     currEmployee.workHoursProgress+=0.1;
                 }
