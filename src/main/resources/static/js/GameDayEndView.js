@@ -22,7 +22,7 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 	var labelStyle = { font: "42px Roboto", fill: "#000000", align: "center"};
 	var today = this.game.add.text(100, 230, 'TODAY', labelStyle);
 
-	var detailStyle = { font: "20px Roboto-Thin", fill: "#000000", align: "center"};
+	var detailStyle = { font: "20px Roboto-Light", fill: "#000000", align: "center"};
 	// var tips = this.game.add.text(200, 210, 'Tips: $'+dailyInfo.totalTips.toFixed(2), detailStyle);
 	// var revenue = this.game.add.text(200, 250, 'Revenue: $'+(dailyInfo.totalProfit - dailyInfo.totalTips).toFixed(2), detailStyle);
 	var revenue = this.game.add.text(100, 300, 'Revenue: $'+(dailyInfo.totalRevenue).toFixed(2), detailStyle);
@@ -46,10 +46,10 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 	upgrade.anchor.setTo(0.5, 0);
 	var close = this.add.button(900, 460, 'exitViewButton', this.destroyDayEndView, this);
 	close.anchor.setTo(0.5, 0);
-	var save = this.add.button(850, 20, 'saveButton', saveGame, this);
-	save.tint = 0xcccccc;
+	var save = this.add.button(900, 20, 'saveButton', saveGame, this);
+	save.tint = 0xec6565;
 	var quitBtn = this.add.button(20, 20, 'quitButton', this.quitGame, this);
-	quitBtn.tint = 0xcccccc;
+	quitBtn.tint = 0xec6565;
 
 	viewInventory.tint = 0xf2f2f2;
 	hire.tint = 0xf2f2f2;

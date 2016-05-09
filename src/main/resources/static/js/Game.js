@@ -76,11 +76,13 @@ BlueRoom.Game.prototype = {
         this.bakeryButton = this.add.button(10, 235, 'bakeryButton', goToBakeryView, this);
         this.status_bar = this.add.sprite(0, 600, 'status_bar');
         this.pauseButton = this.add.button(980, 615, 'pauseButton', this.showPauseScreen, this);
+        this.soundButton = this.add.button(900, 615, 'sound', this.toggleSound, this);
 
-        customerAlert = this.add.sprite(20, 625, 'radiobutton');
-        leavingAlert = this.add.sprite(20, 645, 'radiobutton');
-        stealingAlert = this.add.sprite(20, 665, 'radiobutton');
-        checkoutAlert = this.add.sprite(20, 685, 'radiobutton');
+        customerAlert = this.add.sprite(40, 635, 'new_alert');
+        leavingAlert = this.add.sprite(100, 635, 'ditch_alert');
+        stealingAlert = this.add.sprite(160, 635, 'theft_alert');
+        checkoutAlert = this.add.sprite(220, 635, 'pay_alert');
+        var custTracker = this.add.sprite(130, 680, 'customer_tracker');
 
 
         coffeeButtonOn = false;
@@ -94,25 +96,26 @@ BlueRoom.Game.prototype = {
         gamegroup.add(this.bakeryButton);
         gamegroup.add(this.coffeeButton);
         gamegroup.add(this.pauseButton);
+        gamegroup.add(this.soundButton);
 
         
         var status = statusBar;
         var style = { font: "32px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left"};
 
-        moneytext = this.game.add.text(330, 650, '$' + (status.money.toFixed(2)), style);
-        daytext = this.game.add.text(620, 650,  status.day[dayCounter%7], style);
+        moneytext = this.game.add.text(390, 650, '$' + (status.money.toFixed(2)), style);
+        daytext = this.game.add.text(590, 650,  status.day[dayCounter%7], style);
         //timetext = this.game.add.text(800, 650,  status.hour + ':' + status.minute, style);
-        timetext = this.game.add.text(820, 650,  status.hour, style);
-        ampmtext = this.game.add.text(860, 650,  status.ampm[twelveCounter%2], style);
-        closedtext = this.game.add.text(820, 650,  "CLOSING TIME!", style);
+        timetext = this.game.add.text(760, 650,  status.hour, style);
+        ampmtext = this.game.add.text(800, 650,  status.ampm[twelveCounter%2], style);
+        closedtext = this.game.add.text(780, 650,  "CLOSING TIME!", style);
         this.closedSign(false);
 
         var newstyle = { font: "12px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left"};
 
-        var customerAlertText = this.game.add.text(40, 615, "NEW CUSTOMER", newstyle);
-        var leavingAlertText = this.game.add.text(40, 635, "LEAVING", newstyle);
-        var stealingAlertText = this.game.add.text(40, 655, "STEALING", newstyle);
-        var checkoutAlertText = this.game.add.text(40, 675, "CHECKOUT", newstyle);
+        // var customerAlertText = this.game.add.text(40, 615, "NEW CUSTOMER", newstyle);
+        // var leavingAlertText = this.game.add.text(40, 635, "LEAVING", newstyle);
+        // var stealingAlertText = this.game.add.text(40, 655, "STEALING", newstyle);
+        // var checkoutAlertText = this.game.add.text(40, 675, "CHECKOUT", newstyle);
 
 
         this.moneytextTween = this.add.tween(moneytext.scale).to({ x: 1.5, y: 1.5}, 200, Phaser.Easing.Linear.In).to({ x: 1, y: 1}, 200, Phaser.Easing.Linear.In);
@@ -127,19 +130,20 @@ BlueRoom.Game.prototype = {
         textgroup.add(leavingAlert);
         textgroup.add(stealingAlert);
         textgroup.add(checkoutAlert);
-        textgroup.add(customerAlertText);
-        textgroup.add(leavingAlertText);
-        textgroup.add(stealingAlertText);
-        textgroup.add(checkoutAlertText);
+        textgroup.add(custTracker);
+        // textgroup.add(customerAlertText);
+        // textgroup.add(leavingAlertText);
+        // textgroup.add(stealingAlertText);
+        // textgroup.add(checkoutAlertText);
 
         textgroup.forEach(function(item) {
             item.anchor.set(0.5);
         });
 
-        customerAlertText.anchor.setTo(0, 0);
-        leavingAlertText.anchor.setTo(0, 0);
-        stealingAlertText.anchor.setTo(0, 0);
-        checkoutAlertText.anchor.setTo(0,0);
+        // customerAlertText.anchor.setTo(0, 0);
+        // leavingAlertText.anchor.setTo(0, 0);
+        // stealingAlertText.anchor.setTo(0, 0);
+        // checkoutAlertText.anchor.setTo(0,0);
         
         this.setTimer(MANAGERTIMEINTERVAL);
         this.disableButton(this.managerButton);
@@ -254,11 +258,11 @@ BlueRoom.Game.prototype = {
         var counter = 0;
         var color;
         if(alerttype==customerAlert){
-            color = 0x00FF00;
+            color = 0x89e88a;
         } else if (alerttype==leavingAlert){
-            color = 0xffff00;
+            color = 0xffd412;
         } else if (alerttype ==stealingAlert){
-            color = 0xff0000;
+            color = 0xe34242;
         } else if(alerttype ==checkoutAlert){
             color = 0x0099cc;
         }
@@ -274,9 +278,8 @@ BlueRoom.Game.prototype = {
 
         setTimeout(function() {
             clearInterval(statusTimer);
+            alerttype.tint = 0xFFFFFF;
         }, 1900);
-
-        alerttype.tint = 0xFFFFFF;
 
     },
 
@@ -327,6 +330,14 @@ BlueRoom.Game.prototype = {
             this.moneytextTween.start();
             statusBar.money -= Number(amt);
         }, this);
+    },
+
+    toggleSound: function() {
+        if (this.soundButton.key == "sound") {
+            this.soundButton.loadTexture('mute');
+        } else if (this.soundButton.key == 'mute') {
+            this.soundButton.loadTexture('sound');
+        }
     },
 
     // incrementMoney: function(){

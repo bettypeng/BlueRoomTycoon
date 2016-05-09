@@ -58,9 +58,12 @@ BlueRoom.Game.prototype.createBakeryView= function () {
 
     muffinDropZone = this.add.sprite(620, 0, 'muffinDropZone');
 	var bakeryBg = this.add.sprite(0,0, 'bakeryBg');
+    var batterMenu = this.add.sprite(50, 310, 'batterMenu');
     bakeryViewElements.push(bg);
     bakeryViewElements.push(muffinDropZone);
     bakeryViewElements.push(bakeryBg);
+    bakeryViewElements.push(batterMenu);
+
 
     var p1 = this.add.sprite(60, 210, 'muffinPlate');
     var p2 = this.add.sprite(220, 210, 'muffinPlate');
@@ -103,12 +106,12 @@ BlueRoom.Game.prototype.createBakeryView= function () {
 
     this.addBatterToMuffinTin();
 
-    this.setUpMuffinBatter(260, 350, 'pistachioBatter', pistText);
-    this.setUpMuffinBatter(260, 390, 'doubleChocBatter', dchocText);
-    this.setUpMuffinBatter(260, 430, 'chocChipBatter', chocChipText);
-    this.setUpMuffinBatter(260, 470, 'tripleBerryBatter', berryText);
-    this.setUpMuffinBatter(260, 510, 'bananaNutBatter', bananaText);
-    this.setUpMuffinBatter(260, 550, 'branBatter', branText);
+    this.setUpMuffinBatter(120, 335, 'pistachioBatter', pistText);
+    this.setUpMuffinBatter(170, 355, 'doubleChocBatter', dchocText);
+    this.setUpMuffinBatter(220, 375, 'chocChipBatter', chocChipText);
+    this.setUpMuffinBatter(120, 380, 'tripleBerryBatter', berryText);
+    this.setUpMuffinBatter(170, 400, 'bananaNutBatter', bananaText);
+    this.setUpMuffinBatter(220, 420, 'branBatter', branText);
 
     this.setUpMuffin(85, 130, 'pistachio');
     this.setUpMuffin(245, 130, 'doubleChoc');

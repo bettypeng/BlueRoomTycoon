@@ -32,10 +32,12 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('eraseButton', 'images/erase_saved_game.png');
 		
 		// ABOUT
+				this.load.image('howToBg', 'images/howToBg.png');
+
 		this.load.image('nextHowToButton', 'images/how_to_next.png');
 		this.load.image('backHowToButton', 'images/how_to_back.png');
 
-		this.load.image('smallStart', 'images/small_start.png');
+		this.load.image('startHowToButton', 'images/how_to_start.png');
 		this.load.image('banner', 'images/about_banner.png');
 		
 		// BUTTONS
@@ -88,7 +90,15 @@ BlueRoom.Preloader.prototype = {
 
 		this.load.image('employeeBreakStation', 'images/employeebreak.png');
 
-		this.load.image('radiobutton', 'images/alertbutton.png');
+		// this.load.image('radiobutton', 'images/alertbutton.png');
+		this.load.image('new_alert', 'images/new_alert.png');
+		this.load.image('ditch_alert', 'images/ditch_alert.png');
+		this.load.image('theft_alert', 'images/theft_alert.png');
+		this.load.image('pay_alert', 'images/pay_alert.png');
+		this.load.image('customer_tracker', 'images/customer_tracker.png');
+
+		this.load.image('sound', 'images/sound_button.png');
+		this.load.image('mute', 'images/mute_button.png');
 
 		this.load.image('dollar', 'images/checkout.png');
 		this.load.image('dollarSign', 'images/dollar_sign.png');
@@ -199,7 +209,7 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('branBatter', 'images/bakery/bran_batter.png');
 
 		this.load.image('batterDropZone', 'images/bakery/batter_drop_zone.png')
-		this.load.image('batterMenu', 'images/bakery/batter_menu.png');
+		this.load.image('batterMenu', 'images/batter_menu.png');
 		this.load.image('muffinTin', 'images/bakery/baking_tin.png');
 		this.load.image('oven', 'images/bakery/baking_oven.png');
 		this.load.image('ovenClosed', 'images/bakery/closed_oven.png');
