@@ -496,26 +496,26 @@ BlueRoom.Game.prototype.loadUpgrades = function(upgradeName) {
 
  BlueRoom.Game.prototype.loadMagRack = function() {
 
-    if(upgradeList[currentlyDisplayedUpgrade] === "coffee"){
-        NUMBEROFSTATIONS++;
-        this.coffeeStation.visible = true;
-        coffeeButtonOn = true;
-        buy(upgradeList[currentlyDisplayedUpgrade]);
-    }
-    else if(upgradeList[currentlyDisplayedUpgrade] ==="bakery"){
-        NUMBEROFSTATIONS++;
-        this.bakeryStation.visible = true;
-        bakeryButtonOn = true;
-        buy(upgradeList[currentlyDisplayedUpgrade]);
-    }
-    console.log("BUYING: " + upgradeList[currentlyDisplayedUpgrade]);
-    this.addToUpgradeInventory(upgradeList[currentlyDisplayedUpgrade]);
-    this.createPurchaseAlert("bought a new", upgradeList[currentlyDisplayedUpgrade]+" station", upgradeCostList[upgradeList[currentlyDisplayedUpgrade]]);
-    upgradeList.splice(currentlyDisplayedUpgrade, 1);
-    NUMBEROFUPGRADES--;
-    this.fadeUpgradeForward();
-    this.updateCurrUpgrade();
-    console.log(upgradeList);
+    // if(upgradeList[currentlyDisplayedUpgrade] === "coffee"){
+    //     NUMBEROFSTATIONS++;
+    //     this.coffeeStation.visible = true;
+    //     coffeeButtonOn = true;
+    //     buy(upgradeList[currentlyDisplayedUpgrade]);
+    // }
+    // else if(upgradeList[currentlyDisplayedUpgrade] ==="bakery"){
+    //     NUMBEROFSTATIONS++;
+    //     this.bakeryStation.visible = true;
+    //     bakeryButtonOn = true;
+    //     buy(upgradeList[currentlyDisplayedUpgrade]);
+    // }
+    // console.log("BUYING: " + upgradeList[currentlyDisplayedUpgrade]);
+    // this.addToUpgradeInventory(upgradeList[currentlyDisplayedUpgrade]);
+    // this.createPurchaseAlert("bought a new", upgradeList[currentlyDisplayedUpgrade]+" station", upgradeCostList[upgradeList[currentlyDisplayedUpgrade]]);
+    // upgradeList.splice(currentlyDisplayedUpgrade, 1);
+    // NUMBEROFUPGRADES--;
+    // this.fadeUpgradeForward();
+    // this.updateCurrUpgrade();
+    // console.log(upgradeList);
 
  };
 

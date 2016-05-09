@@ -120,9 +120,10 @@ BlueRoom.Load.prototype = {
 	loadGameNumber: function(gameNumber) {
 		var gameFile = "game" + gameNumber + ".brt";
 		saveNumber = gameNumber;
+		loadTheFile = false;
 		if (savedGames[gameNumber]) {
+			loadTheFile = true;
 			this.state.start('Game', true, false, gameFile);
-			
 		} else {
 			restartGame();
 			this.state.start('Game');

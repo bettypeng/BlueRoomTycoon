@@ -56,6 +56,7 @@ var STATIONTIMEINTERVAL = 50;
 
 
 var saveNumber;
+var loadTheFile = false;
 
 var game;
 
@@ -160,7 +161,9 @@ BlueRoom.Game.prototype = {
         }, 1000);
 
         //LOAD THE GAME
-        loadGame(gameFile);
+        if (loadTheFile) {
+            loadGame(gameFile);
+        }
 
        
         //this.showSandwichView();
