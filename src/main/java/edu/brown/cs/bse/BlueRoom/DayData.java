@@ -3,11 +3,12 @@ package edu.brown.cs.bse.BlueRoom;
 public class DayData {
 
   private int sandwichCount;
-  private double sandwichRevenue;
+  //private double sandwichRevenue;
   private int bakeryCount;
-  private double bakeryRevenue;
+  //private double bakeryRevenue;
   private int coffeeCount;
-  private double coffeeRevenue;
+  //private double coffeeRevenue;
+  private int alcCount;
   private int totalPurchases;
   private double totalRevenue;
   private double totalLosses;
@@ -19,6 +20,7 @@ public class DayData {
   public DayData(double expenses) {
     this.expenses = expenses;
     customersLost = 0;
+    alcCount = 0;
     thefts = 0;
     itemsTrashed = 0;
   }
@@ -27,15 +29,18 @@ public class DayData {
     switch (station) {
     case "sandwich":
       sandwichCount++;
-      sandwichRevenue += price;
+      //sandwichRevenue += price;
       break;
     case "coffee":
       coffeeCount++;
-      coffeeRevenue += price;
+      //coffeeRevenue += price;
       break;
     case "bakery":
       bakeryCount++;
-      bakeryRevenue += price;
+      //bakeryRevenue += price;
+      break;
+    case "drink_alc": case "chips_alc":
+      alcCount++;
       break;
     default:
       break;

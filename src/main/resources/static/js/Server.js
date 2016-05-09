@@ -244,6 +244,22 @@ function coffeePurchase (type, iced, size, flavor, id, happiness, paid) {
     
 }
 
+function aLaCartePurchase (station, id, paid) {
+    var payment = JSON.stringify(paid);
+    var postParameters = {type: station, id: id, paid: payment};
+
+    $.post("/alc", postParameters, function(responseJSON) {
+        var responseObject = JSON.parse(responseJSON);
+        var moneyMade = responseObject.moneyMade;
+
+        if (paid) {
+            game.addMoney(500, 530, "+ $"+moneyMade.toFixed(2), moneyMade);
+        } else {
+            game.loseMoney(500, 530, "- $"+moneyMade.toFixed(2), moneyMade);
+        }
+    });
+}
+
 // window.setInterval()
 
 function updateCustomerInterval() {

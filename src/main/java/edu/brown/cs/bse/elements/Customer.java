@@ -1,6 +1,5 @@
 package edu.brown.cs.bse.elements;
 
-
 public class Customer {
 
   private FoodItem order;
@@ -27,9 +26,9 @@ public class Customer {
     return order;
   }
 
-//  public void setOrder(FoodItem newOrder) {
-//    order = newOrder;
-//  }
+  // public void setOrder(FoodItem newOrder) {
+  // order = newOrder;
+  // }
 
   public String getStation() {
     return station;
@@ -37,6 +36,7 @@ public class Customer {
 
   @Override
   public String toString() {
-    return String.format("id: %s, order: %s, station: %s, happiness: %f", id, order, station, happiness);
+    return String.format("id: %s, order: %s, station: %s, happiness: %f", id,
+        order, station, happiness);
   }
 }

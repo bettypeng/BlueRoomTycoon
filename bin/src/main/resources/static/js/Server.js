@@ -162,7 +162,7 @@ function trashHandler (type, numTrashed) {
 
 }
     
-function sandwichPurchase (ingredients, ingMap, bread, id, happiness, paid) {
+function sandwichPurchase (ingredients, ingMap, id, happiness, paid) {
     //bread will be null if the type is not sandwich
     
     
@@ -171,7 +171,7 @@ function sandwichPurchase (ingredients, ingMap, bread, id, happiness, paid) {
     var iMap = JSON.stringify(ingMap);
     var happ = JSON.stringify(happiness);
     var payment = JSON.stringify(paid);
-	var postParameters = {ingredients: ing, map: iMap, id: id, bread: bread, happiness: happ, paid: payment};
+	var postParameters = {ingredients: ing, map: iMap, id: id, happiness: happ, paid: payment};
     
     $.post("/sandwich", postParameters, function(responseJSON){
     
@@ -288,7 +288,9 @@ function saveGame() {
 }
 
 function loadGame(filename) {
+    console.log("LOADING");
     var postParameters = { file: filename };
+    // var currGame = game;
     
     $.post("/load", postParameters, function(responseJSON) {
 		var responseObject = JSON.parse(responseJSON);
@@ -316,5 +318,9 @@ function eraseSavedGame(number) {
 
 function restartGame() {
     $.post("/restart", function(resonseJSON) {});
+}
+
+function startDay() {
+    $.post("/startday", function(){});
 }
 

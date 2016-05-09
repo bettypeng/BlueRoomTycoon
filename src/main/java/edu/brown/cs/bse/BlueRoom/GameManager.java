@@ -13,7 +13,9 @@ import java.util.UUID;
 
 import com.google.common.collect.ImmutableMap;
 
+import edu.brown.cs.bse.elements.ChipsALaCarte;
 import edu.brown.cs.bse.elements.Customer;
+import edu.brown.cs.bse.elements.DrinkALaCarte;
 import edu.brown.cs.bse.elements.Employee;
 import edu.brown.cs.bse.elements.FoodItem;
 
@@ -25,10 +27,13 @@ public class GameManager {
   private static final double BAKERY_TRASH_CONST = 0.5;
   private static final double COFFEE_TRASH_CONST = 1;
   private static final double EMPLOYEE_WAGE = 20;
+  
   public static final Map<String, Double> UPGRADE_COSTS = new ImmutableMap.Builder<String, Double>()
-      .put("bakery", 400.0).put("coffee", 200.0).build();
+      .put("bakery", 400.0).put("coffee", 200.0).put("drink_alc", 75.0)
+      .put("chips_alc", 50.0).put("magazineRack", 100.0).build();
   private static final Map<String, Double> STATION_UPKEEPS = new ImmutableMap.Builder<String, Double>()
-      .put("bakery", 15.0).put("coffee", 10.0).put("sandwich", 0.0).build();
+      .put("bakery", 15.0).put("coffee", 10.0).put("sandwich", 0.0)
+      .put("drink_alc", 5.0).put("chips_alc", 5.0).put("magazineRack", 2.0).build();
 
   private MoneyManager manager;
   private List<Employee> employees;
@@ -122,6 +127,12 @@ public class GameManager {
     case "coffee":
       order = OrderFactory.getDrinkOrder();
       break;
+    case "drink_alc":
+      order = new DrinkALaCarte();
+      break;
+    case "chips_alc":
+      order = new ChipsALaCarte();
+      break;
     default:
       order = OrderFactory.getSandwichOrder();
       break;
@@ -169,16 +180,15 @@ public class GameManager {
 
   // adds a station to the blue room
   public void addStation(String stationName, double cost) {
-    assert stationName.equals("bakery") || stationName.equals("coffee")
-        || stationName
-            .equals("sandwich") : "ERROR: station input should not exist";
     availableStations.add(stationName);
     manager.changeMoney(cost * -1);
     manager.addDailyExpenses(STATION_UPKEEPS.get(stationName));
   }
 
-  public void addMagazineRack() {
+  public void addMagazineRack(double cost) {
     magazineRack = true;
+    manager.addDailyExpenses(STATION_UPKEEPS.get("magazineRack"));
+    manager.changeMoney(cost * -1);
   }
 
   public boolean hasMagazineRack() {
@@ -281,7 +291,7 @@ public class GameManager {
       writer.flush();
     } catch (IOException e) {
       System.out.println("ERROR: problem saving game in file " + filename
-          + ", GameManager.java line 286");
+          + ", GameManager.java line 291");
       System.exit(1);
     }
   }
@@ -295,7 +305,13 @@ public class GameManager {
       for (String station : stationNames) {
         addStation(station, 0);
       }
-      magazineRack = Boolean.parseBoolean(reader.readLine());
+      
+      boolean rack = Boolean.parseBoolean(reader.readLine());
+      if (rack) {
+        addMagazineRack(0);
+      } else {
+        magazineRack = false;
+      }
 
       employees.clear();
       employeeMap.clear();
@@ -313,11 +329,11 @@ public class GameManager {
       System.out.println(baselineInterval);
     } catch (IOException e) {
       System.out.println("ERROR: Problem writing to file " + file
-          + ", GameManager.java line 317");
+          + ", GameManager.java line 324");
       System.exit(1);
     } catch (NumberFormatException e1) {
       System.out.println("ERROR: Improperly formatted save file " + file
-          + ", GameManager.java line 319");
+          + ", GameManager.java line 328");
       System.exit(1);
     }
     startDay();
@@ -325,6 +341,9 @@ public class GameManager {
 
   public void sellStation(String station, double price) {
     availableStations.remove(station);
+    if (station.equals("magazineRack")) {
+      magazineRack = false;
+    }
     manager.changeMoney(price);
     // subtract daily price
     manager.addDailyExpenses(STATION_UPKEEPS.get(station) * -1);
@@ -352,7 +371,7 @@ public class GameManager {
       }
     } catch (IOException e) {
       System.out.println("ERROR: Problem loading file" + filename
-          + ", GameManager.java line 352");
+          + ", GameManager.java line 363");
       System.exit(1);
     }
   }
@@ -383,7 +402,7 @@ public class GameManager {
       writer.flush();
     } catch (IOException e) {
       System.out.println(
-          "ERROR: Could not write to file .gameConfig, GameManager.java line 381");
+          "ERROR: Could not write to file .gameConfig, GameManager.java line 394");
       System.exit(1);
     }
   }
@@ -393,9 +412,8 @@ public class GameManager {
       writer.flush();
     } catch (IOException e) {
       System.out.println("ERROR: could not write to file " + filename
-          + ", GameManager.java line 389");
+          + ", GameManager.java line 404");
       System.exit(1);
-      ;
     }
   }
 

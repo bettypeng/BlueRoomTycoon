@@ -25,9 +25,12 @@ import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 
 import edu.brown.cs.bse.elements.Bread;
+import edu.brown.cs.bse.elements.ChipsALaCarte;
 import edu.brown.cs.bse.elements.Customer;
 import edu.brown.cs.bse.elements.Drink;
+import edu.brown.cs.bse.elements.DrinkALaCarte;
 import edu.brown.cs.bse.elements.Employee;
+import edu.brown.cs.bse.elements.FoodItem;
 import edu.brown.cs.bse.elements.Muffin;
 import edu.brown.cs.bse.elements.Sandwich;
 import edu.brown.cs.bse.elements.SandwichIngredient;
@@ -105,6 +108,7 @@ public class Server {
     Spark.post("/erasegame", new EraseGameHandler());
     Spark.post("/restart", new RestartHandler());
     Spark.post("/startday", new StartDayHandler());
+    Spark.post("/alc",  new ALaCarteHandler());
   }
 
   /**
@@ -279,6 +283,37 @@ public class Server {
       return GSON.toJson(variables);
     }
   }
+  
+  private class ALaCarteHandler implements Route {
+    
+    @Override
+    public Object handle(Request req, Response res) {
+      QueryParamsMap qm = req.queryMap();
+      String type = qm.value("type");
+      FoodItem purchase;
+      if (type.equals("drink_alc")) {
+        purchase = new DrinkALaCarte();
+      } else {
+        purchase = new ChipsALaCarte();
+      }
+      
+      boolean paid = Boolean.parseBoolean(qm.value("paid"));
+      Customer customer = gameManager.getCustomer(qm.value("id"));
+      
+      double moneyMade;
+      if (paid) {
+        moneyMade = gameManager.purchase(purchase, customer);
+      } else {
+        moneyMade = gameManager.steal(purchase, customer);
+      }
+      
+      // return $$
+      Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
+          .put("moneyMade", moneyMade).build();
+
+      return GSON.toJson(variables);
+    }
+  }
 
   /**
    * Triggered when user requests finance information (clicks on cashier or
@@ -421,7 +456,7 @@ public class Server {
       String stationName = qm.value("name");
       if (stationName.equals("magazineRack")) {
         System.out.println("buying magazine rack!");
-        gameManager.addMagazineRack();
+        gameManager.addMagazineRack(GameManager.UPGRADE_COSTS.get(stationName));
       } else {
         // I think the price should be sent back!
         gameManager.addStation(stationName,
