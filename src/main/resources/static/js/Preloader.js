@@ -131,7 +131,7 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('pickle', 'images/sandwich/toppings/pickle.png');
 		this.load.image('tomato', 'images/sandwich/toppings/tomato.png');
 		
-		this.load.image('speechBubble', 'images/sandwich/speech_bubble.png');
+		this.load.image('speechBubble', 'images/speech_bubble.png');
 		this.load.image('happy', 'images/sprites/happy_face.png');
 		this.load.image('neutral', 'images/sprites/neutral_face.png');
 		this.load.image('sad', 'images/sprites/sad_face.png');
