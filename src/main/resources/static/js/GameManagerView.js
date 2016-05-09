@@ -36,12 +36,14 @@ BlueRoom.Game.prototype.createManager = function () {
 
     // BlueRoom.Game.prototype.create.call(this);
     this.add.sprite(0, 0, 'managerBg');
-    this.sandwichStation = this.add.sprite(652, 140, 'sandwichStation');
-    this.bakeryStation = this.add.sprite(400, 140, 'bakeryStation');
+    this.drinkStand = this.add.sprite(870, 30, 'drink_stand');
+    this.chipStand = this.add.sprite(990, 215, 'chip_stand');
+    this.sandwichStation = this.add.sprite(635, 140, 'sandwichStation');
+    this.bakeryStation = this.add.sprite(395, 140, 'bakeryStation');
     this.coffeeStation = this.add.sprite(130, 140, 'coffeeStation');
-    this.magazineRack = this.add.sprite(15, 270, 'magazineRack');
-    this.chipStand = this.add.sprite(970, 200, 'chip_stand');
-    this.drinkStand = this.add.sprite(900, 130, 'drink_stand');
+    this.magazineRack = this.add.sprite(60, 270, 'magazineRack');
+    
+
     this.bakeryStation.visible = false;
     this.coffeeStation.visible = false;
     this.magazineRack.visible = false;
@@ -432,6 +434,13 @@ BlueRoom.Game.prototype.newCustomerReturned = function(customer){
         posx = currThis.coffeeLinePos['x'][numCoffee];
         posy = currThis.coffeeLinePos['y'][numCoffee];
     }
+    // } else if(customer.station =="chips_alc"){
+    //     posx = currThis.game.rnd.integerInRange(900, 1050);
+    //     posy = currThis.game.rnd.integerInRange(400, 450);
+    // } else if(customer.station =="drink_alc"){
+    //     posx = currThis.game.rnd.integerInRange(900, 1050);
+    //     posy = currThis.game.rnd.integerInRange(400, 450);
+    // }
     
     customer.moving = true;
     var tween = currThis.add.tween(currThis.customer).to( { x: posx, y: posy }, 2000, null, true);
