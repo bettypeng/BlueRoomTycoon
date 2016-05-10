@@ -44,7 +44,7 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 	hire.anchor.setTo(0.5, 0);
 	var upgrade = this.add.button(900, 380, 'upgradeButton', this.createUpgradeView, this);
 	upgrade.anchor.setTo(0.5, 0);
-	var close = this.add.button(900, 460, 'exitViewButton', this.destroyDayEndView, this);
+	var close = this.add.button(900, 460, 'exitViewButton', startDay, this);
 	close.anchor.setTo(0.5, 0);
 	var save = this.add.button(900, 20, 'saveButton', saveGame, this);
 	save.tint = 0xec6565;
@@ -112,17 +112,17 @@ BlueRoom.Game.prototype.enableDayEndButtons = function(){
 // };
 
 BlueRoom.Game.prototype.destroyDayEndView= function(){
-	this.managerButton.visible = true;
-	this.sandwichButton.visible = true;
+	currThis.managerButton.visible = true;
+	currThis.sandwichButton.visible = true;
 	if(coffeeButtonOn){
-		this.coffeeButton.visible = true;
+		currThis.coffeeButton.visible = true;
 	} else{
-		this.coffeeButton.visible = false;
+		currThis.coffeeButton.visible = false;
 	}
 	if(bakeryButtonOn){
-		this.bakeryButton.visible = true;
+		currThis.bakeryButton.visible = true;
 	} else{
-		this.bakeryButton.visible = false;
+		currThis.bakeryButton.visible = false;
 	}
 	dayEndViewElements.forEach(function(item){
 		item.destroy();
@@ -134,20 +134,19 @@ BlueRoom.Game.prototype.destroyDayEndView= function(){
     coffeeView = false;
     bakeryView = false;
     dayEndView = false;
-	this.hideSandwichView();
-    this.hideCoffeeView();
-    this.hideBakeryView();
-    this.disableButton(this.managerButton);
+	currThis.hideSandwichView();
+    currThis.hideCoffeeView();
+    currThis.hideBakeryView();
+    currThis.disableButton(currThis.managerButton);
     if (!sandwichStationFilled ) {
-        this.enableButton(this.sandwichButton);
+        currThis.enableButton(currThis.sandwichButton);
     }
     if (!coffeeStationFilled) {
-        this.enableButton(this.coffeeButton);
+        currThis.enableButton(currThis.coffeeButton);
     }
     if (!bakeryStationFilled) {
-        this.enableButton(this.bakeryButton);
+        currThis.enableButton(currThis.bakeryButton);
     }
 
-	startDay();
-	this.resetGameDay();
+	currThis.resetGameDay();
 };

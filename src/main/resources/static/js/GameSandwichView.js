@@ -372,6 +372,7 @@ BlueRoom.Game.prototype.trashButton = function () {
         nonSandwich = [];
     }
     if (currSandSprites.length != 0) {
+        transitioning = true;
         totalTrash += currSandSprites.length;
         for (var i=0; i<currSandSprites.length; i++) {
             movableElements.remove(currSandSprites[i]);
@@ -394,6 +395,7 @@ BlueRoom.Game.prototype.trashButton = function () {
 
             this.add.tween(currOrderElem).to( { alpha: 1 }, 500, Phaser.Easing.Linear.None, true);
             sandwichViewElements.push(currOrderElem);
+            transitioning = false;
         }, this);
     }
     trashHandler("sandwich", totalTrash);

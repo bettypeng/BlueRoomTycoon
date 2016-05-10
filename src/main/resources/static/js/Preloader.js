@@ -21,6 +21,19 @@ BlueRoom.Preloader.prototype = {
 
 		//	Load the rest of the assets our game needs.
 
+		//HOW TO
+		this.load.image('pg0', 'images/howto/pg0.png');
+		this.load.image('pg1', 'images/howto/pg1.png');
+		this.load.image('pg2', 'images/howto/pg2.png');
+
+		this.load.image('pg3', 'images/howto/pg3.png');
+		this.load.image('pg4', 'images/howto/pg4.png');
+		this.load.image('pg5', 'images/howto/pg5.png');
+
+		this.load.image('pg6', 'images/howto/pg6.png');
+		this.load.image('pg7', 'images/howto/pg7.png');
+
+
 		// MAINMENU
 		this.load.image('titlepage', 'images/start_page.png');
 		this.load.image('playButton', 'images/start_game_button.png');

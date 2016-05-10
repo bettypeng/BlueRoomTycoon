@@ -337,6 +337,18 @@ function restartGame() {
 }
 
 function startDay() {
-    $.post("/startday", function(){});
+    $.post("/startday", function(responseJSON){
+        var responseObject = JSON.parse(responseJSON);
+        var expenses = responseObject.expenses;
+
+        if (expenses >= statusBar.money || Math.abs(statusBar.money - expenses)<=10) {
+            // console.log(statusBar.money);
+            // console.log(expenses);
+            BlueRoom.Game.prototype.createGeneralAlert("You're running out of money! Check your inventory to cut any "+
+                "unnecessary expenses.");
+        } else {
+            BlueRoom.Game.prototype.destroyDayEndView();
+        }
+    });
 }
 
