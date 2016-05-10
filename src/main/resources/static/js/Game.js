@@ -162,6 +162,8 @@ BlueRoom.Game.prototype = {
             }
         }, 1000);
 
+      
+
         //LOAD THE GAME
         if (loadTheFile) {
             loadGame(gameFile);

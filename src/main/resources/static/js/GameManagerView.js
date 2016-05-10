@@ -17,6 +17,8 @@ var employeeGroup;
 var employeeMap = {};
 var isBlueRoomOpen = true;
 
+var numCashier= 0;
+
 var empMakingSandwich = false;
 var empMakingCoffee = false;
 var empMakingMuffin = false;
@@ -142,9 +144,7 @@ BlueRoom.Game.prototype.createManager = function () {
 
     setInterval(function() {
         managerCounter += managerIncr;
-        console.log(managerCounter);
         //console.log(managerIncr);
-        console.log(CUSTOMERINTERVAL);
         if(managerCounter % CUSTOMERINTERVAL == 0 && numSandwich<15 && numCoffee<11 && numBakery<11 && isBlueRoomOpen && !gamePaused){
             getCustomer();
             currThis.statusAlert(customerAlert);
@@ -258,7 +258,7 @@ BlueRoom.Game.prototype.abandonLine = function(customer){
         var ypos = currThis.game.rnd.integerInRange(300, 500);
         var tween = currThis.add.tween(currCustomer).to( { x: xpos, y: ypos }, 2000, null, true);
         tween.onComplete.add(onCashierMoveComplete, currThis);
-        // numCashier++;
+        numCashier++;
 
         
         function onCashierMoveComplete(){
@@ -311,10 +311,12 @@ BlueRoom.Game.prototype.cashCustomerOut= function(customer){
         customer.sprite.visible = false;
         numCustomer--;
         leaving = false;
+        numCashier--;
+        console.log("waiting: " + numCashier);
     }
 };
 
-BlueRoom.Game.prototype.steal = function(customer){
+BlueRoom.Game.prototype.steal = function(customer, fromPatience){
     this.statusAlert(stealingAlert);
 
     var c = customer;
@@ -340,6 +342,11 @@ BlueRoom.Game.prototype.steal = function(customer){
         clearInterval(customer.myTimer);
         numCustomer--;
         leaving = false;
+        if(fromPatience){
+            numCashier--;
+
+        }
+        console.log("STOLE: " + numCashier + " status " + fromPatience);
     }
 }
 

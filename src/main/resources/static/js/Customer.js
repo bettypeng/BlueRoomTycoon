@@ -206,7 +206,7 @@ Customer.prototype = {
         this.moving = true;
         if(!this.cashedOut){
             if(this.ingredients!=null || this.drinkType !=null || this.muffinType != null){
-                currThis.steal(this);
+                currThis.steal(this, true);
                 console.log("STEAL");
             }
             else{

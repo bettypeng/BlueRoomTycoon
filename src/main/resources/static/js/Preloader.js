@@ -266,14 +266,14 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('inventoryDown', 'images/inventory/down_arrow.png');
 		this.load.image('sellButton', 'images/inventory/white_sell_button.png');
 		this.load.image('fireButton', 'images/inventory/white_fire_button.png');
-		this.load.image('i_erik', 'images/inventory/erik.png');
-		this.load.image('i_alex', 'images/inventory/alex.png');
-		this.load.image('i_rachel', 'images/inventory/rachel.png');
-		this.load.image('i_coffee', 'images/inventory/coffee.png');
-		this.load.image('i_bakery', 'images/inventory/bakery.png');
-		this.load.image('i_magazine rack', 'images/inventory/magazine.png');
-		this.load.image('i_chips_alc', 'images/inventory/magazine.png');
-		this.load.image('i_drink_alc', 'images/inventory/magazine.png');
+		this.load.image('i_erik', 'images/inventory/i_erik.png');
+		this.load.image('i_alex', 'images/inventory/i_alex.png');
+		this.load.image('i_rachel', 'images/inventory/i_rachel.png');
+		this.load.image('i_coffee', 'images/inventory/i_coffee.png');
+		this.load.image('i_bakery', 'images/inventory/i_bakery.png');
+		this.load.image('i_magazine rack', 'images/inventory/i_magazine.png');
+		this.load.image('i_chips_alc', 'images/inventory/i_chips.png');
+		this.load.image('i_drink_alc', 'images/inventory/i_drinks.png');
 
 
 

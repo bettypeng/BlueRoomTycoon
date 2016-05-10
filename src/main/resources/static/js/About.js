@@ -15,8 +15,7 @@ nextText.push("Congratulations! You have just purchased Brown's most beloved eat
             "the Blue Room. You begin with nothing but a sandwich station, a cash register, and $50 in your pocket. "+
             "\n \nFor now, you are the lone manager and worker of the Blue Room. All of Brown is depending on you to keep their "+
             "favorite eatery afloat!");
-nextText.push("You will begin with two views of the Blue Room: Manager and Sandwich. With time, you can buy the Coffee Station and the "+
-            "bakery. The "+
+nextText.push("You will begin with two views of the Blue Room: Manager and Sandwich. With time, you can buy a coffee station, a bakery, and countless other upgrades. The "+
             "icons in the top left corner allow you to switch between these views. Your job is to serve all the "+
             "customers by creating their orders and checking them out at the cash register. ");
 nextText.push("You can check customers "+
