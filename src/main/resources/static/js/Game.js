@@ -435,6 +435,21 @@ BlueRoom.Game.prototype = {
                 endDayStats();
             }
         }
+
+        if(statusBar.money < 0){
+            this.add.sprite(0,0,'bankrupt');
+            gamePaused = true;
+            this.hideSandwichView();
+            this.hideCoffeeView();
+            this.hideBakeryView();
+
+            managerView = false;
+            sandwichView = false;
+            coffeeView = false;
+            bakeryView = false;
+            clearInterval(gameTimer);
+            this.disableButton(this.pauseButton);
+        }
     },
     
 
@@ -509,11 +524,7 @@ BlueRoom.Game.prototype = {
 
     quitGame: function () {
 
-        //  Destroy anything you no longer need.
-        //  Stop music, delete sprites, purge caches, free resources, all that good stuff.
 
-        //  Then let's go back to the main menu.
-        this.state.start('MainMenu');
 
     },
 

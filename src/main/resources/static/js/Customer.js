@@ -1,10 +1,11 @@
-var sign;
 var CUSTOMERHAPPINESSINTERVAL = 80;
 //var currThis = this;
 
 function Customer(id, station, order){
     this.id = id;
     this.sprite = currThis.game.add.group();
+    this.sign;
+
 
     var shirtColor = currThis.game.rnd.integerInRange(0, 4);
     var cust;
@@ -122,30 +123,31 @@ Customer.prototype = {
             currThis.cashCustomerOut(this);
         }
         else{
-            sign.visible = true;
+            this.sign.visible = true;
         }
     
     },
 
     hideDollar: function(){
-        // this.sprite.remove(sign);
-        sign.visible = false;
+        // this.sprite.remove(this.sign);
+        this.sign.visible = false;
     },
 
     flashDollar: function(){
-        sign = currThis.add.sprite(0, -80, 'dollarSign');
-        sign.anchor.setTo(0.5, 0.5);
-        this.sprite.add(sign);
+        var currCust = this;
+        this.sign = currThis.add.sprite(0, -80, 'dollarSign');
+        this.sign.anchor.setTo(0.5, 0.5);
+        this.sprite.add(this.sign);
         var counter = 0;
-        var timer = setInterval(function(){
+        var custDollartimer = setInterval(function(){
             if(counter%2 == 0){
-                sign.loadTexture('dollarSign');
+                currCust.sign.loadTexture('dollarSign');
             }
             else{
-                sign.loadTexture('dollarSignDark');
+                currCust.sign.loadTexture('dollarSignDark');
             }
             counter++;
-        }, 100);
+        }, 300);
     },
 
    	createBar : function(){

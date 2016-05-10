@@ -22,16 +22,19 @@ function Employee(name){
     this.name = name;
 
     this.employeeSprite = currThis.game.add.group();
-
+    var xStart;
     if(name==="erik"){
         this.fullBody = "erik_employee";
         this.halfBody = "erik_employeeHalf";
+        xStart = 430;
     } else if(name ==="alex"){
         this.fullBody = "alex_employee";
         this.halfBody = "alex_employeeHalf";
+        xStart = 530;
     } else{
         this.fullBody = "rachel_employee";
         this.halfBody = "rachel_employeeHalf";
+        xStart = 630;
     }
 
     var e = currThis.game.add.sprite(0, 0, this.fullBody);
@@ -45,7 +48,7 @@ function Employee(name){
     this.workHoursSprite.anchor.setTo(0.5, 0.5);
     this.employeeSprite.add(this.workHoursSprite);
 
-    this.employeeSprite.x = 440;
+    this.employeeSprite.x = xStart;
     this.employeeSprite.y = 500;
 
     this.station;
