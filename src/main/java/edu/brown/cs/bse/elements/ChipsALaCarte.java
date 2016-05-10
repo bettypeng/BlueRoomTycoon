@@ -4,7 +4,7 @@ public class ChipsALaCarte extends FoodItem {
 
   public ChipsALaCarte() {
     setPrice(2.30);
-    setMaxTip(1);
+    setMaxTip(0);
   }
 
   @Override

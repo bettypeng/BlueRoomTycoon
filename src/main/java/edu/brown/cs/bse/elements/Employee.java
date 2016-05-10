@@ -35,12 +35,12 @@ public class Employee {
     return name;
   }
 
-  public void setStation(String newStation) {
-    station = newStation;
-  }
-
   public void setEnergy(double energy) {
     this.energy = energy;
+  }
+  
+  public double getEnergy() {
+    return energy;
   }
 
   public String getStation() {

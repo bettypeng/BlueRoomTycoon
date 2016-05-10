@@ -64,9 +64,7 @@ public class MoneyManager {
     dailyNetProfits.add(currDay.getTotalRevenue()
         - (currDay.getExpenses() + currDay.getLosses()));
     gameData.addDayData(currDay);
-    // currDay = new DayData(dailyExpenses);
     money -= dailyExpenses;
-    System.out.println(dailyExpenses);
     dayNum++;
   }
 
@@ -74,10 +72,8 @@ public class MoneyManager {
     currDay = new DayData(dailyExpenses);
   }
 
-  public void handleAbandon(String station) {
+  public void handleAbandon() {
     currDay.customerLost();
-    // switch on the station to decrement money by baseline price for item at
-    // that station
   }
 
   public void handleTheft() {

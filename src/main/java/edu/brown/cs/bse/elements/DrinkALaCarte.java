@@ -4,7 +4,7 @@ public class DrinkALaCarte extends FoodItem {
 
   public DrinkALaCarte() {
     setPrice(4.25);
-    setMaxTip(1);
+    setMaxTip(0);
   }
 
   @Override
