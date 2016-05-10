@@ -1,6 +1,7 @@
 package EconomicsSimulator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -54,11 +55,17 @@ public class SimulatorMain {
     if (manager.hasMagazineRack()) {
       upgradesPurchased.add("magazineRack");
     }
+    
     String bestStationToBuy = getCheapestAvailableUpgrade(upgradesPurchased);
     if (bestStationToBuy.equals("")) {
       System.out
           .println("all upgrades purchased by day " + manager.getDayNum());
+      return;
     }
+    if (bestStationToBuy.equals("coffee") || manager.getEmployeeNames().size() < 1) {
+      
+    }
+    
   }
 
   private double getRandVal() {
@@ -80,6 +87,15 @@ public class SimulatorMain {
       }
     }
     return best;
+  }
+  
+  private String pickEmployeeToHire(List<String> currEmployees) {
+    List<String> names = new ArrayList<>(Arrays.asList("erik", "alex", "rachel"));
+    for (String s : currEmployees) {
+      names.remove(s);
+    }
+    int rand = (int)(Math.random() * names.size());
+    return names.get(rand);
   }
 
 }
