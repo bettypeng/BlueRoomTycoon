@@ -1,13 +1,13 @@
 var EMPLOYEEINTERVAL = 300;
 //sandwich station coords
 var SSX = 750;
-var SSY = 110;
+var SSY = 100;
 //bakery station coords
 var BSX = 472;
-var BSY = 110;
+var BSY = 100;
 //coffee station coords
 var CSX = 215;
-var CSY = 110;
+var CSY = 100;
 
 var sandwichStationFilled = false;
 var bakeryStationFilled = false;

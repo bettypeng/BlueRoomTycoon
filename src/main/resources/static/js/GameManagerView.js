@@ -39,11 +39,11 @@ BlueRoom.Game.prototype.createManager = function () {
 
     // BlueRoom.Game.prototype.create.call(this);
     this.add.sprite(0, 0, 'managerBg');
-    this.drinkStand = this.add.sprite(870, 30, 'drink_stand');
+    this.drinkStand = this.add.sprite(870, 20, 'drink_stand');
     this.chipStand = this.add.sprite(990, 215, 'chip_stand');
-    this.sandwichStation = this.add.sprite(635, 140, 'sandwichStation');
-    this.bakeryStation = this.add.sprite(395, 140, 'bakeryStation');
-    this.coffeeStation = this.add.sprite(130, 140, 'coffeeStation');
+    this.sandwichStation = this.add.sprite(635, 130, 'sandwichStation');
+    this.bakeryStation = this.add.sprite(395, 130, 'bakeryStation');
+    this.coffeeStation = this.add.sprite(130, 130, 'coffeeStation');
     this.magazineRack = this.add.sprite(30, 310, 'magazineRack');
     
 

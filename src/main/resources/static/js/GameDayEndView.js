@@ -48,8 +48,8 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 	close.anchor.setTo(0.5, 0);
 	var save = this.add.button(900, 20, 'saveButton', saveGame, this);
 	save.tint = 0xec6565;
-	var quitBtn = this.add.button(20, 20, 'quitButton', this.quitGame, this);
-	quitBtn.tint = 0xec6565;
+	// var quitBtn = this.add.button(20, 20, 'quitButton', this.quitGame, this);
+	// quitBtn.tint = 0xec6565;
 
 	viewInventory.tint = 0xf2f2f2;
 	hire.tint = 0xf2f2f2;
@@ -60,7 +60,7 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 	dayEndButtons.push(upgrade);
 	dayEndButtons.push(close);
 	dayEndButtons.push(save);
-	dayEndButtons.push(quitBtn);
+	// dayEndButtons.push(quitBtn);
 
 
 	dayEndViewElements.push(title);
@@ -79,7 +79,7 @@ BlueRoom.Game.prototype.createDayEndView= function (dailyInfo, totalInfo) {
 	dayEndViewElements.push(hire);
 	dayEndViewElements.push(close);
 	dayEndViewElements.push(save);
-	dayEndViewElements.push(quitBtn);
+	// dayEndViewElements.push(quitBtn);
 
 
 	managerView = false;
