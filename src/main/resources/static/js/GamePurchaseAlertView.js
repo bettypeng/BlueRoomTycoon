@@ -6,6 +6,15 @@ BlueRoom.Game.prototype.createPurchaseAlert= function (type, purchase, cost) {
 	purchaseAlertElements.push(alertBg);
 
     var alertstyle = { font: "18px Roboto-Thin", fill: "#000000", wordWrap: true, wordWrapWidth: 400, align: "center" };
+    if(purchase ==="bakery"){
+    	purchase = "bakery station";
+    } else if(purchase ==="coffee"){
+    	purchase = "coffee station";
+    } else if(purchase === "drink_alc"){
+    	purchase = "drink fridge";
+    } else if(purchase === "chips_alc"){
+    	purchase = "chips stand";
+    } 
     var alert = this.game.add.text(this.game.width/2, 230, "Congratulations, you have just " + type +" " + purchase + "! $" + cost + " has been subtracted from your balance. Make sure you keep an eye out for the rise in daily expenses!"  , alertstyle);
     alert.anchor.setTo(0.5, 0.5);
     purchaseAlertElements.push(alert);

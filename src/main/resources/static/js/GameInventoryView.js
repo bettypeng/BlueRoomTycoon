@@ -75,8 +75,10 @@ BlueRoom.Game.prototype.removeFromEmployeeInventory = function(){
 		this.fadeInventoryEmployeeForward();
 	}
 
-	this.createGeneralAlert("You have successfully fired " + name + ". Sorry, " + name + "!");
-
+	this.createGeneralAlert("You have successfully fired " + capitalizeFirstLetter(name) + ". Sorry, " + capitalizeFirstLetter(name) + "!");
+	function capitalizeFirstLetter(string) {
+	    return string.charAt(0).toUpperCase() + string.slice(1);
+	}
 };
 
 BlueRoom.Game.prototype.setUpEmployeeInventory = function(){
@@ -147,7 +149,17 @@ BlueRoom.Game.prototype.removeFromUpgradeInventory = function(){
 		this.fadeInventoryUpgradeForward();
 	}
 
-	this.createGeneralAlert("You have just sold your " + name +  " station.");
+	var sentname; 
+	if(name ==="bakery"){
+    	sentname = "bakery station";
+    } else if(name ==="coffee"){
+    	sentname = "coffee station";
+    } else if(name === "drink_alc"){
+    	sentname = "drink fridge";
+    } else if(name === "chips_alc"){
+    	sentname = "chips stand";
+    } 
+	this.createGeneralAlert("You have just sold your " + sentname+ "!");
 
 
 		

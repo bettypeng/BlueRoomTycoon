@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
 import edu.brown.cs.bse.elements.ChipsALaCarte;
@@ -26,12 +27,12 @@ public class GameManager {
   private static final double SANDWICH_TRASH_CONST = 0.3;
   private static final double BAKERY_TRASH_CONST = 0.5;
   private static final double COFFEE_TRASH_CONST = 1;
-  private static final double EMPLOYEE_WAGE = 20;
+  public static final double EMPLOYEE_WAGE = 20;
   
   public static final Map<String, Double> UPGRADE_COSTS = new ImmutableMap.Builder<String, Double>()
-      .put("bakery", 400.0).put("coffee", 200.0).put("drink_alc", 75.0)
+      .put("bakery", 300.0).put("coffee", 200.0).put("drink_alc", 75.0)
       .put("chips_alc", 50.0).put("magazineRack", 100.0).build();
-  private static final Map<String, Double> STATION_UPKEEPS = new ImmutableMap.Builder<String, Double>()
+  public static final Map<String, Double> STATION_UPKEEPS = new ImmutableMap.Builder<String, Double>()
       .put("bakery", 15.0).put("coffee", 10.0).put("sandwich", 0.0)
       .put("drink_alc", 5.0).put("chips_alc", 5.0).put("magazineRack", 2.0).build();
 
@@ -161,7 +162,7 @@ public class GameManager {
 
   // gets the list of available stations
   public List<String> getAvailableStations() {
-    return availableStations;
+    return ImmutableList.copyOf(availableStations);
   }
 
   // gets a list of names of all employees (not employee objects themselves)
@@ -236,9 +237,9 @@ public class GameManager {
     manager.startDay();
   }
 
-  public void leave(String station) {
+  public void leave() {
     leftToday++;
-    manager.handleAbandon(station);
+    manager.handleAbandon();
   }
 
   public int getDayNum() {
@@ -250,15 +251,20 @@ public class GameManager {
   // }
 
   public double calculateCustomerInterval() {
-    double interval = baselineInterval + (leftToday * 10);
+    int interval = baselineInterval + (leftToday * 10);
     interval -= (100 * (employees.size()));
     if (availableStations.size() == 2) {
       interval /= 1.5;
     } else if (availableStations.size() == 3) {
       interval /= 2;
+    } else if (availableStations.size() > 3) {
+      interval /= 2.5;
     }
-    if (interval < 50) {
-      return 50;
+    if (interval % 4 != 0) {
+      interval += (4 - (interval % 4));
+    }
+    if (interval < 52) {
+      return 52;
     }
     return interval;
   }
@@ -326,7 +332,6 @@ public class GameManager {
 
       int dayNum = manager.load(reader);
       baselineInterval = 1100 - (dayNum * 100);
-      System.out.println(baselineInterval);
     } catch (IOException e) {
       System.out.println("ERROR: Problem writing to file " + file
           + ", GameManager.java line 324");
