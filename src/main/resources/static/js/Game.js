@@ -76,7 +76,7 @@ BlueRoom.Game.prototype = {
         this.bakeryButton = this.add.button(10, 235, 'bakeryButton', goToBakeryView, this);
         this.status_bar = this.add.sprite(0, 600, 'status_bar');
         this.pauseButton = this.add.button(980, 615, 'pauseButton', this.showPauseScreen, this);
-        this.soundButton = this.add.button(900, 615, 'sound', this.toggleSound, this);
+        // this.soundButton = this.add.button(900, 615, 'sound', this.toggleSound, this);
 
         customerAlert = this.add.sprite(40, 635, 'new_alert');
         leavingAlert = this.add.sprite(100, 635, 'ditch_alert');
@@ -96,18 +96,18 @@ BlueRoom.Game.prototype = {
         gamegroup.add(this.bakeryButton);
         gamegroup.add(this.coffeeButton);
         gamegroup.add(this.pauseButton);
-        gamegroup.add(this.soundButton);
+        // gamegroup.add(this.soundButton);
 
         
         var status = statusBar;
         var style = { font: "32px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left"};
 
         moneytext = this.game.add.text(390, 650, '$' + (status.money.toFixed(2)), style);
-        daytext = this.game.add.text(590, 650,  status.day[dayCounter%7], style);
+        daytext = this.game.add.text(620, 650,  status.day[dayCounter%7], style);
         //timetext = this.game.add.text(800, 650,  status.hour + ':' + status.minute, style);
-        timetext = this.game.add.text(760, 650,  status.hour, style);
-        ampmtext = this.game.add.text(800, 650,  status.ampm[twelveCounter%2], style);
-        closedtext = this.game.add.text(780, 650,  "CLOSING TIME!", style);
+        timetext = this.game.add.text(800, 650,  status.hour, style);
+        ampmtext = this.game.add.text(840, 650,  status.ampm[twelveCounter%2], style);
+        closedtext = this.game.add.text(800, 650,  "CLOSING TIME!", style);
         this.closedSign(false);
 
         var newstyle = { font: "12px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left"};
@@ -334,13 +334,13 @@ BlueRoom.Game.prototype = {
         }, this);
     },
 
-    toggleSound: function() {
-        if (this.soundButton.key == "sound") {
-            this.soundButton.loadTexture('mute');
-        } else if (this.soundButton.key == 'mute') {
-            this.soundButton.loadTexture('sound');
-        }
-    },
+    // toggleSound: function() {
+    //     if (this.soundButton.key == "sound") {
+    //         this.soundButton.loadTexture('mute');
+    //     } else if (this.soundButton.key == 'mute') {
+    //         this.soundButton.loadTexture('sound');
+    //     }
+    // },
 
     // incrementMoney: function(){
     //     statusBar.money = statusBar.money + .01;   
