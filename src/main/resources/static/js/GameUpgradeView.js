@@ -5,7 +5,7 @@ var upgradeList = ["coffee", "bakery", "drink_alc", "chips_alc", "magazine rack"
 var upgradeCostList = [];
 var upgradeUpkeepList = [];
 upgradeCostList["coffee"] = 200;
-upgradeCostList["bakery"] = 400;
+upgradeCostList["bakery"] = 300;
 upgradeCostList["magazine rack"] = 100;
 upgradeCostList["drink_alc"] = 75;
 upgradeCostList["chips_alc"] = 50;
@@ -174,7 +174,7 @@ BlueRoom.Game.prototype.fadeUpgradeBackward = function() {
  	}
  	console.log("BUYING: " + upgradeList[currentlyDisplayedUpgrade]);
  	this.addToUpgradeInventory(upgradeList[currentlyDisplayedUpgrade]);
- 	this.createPurchaseAlert("bought a new", upgradeList[currentlyDisplayedUpgrade]+" station", upgradeCostList[upgradeList[currentlyDisplayedUpgrade]]);
+ 	this.createPurchaseAlert("bought a new", upgradeList[currentlyDisplayedUpgrade], upgradeCostList[upgradeList[currentlyDisplayedUpgrade]]);
 	upgradeList.splice(currentlyDisplayedUpgrade, 1);
 	NUMBEROFUPGRADES--;
 	this.fadeUpgradeForward();

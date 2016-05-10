@@ -3,7 +3,7 @@ var NUMBEROFHIRES = 3;
 var currentlyDisplayedHire = 0;
 var hireList = ["erik", "alex", "rachel"];
 var HIRECOST = 100;
-var EMPLOYEEWAGE = 50;
+var EMPLOYEEWAGE = 20;
 var hireMeButton;
 
 BlueRoom.Game.prototype.createHireView= function () {

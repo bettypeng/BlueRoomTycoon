@@ -62,6 +62,9 @@ BlueRoom.Preloader.prototype = {
 		this.load.image('chip_stand', 'images/bright_chips_stand.png');
 		this.load.image('drink_stand', 'images/drink_fridge.png');
 
+		this.load.image('bankrupt', 'images/lose_screen.png');
+
+
 		//this.load.image('sandwichBg', 'images/sandwich_bg.png');
 		this.load.image('sandwichBg', 'images/sandwich/sandwich_bg.png');
 
@@ -235,13 +238,13 @@ BlueRoom.Preloader.prototype = {
 
 
 		// HIRE PAGE
-		this.load.image('next', 'images/next_btn.png');
-		this.load.image('prev', 'images/prev_btn.png');
+		this.load.image('next', 'images/slide_forward.png');
+		this.load.image('prev', 'images/slide_backward.png');
 		this.load.image('hireMeButton', 'images/hire_me_button.png');
 		// this.load.image('philPage', 'images/hire/phil.png');
-		this.load.image('erik', 'images/hire/hire_erik.png');
-		this.load.image('alex', 'images/hire/hire_alex.png');
-		this.load.image('rachel', 'images/hire/hire_rachel.png');
+		this.load.image('erik', 'images/hire/hire_erik_screen.png');
+		this.load.image('alex', 'images/hire/hire_alex_screen.png');
+		this.load.image('rachel', 'images/hire/hire_rachel_screen.png');
 
 		// HIRE VIEW STAR TEMPLATES
 		this.load.image('oneStar', 'images/hire/one_star.png');
@@ -252,11 +255,11 @@ BlueRoom.Preloader.prototype = {
 
 		//UPGRADE PAGE
 		this.load.image('buyButton', 'images/buy_now_button.png');
-		this.load.image('coffee', 'images/upgrades/coffee_bar.png');
-		this.load.image('bakery', 'images/upgrades/bakery.png');
-		this.load.image('magazine rack', 'images/upgrades/magazine_rack.png');
-		this.load.image('drink_alc', 'images/upgrades/magazine_rack.png');
-		this.load.image('chips_alc', 'images/upgrades/magazine_rack.png');
+		this.load.image('coffee', 'images/upgrades/coffee_slide.png');
+		this.load.image('bakery', 'images/upgrades/bakery_slide.png');
+		this.load.image('magazine rack', 'images/upgrades/magazine_slide.png');
+		this.load.image('drink_alc', 'images/upgrades/drink_fridge.png');
+		this.load.image('chips_alc', 'images/upgrades/chips_slide.png');
 
 		//INVENTORY
 		this.load.image('inventoryUp', 'images/inventory/up_arrow.png');
