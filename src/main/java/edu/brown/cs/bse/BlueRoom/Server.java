@@ -522,15 +522,11 @@ public class Server {
 
     @Override
     public Object handle(Request req, Response res) {
-      QueryParamsMap qm = req.queryMap();
 
-      String station = qm.value("station");
+      gameManager.leave();
 
-      gameManager.leave(station);
-
-      List<String> results = new ArrayList<>();
       Map<String, Object> variables = new ImmutableMap.Builder<String, Object>()
-          .put("results", results).build();
+          .put("results", "").build();
       return GSON.toJson(variables);
     }
   }
