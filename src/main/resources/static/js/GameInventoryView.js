@@ -21,7 +21,7 @@ BlueRoom.Game.prototype.createInventoryView= function () {
 	title.anchor.setTo(0.5, 0);
 
 	var labelStyle = {font: "25px Roboto", fill: "#000000", align: "center"};
-	var detailStyle = {font: "15px Roboto-Thin", fill: "#000000", align: "center"};
+	var detailStyle = {font: "15px Roboto-Light", fill: "#000000", align: "center"};
 
 	var employees = this.game.add.text(this.game.width/3, 150, 'EMPLOYEES', labelStyle);
 	employees.anchor.setTo(0.5, 0);
