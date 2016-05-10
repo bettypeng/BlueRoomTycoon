@@ -48,6 +48,7 @@
 <div id="gameContainer"></div>
 
 <script type="text/javascript">
+var PHASERGAME;
 
 window.onload = function() {
 
@@ -55,6 +56,7 @@ window.onload = function() {
 	//	Here, a window.onload event, but you can do it anywhere (requireJS load, anonymous function, jQuery dom ready, - whatever floats your boat)
 	//var game = new Phaser.Game(1024, 768, Phaser.AUTO, 'gameContainer');
 	var game = new Phaser.Game(1058, 700, Phaser.AUTO, 'gameContainer');
+	PHASERGAME = game;
 
 
 	//	Add the States game has.

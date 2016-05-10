@@ -62,7 +62,8 @@ var game;
 
 BlueRoom.Game.prototype = {
 
-    init: function (gameFile) {        
+    init: function (gameFile) { 
+        console.log(PHASERGAME);       
         game = this;
         var mygame = this;
         //this.add.sprite(0, 0, 'whiteBg');
@@ -387,26 +388,26 @@ BlueRoom.Game.prototype = {
 
         if(sandwichView){
             this.sandwichUpdate();
-            // managerIncr = 4;
-            // if (managerCounter % 4 != 0) { 
-            //     managerCounter += (4 - (managerCounter % 4));
-            // }
+            managerIncr = 4;
+            if (managerCounter % 4 != 0) { 
+                managerCounter += (4 - (managerCounter % 4));
+            }
         }
 
         if(coffeeView) {
             this.coffeeUpdate();
-            // managerIncr = 2;
-            // if (managerCounter % 2 != 0) { 
-            //     managerCounter += 1;
-            // }
+            managerIncr = 2;
+            if (managerCounter % 2 != 0) { 
+                managerCounter += 1;
+            }
         }
 
         if(bakeryView){
             this.bakeryUpdate();
-            // managerIncr = 2;
-            // if (managerCounter % 2 != 0) { 
-            //     managerCounter += 1;
-            // }
+            managerIncr = 2;
+            if (managerCounter % 2 != 0) { 
+                managerCounter += 1;
+            }
         }
 
         if(dayEndView){
@@ -527,9 +528,6 @@ BlueRoom.Game.prototype = {
     },
 
     quitGame: function () {
-
-
-
     },
 
     load: function(stations, employees, balance, dayNum, magRack) {
@@ -539,7 +537,7 @@ BlueRoom.Game.prototype = {
             // var station = stations[i];
             // do something to add the station to the front end
             // console.log(this);
-            this.loadUpgrades(stations);
+        this.loadUpgrades(stations);
         // }
         console.log(employees);
         for (var i = 0; i < employees.length; i++) {

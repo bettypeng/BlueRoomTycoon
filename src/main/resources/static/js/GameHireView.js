@@ -150,7 +150,7 @@ BlueRoom.Game.prototype.firedEmployeeBackOnMarket = function(name){
 	employeeMap[name].employeeSprite.destroy();
 	employeeMap[name] = null;
 	hireList.push(name);
-	this.checkHireButton(hireMeButton);
+	// this.checkHireButton(hireMeButton);
 	delete employeeMap[name];
 
 };

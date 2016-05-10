@@ -39,11 +39,11 @@ BlueRoom.Game.prototype.createManager = function () {
 
     // BlueRoom.Game.prototype.create.call(this);
     this.add.sprite(0, 0, 'managerBg');
-    this.drinkStand = this.add.sprite(870, 30, 'drink_stand');
+    this.drinkStand = this.add.sprite(870, 20, 'drink_stand');
     this.chipStand = this.add.sprite(990, 215, 'chip_stand');
-    this.sandwichStation = this.add.sprite(635, 140, 'sandwichStation');
-    this.bakeryStation = this.add.sprite(395, 140, 'bakeryStation');
-    this.coffeeStation = this.add.sprite(130, 140, 'coffeeStation');
+    this.sandwichStation = this.add.sprite(635, 130, 'sandwichStation');
+    this.bakeryStation = this.add.sprite(395, 130, 'bakeryStation');
+    this.coffeeStation = this.add.sprite(130, 130, 'coffeeStation');
     this.magazineRack = this.add.sprite(30, 310, 'magazineRack');
     
 
@@ -464,6 +464,7 @@ BlueRoom.Game.prototype.newCustomerReturned = function(customer){
             coffeeLine.push(customer);
         } else {
             setTimeout(function(){
+                customer.alc = true;
                 currThis.toCashier(null, customer);
             }, 1000);
         }
@@ -473,7 +474,7 @@ BlueRoom.Game.prototype.newCustomerReturned = function(customer){
 
 BlueRoom.Game.prototype.loadUpgrades = function(upgrades) { 
 
-    for (var i=0; i<NUMBEROFUPGRADES; i++) {
+    for (var i=0; i<upgradeList.length; i++) {
         for (var j=0; j<upgrades.length; j++) {
             if (upgrades[j] == upgradeList[i]) {
                 upgradeList.splice(i, 1);
@@ -490,11 +491,13 @@ BlueRoom.Game.prototype.loadUpgrades = function(upgrades) {
             currThis.coffeeStation.visible = true;
             currThis.coffeeButton.visible = true;
             coffeeButtonOn = true;
+            NUMBEROFSTATIONS++;
             this.addToUpgradeInventory("coffee");
         } else if (upgrades[i] == "bakery") {
             currThis.bakeryStation.visible = true;
             currThis.bakeryButton.visible = true;
             bakeryButtonOn= true;
+            NUMBEROFSTATIONS++;
             this.addToUpgradeInventory("bakery");
         } else if (upgrades[i] == "drink_alc") {
             currThis.drinkStand.visible = true;

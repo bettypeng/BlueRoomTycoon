@@ -55,6 +55,8 @@ function Customer(id, station, order){
     this.drinkFlavor = null;
     this.drinkSize = null;
 
+    this.alc = false;
+
     this.muffinType = null;
 
     this.createBar();
@@ -205,7 +207,7 @@ Customer.prototype = {
     leaveBlueRoom: function(){
         this.moving = true;
         if(!this.cashedOut){
-            if(this.ingredients!=null || this.drinkType !=null || this.muffinType != null){
+            if(this.ingredients!=null || this.drinkType !=null || this.muffinType != null || this.employee != null || this.alc){
                 currThis.steal(this, true);
                 console.log("STEAL");
             }
