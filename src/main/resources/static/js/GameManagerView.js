@@ -464,6 +464,7 @@ BlueRoom.Game.prototype.newCustomerReturned = function(customer){
             coffeeLine.push(customer);
         } else {
             setTimeout(function(){
+                customer.alc = true;
                 currThis.toCashier(null, customer);
             }, 1000);
         }
