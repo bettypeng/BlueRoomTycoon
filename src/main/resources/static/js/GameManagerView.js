@@ -492,28 +492,6 @@ BlueRoom.Game.prototype.loadUpgrades = function(upgrades) {
         }
     }
 
-    // if (upgradeName == "coffee") {
-    //     NUMBEROFSTATIONS++;
-    //     currThis.coffeeStation.visible = true;
-    //     currThis.coffeeButton.visible = true;
-    //     coffeeButtonOn = true;
-    //     this.addToUpgradeInventory("coffee");
-    //     upgradeList.splice(0, 1);
-    //     NUMBEROFUPGRADES--;
-    // } else if (upgradeName == "bakery") {
-    //     NUMBEROFSTATIONS++;
-    //     currThis.bakeryStation.visible = true;
-    //     currThis.bakeryButton.visible = true;
-    //     bakeryButtonOn= true;
-    //     this.addToUpgradeInventory("bakery");
-    //     if (upgradeList.length == 2) {
-    //         upgradeList.splice(0, 1);
-    //     } else {
-    //         upgradeList.splice(1,1);
-    //     }
-    //     NUMBEROFUPGRADES--;
-    // }
-
  };
 
  BlueRoom.Game.prototype.loadEmployees = function(employeeName) {
