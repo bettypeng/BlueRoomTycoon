@@ -100,14 +100,15 @@ BlueRoom.Game.prototype = {
 
         
         var status = statusBar;
-        var style = { font: "32px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left"};
+        var style = { font: "32px Roboto", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left"};
+        var style2 = { font: "32px Roboto-Bold-Condensed", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left"};
 
         moneytext = this.game.add.text(390, 650, '$' + (status.money.toFixed(2)), style);
-        daytext = this.game.add.text(590, 650,  status.day[dayCounter%7], style);
+        daytext = this.game.add.text(590, 650,  status.day[dayCounter%7], style2);
         //timetext = this.game.add.text(800, 650,  status.hour + ':' + status.minute, style);
-        timetext = this.game.add.text(760, 650,  status.hour, style);
-        ampmtext = this.game.add.text(800, 650,  status.ampm[twelveCounter%2], style);
-        closedtext = this.game.add.text(780, 650,  "CLOSING TIME!", style);
+        timetext = this.game.add.text(760, 650,  status.hour, style2);
+        ampmtext = this.game.add.text(800, 650,  status.ampm[twelveCounter%2], style2);
+        closedtext = this.game.add.text(780, 650,  "CLOSING TIME!", style2);
         this.closedSign(false);
 
         var newstyle = { font: "12px Roboto-Light", fill: "#000000", wordWrap: true, wordWrapWidth: 300, align: "left", boundsAlignH: "left"};

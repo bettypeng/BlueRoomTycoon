@@ -49,7 +49,9 @@ BlueRoom.Game.prototype.createCoffeeView= function () {
     coffeeExclamation = this.add.sprite(400, 40, 'exclamation');
     coffeeExclamation.visible = false;
 
-
+    var coffeeBg = this.add.sprite(0, 0, 'coffeeBg');
+    coffeeViewElements.push(bg);
+    coffeeViewElements.push(coffeeBg);
 
     smallCup.push(this.add.sprite(410, 40, 'smCup'));
     smallCup.push(this.add.sprite(410, 40, 'smDrink'));
@@ -66,9 +68,7 @@ BlueRoom.Game.prototype.createCoffeeView= function () {
     largeCup.push(this.add.sprite(402, 20, 'lgSyrup'));
     largeCup.push(this.add.sprite(402, 20, 'lgIce'));
 
-	var coffeeBg = this.add.sprite(0, 0, 'coffeeBg');
-    coffeeViewElements.push(bg);
-    coffeeViewElements.push(coffeeBg);
+	
 
     var coffeeGarbageCan = this.add.button(950, 240, 'trash', this.coffeeTrashButton, this);
     coffeeViewElements.push(coffeeGarbageCan);
@@ -100,15 +100,15 @@ BlueRoom.Game.prototype.createCoffeeView= function () {
 
     syrupDispenser = this.game.add.group();
     var syrup = this.add.sprite(0, 0, 'syrupDispenser');
-    var caramel = this.add.button(130, 15, 'syrupButton', this.caramelSyrup, this);
+    var caramel = this.add.button(5, 20, 'syrupButton', this.caramelSyrup, this);
     caramel.tint = 0xffb84d;
-    var hazelnut = this.add.button(130, 45, 'syrupButton', this.hazelnutSyrup, this);
+    var hazelnut = this.add.button(5, 50, 'syrupButton', this.hazelnutSyrup, this);
     hazelnut.tint = 0x732626;
-    var vanilla = this.add.button(130, 75, 'syrupButton', this.vanillaSyrup, this);
+    var vanilla = this.add.button(5, 80, 'syrupButton', this.vanillaSyrup, this);
     vanilla.tint = 0xf9f2ec;
-    var peppermint = this.add.button(130, 105, 'syrupButton', this.peppermintSyrup, this);
+    var peppermint = this.add.button(5, 110, 'syrupButton', this.peppermintSyrup, this);
     peppermint.tint = 0xff6666;
-    var kahlua = this.add.button(130, 135, 'syrupButton', this.kahluaSyrup, this);
+    var kahlua = this.add.button(5, 140, 'syrupButton', this.kahluaSyrup, this);
     kahlua.tint = 0xb36b00;
 	syrupDispenser.add(syrup);
     syrupDispenser.add(caramel);
