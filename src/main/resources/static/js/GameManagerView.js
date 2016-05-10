@@ -473,7 +473,7 @@ BlueRoom.Game.prototype.newCustomerReturned = function(customer){
 
 BlueRoom.Game.prototype.loadUpgrades = function(upgrades) { 
 
-    for (var i=0; i<NUMBEROFUPGRADES; i++) {
+    for (var i=0; i<upgradeList.length; i++) {
         for (var j=0; j<upgrades.length; j++) {
             if (upgrades[j] == upgradeList[i]) {
                 upgradeList.splice(i, 1);
@@ -490,11 +490,13 @@ BlueRoom.Game.prototype.loadUpgrades = function(upgrades) {
             currThis.coffeeStation.visible = true;
             currThis.coffeeButton.visible = true;
             coffeeButtonOn = true;
+            NUMBEROFSTATIONS++;
             this.addToUpgradeInventory("coffee");
         } else if (upgrades[i] == "bakery") {
             currThis.bakeryStation.visible = true;
             currThis.bakeryButton.visible = true;
             bakeryButtonOn= true;
+            NUMBEROFSTATIONS++;
             this.addToUpgradeInventory("bakery");
         } else if (upgrades[i] == "drink_alc") {
             currThis.drinkStand.visible = true;

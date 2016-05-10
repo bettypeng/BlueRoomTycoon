@@ -537,7 +537,7 @@ BlueRoom.Game.prototype = {
             // var station = stations[i];
             // do something to add the station to the front end
             // console.log(this);
-            this.loadUpgrades(stations);
+        this.loadUpgrades(stations);
         // }
         console.log(employees);
         for (var i = 0; i < employees.length; i++) {
