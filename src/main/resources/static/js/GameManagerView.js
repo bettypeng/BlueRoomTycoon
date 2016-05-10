@@ -222,10 +222,11 @@ BlueRoom.Game.prototype.abandonLine = function(customer){
 
     }
 
-    BlueRoom.Game.prototype.toCashier= function(station){
+    BlueRoom.Game.prototype.toCashier= function(station, customer){
         var curr;
-
-        if (station == "sandwich") {
+        if (customer != undefined) {
+            curr = customer;
+        } else if (station == "sandwich") {
             if(sandwichLine.length>0){
                 curr= sandwichLine.shift();
                 numSandwich--;
@@ -438,18 +439,17 @@ BlueRoom.Game.prototype.newCustomerReturned = function(customer){
         numBakery++;
         posx = currThis.bakeryLinePos['x'][numBakery];
         posy = currThis.bakeryLinePos['y'][numBakery];
-    } else {
+    } else if (customer.station == "coffee"){
         numCoffee++;
         posx = currThis.coffeeLinePos['x'][numCoffee];
         posy = currThis.coffeeLinePos['y'][numCoffee];
+    } else if(customer.station =="chips_alc"){
+        posx = currThis.game.rnd.integerInRange(950, 1050);
+        posy = currThis.game.rnd.integerInRange(300, 350);
+    } else if(customer.station =="drink_alc"){
+        posx = currThis.game.rnd.integerInRange(900, 1005);
+        posy = currThis.game.rnd.integerInRange(175, 200);
     }
-    // } else if(customer.station =="chips_alc"){
-    //     posx = currThis.game.rnd.integerInRange(900, 1050);
-    //     posy = currThis.game.rnd.integerInRange(400, 450);
-    // } else if(customer.station =="drink_alc"){
-    //     posx = currThis.game.rnd.integerInRange(900, 1050);
-    //     posy = currThis.game.rnd.integerInRange(400, 450);
-    // }
     
     customer.moving = true;
     var tween = currThis.add.tween(currThis.customer).to( { x: posx, y: posy }, 2000, null, true);
@@ -460,8 +460,12 @@ BlueRoom.Game.prototype.newCustomerReturned = function(customer){
             sandwichLine.push(customer);
         } else if (customer.station == "bakery") {
             bakeryLine.push(customer);
-        } else {
+        } else if (customer.station == "coffee") {
             coffeeLine.push(customer);
+        } else {
+            setTimeout(function(){
+                currThis.toCashier(null, customer);
+            }, 1000);
         }
         
     }
@@ -500,28 +504,6 @@ BlueRoom.Game.prototype.loadUpgrades = function(upgrades) {
             this.addToUpgradeInventory("chips_alc");
         }
     }
-
-    // if (upgradeName == "coffee") {
-    //     NUMBEROFSTATIONS++;
-    //     currThis.coffeeStation.visible = true;
-    //     currThis.coffeeButton.visible = true;
-    //     coffeeButtonOn = true;
-    //     this.addToUpgradeInventory("coffee");
-    //     upgradeList.splice(0, 1);
-    //     NUMBEROFUPGRADES--;
-    // } else if (upgradeName == "bakery") {
-    //     NUMBEROFSTATIONS++;
-    //     currThis.bakeryStation.visible = true;
-    //     currThis.bakeryButton.visible = true;
-    //     bakeryButtonOn= true;
-    //     this.addToUpgradeInventory("bakery");
-    //     if (upgradeList.length == 2) {
-    //         upgradeList.splice(0, 1);
-    //     } else {
-    //         upgradeList.splice(1,1);
-    //     }
-    //     NUMBEROFUPGRADES--;
-    // }
 
  };
 
