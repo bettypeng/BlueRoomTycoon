@@ -37,4 +37,4 @@ PKG=$(basename $(dirname $(dirname $MAIN)))
 
 # The funny symbol: "$@" passes the command-line arguments on from
 # this script to your Java program.
-web: java -ea -cp $TARGET:$CP edu.brown.cs.$PKG.BlueRoom.Main "$@"
+web: java -ea -cp $TARGET:$CP edu.brown.cs.bse.BlueRoom.Main "$@"
