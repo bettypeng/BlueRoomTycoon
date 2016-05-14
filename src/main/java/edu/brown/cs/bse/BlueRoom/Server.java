@@ -83,7 +83,7 @@ public class Server {
 
     FreeMarkerEngine freeMarker = createEngine();
 
-    Spark.setPort(6789);
+    Spark.setPort(process.env.PORT  || 6789);
 
     // Setup Spark Routes
     Spark.get("/blueroom", new FrontHandler(), freeMarker);
