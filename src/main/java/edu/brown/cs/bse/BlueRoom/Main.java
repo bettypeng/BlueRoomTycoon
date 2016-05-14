@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 
 import joptsimple.OptionException;
 import joptsimple.OptionParser;
+import joptsimple.OptionSpec;
 import joptsimple.OptionSet;
 import edu.brown.cs.bse.elements.Customer;
 import edu.brown.cs.bse.elements.Employee;
@@ -27,6 +28,9 @@ public class Main {
 
     OptionParser parser = new OptionParser();
     parser.accepts("gui");
+    OptionSpec<Integer> port = parser.accepts("port", "port <number>")
+        .withRequiredArg().ofType(Integer.class);
+
     OptionSet options;
     try {
       options = parser.parse(args);
@@ -36,10 +40,18 @@ public class Main {
     }
 
     GameManager manager = new GameManager();
+    int portVal= 4567;
 
+    if (options.has("port")) {
+        portVal = options.valueOf(port);
+        if (portVal < 2000 || portVal > 9999) {
+          System.out.println("ERROR: port must be between 2000 and 9999");
+          return;
+        }
+    }
     if (options.has("gui")) {
       System.out.println("run spark server");
-      new Server(manager);
+      new Server(manager, portVal);
     } else {
 
       try (BufferedReader reader = new BufferedReader(

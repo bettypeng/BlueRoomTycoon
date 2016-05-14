@@ -56,9 +56,9 @@ public class Server {
    * @param gm
    *          The game's manager.
    */
-  public Server(GameManager gm) {
+  public Server(GameManager gm, int portNum) {
     gameManager = gm;
-    runSparkServer();
+    runSparkServer(portNum);
   }
 
   private static FreeMarkerEngine createEngine() {
@@ -77,11 +77,13 @@ public class Server {
   /**
    * Starts the Spark server which will allow the user to interact with the gui.
    */
-  private void runSparkServer() {
+  private void runSparkServer(int port) {
     Spark.externalStaticFileLocation("src/main/resources/static");
     Spark.exception(Exception.class, new ExceptionPrinter());
 
     FreeMarkerEngine freeMarker = createEngine();
+
+    Spark.setPort(port);
 
     // Setup Spark Routes
     Spark.get("/blueroom", new FrontHandler(), freeMarker);
