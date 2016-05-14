@@ -83,8 +83,6 @@ public class Server {
 
     FreeMarkerEngine freeMarker = createEngine();
 
-    Spark.setPort(process.env.PORT  || 6789);
-
     // Setup Spark Routes
     Spark.get("/blueroom", new FrontHandler(), freeMarker);
     Spark.post("/sandwich", new SandwichHandler());
